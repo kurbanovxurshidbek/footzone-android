@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingBottom="18dp"
+    android:paddingTop="42dp"
+    app:behavior_hideable="false"
+    app:layout_behavior="@string/top_sheet_auto_close_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingEnd="20dp"
+            android:src="@drawable/ic_icon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yaqin atrofdagi maydonlar"
+            android:textColor="#1C1B1F"
+            android:textSize="22sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textview_rounded_background"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:text="Hozir ochiq"
+            android:textColor="@color/grey2"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/textview_rounded_background"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:text="Yaxshi baholangan"
+            android:textColor="@color/grey2"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
