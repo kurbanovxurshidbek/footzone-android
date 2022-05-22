@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="16dp"
-    app:behavior_peekHeight="600dp"
+    app:behavior_peekHeight="220dp"
     app:behavior_hideable="false"
     android:background="@color/white"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
@@ -16,14 +16,15 @@
         android:layout_marginHorizontal="10dp"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
+        <View
+            android:layout_marginTop="16dp"
+            android:layout_width="32dp"
+            android:layout_height="4dp"
             android:layout_gravity="center_horizontal"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_remove" />
+            android:background="#EDEDED"/>
 
         <EditText
+            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/edittext_backround"

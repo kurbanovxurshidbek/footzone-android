@@ -130,7 +130,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
     }
 
     private fun refreshAdapter() {
-        val adapter = PitchAdapter{pitch->
+        val adapter = PitchAdapter { pitch ->
             openPitchDetailActivity(pitch)
         }
         adapter.submitData(getPitches())
@@ -138,8 +138,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
     }
 
     private fun openPitchDetailActivity(pitch: Pitch) {
-        val intent = Intent(requireActivity(),PitchDetailActivity::class.java)
-        intent.putExtra(PITCH_DETAIL,pitch)
+        val intent = Intent(requireActivity(), PitchDetailActivity::class.java)
+        intent.putExtra(PITCH_DETAIL, pitch)
         startActivity(intent)
     }
 
@@ -186,8 +186,9 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     showTopSheet()
                 }
-                if (newState == BottomSheetBehavior.STATE_HIDDEN){
+                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                     showBottomSheet(bottomSheetBehaviorType)
+                    bottomSheetBehaviorType.isHideable = false
                 }
             }
 

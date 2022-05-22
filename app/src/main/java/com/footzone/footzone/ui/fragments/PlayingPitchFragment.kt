@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.PlayingPitchAdapter
-import com.footzone.footzone.databinding.FragmentPlayedPitchBinding
 import com.footzone.footzone.databinding.FragmentPlayingPitchBinding
 import com.footzone.footzone.model.Hour
 import com.footzone.footzone.model.PitchHistory
