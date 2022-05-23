@@ -1,11 +1,16 @@
-
 package com.footzone.footzone.ui.activity
 
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI.setupWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ActivityMapsBinding
 import com.footzone.footzone.utils.LocationHelper
@@ -31,9 +36,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.Cancelab
         setContentView(binding.root)
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map_view) as SupportMapFragment
-
-        mapFragment.getMapAsync(this)
     }
 
     /**
@@ -48,8 +50,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.Cancelab
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         //googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle())
-
-
 
         // Add a marker in Sydney and move the camera
         permissionRequest()
@@ -119,11 +119,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.Cancelab
             }).check()
     }
 
-    override fun onCancel() {
+    override fun onCancel() {}
 
-    }
-
-    override fun onFinish() {
-
-    }
+    override fun onFinish() {}
 }

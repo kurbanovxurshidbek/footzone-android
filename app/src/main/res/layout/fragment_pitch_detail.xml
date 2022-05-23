@@ -3,14 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.PitchDetailActivity">
+    android:background="#FFFFFF"
+    android:paddingTop="24dp"
+    tools:context=".ui.fragments.PitchDetailFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@color/white"
+        app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
@@ -24,9 +26,19 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingEnd="18dp"
+                    android:src="@drawable/ic_back_icon" />
+
+                <TextView
+                    android:id="@+id/tvAppBarPitchName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_back_icon" />
+                    android:text="Acme futbol maydoni"
+                    android:textColor="#1C1B1F"
+                    android:textSize="22sp" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -34,6 +46,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#FFFFFF"
         android:overScrollMode="never"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -43,12 +56,12 @@
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:overScrollMode="never"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" />
+                android:orientation="horizontal"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -143,8 +156,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:textSize="16sp"
-                        android:text="•" />
+                        android:text="•"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -199,10 +212,10 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:overScrollMode="never"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="8dp">
+                android:layout_marginEnd="8dp"
+                android:overScrollMode="never">
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
@@ -263,8 +276,8 @@
                                 android:maxLines="1"
                                 android:text="Marshrut"
                                 android:textColor="#0C64E6"
-                                android:textStyle="bold"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -289,8 +302,8 @@
                                 android:maxLines="1"
                                 android:text="Tanlanganlarga qo’shish"
                                 android:textColor="#0C64E6"
-                                android:textStyle="bold"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -315,8 +328,8 @@
                                 android:maxLines="1"
                                 android:text="Ulashish"
                                 android:textColor="#0C64E6"
-                                android:textStyle="bold"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
                     </LinearLayout>
                 </HorizontalScrollView>
@@ -371,7 +384,8 @@
                         android:stepSize="0.01"
                         app:mrb_progressBackgroundTint="#E8B006"
                         app:mrb_progressTint="#E8B006"
-                        app:mrb_secondaryProgressTint="#E8B006" />
+                        app:mrb_secondaryProgressTint="#E8B006"
+                        android:id="@+id/rbRate"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -545,14 +559,13 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewComment"
                 android:layout_width="match_parent"
-                android:overScrollMode="never"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-

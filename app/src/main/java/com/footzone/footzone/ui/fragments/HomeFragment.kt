@@ -6,19 +6,21 @@ import android.graphics.Color
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import com.androidbolts.topsheet.TopSheetBehavior
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.PitchAdapter
 import com.footzone.footzone.databinding.FragmentHomeBinding
 import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.Time
-import com.footzone.footzone.ui.activity.PitchDetailActivity
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 import com.footzone.footzone.utils.LocationHelper
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -120,27 +122,22 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
 
         hideBottomSheet(bottomSheetBehavior)
         hideTopSheet()
-
-        binding.frameWrapper.setOnTouchListener { view, motionEvent ->
-            topSheetBehavior.state = TopSheetBehavior.STATE_EXPANDED
-            false
-        }
-
         refreshAdapter()
     }
 
     private fun refreshAdapter() {
         val adapter = PitchAdapter { pitch ->
-            openPitchDetailActivity(pitch)
+            openPitchDetailFragment(pitch)
         }
         adapter.submitData(getPitches())
         binding.bottomSheetPitchList.rvPitch.adapter = adapter
     }
 
-    private fun openPitchDetailActivity(pitch: Pitch) {
-        val intent = Intent(requireActivity(), PitchDetailActivity::class.java)
-        intent.putExtra(PITCH_DETAIL, pitch)
-        startActivity(intent)
+    private fun openPitchDetailFragment(pitch: Pitch) {
+        findNavController().navigate(
+            R.id.action_homeFragment_to_pitchDetailFragment,
+            bundleOf(PITCH_DETAIL to pitch)
+        )
     }
 
     private fun showPitches() {

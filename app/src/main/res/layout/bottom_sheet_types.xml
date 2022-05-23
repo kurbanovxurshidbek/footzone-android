@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:id="@+id/bottomSheet"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomSheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/linear_top_rounded_background"
     android:paddingBottom="16dp"
-    app:behavior_peekHeight="220dp"
     app:behavior_hideable="false"
-    android:background="@color/white"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    app:behavior_peekHeight="220dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,16 +17,17 @@
         android:orientation="vertical">
 
         <View
-            android:layout_marginTop="16dp"
             android:layout_width="32dp"
             android:layout_height="4dp"
             android:layout_gravity="center_horizontal"
-            android:background="#EDEDED"/>
+            android:layout_marginTop="16dp"
+            android:background="@drawable/line_rounded_background" />
 
         <EditText
-            android:layout_marginTop="16dp"
+            android:id="@+id/edtPitchSearch"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/edittext_backround"
             android:drawableLeft="@drawable/ic_leading_icon"
             android:gravity="center_vertical"

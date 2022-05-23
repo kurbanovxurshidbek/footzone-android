@@ -1,0 +1,85 @@
+package com.footzone.footzone.ui.fragments
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.footzone.footzone.R
+import com.footzone.footzone.adapter.CommentAdapter
+import com.footzone.footzone.adapter.CustomAdapter
+import com.footzone.footzone.databinding.FragmentPitchDetailBinding
+import com.footzone.footzone.model.Comment
+import com.footzone.footzone.model.Pitch
+import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
+
+class PitchDetailFragment : Fragment() {
+
+    private lateinit var binding: FragmentPitchDetailBinding
+    lateinit var adapter: CustomAdapter
+    lateinit var adapterComment: CommentAdapter
+    lateinit var pitch: Pitch
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        pitch = arguments?.get(PITCH_DETAIL) as Pitch
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_pitch_detail, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding = FragmentPitchDetailBinding.bind(view)
+
+        initViews()
+    }
+
+    private fun initViews() {
+        refreshAdapter()
+        refreshCommentAdapter()
+        binding.rbRate.setIsIndicator(true)
+
+        binding.ivBack.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
+    }
+
+    private fun refreshAdapter() {
+        adapter = CustomAdapter(pitch.images)
+        binding.recyclerView.adapter = adapter
+    }
+
+    private fun refreshCommentAdapter() {
+        adapterComment = CommentAdapter(getComments())
+        binding.recyclerViewComment.adapter = adapterComment
+    }
+
+    private fun getComments(): ArrayList<Comment> {
+        val items = ArrayList<Comment>()
+        items.add(
+            Comment(
+                "Jonibek Xolmonov",
+                3.5f,
+                "18.05.2002",
+                "Measure the view and its content to determine the measured width and the measured height. This method is invoked by measure(int, int) and should be overridden by subclasses to provide accurate and efficient measurement of their contents."
+            )
+        )
+        items.add(
+            Comment(
+                "Odilbek Rustamov",
+                2f,
+                "11.05.2002",
+                "CONTRACT: When overriding this method, you must call setMeasuredDimension(int, int) to store the measured width and height of this view. Failure to do so will trigger an IllegalStateException, thrown by measure(int, int). Calling the superclass' onMeasure(int, int) is a valid use."
+            )
+        )
+        return items
+    }
+}
