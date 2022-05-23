@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:paddingTop="24dp"
+    android:id="@+id/cordLayout"
     tools:context=".ui.fragments.PitchDetailFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -229,6 +230,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:id="@+id/btnOpenBottomSheet"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_marginEnd="6dp"
@@ -568,4 +570,8 @@
 
     </androidx.core.widget.NestedScrollView>
 
+
+    <include
+        android:id="@+id/bottomSheet"
+        layout="@layout/item_detail_entry_bottom_sheet" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
