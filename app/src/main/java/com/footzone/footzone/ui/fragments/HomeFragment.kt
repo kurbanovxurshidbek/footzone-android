@@ -11,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
 import androidx.core.os.bundleOf
@@ -133,17 +135,33 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
 
         binding.bottomSheetTypes.edtPitchSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                val imm =
-                    requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-                var view = requireActivity().currentFocus
-                if (view == null) {
-                    view = View(activity)
-                }
-                imm.hideSoftInputFromWindow(view.windowToken, 0)
+                hideKeyboard()
                 bottomSheetBehaviorType.state = BottomSheetBehavior.STATE_COLLAPSED
                 true
             } else false
         }
+
+        controlOnBackPressed()
+    }
+
+    private fun controlOnBackPressed() {
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(false) {
+                override fun handleOnBackPressed() {
+                    requireActivity().onBackPressed()
+                }
+            })
+    }
+
+    private fun hideKeyboard() {
+        val imm =
+            requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        var view = requireActivity().currentFocus
+        if (view == null) {
+            view = View(activity)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     private fun refreshAdapter() {
