@@ -52,6 +52,6 @@
 
         <include
             android:id="@+id/bottomSheetTypes"
-            layout="@layout/bottom_sheet_types"/>
+            layout="@layout/bottom_sheet_types" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </FrameLayout>

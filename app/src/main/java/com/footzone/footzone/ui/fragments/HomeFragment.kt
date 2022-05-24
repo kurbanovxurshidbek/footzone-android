@@ -123,6 +123,9 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
         hideBottomSheet(bottomSheetBehavior)
         hideTopSheet()
         refreshAdapter()
+
+        //open add stadion odil
+        binding.bottomSheetTypes.linearMyStadium.setOnClickListener {  }
     }
 
     private fun refreshAdapter() {
