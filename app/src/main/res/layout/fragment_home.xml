@@ -36,7 +36,7 @@
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_location_svgrepo_com" />
+        android:src="@drawable/ic_location" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
