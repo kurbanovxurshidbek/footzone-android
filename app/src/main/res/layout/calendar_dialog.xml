@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/rounded_view">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical">
+
+       <CalendarView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"/>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginHorizontal="24dp"
+           android:layout_marginVertical="16dp">
+
+           <TextView
+               android:id="@+id/tvCancel"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_marginEnd="10dp"
+               android:layout_weight="1"
+               android:background="@drawable/view_rounded_corners"
+               android:gravity="center"
+               android:paddingVertical="10dp"
+               android:text="@string/str_cancel"
+               android:textColor="@color/blue"
+               android:textSize="14sp" />
+
+           <TextView
+               android:id="@+id/tvSelection"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="10dp"
+               android:layout_weight="1"
+               android:background="@drawable/view_rounded_corners_blue"
+               android:gravity="center"
+               android:paddingVertical="10dp"
+               android:text="@string/str_selection"
+               android:textColor="@color/black"
+               android:textSize="14sp"
+               app:backgroundTint="@null" />
+       </LinearLayout>
+   </LinearLayout>
+</LinearLayout>

@@ -1,24 +1,29 @@
 package com.footzone.footzone.ui.fragments
 
 import android.Manifest
-import android.content.Intent
+import android.app.Activity
 import android.graphics.Color
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.androidbolts.topsheet.TopSheetBehavior
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.PitchAdapter
 import com.footzone.footzone.databinding.FragmentHomeBinding
 import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.Time
-import com.footzone.footzone.ui.activity.PitchDetailActivity
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 import com.footzone.footzone.utils.LocationHelper
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -33,6 +38,7 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.PermissionListener
+
 
 class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallback {
     private lateinit var mMap: GoogleMap
@@ -120,27 +126,57 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
 
         hideBottomSheet(bottomSheetBehavior)
         hideTopSheet()
+        refreshAdapter()
 
-        binding.frameWrapper.setOnTouchListener { view, motionEvent ->
-            topSheetBehavior.state = TopSheetBehavior.STATE_EXPANDED
+        binding.bottomSheetTypes.edtPitchSearch.setOnTouchListener { p0, p1 ->
+            bottomSheetBehaviorType.state = BottomSheetBehavior.STATE_EXPANDED
             false
         }
 
-        refreshAdapter()
+        binding.bottomSheetTypes.edtPitchSearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                hideKeyboard()
+                bottomSheetBehaviorType.state = BottomSheetBehavior.STATE_COLLAPSED
+                true
+            } else false
+        }
+
+        controlOnBackPressed()
+    }
+
+    private fun controlOnBackPressed() {
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(false) {
+                override fun handleOnBackPressed() {
+                    requireActivity().onBackPressed()
+                }
+            })
+    }
+
+    private fun hideKeyboard() {
+        val imm =
+            requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        var view = requireActivity().currentFocus
+        if (view == null) {
+            view = View(activity)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     private fun refreshAdapter() {
-        val adapter = PitchAdapter{pitch->
-            openPitchDetailActivity(pitch)
+        val adapter = PitchAdapter { pitch ->
+            openPitchDetailFragment(pitch)
         }
         adapter.submitData(getPitches())
         binding.bottomSheetPitchList.rvPitch.adapter = adapter
     }
 
-    private fun openPitchDetailActivity(pitch: Pitch) {
-        val intent = Intent(requireActivity(),PitchDetailActivity::class.java)
-        intent.putExtra(PITCH_DETAIL,pitch)
-        startActivity(intent)
+    private fun openPitchDetailFragment(pitch: Pitch) {
+        findNavController().navigate(
+            R.id.action_homeFragment_to_pitchDetailFragment,
+            bundleOf(PITCH_DETAIL to pitch)
+        )
     }
 
     private fun showPitches() {
@@ -186,8 +222,9 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     showTopSheet()
                 }
-                if (newState == BottomSheetBehavior.STATE_HIDDEN){
+                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                     showBottomSheet(bottomSheetBehaviorType)
+                    bottomSheetBehaviorType.isHideable = false
                 }
             }
 
