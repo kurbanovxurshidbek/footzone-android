@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottomSheet"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@drawable/linear_top_rounded_background"
     android:paddingBottom="16dp"
     app:behavior_hideable="false"
@@ -24,6 +24,7 @@
             android:background="@drawable/line_rounded_background" />
 
         <EditText
+            android:singleLine="true"
             android:id="@+id/edtPitchSearch"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -31,11 +32,14 @@
             android:background="@drawable/edittext_backround"
             android:drawableLeft="@drawable/ic_leading_icon"
             android:gravity="center_vertical"
-            android:hint="maydon nomi"
+            android:hint="Maydon nomi"
+            android:drawablePadding="16dp"
+            android:imeOptions="actionDone"
+            android:inputType="text"
             android:paddingHorizontal="10dp"
             android:textColor="@color/black"
             android:textColorHint="#616161"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
