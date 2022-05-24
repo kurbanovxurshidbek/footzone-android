@@ -14,5 +14,10 @@
     <color name="colorNeutral80">#616161</color>
     <color name="grey">#79747E</color>
     <color name="grey2">#49454F</color>
+    <color name="grey1">#E0E0E0</color>
+    <color name="blue">#0023DD</color>
+    <color name="yellow">#E8B006</color>
+    <color name="red">#FD1D00</color>
+    <color name="green">#00FF0A</color>
 
 </resources>
