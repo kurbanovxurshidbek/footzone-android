@@ -20,6 +20,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun isRouteDisplayed(): Boolean {
+        return false
+    }
+
     private fun setupUI() {
         showAndHideBottomNavView()
     }
