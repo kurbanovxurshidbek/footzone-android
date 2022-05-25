@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
 import android.widget.RelativeLayout
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentChooseWorkTimeBinding
+import com.footzone.footzone.utils.KeyValues
 
 class ChooseWorkTimeFragment : Fragment() {
     lateinit var binding: FragmentChooseWorkTimeBinding
@@ -17,7 +20,6 @@ class ChooseWorkTimeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_choose_work_time, container, false)
     }
 
@@ -32,7 +34,11 @@ class ChooseWorkTimeFragment : Fragment() {
         binding.apply {
             icClose.setOnClickListener { requireActivity().onBackPressed() }
             tvCancel.setOnClickListener { requireActivity().onBackPressed() }
-            tvSelection.setOnClickListener { requireActivity().onBackPressed() }
+            tvSelection.setOnClickListener {
+                val result = wortTime()
+                setFragmentResult(KeyValues.TYPE_WORK_TIME, bundleOf("bundleKey" to result))
+                requireActivity().onBackPressed()
+            }
         }
 
         binding.switchMo.setOnToggledListener { toggleableView, isOn ->
@@ -88,5 +94,37 @@ class ChooseWorkTimeFragment : Fragment() {
         finishTime.minValue = 1
         finishTime.maxValue = 47
         finishTime.displayedValues = timeList
+    }
+
+    fun wortTime(): String{
+        var string = ""
+        if (!binding.switchMo.isOn){
+            string += "Du, "
+        }
+
+        if (!binding.switchTu.isOn){
+            string += "Se, "
+        }
+
+        if (binding.switchWe.isOn){
+            string += "Cho, "
+        }
+
+        if (binding.switchTh.isOn){
+            string += "Pa, "
+        }
+
+        if (binding.switchFr.isOn){
+            string += "Ju, "
+        }
+
+        if (binding.switchSa.isOn){
+            string += "Sha, "
+        }
+
+        if (binding.switchSu.isOn){
+            string += "Ya"
+        }
+        return string
     }
 }

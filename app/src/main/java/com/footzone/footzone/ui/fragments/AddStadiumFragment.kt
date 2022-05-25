@@ -1,8 +1,10 @@
 package com.footzone.footzone.ui.fragments
 
-
+import android.R.attr
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -12,17 +14,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.AddImageAdapter
 import com.footzone.footzone.adapter.PitchImageEditAdapter
-import com.footzone.footzone.adapter.PitchImagesAdapter
-import com.footzone.footzone.adapter.PlayedPitchAdapter
 import com.footzone.footzone.databinding.FragmentAddStadiumBinding
 import com.footzone.footzone.model.Image
 import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.utils.KeyValues
-import kotlin.properties.Delegates
+import java.io.FileNotFoundException
+import java.io.InputStream
+
 
 open class AddStadiumFragment : Fragment() {
     lateinit var binding: FragmentAddStadiumBinding
@@ -38,6 +41,18 @@ open class AddStadiumFragment : Fragment() {
         type = arguments?.get(KeyValues.TYPE_DETAIL).toString().toInt()
         if (type == 1){
             pitch = arguments?.get(KeyValues.PITCH_DETAIL) as Pitch
+        }
+
+        setFragmentResultListener(KeyValues.TYPE_LOCATION) { requestKey, bundle ->
+
+            val result = bundle.getString("bundleKey")
+            binding.tvPichLocation.setText(result.toString())
+        }
+
+        setFragmentResultListener(KeyValues.TYPE_WORK_TIME) { requestKey, bundle ->
+
+            val result = bundle.getString("bundleKey")
+            binding.tvPitchWorkTime.setText(result.toString())
         }
     }
 
@@ -57,6 +72,15 @@ open class AddStadiumFragment : Fragment() {
             icClose.setOnClickListener { requireActivity().onBackPressed() }
             tvCancel.setOnClickListener { requireActivity().onBackPressed() }
             tvOccupancy.setOnClickListener { requireActivity().onBackPressed() }
+
+            ivChooseLocation.setOnClickListener {
+                openStadiumLocation()
+                }
+
+            ivChooseWorkTime.setOnClickListener {
+                openChooseWorkTime()
+            }
+
         }
 
         if (type == 1){
@@ -84,15 +108,6 @@ open class AddStadiumFragment : Fragment() {
 
     private fun initViewsAdd() {
         items.add(Image())
-        binding.apply {
-            ivChooseLocation.setOnClickListener {
-                openStadiumLocation()
-            }
-
-            ivChooseWorkTime.setOnClickListener {
-                openChooseWorkTime()
-            }
-        }
 
         adapter = AddImageAdapter(this, items) {
            selectImage()
@@ -118,9 +133,20 @@ open class AddStadiumFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_FROM_FILE && resultCode == RESULT_OK) {
             try {
-                val selectedImage: Uri = data?.getData()!!
-               // items.add(Image(selectedImage))
-                binding.imageview.setImageURI(selectedImage)
+//                val selectedImage: Uri = data?.getData()!!
+//                Log.d("@@##", selectedImage.toString())
+
+                val selectedImageUri: Uri = data?.getData()!!
+                var imageStream: InputStream? = null
+                try {
+                    imageStream = activity?.getContentResolver()?.openInputStream(selectedImageUri)
+                } catch (e: FileNotFoundException) {
+                    e.printStackTrace()
+                }
+                val yourSelectedImage = BitmapFactory.decodeStream(imageStream) as Bitmap
+                // items.add(Image(selectedImage))
+//                binding.imageView.setImageURI(selectedImage)
+                binding.imageView.setImageBitmap(yourSelectedImage)
                 adapter.notifyDataSetChanged()
             } catch (e: Exception) {
                 e.printStackTrace()
