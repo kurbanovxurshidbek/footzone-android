@@ -1,6 +1,7 @@
 package com.footzone.footzone.ui.fragments
 
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -78,7 +79,6 @@ open class AddStadiumFragment : Fragment() {
             }
             recyclerView.adapter = pitchImageEditAdapter
 
-
         }
     }
 
@@ -116,10 +116,11 @@ open class AddStadiumFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_FROM_FILE) {
+        if (requestCode == PICK_FROM_FILE && resultCode == RESULT_OK) {
             try {
                 val selectedImage: Uri = data?.getData()!!
-                items.add(Image(selectedImage))
+               // items.add(Image(selectedImage))
+                binding.imageview.setImageURI(selectedImage)
                 adapter.notifyDataSetChanged()
             } catch (e: Exception) {
                 e.printStackTrace()
