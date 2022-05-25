@@ -1,219 +1,59 @@
 package com.footzone.footzone.ui.fragments
 
-import android.Manifest
-import android.content.Intent
-import android.graphics.Color
-import android.location.Location
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.PermissionChecker
-import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
-import com.androidbolts.topsheet.TopSheetBehavior
 import com.footzone.footzone.R
+import com.footzone.footzone.adapter.MyPitchAdapter
 import com.footzone.footzone.adapter.PitchAdapter
-import com.footzone.footzone.databinding.FragmentHomeBinding
+import com.footzone.footzone.databinding.FragmentMyStadiumBinding
 import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.Time
-import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
-import com.footzone.footzone.utils.LocationHelper
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
-import com.karumi.dexter.listener.single.PermissionListener
+import com.footzone.footzone.utils.KeyValues
 
-class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallback {
-    private lateinit var mMap: GoogleMap
-    private lateinit var binding: FragmentHomeBinding
-    private var isFirstTime = true
-    private lateinit var bottomSheet: View
-    private lateinit var topSheet: View
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
-    private lateinit var bottomSheetBehaviorType: BottomSheetBehavior<View>
-    private lateinit var topSheetBehavior: TopSheetBehavior<View>
+class MyStadiumFragment : Fragment() {
+    lateinit var binding: FragmentMyStadiumBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        return inflater.inflate(R.layout.fragment_my_stadium, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentHomeBinding.bind(view)
-
-        initViews(view)
+        binding = FragmentMyStadiumBinding.bind(view)
+        initViews()
     }
 
-    override fun onMapReady(p0: GoogleMap) {
-        mMap = p0
-        mMap.setOnCameraMoveStartedListener {
-            //todo start animate marker
-            binding.mapIcon.animate().setDuration(300).translationY(-binding.mapIcon.height / 2.0f)
-                .start()
+    private fun initViews() {
+        binding.apply {
+            icClose.setOnClickListener { requireActivity().onBackPressed() }
         }
 
-        mMap.setOnCameraIdleListener {
-            binding.mapIcon.animate().translationY(0f).setDuration(300).start()
-
-            val target = mMap.cameraPosition.target
-
-            //todo send request for nearby stadions
-        }
-        // Add a marker in Sydney and move the camera
-        permissionRequest()
-
-
-    }
-
-    override fun onCancel() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onFinish() {
-        TODO("Not yet implemented")
-    }
-
-    private fun initViews(view: View) {
-        val bottomSheetTypes = view.findViewById<View>(R.id.bottomSheetTypes)
-        bottomSheet = view.findViewById(R.id.bottomSheetPitchList)
-        topSheet = view.findViewById(R.id.topSheet)
-
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        topSheetBehavior = TopSheetBehavior.from(topSheet)
-        bottomSheetBehaviorType = BottomSheetBehavior.from(bottomSheetTypes)
-
-        showBottomSheet(bottomSheetBehaviorType)
-
-        val supportMapFragment =
-            childFragmentManager.findFragmentById(R.id.map_view) as SupportMapFragment
-        supportMapFragment.getMapAsync(this)
-
-        binding.bottomSheetTypes.apply {
-            linearMyStadium.setOnClickListener {
-                openMyStadiumFragment()
-            }
-            linearNearPitch.setOnClickListener {
-                hideBottomSheet(bottomSheetBehaviorType)
-                showPitches()
-            }
-            linearSelectedPitch.setOnClickListener {
-                hideBottomSheet(bottomSheetBehaviorType)
-                showPitches()
-            }
-            linearBookedPitch.setOnClickListener {
-                hideBottomSheet(bottomSheetBehaviorType)
-                showPitches()
-            }
+        binding.ivAdd.setOnClickListener {
+            openAddStadium()
         }
 
-        hideBottomSheet(bottomSheetBehavior)
-        hideTopSheet()
+        binding.tvJustText.text = "Hozir sizda maydonlar mavjud emas.\nMaydon qo’shish uchun yuqoridagi\n“+” tugmasini bosing"
+
         refreshAdapter()
-    }
 
-    private fun openMyStadiumFragment() {
-        findNavController().navigate(R.id.action_homeFragment_to_myStadiumFragment)
     }
 
     private fun refreshAdapter() {
-        val adapter = PitchAdapter { pitch ->
-            openPitchDetailFragment(pitch)
+        Log.d("###$$$", getPitches().toString())
+        val adapter = MyPitchAdapter(requireContext(), getPitches()){ pitch ->
+            openEditStadium(pitch)
         }
-        adapter.submitData(getPitches())
-        binding.bottomSheetPitchList.rvPitch.adapter = adapter
-    }
-
-    private fun openPitchDetailFragment(pitch: Pitch) {
-        findNavController().navigate(
-            R.id.action_homeFragment_to_pitchDetailFragment,
-            bundleOf(PITCH_DETAIL to pitch)
-        )
-    }
-
-    private fun showPitches() {
-        openPitchListBottomSheet()
-        openTopSheet()
-    }
-
-    private fun openTopSheet() {
-        showTopSheet()
-
-        topSheetBehavior.setTopSheetCallback(object : TopSheetBehavior.TopSheetCallback() {
-            override fun onSlide(bottomSheet: View, slideOffset: Float, isOpening: Boolean?) {
-            }
-
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == TopSheetBehavior.STATE_DRAGGING) {
-                    topSheetBehavior.state = TopSheetBehavior.STATE_EXPANDED
-                }
-            }
-        })
-
-        binding.topSheet.ivBack.setOnClickListener {
-            topSheetBehavior.isHideable = true
-            hideTopSheet()
-            hideBottomSheet(bottomSheetBehavior)
-            showBottomSheet(bottomSheetBehaviorType)
-        }
-    }
-
-    private fun openPitchListBottomSheet() {
-        setLightStatusBar()
-        showBottomSheet(bottomSheetBehavior)
-
-        bottomSheetBehavior.addBottomSheetCallback(object :
-            BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    binding.bottomSheetPitchList.bottomSheetPitchList.setBackgroundResource(R.drawable.linear_top_smooth_background)
-                } else {
-                    binding.bottomSheetPitchList.bottomSheetPitchList.setBackgroundResource(R.drawable.linear_top_rounded_background)
-                }
-
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    showTopSheet()
-                }
-                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                    showBottomSheet(bottomSheetBehaviorType)
-                    bottomSheetBehaviorType.isHideable = false
-                }
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
-        })
-    }
-
-    private fun hideBottomSheet(bottomSheetBehavior: BottomSheetBehavior<View>) {
-        bottomSheetBehavior.isHideable = true
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-    }
-
-    private fun showBottomSheet(bottomSheetBehavior: BottomSheetBehavior<View>) {
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-    }
-
-    private fun hideTopSheet() {
-        topSheetBehavior.state = TopSheetBehavior.STATE_HIDDEN
-    }
-
-    private fun showTopSheet() {
-        topSheetBehavior.state = TopSheetBehavior.STATE_EXPANDED
+        Log.d("###$$$", adapter.toString())
+        binding.recyclerView.adapter = adapter
     }
 
     private fun getPitches(): ArrayList<Pitch> {
@@ -257,81 +97,16 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
         }
     }
 
-    private fun setLightStatusBar() {
-        //setting light mode status bar
-        requireActivity().window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        val view = View(requireContext())
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            var flags: Int = view.systemUiVisibility
-            flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            view.systemUiVisibility = flags
-            requireActivity().window.statusBarColor = Color.WHITE
-        }
+
+    private fun openAddStadium() {
+        findNavController().navigate(R.id.action_myStadiumFragment_to_addStadiumFragment,
+            bundleOf(KeyValues.TYPE_DETAIL to 2))
     }
 
-    private fun permissionRequest() {
-        if (checkCallingOrSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PermissionChecker.PERMISSION_GRANTED
-        ) {
-            request()
-        } else {
-            setUpCamera()
-        }
-    }
-
-    private fun setUpCamera() {
-        val locationHelper = LocationHelper()
-        locationHelper.startLocationUpdates(requireContext())
-        locationHelper.addLocationlistener(object : LocationHelper.LocationListener {
-            override fun onLocationChanged(location: Location) {
-                if (isFirstTime) {
-                    val target = LatLng(location.latitude, location.longitude)
-                    val cameraUpdate = CameraPosition.Builder().target(target).zoom(16f).build()
-                    mMap.moveCamera(
-                        CameraUpdateFactory.newCameraPosition(cameraUpdate)
-                    )
-                    isFirstTime = false
-                }
-
-
-//                if (userLocationMarker == null) {
-////                    val bitmap = BitmapFactory.decodeResource(resources,R.drawable.ic_location_svgrepo_com)
-////                    val icon = BitmapDescriptorFactory.fromBitmap(bitmap)
-//                    userLocationMarker = mMap.addMarker(
-//                        MarkerOptions()
-//                            .position(target)
-//                    )
-//                } else {
-//                    userLocationMarker?.position = target
-//                }
-
-
-            }
-        })
-    }
-
-    private fun request() {
-        Dexter.withContext(requireContext())
-            .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-            .withListener(object : PermissionListener {
-                override fun onPermissionGranted(response: PermissionGrantedResponse?) { /* ... */
-                    setUpCamera()
-                }
-
-                override fun onPermissionDenied(response: PermissionDeniedResponse?) { /* ... */
-                    //open settings
-
-                }
-
-                override fun onPermissionRationaleShouldBeShown(
-                    p0: com.karumi.dexter.listener.PermissionRequest?,
-                    p1: PermissionToken?
-                ) {
-                    p1?.continuePermissionRequest()
-                }
-
-            }).check()
+    private fun openEditStadium(pitch: Pitch) {
+        findNavController().navigate(
+            R.id.action_myStadiumFragment_to_addStadiumFragment,
+            bundleOf(KeyValues.PITCH_DETAIL to pitch, KeyValues.TYPE_DETAIL to 1)
+        )
     }
 }

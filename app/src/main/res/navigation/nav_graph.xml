@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_pitchDetailFragment"
             app:destination="@id/pitchDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_myStadiumFragment"
+            app:destination="@id/myStadiumFragment" />
     </fragment>
     <fragment
         android:id="@+id/tableFragment"
@@ -29,4 +32,39 @@
         android:name="com.footzone.footzone.ui.fragments.PitchDetailFragment"
         android:label="fragment_pitch_detail"
         tools:layout="@layout/fragment_pitch_detail" />
+    <fragment
+        android:id="@+id/myStadiumFragment"
+        android:name="com.footzone.footzone.ui.fragments.MyStadiumFragment"
+        android:label="MyStadiumFragment" >
+        <action
+            android:id="@+id/action_myStadiumFragment_to_addStadiumFragment"
+            app:destination="@id/addStadiumFragment" />
+        <action
+            android:id="@+id/action_myStadiumFragment_to_editStadiumFragment"
+            app:destination="@id/editStadiumFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addStadiumFragment"
+        android:name="com.footzone.footzone.ui.fragments.AddStadiumFragment"
+        android:label="AddStadiumFragment" >
+        <action
+            android:id="@+id/action_addStadiumFragment_to_stadiumLocationFragment"
+            app:destination="@id/stadiumLocationFragment" />
+        <action
+            android:id="@+id/action_addStadiumFragment_to_chooseWorkTimeFragment"
+            app:destination="@id/chooseWorkTimeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/stadiumLocationFragment"
+        android:name="com.footzone.footzone.ui.fragments.StadiumLocationFragment"
+        android:label="StadiumLocationFragment" />
+    <fragment
+        android:id="@+id/chooseWorkTimeFragment"
+        android:name="com.footzone.footzone.ui.fragments.ChooseWorkTimeFragment"
+        android:label="ChooseWorkTimeFragment" />
+    <fragment
+        android:id="@+id/editStadiumFragment"
+        android:name="com.footzone.footzone.ui.fragments.EditStadiumFragment"
+        android:label="fragment_edit_stadium"
+        tools:layout="@layout/fragment_edit_stadium" />
 </navigation>

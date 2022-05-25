@@ -6,21 +6,20 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Vibrator
-import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
 import androidx.fragment.app.Fragment
 import com.footzone.footzone.CalendarDIalog
-import com.footzone.footzone.Extensions.changeTextBackgroundBlue
-import com.footzone.footzone.Extensions.changeTextColorGreen
-import com.footzone.footzone.Extensions.changeTextColorRed
-import com.footzone.footzone.Extensions.changeTextColorYellow
-import com.footzone.footzone.Extensions.hideBottomSheet
-import com.footzone.footzone.Extensions.setImageViewBusy
-import com.footzone.footzone.Extensions.setImageViewisBusy
-import com.footzone.footzone.Extensions.showBottomSheet
+import com.footzone.footzone.utils.Extensions.changeTextBackgroundBlue
+import com.footzone.footzone.utils.Extensions.changeTextColorGreen
+import com.footzone.footzone.utils.Extensions.changeTextColorRed
+import com.footzone.footzone.utils.Extensions.changeTextColorYellow
+import com.footzone.footzone.utils.Extensions.hideBottomSheet
+import com.footzone.footzone.utils.Extensions.setImageViewBusy
+import com.footzone.footzone.utils.Extensions.setImageViewisBusy
+import com.footzone.footzone.utils.Extensions.showBottomSheet
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.CommentAdapter
 import com.footzone.footzone.adapter.CustomAdapter
@@ -30,7 +29,6 @@ import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.TimeManager
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.util.*
 
 
@@ -46,8 +44,6 @@ class PitchDetailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
 
         pitch = arguments?.get(PITCH_DETAIL) as Pitch
     }
@@ -237,10 +233,11 @@ class PitchDetailFragment : Fragment() {
             val v: Vibrator =
                 requireActivity().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
             v.vibrate(70)
-        } else if (1 == Settings.System.getInt(context.contentResolver,
+        } else /*if (1 == Settings.System.getInt(context.contentResolver,
                 "vibrate_when_ringing",
                 0)
-        ) {
+        )*/
+        {
 
             val mMediaPlayer = MediaPlayer.create(context, R.raw.mouse_1)
             val audioManager =
@@ -258,8 +255,6 @@ class PitchDetailFragment : Fragment() {
                     })
                 }
             }, 500)
-        }
+       }
     }
-
-
 }

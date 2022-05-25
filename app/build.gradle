@@ -63,5 +63,8 @@ dependencies {
     implementation 'com.orhanobut:dialogplus:1.11@aar'
     implementation 'com.github.nawinkhatiwada:TopSheet:1.0.0-alpha2'
 
+    //Switch
+    implementation 'com.github.angads25:toggle:1.1.0'
+
 
 }

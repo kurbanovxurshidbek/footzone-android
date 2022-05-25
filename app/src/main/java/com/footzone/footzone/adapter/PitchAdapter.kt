@@ -58,7 +58,7 @@ class PitchAdapter(private var onPitchClick: ((Pitch) -> Unit)) :
     }
 }
 
-private fun setStrokeColorToRatingBar(ratingBar: MaterialRatingBar) {
+fun setStrokeColorToRatingBar(ratingBar: MaterialRatingBar) {
     val stars = ratingBar.progressDrawable as LayerDrawable
     stars.getDrawable(2).setColorFilter(Color.parseColor("#FFC107"), PorterDuff.Mode.SRC_ATOP)
     stars.getDrawable(0).setColorFilter(Color.parseColor("#FFC107"), PorterDuff.Mode.SRC_ATOP)

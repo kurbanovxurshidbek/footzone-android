@@ -1,8 +1,9 @@
-package com.footzone.footzone
+package com.footzone.footzone.utils
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.footzone.footzone.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 object Extensions {
@@ -21,10 +22,10 @@ object Extensions {
     fun TextView.changeTextBackgroundBlue(boolStart: Boolean, boolFinish: Boolean) {
         if (boolStart && boolFinish) {
             this.setBackgroundResource(R.drawable.view_rounded_corners_blue)
-            this.getResources().getColor(R.color.white)
+            this.setTextColor(getResources().getColor(R.color.white))
         } else {
             this.setBackgroundResource(R.drawable.view_rounded_corners_grey)
-            this.getResources().getColor(R.color.black)
+            this.setTextColor(getResources().getColor(R.color.white))
         }
     }
 
