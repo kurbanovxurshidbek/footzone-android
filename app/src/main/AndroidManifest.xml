@@ -15,16 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Footzone">
-        <provider
-            android:name="com.vansuita.pickimage.provider.PickImageFileProvider"
-            android:authorities="${applicationId}.com.vansuita.pickimage.provider"
-            android:exported="false"
-            android:grantUriPermissions="true"
-            tools:replace="android:authorities">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/picker_provider_paths" />
-        </provider>
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
