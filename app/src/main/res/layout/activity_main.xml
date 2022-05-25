@@ -27,6 +27,6 @@
         app:elevation="0dp"
         app:itemIconTint="@color/state_bottom_nav_icon"
         app:itemTextColor="@color/state_bottom_nav_icon"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/bottom_nav_menu"/>
 
 </RelativeLayout>
