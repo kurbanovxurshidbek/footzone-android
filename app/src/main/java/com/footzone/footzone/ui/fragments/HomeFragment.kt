@@ -1,19 +1,22 @@
 package com.footzone.footzone.ui.fragments
 
 import android.Manifest
-import android.content.Intent
+import android.app.Activity
 import android.graphics.Color
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.androidbolts.topsheet.TopSheetBehavior
 import com.footzone.footzone.R
@@ -35,6 +38,7 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.PermissionListener
+
 
 class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallback {
     private lateinit var mMap: GoogleMap
@@ -125,6 +129,41 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
         hideBottomSheet(bottomSheetBehavior)
         hideTopSheet()
         refreshAdapter()
+
+        binding.bottomSheetTypes.edtPitchSearch.setOnTouchListener { p0, p1 ->
+            bottomSheetBehaviorType.state = BottomSheetBehavior.STATE_EXPANDED
+            false
+        }
+
+        binding.bottomSheetTypes.edtPitchSearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                hideKeyboard()
+                bottomSheetBehaviorType.state = BottomSheetBehavior.STATE_COLLAPSED
+                true
+            } else false
+        }
+
+        controlOnBackPressed()
+    }
+
+    private fun controlOnBackPressed() {
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(false) {
+                override fun handleOnBackPressed() {
+                    requireActivity().onBackPressed()
+                }
+            })
+    }
+
+    private fun hideKeyboard() {
+        val imm =
+            requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        var view = requireActivity().currentFocus
+        if (view == null) {
+            view = View(activity)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     private fun openMyStadiumFragment() {

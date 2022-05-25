@@ -3,49 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/background_top_oval.xml" value="0.184" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/edittextround.xml" value="0.184" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/ic_add_image.xml" value="0.184" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/ic_busy.xml" value="0.184" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/ic_calendar.xml" value="0.184" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/ic_close.xml" value="0.184" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/ic_pitch_white.xml" value="0.184" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/ic_plus.xml" value="0.184" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/ic_price.xml" value="0.184" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/ic_work_time.xml" value="0.184" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/rounded_view.xml" value="0.184" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/view_rounded_corners.xml" value="0.184" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/view_rounded_corners_blue.xml" value="0.184" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/view_rounded_corners_grey.xml" value="0.184" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable/bottom_nav_selected_background.xml" value="0.184" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable/circle_view.xml" value="0.184" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable/ic_icon.xml" value="0.184" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/activity_main.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/bottom_sheet_layout.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/bottom_sheet_types.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/bottomsheet_pitch_zone_list.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/calendar_dialog.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/dialog_add_image.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_add_stadium.xml" value="0.152" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_choose_work_time.xml" value="0.2" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_edit_stadium.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_home.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_my_stadium.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_pitch_detail.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_playing_pitch.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_stadium_location.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_add_image.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_detail_entry_bottom_sheet.xml" value="0.264" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_my_pitch_layout.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_pitch_image_layout.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_pitch_layout.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_played_pitch.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_playing_pitch.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_rv.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_stadium_image.xml" value="0.264" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_stadium_image_edit.xml" value="0.4" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/topsheet_app_bar.xml" value="0.27447916666666666" />
-        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/menu/bottom_nav_menu.xml" value="0.27447916666666666" />
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/drawable/bottom_navigation_style.xml" value="0.1065" />
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/drawable/bottom_navigation_style_background.xml" value="0.1065" />
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/drawable/button_rounded_corner.xml" value="0.1065" />
@@ -86,7 +43,6 @@
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/layout/item_rv.xml" value="0.17916666666666667" />
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/layout/topsheet_app_bar.xml" value="0.17916666666666667" />
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/menu/bottom_nav_menu.xml" value="0.17916666666666667" />
-        <entry key="..\:/FoodZone/footzone-android/app/src/main/res/layout/activity_pitch_detail.xml" value="0.27447916666666666" />
       </map>
     </option>
   </component>
