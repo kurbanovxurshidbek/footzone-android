@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -150,9 +151,19 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
     private fun controlOnBackPressed() {
         activity?.onBackPressedDispatcher?.addCallback(
             viewLifecycleOwner,
-            object : OnBackPressedCallback(false) {
+            object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    requireActivity().onBackPressed()
+                    if (bottomSheetBehaviorType.state == BottomSheetBehavior.STATE_EXPANDED) {
+                        bottomSheetBehaviorType.state = BottomSheetBehavior.STATE_COLLAPSED
+                    }
+                    if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+                        hideBottomSheet(bottomSheetBehavior)
+                    }
+                    if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+                        hideBottomSheet(bottomSheetBehavior)
+                    }
+
+                        requireActivity().finish()
                 }
             })
     }
