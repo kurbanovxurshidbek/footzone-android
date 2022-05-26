@@ -26,10 +26,6 @@ class MainActivity : AppCompatActivity() {
         setupUI()
     }
 
-    fun isRouteDisplayed(): Boolean {
-        return false
-    }
-
     private fun setupUI() {
         showAndHideBottomNavView()
         binding.bottomNavigationView.itemIconTintList = null

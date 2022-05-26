@@ -24,7 +24,7 @@ class PitchImageEditAdapter( var context: Context, var pitchImages : ArrayList<S
             .into(holder.binding.ivPitch)
         holder.binding.apply {
             llConvert.setOnClickListener {
-                onItemClicked
+                onItemClicked.invoke()
                 Toast.makeText(context, "Convert Image", Toast.LENGTH_SHORT).show()
             }
 
