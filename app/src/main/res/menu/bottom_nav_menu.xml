@@ -4,16 +4,16 @@
 
     <item
         android:id="@+id/homeFragment"
-        android:icon="@drawable/ic_pitch_grey"
+        android:icon="@drawable/item_bottom_nav_pitch"
         android:title="Maydonlar" />
 
     <item
         android:id="@+id/tableFragment"
-        android:icon="@drawable/ic_table"
+        android:icon="@drawable/item_bottom_nav_table"
         android:title="Jadval" />
 
     <item
         android:id="@+id/profileFragment"
-        android:icon="@drawable/ic_person"
+        android:icon="@drawable/item_bottom_nav_profile"
         android:title="Akkount" />
 </menu>

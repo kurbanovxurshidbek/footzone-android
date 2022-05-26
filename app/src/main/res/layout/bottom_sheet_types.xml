@@ -24,19 +24,19 @@
             android:background="@drawable/line_rounded_background" />
 
         <EditText
-            android:singleLine="true"
             android:id="@+id/edtPitchSearch"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/edittext_backround"
             android:drawableLeft="@drawable/ic_leading_icon"
+            android:drawablePadding="16dp"
             android:gravity="center_vertical"
             android:hint="Maydon nomi"
-            android:drawablePadding="16dp"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:paddingHorizontal="10dp"
+            android:singleLine="true"
             android:textColor="@color/black"
             android:textColorHint="#616161"
             android:textSize="16sp" />
@@ -137,7 +137,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:background="#FAFAFA"
+                android:background="#E7F1FF"
                 android:orientation="vertical"
                 android:padding="15dp">
 
