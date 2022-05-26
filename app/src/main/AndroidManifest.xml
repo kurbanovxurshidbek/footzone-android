@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -13,24 +14,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Footzone">
-        <activity
-            android:name=".ui.activity.SplashActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustNothing|stateHidden">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
-
-        <service
-            android:name=".utils.MyBackgroundService"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="location" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 

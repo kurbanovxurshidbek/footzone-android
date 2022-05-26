@@ -18,6 +18,9 @@
     <string name="str_band">Boshqa user tomonidan band qilingan.</string>
     <string name="str_choose_date">Sanani tanlang</string>
     <string name="str_selection">Tanlash</string>
+    <string name="str_my_stadium">Mening maydonlarim</string>
+    <string name="str_add_stadium">Maydon qo’shish</string>
+    <string name="pick_image_intent_text">"AJHGVBCD N CCS  "</string>
 
     <string-array name="timelist">
         <item>00:00</item>

@@ -132,25 +132,25 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearMyStadium"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:background="#FAFAFA"
                 android:orientation="vertical"
-                android:padding="15dp"
-                android:visibility="invisible">
+                android:padding="15dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_bookmark_border" />
+                    android:src="@drawable/ic_maydon" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Tanlangan\nmaydonlar"
+                    android:text="Mening maydonlarim"
                     android:textColor="#0A0A0A"
                     android:textSize="14sp" />
             </LinearLayout>

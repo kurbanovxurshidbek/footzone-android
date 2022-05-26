@@ -1,10 +1,11 @@
-package com.footzone.footzone
+package com.footzone.footzone.ui.activity
 
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ActivityMainBinding
 
 

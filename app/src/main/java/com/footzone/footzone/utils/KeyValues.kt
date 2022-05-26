@@ -1,10 +1,8 @@
 package com.footzone.footzone.utils
 
-import android.location.Location
-
 object KeyValues {
     const val PITCH_DETAIL = "pitchDetail"
-
-    //current location variable
-    var location: Location? = null
+    const val TYPE_DETAIL = "type"
+    const val TYPE_LOCATION = "1001"
+    const val TYPE_WORK_TIME = "1002"
 }

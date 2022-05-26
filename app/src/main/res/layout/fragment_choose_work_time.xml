@@ -1,0 +1,932 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:paddingTop="24dp">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_marginEnd="5dp">
+
+                <ImageView
+                    android:id="@+id/icClose"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:paddingVertical="15dp"
+                    android:paddingEnd="20dp"
+                    android:src="@drawable/ic_back_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="22sp"
+                    android:textColor="@color/black"
+                    android:text="Maydon ish vaqtlarini kiritish"/>
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:paddingVertical="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp">
+
+                    <TextView
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dushanba"
+                        android:textSize="16sp"/>
+
+                    <com.github.angads25.toggle.widget.LabeledSwitch
+                        android:id="@+id/switchMo"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="50dp"
+                        android:layout_height="20dp"
+                        android:textSize="8sp"
+                        app:on="false"
+                        app:textOn="OPEN"
+                        app:textOff="CLOSED"
+                        app:colorOn="@color/blue"
+                        app:colorBorder="@color/blue"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <RelativeLayout
+                    android:id="@+id/input_layout_mo"
+                    android:visibility="gone"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/edittextround"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="20dp"
+                            android:gravity="center_vertical">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical|end">
+
+
+                                <NumberPicker
+                                    android:id="@+id/startTimeMo"
+                                    android:layout_width="90dp"
+                                    android:soundEffectsEnabled="true"
+                                    android:layout_height="wrap_content"
+                                    android:selectionDividerHeight="0dp"
+                                    android:theme="@style/NumberPicker" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <View
+                                    android:layout_width="24dp"
+                                    android:layout_height="3dp"
+                                    android:background="@color/black" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical|start">
+
+                                <NumberPicker
+                                    android:id="@+id/finishTimeMo"
+                                    android:layout_width="90dp"
+                                    android:layout_height="wrap_content"
+                                    android:selectionDividerHeight="0dp"
+                                    android:theme="@style/NumberPicker" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/viewMo"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/viewMo"
+                        android:layout_marginStart="20dp"
+                        android:background="@color/white"
+                        android:includeFontPadding="false"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="14dp"
+                        android:text="@string/str_time_interval"
+                        android:textAppearance="@android:style/TextAppearance.Medium"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:paddingVertical="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp">
+
+                    <TextView
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seshanba"
+                        android:textSize="16sp"/>
+
+                    <com.github.angads25.toggle.widget.LabeledSwitch
+                        android:id="@+id/switchTu"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="50dp"
+                        android:layout_height="20dp"
+                        android:textSize="8sp"
+                        app:on="false"
+                        app:textOn="OPEN"
+                        app:textOff="CLOSED"
+                        app:colorOn="@color/blue"
+                        app:colorBorder="@color/blue"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <RelativeLayout
+                    android:id="@+id/input_layout_tu"
+                    android:visibility="gone"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/edittextround"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="20dp"
+                            android:gravity="center_vertical">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical|end">
+
+
+                                <NumberPicker
+                                    android:id="@+id/startTimeTu"
+                                    android:layout_width="90dp"
+                                    android:soundEffectsEnabled="true"
+                                    android:layout_height="wrap_content"
+                                    android:selectionDividerHeight="0dp"
+                                    android:theme="@style/NumberPicker" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <View
+                                    android:layout_width="24dp"
+                                    android:layout_height="3dp"
+                                    android:background="@color/black" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical|start">
+
+                                <NumberPicker
+                                    android:id="@+id/finishTimeTu"
+                                    android:layout_width="90dp"
+                                    android:layout_height="wrap_content"
+                                    android:selectionDividerHeight="0dp"
+                                    android:theme="@style/NumberPicker" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/viewTu"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/viewTu"
+                        android:layout_marginStart="20dp"
+                        android:background="@color/white"
+                        android:includeFontPadding="false"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="14dp"
+                        android:text="@string/str_time_interval"
+                        android:textAppearance="@android:style/TextAppearance.Medium"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:paddingVertical="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp">
+
+                    <TextView
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Chorshanba"
+                        android:textSize="16sp"/>
+
+                    <com.github.angads25.toggle.widget.LabeledSwitch
+                        android:id="@+id/switchWe"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="50dp"
+                        android:layout_height="20dp"
+                        android:textSize="8sp"
+                        app:on="false"
+                        app:textOn="OPEN"
+                        app:textOff="CLOSED"
+                        app:colorOn="@color/blue"
+                        app:colorBorder="@color/blue"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <RelativeLayout
+                    android:id="@+id/input_layout_we"
+                    android:visibility="gone"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/edittextround"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="20dp"
+                            android:gravity="center_vertical">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical|end">
+
+
+                                <NumberPicker
+                                    android:id="@+id/startTimeWe"
+                                    android:layout_width="90dp"
+                                    android:soundEffectsEnabled="true"
+                                    android:layout_height="wrap_content"
+                                    android:selectionDividerHeight="0dp"
+                                    android:theme="@style/NumberPicker" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <View
+                                    android:layout_width="24dp"
+                                    android:layout_height="3dp"
+                                    android:background="@color/black" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical|start">
+
+                                <NumberPicker
+                                    android:id="@+id/finishTimeWe"
+                                    android:layout_width="90dp"
+                                    android:layout_height="wrap_content"
+                                    android:selectionDividerHeight="0dp"
+                                    android:theme="@style/NumberPicker" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/viewWe"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/viewWe"
+                        android:layout_marginStart="20dp"
+                        android:background="@color/white"
+                        android:includeFontPadding="false"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="14dp"
+                        android:text="@string/str_time_interval"
+                        android:textAppearance="@android:style/TextAppearance.Medium"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:paddingVertical="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp">
+
+                    <TextView
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Payshanba"
+                        android:textSize="16sp"/>
+
+                    <com.github.angads25.toggle.widget.LabeledSwitch
+                        android:id="@+id/switchTh"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="50dp"
+                        android:layout_height="20dp"
+                        android:textSize="8sp"
+                        app:on="false"
+                        app:textOn="OPEN"
+                        app:textOff="CLOSED"
+                        app:colorOn="@color/blue"
+                        app:colorBorder="@color/blue"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <RelativeLayout
+                    android:id="@+id/input_layout_th"
+                    android:visibility="gone"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/edittextround"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="20dp"
+                            android:gravity="center_vertical">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical|end">
+
+
+                                <NumberPicker
+                                    android:id="@+id/startTimeTh"
+                                    android:layout_width="90dp"
+                                    android:soundEffectsEnabled="true"
+                                    android:layout_height="wrap_content"
+                                    android:selectionDividerHeight="0dp"
+                                    android:theme="@style/NumberPicker" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <View
+                                    android:layout_width="24dp"
+                                    android:layout_height="3dp"
+                                    android:background="@color/black" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical|start">
+
+                                <NumberPicker
+                                    android:id="@+id/finishTimeTh"
+                                    android:layout_width="90dp"
+                                    android:layout_height="wrap_content"
+                                    android:selectionDividerHeight="0dp"
+                                    android:theme="@style/NumberPicker" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/viewTh"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/viewTh"
+                        android:layout_marginStart="20dp"
+                        android:background="@color/white"
+                        android:includeFontPadding="false"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="14dp"
+                        android:text="@string/str_time_interval"
+                        android:textAppearance="@android:style/TextAppearance.Medium"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:paddingVertical="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp">
+
+                    <TextView
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Juma"
+                        android:textSize="16sp"/>
+
+                    <com.github.angads25.toggle.widget.LabeledSwitch
+                        android:id="@+id/switchFr"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="50dp"
+                        android:layout_height="20dp"
+                        android:textSize="8sp"
+                        app:on="false"
+                        app:textOn="OPEN"
+                        app:textOff="CLOSED"
+                        app:colorOn="@color/blue"
+                        app:colorBorder="@color/blue"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <RelativeLayout
+                    android:id="@+id/input_layout_fr"
+                    android:visibility="gone"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/edittextround"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="20dp"
+                            android:gravity="center_vertical">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical|end">
+
+
+                                <NumberPicker
+                                    android:id="@+id/startTimeFr"
+                                    android:layout_width="90dp"
+                                    android:soundEffectsEnabled="true"
+                                    android:layout_height="wrap_content"
+                                    android:selectionDividerHeight="0dp"
+                                    android:theme="@style/NumberPicker" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <View
+                                    android:layout_width="24dp"
+                                    android:layout_height="3dp"
+                                    android:background="@color/black" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical|start">
+
+                                <NumberPicker
+                                    android:id="@+id/finishTimeFr"
+                                    android:layout_width="90dp"
+                                    android:layout_height="wrap_content"
+                                    android:selectionDividerHeight="0dp"
+                                    android:theme="@style/NumberPicker" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/viewFr"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/viewFr"
+                        android:layout_marginStart="20dp"
+                        android:background="@color/white"
+                        android:includeFontPadding="false"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="14dp"
+                        android:text="@string/str_time_interval"
+                        android:textAppearance="@android:style/TextAppearance.Medium"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:paddingVertical="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp">
+
+                    <TextView
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Shanba"
+                        android:textSize="16sp"/>
+
+                    <com.github.angads25.toggle.widget.LabeledSwitch
+                        android:id="@+id/switchSa"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="50dp"
+                        android:layout_height="20dp"
+                        android:textSize="8sp"
+                        app:on="false"
+                        app:textOn="OPEN"
+                        app:textOff="CLOSED"
+                        app:colorOn="@color/blue"
+                        app:colorBorder="@color/blue"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <RelativeLayout
+                    android:id="@+id/input_layout_sa"
+                    android:visibility="gone"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/edittextround"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="20dp"
+                            android:gravity="center_vertical">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical|end">
+
+
+                                <NumberPicker
+                                    android:id="@+id/startTimeSa"
+                                    android:layout_width="90dp"
+                                    android:soundEffectsEnabled="true"
+                                    android:layout_height="wrap_content"
+                                    android:selectionDividerHeight="0dp"
+                                    android:theme="@style/NumberPicker" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <View
+                                    android:layout_width="24dp"
+                                    android:layout_height="3dp"
+                                    android:background="@color/black" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical|start">
+
+                                <NumberPicker
+                                    android:id="@+id/finishTimeSa"
+                                    android:layout_width="90dp"
+                                    android:layout_height="wrap_content"
+                                    android:selectionDividerHeight="0dp"
+                                    android:theme="@style/NumberPicker" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/viewSa"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/viewSa"
+                        android:layout_marginStart="20dp"
+                        android:background="@color/white"
+                        android:includeFontPadding="false"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="14dp"
+                        android:text="@string/str_time_interval"
+                        android:textAppearance="@android:style/TextAppearance.Medium"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:paddingVertical="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp">
+
+                    <TextView
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Yakshanba"
+                        android:textSize="16sp"/>
+
+                    <com.github.angads25.toggle.widget.LabeledSwitch
+                        android:id="@+id/switchSu"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="50dp"
+                        android:layout_height="20dp"
+                        android:textSize="8sp"
+                        app:on="false"
+                        app:textOn="OPEN"
+                        app:textOff="CLOSED"
+                        app:colorOn="@color/blue"
+                        app:colorBorder="@color/blue"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <RelativeLayout
+                    android:id="@+id/input_layout_su"
+                    android:visibility="gone"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/edittextround"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="20dp"
+                            android:gravity="center_vertical">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical|end">
+
+
+                                <NumberPicker
+                                    android:id="@+id/startTimeSu"
+                                    android:layout_width="90dp"
+                                    android:soundEffectsEnabled="true"
+                                    android:layout_height="wrap_content"
+                                    android:selectionDividerHeight="0dp"
+                                    android:theme="@style/NumberPicker" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <View
+                                    android:layout_width="24dp"
+                                    android:layout_height="3dp"
+                                    android:background="@color/black" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical|start">
+
+                                <NumberPicker
+                                    android:id="@+id/finishTimeSu"
+                                    android:layout_width="90dp"
+                                    android:layout_height="wrap_content"
+                                    android:selectionDividerHeight="0dp"
+                                    android:theme="@style/NumberPicker" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/viewSu"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/viewSu"
+                        android:layout_marginStart="20dp"
+                        android:background="@color/white"
+                        android:includeFontPadding="false"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="14dp"
+                        android:text="@string/str_time_interval"
+                        android:textAppearance="@android:style/TextAppearance.Medium"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="88dp"
+            android:gravity="center"
+            android:layout_marginHorizontal="8dp">
+
+            <TextView
+                android:id="@+id/tvCancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/view_rounded_corners"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                android:text="@string/str_cancel"
+                android:textColor="@color/blue"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvSelection"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/view_rounded_corners_blue"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                android:text="@string/str_selection"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:backgroundTint="@null" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
