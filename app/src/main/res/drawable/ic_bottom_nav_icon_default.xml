@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/bottom_nav_unselected_background" />
+    <item
+        android:bottom="8dp"
+        android:drawable="@drawable/ic_pitch_default"
+        android:left="24dp"
+        android:right="24dp"
+        android:top="8dp" />
+</layer-list>

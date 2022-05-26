@@ -132,6 +132,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
 
         binding.bottomSheetTypes.edtPitchSearch.setOnTouchListener { p0, p1 ->
             bottomSheetBehaviorType.state = BottomSheetBehavior.STATE_EXPANDED
+            binding.bottomSheetTypes.edtPitchSearch.isEnabled = true
             false
         }
 

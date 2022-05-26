@@ -1,12 +1,19 @@
 package com.footzone.footzone.ui.activity
 
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.LabelVisibilityMode
+import com.google.android.material.navigation.NavigationBarView
 
 
 class MainActivity : AppCompatActivity() {
@@ -17,11 +24,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         showContentBehindStatusBar()
         setupUI()
-
     }
 
     private fun setupUI() {
         showAndHideBottomNavView()
+        binding.bottomNavigationView.itemIconTintList = null
+        binding.bottomNavigationView.itemRippleColor =
+            ColorStateList.valueOf(Color.parseColor("#FFFFFF"));
     }
 
     private fun showContentBehindStatusBar() {
@@ -29,7 +38,9 @@ class MainActivity : AppCompatActivity() {
         window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
         //make status bar light
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
     }
 
     private fun showAndHideBottomNavView() {
