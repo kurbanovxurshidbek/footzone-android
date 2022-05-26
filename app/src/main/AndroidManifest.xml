@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -16,7 +15,8 @@
         android:theme="@style/Theme.Footzone">
         <activity
             android:name=".ui.activity.SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustNothing|stateHidden">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,10 +31,6 @@
             android:enabled="true"
             android:exported="true"
             android:permission="location" />
-
-        <activity
-            android:name=".ui.activity.PitchDetailActivity"
-            android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
