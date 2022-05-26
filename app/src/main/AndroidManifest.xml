@@ -30,11 +30,7 @@
             android:value="AIzaSyDIQLTyvAVuV9DSy0h0cIF6_vDja5ayKYU" />
 
         <activity
-            android:name=".ui.activity.MapsActivity"
-            android:exported="true"
-            android:label="@string/app_name"></activity>
-        <activity
-            android:name=".MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
