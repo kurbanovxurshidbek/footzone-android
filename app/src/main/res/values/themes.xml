@@ -48,5 +48,18 @@
         <item name="android:background">@drawable/background_top_oval</item>
     </style>
 
-
+    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/text_input_box_stroke</item>
+        <item name="android:textColorHint">#616161</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="hintTextColor">@color/selector_hint_text_color</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
+    <style name="LoginTextInputLayoutStyleRole" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeColor">@color/text_input_box_stroke</item>
+        <item name="android:textColorHint">#616161</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="hintTextColor">@color/selector_hint_text_color</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
 </resources>
