@@ -105,4 +105,9 @@
         android:name="com.footzone.footzone.ui.fragments.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" />
+    <fragment
+        android:id="@+id/verificationFragment"
+        android:name="com.footzone.footzone.ui.fragments.VerificationFragment"
+        android:label="fragment_verification"
+        tools:layout="@layout/fragment_verification" />
 </navigation>

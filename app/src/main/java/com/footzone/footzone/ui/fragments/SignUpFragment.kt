@@ -44,7 +44,17 @@ class SignUpFragment : Fragment() {
             openSignInFragment()
         }
         checkAllFields()
+        binding.registerButton.setOnClickListener {
+            if (checkData()) {
+                openVerificationFragment()
+            }
+        }
     }
+
+    private fun openVerificationFragment() {
+        findNavController().navigate(R.id.verificationFragment)
+    }
+
     private fun checkAllFields() {
         binding.editTextName.doAfterTextChanged {
             registerButtonControl()
@@ -104,20 +114,13 @@ class SignUpFragment : Fragment() {
 
 
     private fun passwordErrorControl() {
-        binding.editTextPassword.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        binding.editTextPassword.doAfterTextChanged {
+            if (it!!.toString().length<6){
+                binding.textInputLayoutPassword.error = "Parol 6 ta belgidan iborat bo'lishi kerak"
+            } else {
+                binding.textInputLayoutPassword.error = null
             }
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-            override fun afterTextChanged(p0: Editable?) {
-                if (p0!!.length<6){
-                    binding.textInputLayoutPassword.error = "Parol 6 ta belgidan iborat bo'lishi kerak"
-                } else {
-                    binding.textInputLayoutPassword.error = null
-                }
-            }
-
-        })
+        }
 
         binding.editTextConfirmPassword.doAfterTextChanged {
             if (it.toString() != binding.editTextPassword.text.toString()) {
