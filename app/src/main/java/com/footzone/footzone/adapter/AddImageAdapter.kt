@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.footzone.footzone.databinding.ItemAddImageBinding
 import com.footzone.footzone.databinding.ItemStadiumImageBinding
 import com.footzone.footzone.model.Image
@@ -14,15 +15,14 @@ import com.footzone.footzone.ui.fragments.AddStadiumFragment
 class AddImageAdapter(
     val context: AddStadiumFragment,
     val items: ArrayList<Image>,
-    private var onItemClicked: (() -> Unit),
+    private var onItemClicked: ((Int) -> Unit),
 ):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TYPE_ITEM_DEFAULT_IMAGE = 1
     private val TYPE_ITEM_NEW_IMAGE = 2
 
     override fun getItemViewType(position: Int): Int {
-        val item =items[position]
-        return if (position == items.size - 1) {
+        return if (position == 0) {
             TYPE_ITEM_DEFAULT_IMAGE
         }else {
             TYPE_ITEM_NEW_IMAGE
@@ -40,22 +40,24 @@ class AddImageAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val item = items[items.size - 1 - position]
+        val item = items[position]
         if (holder is DefualtImageViewHolder){
             holder.view.apply {
                 ivAddImage.setOnClickListener {
-                    onItemClicked.invoke()
+                    onItemClicked.invoke(position)
                 }
             }
         }
 
         if (holder is NewImageViewHolder){
-            if (item.imagePath != null){
-                holder.view.ivPitch.setImageURI(item.imagePath)
-                Log.d("##$$##", item.imagePath.toString())
-
+            if (item.imageUri != null){
+                Glide.with(holder.view.ivPitch)
+                    .load(item.imageUri)
+                    .into(holder.view.ivPitch)
+                holder.view.ivCaution.setOnClickListener {
+                    onItemClicked.invoke(position)
+                }
             }
-            Log.d("##$$##", item.imagePath.toString())
         }
     }
 

@@ -22,7 +22,7 @@ class CalendarDIalog(private var onEnterClick: ((String) -> Unit)) {
     lateinit var dateChoose: String
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun showOneIDLoginDialog(activity: Activity?) {
+    fun showCalendarDialog(activity: Activity?) {
         val mCalendar = Calendar.getInstance()
         val currentdate: LocalDate = LocalDate.now()
         val day = currentdate.getDayOfMonth();

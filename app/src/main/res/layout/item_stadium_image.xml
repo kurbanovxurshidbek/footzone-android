@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="160dp"
     android:layout_height="120dp"
-    android:layout_marginStart="8dp">
+    android:layout_marginEnd="8dp">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivPitch"
@@ -27,6 +27,7 @@
         android:background="@drawable/circle_view">
 
         <ImageView
+            android:id="@+id/ivCaution"
             android:layout_width="13.33dp"
             android:layout_height="13.33dp"
             android:src="@drawable/ic_conversation"/>
