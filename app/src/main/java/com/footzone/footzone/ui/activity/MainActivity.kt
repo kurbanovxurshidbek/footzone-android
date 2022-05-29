@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        showContentBehindStatusBar()
         setupUI()
     }
 
@@ -45,9 +44,18 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.homeFragment -> showBottomNav()
-                R.id.tableFragment -> showBottomNav()
-                R.id.profileFragment -> showBottomNav()
+                R.id.homeFragment -> {
+                    showContentBehindStatusBar()
+                    showBottomNav()
+                }
+                R.id.tableFragment -> {
+                    showContentBehindStatusBar()
+                    showBottomNav()
+                }
+                R.id.profileFragment -> {
+                    showBottomNav()
+                    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                }
                 else -> hideBottomNav()
             }
         }

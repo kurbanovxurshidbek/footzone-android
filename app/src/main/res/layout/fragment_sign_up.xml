@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="24dp"
     tools:context=".ui.fragments.SignUpFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -130,10 +131,10 @@
                 <com.vicmikhailau.maskededittext.MaskedEditText
                     android:id="@+id/editTextNumber"
                     android:layout_width="match_parent"
-                    app:mask="## ### ## ##"
-                    android:inputType="phone"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
-                    android:layout_height="wrap_content"/>
+                    android:inputType="phone"
+                    app:mask="## ### ## ##" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -187,19 +188,20 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:gravity="end"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:layout_height="wrap_content">
+                android:gravity="end">
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/registerButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
+                    android:layout_margin="2dp"
                     android:background="@drawable/button_register_filled_rounded_corner1"
                     android:clickable="false"
-                    android:maxLines="1"
-                    android:layout_margin="2dp"
                     android:fontFamily="@font/roboto"
+                    android:maxLines="1"
                     android:text="Ro'yxatdan o'tish"
                     android:textAllCaps="false"
                     android:textColor="#8F8F8F"
@@ -245,15 +247,18 @@
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:orientation="vertical">
-        <LinearLayout
-            android:background="#E0E0E0"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
+            android:layout_height="1dp"
+            android:background="#E0E0E0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
             android:gravity="center"
-            android:layout_height="64dp">
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

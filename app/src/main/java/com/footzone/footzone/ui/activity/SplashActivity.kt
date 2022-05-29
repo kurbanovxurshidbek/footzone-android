@@ -16,12 +16,12 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        registerReceiver(locationReciever, IntentFilter("location.update"))
+        registerReceiver(locationReceiver, IntentFilter("location.update"))
         val intent = Intent(this, MyBackgroundService::class.java)
         startService(intent)
     }
 
-    private val locationReciever = object : BroadcastReceiver() {
+    private val locationReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
             if (p1 != null) {
                 if (p1.action == "location.update") {
@@ -38,6 +38,6 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(locationReciever)
+        unregisterReceiver(locationReceiver)
     }
 }

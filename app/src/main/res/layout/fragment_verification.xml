@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="24dp"
     tools:context=".ui.fragments.VerificationFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -46,22 +47,23 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
         android:gravity="center_horizontal"
-        android:layout_height="match_parent">
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <TextView
-            android:text="Telefon raqamingizga maxfiy kod\nSMS sifatida yuborildi. Shu kodni tering"
             android:layout_width="wrap_content"
-            android:gravity="center"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
-            android:textSize="14sp"
+            android:gravity="center"
+            android:text="Telefon raqamingizga maxfiy kod\nSMS sifatida yuborildi. Shu kodni tering"
             android:textColor="#424242"
-            android:layout_height="wrap_content"/>
+            android:textSize="14sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutVerificationCode"
@@ -84,26 +86,28 @@
                 android:textColor="#0A0A0A"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
+            android:layout_height="wrap_content"
 
-            android:layout_height="wrap_content">
+            android:orientation="horizontal">
+
             <TextView
-                android:fontFamily="@font/roboto"
-                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/roboto"
                 android:text="Kodni qayta jo’natish"
-                android:textSize="14sp"
-                android:textColor="#0C64E6"/>
+                android:textColor="#0C64E6"
+                android:textSize="14sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/registerButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
                 android:layout_gravity="end"
+                android:layout_margin="2dp"
                 android:background="@drawable/button_register_filled_rounded_corner1"
                 android:clickable="false"
                 android:fontFamily="@font/roboto"

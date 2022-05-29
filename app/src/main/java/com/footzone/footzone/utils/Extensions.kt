@@ -22,10 +22,10 @@ object Extensions {
     fun TextView.changeTextBackgroundBlue(boolStart: Boolean, boolFinish: Boolean) {
         if (boolStart && boolFinish) {
             this.setBackgroundResource(R.drawable.view_rounded_corners_blue)
-            this.setTextColor(getResources().getColor(R.color.white))
+            this.setTextColor(resources.getColor(R.color.white))
         } else {
             this.setBackgroundResource(R.drawable.view_rounded_corners_grey)
-            this.setTextColor(getResources().getColor(R.color.white))
+            this.setTextColor(resources.getColor(R.color.white))
         }
     }
 

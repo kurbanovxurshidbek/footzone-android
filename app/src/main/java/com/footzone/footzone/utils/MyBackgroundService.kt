@@ -28,6 +28,4 @@ class MyBackgroundService : Service(), LocationHelper.LocationListener {
         intent.putExtra("location", location)
         sendBroadcast(intent)
     }
-
-
 }
