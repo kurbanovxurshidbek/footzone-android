@@ -91,4 +91,23 @@
         android:name="com.footzone.footzone.ui.fragments.EditStadiumFragment"
         android:label="fragment_edit_stadium"
         tools:layout="@layout/fragment_edit_stadium" />
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.footzone.footzone.ui.fragments.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.footzone.footzone.ui.fragments.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" />
+    <fragment
+        android:id="@+id/verificationFragment"
+        android:name="com.footzone.footzone.ui.fragments.VerificationFragment"
+        android:label="fragment_verification"
+        tools:layout="@layout/fragment_verification" />
 </navigation>
