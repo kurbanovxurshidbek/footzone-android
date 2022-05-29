@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="24dp"
-    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -32,7 +31,6 @@
                     android:src="@drawable/ic_back_icon" />
 
                 <TextView
-                    android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="22sp"
@@ -50,7 +48,6 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginStart="16dp"
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="144dp"
@@ -59,32 +56,19 @@
             android:overScrollMode="never"
             app:spanCount="1"/>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <EditText
+            android:id="@+id/etPitchName"
+            android:layout_marginHorizontal="16dp"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="50dp"
             android:layout_marginTop="16dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginStart="16dp"
-            app:boxStrokeColor="#E4E4E4"
-            app:boxCornerRadiusBottomEnd="10dp"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeWidth="2dp"
-            app:hintTextColor="#616161"
-            android:layout_marginEnd="20dp" >
-
-            <EditText
-                android:id="@+id/etPitchName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/str_stadium_name"
-                android:inputType="text"
-                android:textSize="16sp"
-                android:importantForAutofill="no"
-                tools:ignore="LabelFor" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:background="@drawable/edittext_backround"
+            android:gravity="center_vertical"
+            android:hint="Maydon nomi"
+            android:paddingStart="16dp"
+            android:textColor="@color/black"
+            android:textColorHint="#616161"
+            android:textSize="16sp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_marginHorizontal="16dp"
@@ -102,7 +86,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/str_location"
+                android:text="Manzil"
                 android:textSize="16sp"
                 android:textColor="#616161"/>
 
@@ -117,32 +101,19 @@
                 android:src="@drawable/ic_location"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <EditText
+            android:id="@+id/etPitchPhoneNumber"
+            android:layout_marginHorizontal="16dp"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="50dp"
             android:layout_marginTop="16dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginStart="16dp"
-            app:boxStrokeColor="#E4E4E4"
-            app:boxCornerRadiusBottomEnd="10dp"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeWidth="2dp"
-            app:hintTextColor="#616161"
-            android:layout_marginEnd="20dp" >
-
-            <EditText
-                android:id="@+id/etPitchPhoneNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/str_phone_number"
-                android:inputType="text"
-                android:textSize="16sp"
-                android:importantForAutofill="no"
-                tools:ignore="LabelFor" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:background="@drawable/edittext_backround"
+            android:gravity="center_vertical"
+            android:hint="Telefon raqam"
+            android:paddingHorizontal="16dp"
+            android:textColor="@color/black"
+            android:textColorHint="#616161"
+            android:textSize="16sp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_marginHorizontal="16dp"
@@ -160,7 +131,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/str_work_time"
+                android:text="Ish vaqtlari"
                 android:textSize="16sp"
                 android:textColor="#616161"/>
 
@@ -175,39 +146,25 @@
                 android:src="@drawable/ic_work_time"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <EditText
+            android:id="@+id/etPitchPrice"
+            android:layout_marginHorizontal="16dp"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="50dp"
             android:layout_marginTop="16dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginStart="16dp"
-            app:boxStrokeColor="#E4E4E4"
-            app:boxCornerRadiusBottomEnd="10dp"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeWidth="2dp"
-            app:hintTextColor="#616161"
-            android:layout_marginEnd="20dp" >
-
-            <EditText
-                android:id="@+id/etPitchPrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/str_prise"
-                android:inputType="text"
-                android:textSize="16sp"
-                android:importantForAutofill="no"
-                tools:ignore="LabelFor" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:background="@drawable/edittext_backround"
+            android:gravity="center_vertical"
+            android:hint="Narxi (so’m/soat)"
+            android:paddingHorizontal="16dp"
+            android:textColor="@color/black"
+            android:textColorHint="#616161"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"/>
-
 
         <LinearLayout
             android:layout_marginBottom="16dp"
@@ -237,7 +194,7 @@
                 android:background="@drawable/view_rounded_corners_grey"
                 android:gravity="center"
                 android:paddingVertical="10dp"
-                android:text="@string/str_save"
+                android:text="Saqlash"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:backgroundTint="@null" />

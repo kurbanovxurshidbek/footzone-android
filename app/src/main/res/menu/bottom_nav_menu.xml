@@ -13,7 +13,7 @@
         android:title="Jadval" />
 
     <item
-        android:id="@+id/profileFragment"
+        android:id="@+id/signInFragment"
         android:icon="@drawable/item_bottom_nav_profile"
         android:title="Akkount" />
 </menu>
