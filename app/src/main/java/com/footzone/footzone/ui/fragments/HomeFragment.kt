@@ -154,16 +154,24 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (bottomSheetBehaviorType.state == BottomSheetBehavior.STATE_EXPANDED) {
+                        Log.d("TAG", "handleOnBackPressed: ok")
                         bottomSheetBehaviorType.state = BottomSheetBehavior.STATE_COLLAPSED
+                        isEnabled = false
                     }
                     if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+                        Log.d("TAG", "handleOnBackPressed: okk")
                         hideBottomSheet(bottomSheetBehavior)
+                        isEnabled = false
                     }
                     if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+                        Log.d("TAG", "handleOnBackPressed: okkk")
                         hideBottomSheet(bottomSheetBehavior)
+                        isEnabled = false
                     }
-
-                        requireActivity().finish()
+                    if (isEnabled) {
+                        Log.d("TAG", "handleOnBackPressed: ok@")
+                        requireActivity().onBackPressed()
+                    }
                 }
             })
     }
