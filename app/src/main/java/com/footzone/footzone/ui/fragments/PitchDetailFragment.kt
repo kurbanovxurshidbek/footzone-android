@@ -1,6 +1,7 @@
 package com.footzone.footzone.ui.fragments
 
 import android.content.Context
+import android.graphics.Color
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Build
@@ -149,7 +150,7 @@ class PitchDetailFragment : Fragment() {
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                dialog.showOneIDLoginDialog(requireActivity())
+                dialog.showCalendarDialog(requireActivity())
             }
         }
 
@@ -231,6 +232,22 @@ class PitchDetailFragment : Fragment() {
         })
 
         binding.bottomSheet.tvCancel.setOnClickListener { sheetBehavior.hideBottomSheet() }
+
+        sheetBehavior.addBottomSheetCallback(object :BottomSheetBehavior.BottomSheetCallback(){
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED){
+                    binding.frameWrapper.setBackgroundColor(Color.parseColor("#40000000"))
+                }
+                if (newState == BottomSheetBehavior.STATE_HIDDEN){
+                    binding.frameWrapper.setBackgroundColor(Color.TRANSPARENT)
+                }
+
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+
+        })
     }
 
     /**

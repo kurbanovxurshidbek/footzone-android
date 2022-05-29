@@ -27,7 +27,7 @@ class SplashActivity : AppCompatActivity() {
                 if (p1.action == "location.update") {
                     Toast.makeText(this@SplashActivity, "location", Toast.LENGTH_SHORT).show()
                     val location = p1.getParcelableExtra<Location>("location") as Location
-                    KeyValues.location = location.toString()
+                    KeyValues.LOCATION = location.toString()
                     val intent = Intent(this@SplashActivity, MainActivity::class.java)
                     startActivity(intent)
                     finish()

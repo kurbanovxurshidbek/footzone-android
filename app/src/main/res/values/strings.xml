@@ -21,6 +21,13 @@
     <string name="str_my_stadium">Mening maydonlarim</string>
     <string name="str_add_stadium">Maydon qo’shish</string>
     <string name="pick_image_intent_text">"AJHGVBCD N CCS  "</string>
+    <string name="str_stadium_name">Maydon nomi</string>
+    <string name="str_location">Manzil</string>
+    <string name="str_phone_number">Telefon raqam</string>
+    <string name="str_work_time">Ish vaqtlari</string>
+    <string name="str_prise">Narxi (so’m/soat)</string>
+    <string name="str_save">Saqlash</string>
+    <string name="str_edit_stadium">Maydonni tahrirlash</string>
 
     <string-array name="timelist">
         <item>00:00</item>

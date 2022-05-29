@@ -2,7 +2,6 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cordLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
@@ -92,7 +91,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_location_small" />
+                        android:src="@drawable/ic_location" />
 
                     <TextView
                         android:id="@+id/textViewAddress"
@@ -379,7 +378,6 @@
                         android:textSize="45dp" />
 
                     <me.zhanghai.android.materialratingbar.MaterialRatingBar
-                        android:id="@+id/rbRate"
                         style="@style/Widget.MaterialRatingBar.RatingBar"
                         android:layout_width="wrap_content"
                         android:layout_height="16dp"
@@ -387,7 +385,8 @@
                         android:stepSize="0.01"
                         app:mrb_progressBackgroundTint="#E8B006"
                         app:mrb_progressTint="#E8B006"
-                        app:mrb_secondaryProgressTint="#E8B006" />
+                        app:mrb_secondaryProgressTint="#E8B006"
+                        android:id="@+id/rbRate"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"

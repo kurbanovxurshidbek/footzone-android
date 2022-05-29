@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CalenderViewCustom" parent="Theme.AppCompat">
+        <item name="colorAccent">@color/blue2</item>
+        <item name="colorPrimary">@android:color/black</item>
+        <item name="android:autoSizeMinTextSize">12dp</item>
+        <item name="android:textColorPrimary">@color/green</item>
+
+    </style>
+</resources>

@@ -31,6 +31,7 @@
                     android:src="@drawable/ic_back_icon" />
 
                 <TextView
+                    android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="22sp"
@@ -58,9 +59,9 @@
 
         <EditText
             android:id="@+id/etPitchName"
+            android:layout_marginHorizontal="16dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/edittext_backround"
             android:gravity="center_vertical"
