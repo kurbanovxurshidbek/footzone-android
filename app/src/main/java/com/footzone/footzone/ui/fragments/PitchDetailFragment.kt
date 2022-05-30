@@ -1,17 +1,18 @@
 package com.footzone.footzone.ui.fragments
 
 import android.content.Context
-import android.graphics.Color
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Vibrator
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.footzone.footzone.CalendarDIalog
 import com.footzone.footzone.R
@@ -31,6 +32,10 @@ import com.footzone.footzone.utils.Extensions.setImageViewisBusy
 import com.footzone.footzone.utils.Extensions.showBottomSheet
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import java.lang.Integer.parseInt
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -66,7 +71,6 @@ class PitchDetailFragment : Fragment() {
 
     private fun initViews() {
         allTime()
-        //
         refreshAdapter()
         refreshCommentAdapter()
         binding.rbRate.setIsIndicator(true)
@@ -87,7 +91,9 @@ class PitchDetailFragment : Fragment() {
             controlBottomSheetActions()
         }
 
-        binding.cordLayout.setOnClickListener { sheetBehavior.hideBottomSheet() }
+        binding.cordLayout.setOnClickListener {
+            Toast.makeText(requireContext(), "sdhgcvb ndcsavvv", Toast.LENGTH_SHORT).show()
+            sheetBehavior.hideBottomSheet() }
 
     }
 
@@ -136,13 +142,14 @@ class PitchDetailFragment : Fragment() {
     /**
      * this function, controls the time it takes to apply to the stadium
      */
+
     private fun controlBottomSheetActions() {
         val timeList = resources.getStringArray(R.array.timelist)
         var boolStart: Boolean = false
         var boolFinish: Boolean = false
 
         binding.bottomSheet.ivCalendar.setOnClickListener {
-            val dialog = CalendarDIalog{ date ->
+            val dialog = CalendarDIalog { date ->
                 binding.bottomSheet.tvDate.text = date
 
             }
@@ -165,6 +172,22 @@ class PitchDetailFragment : Fragment() {
 
 
         binding.bottomSheet.startTime.setOnValueChangedListener(NumberPicker.OnValueChangeListener { numberPicker, i, i1 ->
+
+                var inswv  = LocalDate.now().atTime(LocalTime.parse(timeList[i]))
+                    .format(DateTimeFormatter.ofPattern("HH:mm"))
+
+                Log.d("TAG", "controlBottomSheetActions: ${inswv}")
+
+                val startTime = "05:30"
+                val sts = startTime.split(":");
+                val endTime = "15:00"
+                val ets = endTime.split(":");
+
+                val stMin = (parseInt(sts[0]) * 60 + parseInt(sts[1]));
+                val etMin = (parseInt(ets[0]) * 60 + parseInt(ets[1]));
+                if( etMin > stMin) {
+                    Toast.makeText(requireContext(), "true", Toast.LENGTH_SHORT).show()
+                }
 
             checkVibrationIsOn(requireContext())
 
@@ -198,7 +221,6 @@ class PitchDetailFragment : Fragment() {
         })
 
         binding.bottomSheet.finishTime.setOnValueChangedListener(NumberPicker.OnValueChangeListener { numberPicker, i, i1 ->
-
             checkVibrationIsOn(requireContext())
 
             for (time in times) {
@@ -261,6 +283,6 @@ class PitchDetailFragment : Fragment() {
                     })
                 }
             }, 500)
-       }
+        }
     }
 }

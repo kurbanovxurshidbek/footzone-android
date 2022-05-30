@@ -1,6 +1,7 @@
 package com.footzone.footzone.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -40,6 +41,8 @@ class ChooseWorkTimeFragment : Fragment() {
                 requireActivity().onBackPressed()
             }
         }
+
+
 
         binding.switchMo.setOnToggledListener { toggleableView, isOn ->
             openTime(binding.inputLayoutMo, isOn)
@@ -98,33 +101,43 @@ class ChooseWorkTimeFragment : Fragment() {
 
     fun wortTime(): String{
         var string = ""
-        if (!binding.switchMo.isOn){
+        if (binding.switchMo.isOn){
             string += "Du, "
+            Log.d("#####@@", string)
+            Log.d("#####@@", binding.switchMo.isOn.toString())
         }
 
-        if (!binding.switchTu.isOn){
+        if (binding.switchTu.isOn){
             string += "Se, "
+            Log.d("#####@@", string)
         }
 
         if (binding.switchWe.isOn){
             string += "Cho, "
+            Log.d("#####@@", string)
         }
 
         if (binding.switchTh.isOn){
             string += "Pa, "
+            Log.d("#####@@", string)
         }
 
         if (binding.switchFr.isOn){
             string += "Ju, "
+            Log.d("#####@@", string)
         }
 
         if (binding.switchSa.isOn){
             string += "Sha, "
+            Log.d("#####@@", string)
         }
 
         if (binding.switchSu.isOn){
             string += "Ya"
+            Log.d("#####@@", string)
         }
+
+        Log.d("#####@@", string)
         return string
     }
 }
