@@ -15,7 +15,7 @@ import com.footzone.footzone.databinding.FragmentPlayedPitchBinding
 import com.footzone.footzone.databinding.FragmentSignInBinding
 
 class SignInFragment : Fragment() {
-    lateinit var binding:FragmentSignInBinding
+    lateinit var binding: FragmentSignInBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,6 +23,7 @@ class SignInFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_sign_in, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -70,7 +71,7 @@ class SignInFragment : Fragment() {
     private fun checkData(): Boolean {
         val number = binding.editTextNumber.text.toString()
         val password = binding.editTextPassword.text.toString()
-        return number.length==12 && password.length>5
+        return number.length == 12 && password.length > 5
     }
 
     private fun closeSignInFragment() {

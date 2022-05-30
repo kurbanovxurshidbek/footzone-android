@@ -2,11 +2,17 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cordLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:paddingTop="24dp"
     tools:context=".ui.fragments.PitchDetailFragment">
+
+    <FrameLayout
+        android:id="@+id/frameWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -378,6 +384,7 @@
                         android:textSize="45dp" />
 
                     <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                        android:id="@+id/rbRate"
                         style="@style/Widget.MaterialRatingBar.RatingBar"
                         android:layout_width="wrap_content"
                         android:layout_height="16dp"
@@ -385,8 +392,7 @@
                         android:stepSize="0.01"
                         app:mrb_progressBackgroundTint="#E8B006"
                         app:mrb_progressTint="#E8B006"
-                        app:mrb_secondaryProgressTint="#E8B006"
-                        android:id="@+id/rbRate"/>
+                        app:mrb_secondaryProgressTint="#E8B006" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
