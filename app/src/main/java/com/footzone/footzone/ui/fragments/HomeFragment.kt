@@ -3,9 +3,7 @@ package com.footzone.footzone.ui.fragments
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.graphics.Color
-import android.graphics.Rect
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
@@ -16,10 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
 import androidx.core.os.bundleOf
@@ -39,7 +35,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.karumi.dexter.Dexter
@@ -80,25 +75,29 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
     override fun onMapReady(p0: GoogleMap) {
         mMap = p0
         mMap.setOnCameraMoveStartedListener {
-            //todo start animate marker
             binding.mapIcon.animate().setDuration(300).translationY(-binding.mapIcon.height / 2.0f)
                 .start()
+            hideBottomSheet(bottomSheetBehaviorType)
+            hideBottomSheet(bottomSheetBehavior)
         }
         findMultipleLocation()
 
         mMap.setOnCameraIdleListener {
             binding.mapIcon.animate().translationY(0f).setDuration(300).start()
 
-            val target = mMap.cameraPosition.target
+            showBottomSheet(bottomSheetBehaviorType)
+            bottomSheetBehaviorType.isHideable = false
 
+            val target = mMap.cameraPosition.target
         }
+
         mMap.setOnMarkerClickListener { onMarkerClickListener ->
             Toast.makeText(requireContext(), onMarkerClickListener.title, Toast.LENGTH_SHORT).show()
             false
         }
+
         // Add a marker in Sydney and move the camera
         permissionRequest()
-
     }
 
 
@@ -142,7 +141,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
                 hideBottomSheet(bottomSheetBehaviorType)
                 showPitches()
             }
-            a()
         }
 
         hideBottomSheet(bottomSheetBehavior)
@@ -222,14 +220,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
             R.id.action_homeFragment_to_pitchDetailFragment,
             bundleOf(PITCH_DETAIL to pitch)
         )
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    fun a() {
-        binding.coordinator.setOnTouchListener { view, motionEvent ->
-            bottomSheetBehaviorType.state = BottomSheetBehavior.STATE_HIDDEN
-            true
-        }
     }
 
     private fun showPitches() {
@@ -431,7 +421,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
                 ) {
                     p1?.continuePermissionRequest()
                 }
-
             }).check()
     }
 
