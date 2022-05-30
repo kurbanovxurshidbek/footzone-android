@@ -23,30 +23,31 @@ import com.androidbolts.topsheet.TopSheetBehavior
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.PitchAdapter
 import com.footzone.footzone.databinding.FragmentHomeBinding
-import com.footzone.footzone.model.Pitch
-import com.footzone.footzone.model.Time
+import com.footzone.footzone.model.*
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 import com.footzone.footzone.utils.LocationHelper
+import com.footzone.footzone.utils.distance
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.PermissionListener
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallback {
-    val location1=LatLng(41.33243612881973, 69.23638124609397)
-    val location2=LatLng(41.325604130328664, 69.24281854772987)
-    private var locationList=ArrayList<LatLng>()
+    val location1 = LatLng(41.33243612881973, 69.23638124609397)
+    val location2 = LatLng(41.325604130328664, 69.24281854772987)
+    private var locationList = ArrayList<LatLng>()
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: FragmentHomeBinding
@@ -56,6 +57,15 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
     private lateinit var bottomSheetBehaviorType: BottomSheetBehavior<View>
     private lateinit var topSheetBehavior: TopSheetBehavior<View>
+
+    /////////
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var lastLocation: Location? = null
+    private val myLocationZoom = 16.0f
+    private var polyLines: MutableList<Polyline>? = null
+    private var markerList = ArrayList<Marker>()
+    private var cameraCurrentLatLng: LatLng? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,6 +79,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
         binding = FragmentHomeBinding.bind(view)
 
         initViews(view)
+        btnMyLocationClickManager()
     }
 
     override fun onMapReady(p0: GoogleMap) {
@@ -87,17 +98,32 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
 
             //todo send request for nearby stadions
         }
-        mMap.setOnMarkerClickListener(object :GoogleMap.OnMarkerClickListener{
+
+
+        mMap.setOnMarkerClickListener(object : GoogleMap.OnMarkerClickListener {
             override fun onMarkerClick(p0: Marker): Boolean {
                 Toast.makeText(requireContext(), p0.title, Toast.LENGTH_SHORT).show()
                 return false
             }
 
         })
-        // Add a marker in Sydney and move the camera
+
+        fun updateMyCurrentLocation() {
+            mMap.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    LatLng(
+                        lastLocation!!.latitude,
+                        lastLocation!!.longitude
+                    ), myLocationZoom
+                )
+            )
+        }
+
         permissionRequest()
 
-
+        binding.findMyLocation.setOnClickListener {
+            updateMyCurrentLocation()
+        }
     }
 
 
@@ -142,6 +168,10 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
                 showPitches()
             }
         }
+        binding.findMyLocation.setOnClickListener {
+            Toast.makeText(requireContext(), "show", Toast.LENGTH_SHORT).show()
+        }
+
 
         hideBottomSheet(bottomSheetBehavior)
         hideTopSheet()
@@ -220,6 +250,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
             bundleOf(PITCH_DETAIL to pitch)
         )
     }
+
 
     private fun showPitches() {
         openPitchListBottomSheet()
@@ -367,6 +398,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
                     mMap.moveCamera(
                         CameraUpdateFactory.newCameraPosition(cameraUpdate)
                     )
+                    lastLocation = location
                     isFirstTime = false
                 }
 
@@ -410,10 +442,10 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
             }).check()
     }
 
-    private fun findMultipleLocation(){
+    private fun findMultipleLocation() {
         locationList.add(location1)
         locationList.add(location2)
-        for (i in locationList.indices){
+        for (i in locationList.indices) {
             mMap.addMarker(MarkerOptions().position(locationList[i]).title("Marker"))
             mMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
             mMap.moveCamera(CameraUpdateFactory.newLatLng(locationList[i]))
@@ -421,4 +453,33 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
 
 
     }
+
+
+    private fun calculateDestination(response: GeoResponse, latlng: LatLng): GeoCodeInfo? {
+        var geoCodeInfo: GeoCodeInfo? = null
+        var minDistance = Double.MAX_VALUE
+
+        for (datum in response.data) {
+            if (minDistance > distance(
+                    datum.latitude,
+                    datum.longitude,
+                    latlng.latitude,
+                    latlng.longitude
+                )
+            ) {
+                minDistance =
+                    distance(datum.latitude, datum.longitude, latlng.latitude, latlng.longitude)
+                geoCodeInfo = datum
+            }
+        }
+
+        return geoCodeInfo
+
+    }
+
+    private fun btnMyLocationClickManager() {
+        request()
+    }
+
+
 }
