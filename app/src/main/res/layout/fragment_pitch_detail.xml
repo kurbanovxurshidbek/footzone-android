@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:paddingTop="24dp"
-    android:id="@+id/cordLayout"
     tools:context=".ui.fragments.PitchDetailFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -569,7 +568,6 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
 
     <include
         android:id="@+id/bottomSheet"

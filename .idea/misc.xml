@@ -3,9 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/background_top_oval.xml" value="0.184" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable/selectordatetextcolor.xml" value="0.17" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/calendar_dialog.xml" value="0.136" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_add_stadium.xml" value="0.14583333333333334" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_calendar.xml" value="0.27447916666666666" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_choose_work_time.xml" value="0.14583333333333334" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_pitch_detail.xml" value="0.14583333333333334" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_sign_in.xml" value="0.1265625" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_sign_up.xml" value="0.1265625" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_stadium_location.xml" value="0.14583333333333334" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_add_image.xml" value="0.14583333333333334" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_detail_entry_bottom_sheet.xml" value="0.14583333333333334" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_stadium_image.xml" value="0.14583333333333334" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_stadium_image_edit.xml" value="0.14583333333333334" />
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/drawable/bottom_navigation_style.xml" value="0.1065" />
@@ -51,6 +60,61 @@
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/layout/item_rv.xml" value="0.17916666666666667" />
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/layout/topsheet_app_bar.xml" value="0.17916666666666667" />
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/menu/bottom_nav_menu.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable-v24/background_top_oval.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/a.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/bottom_nav_icon.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/bottom_nav_item_background.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/bottom_nav_item_selected.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/bottom_nav_item_unselected.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/bottom_nav_selected_background.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/bottom_nav_unselected_background.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/bottom_navigation_style.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/bottom_navigation_style_background.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_active_icon.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_avatar.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_back_icon.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_book.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_bookmark.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_bottom_nav_icon.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_bottom_nav_icon_default.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_bottom_nav_icon_profile.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_bottom_nav_icon_profile_default.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_bottom_nav_icon_table.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_bottom_nav_icon_table_default.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_person.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_person_active.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_pitch.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_pitch_default.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_pitch_grey.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_selected_pitch.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_table.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_table_active.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/item_bottom_nav_pitch.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/item_bottom_nav_profile.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/item_bottom_nav_table.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/item_comment_background.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/linear_top_rounded_background.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/linear_top_smooth_background.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/state_bottom_nav_icon.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/tab_background.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/activity_maps.xml" value="0.2" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/activity_pitch_detail.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/bottom_sheet_types.xml" value="0.2613390928725702" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/bottomsheet_pitch_zone_list.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_pitch_detail.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_played_pitch.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_playing_pitch.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_table.xml" value="0.16" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_comment.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_pitch_image_layout.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_pitch_layout.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_played_pitch.xml" value="0.2" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_playing_pitch.xml" value="0.2" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_rv.xml" value="0.3212669683257919" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/topsheet_app_bar.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

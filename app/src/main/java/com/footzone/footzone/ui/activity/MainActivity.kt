@@ -1,5 +1,8 @@
 package com.footzone.footzone.ui.activity
 
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -15,13 +18,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        showContentBehindStatusBar()
         setupUI()
-
     }
 
     private fun setupUI() {
         showAndHideBottomNavView()
+        binding.bottomNavigationView.itemIconTintList = null
+        binding.bottomNavigationView.itemRippleColor =
+            ColorStateList.valueOf(Color.parseColor("#FFFFFF"))
     }
 
     private fun showContentBehindStatusBar() {
@@ -29,7 +33,9 @@ class MainActivity : AppCompatActivity() {
         window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
         //make status bar light
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
     }
 
     private fun showAndHideBottomNavView() {
@@ -38,9 +44,18 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.homeFragment -> showBottomNav()
-                R.id.tableFragment -> showBottomNav()
-                R.id.profileFragment -> showBottomNav()
+                R.id.homeFragment -> {
+                    showContentBehindStatusBar()
+                    showBottomNav()
+                }
+                R.id.tableFragment -> {
+                    showContentBehindStatusBar()
+                    showBottomNav()
+                }
+                R.id.profileFragment -> {
+                    showBottomNav()
+                    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                }
                 else -> hideBottomNav()
             }
         }

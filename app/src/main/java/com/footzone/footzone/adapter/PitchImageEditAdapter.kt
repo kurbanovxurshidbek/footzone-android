@@ -1,14 +1,16 @@
 package com.footzone.footzone.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.marginEnd
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.footzone.footzone.databinding.ItemStadiumImageEditBinding
 
-class PitchImageEditAdapter( var context: Context, var pitchImages : ArrayList<String>,  private var onItemClicked: (() -> Unit)) :
+class PitchImageEditAdapter( var context: Context, var pitchImages : ArrayList<String>,  private var onItemClicked: ((Int) -> Unit)) :
     RecyclerView.Adapter<PitchImageEditAdapter.VH>()  {
 
 
@@ -22,10 +24,12 @@ class PitchImageEditAdapter( var context: Context, var pitchImages : ArrayList<S
         Glide.with(holder.binding.ivPitch)
             .load(pitchImages[position])
             .into(holder.binding.ivPitch)
+
+      //  Log.d("@@@###", pitchImages[position])
+
         holder.binding.apply {
             llConvert.setOnClickListener {
-                onItemClicked.invoke()
-                Toast.makeText(context, "Convert Image", Toast.LENGTH_SHORT).show()
+                onItemClicked.invoke(position)
             }
 
             llDelete.setOnClickListener {

@@ -11,8 +11,12 @@
        android:orientation="vertical">
 
        <CalendarView
+           android:id="@+id/calendarView"
            android:layout_width="wrap_content"
-           android:layout_height="wrap_content"/>
+           android:layout_height="wrap_content"
+           />
+
+
 
        <LinearLayout
            android:layout_width="match_parent"
@@ -43,7 +47,7 @@
                android:gravity="center"
                android:paddingVertical="10dp"
                android:text="@string/str_selection"
-               android:textColor="@color/black"
+               android:textColor="@color/white"
                android:textSize="14sp"
                app:backgroundTint="@null" />
        </LinearLayout>

@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -148,6 +149,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
 
         binding.bottomSheetTypes.edtPitchSearch.setOnTouchListener { p0, p1 ->
             bottomSheetBehaviorType.state = BottomSheetBehavior.STATE_EXPANDED
+            binding.bottomSheetTypes.edtPitchSearch.isEnabled = true
             false
         }
 
@@ -165,9 +167,27 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
     private fun controlOnBackPressed() {
         activity?.onBackPressedDispatcher?.addCallback(
             viewLifecycleOwner,
-            object : OnBackPressedCallback(false) {
+            object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    requireActivity().onBackPressed()
+                    if (bottomSheetBehaviorType.state == BottomSheetBehavior.STATE_EXPANDED) {
+                        Log.d("TAG", "handleOnBackPressed: ok")
+                        bottomSheetBehaviorType.state = BottomSheetBehavior.STATE_COLLAPSED
+                        isEnabled = false
+                    }
+                    if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+                        Log.d("TAG", "handleOnBackPressed: okk")
+                        hideBottomSheet(bottomSheetBehavior)
+                        isEnabled = false
+                    }
+                    if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+                        Log.d("TAG", "handleOnBackPressed: okkk")
+                        hideBottomSheet(bottomSheetBehavior)
+                        isEnabled = false
+                    }
+                    if (isEnabled) {
+                        Log.d("TAG", "handleOnBackPressed: ok@")
+                        requireActivity().onBackPressed()
+                    }
                 }
             })
     }

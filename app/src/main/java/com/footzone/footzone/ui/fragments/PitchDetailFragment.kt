@@ -1,8 +1,10 @@
 package com.footzone.footzone.ui.fragments
 
 import android.content.Context
+import android.graphics.Color
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Vibrator
@@ -12,6 +14,13 @@ import android.view.ViewGroup
 import android.widget.NumberPicker
 import androidx.fragment.app.Fragment
 import com.footzone.footzone.CalendarDIalog
+import com.footzone.footzone.R
+import com.footzone.footzone.adapter.CommentAdapter
+import com.footzone.footzone.adapter.CustomAdapter
+import com.footzone.footzone.databinding.FragmentPitchDetailBinding
+import com.footzone.footzone.model.Comment
+import com.footzone.footzone.model.Pitch
+import com.footzone.footzone.model.TimeManager
 import com.footzone.footzone.utils.Extensions.changeTextBackgroundBlue
 import com.footzone.footzone.utils.Extensions.changeTextColorGreen
 import com.footzone.footzone.utils.Extensions.changeTextColorRed
@@ -20,13 +29,6 @@ import com.footzone.footzone.utils.Extensions.hideBottomSheet
 import com.footzone.footzone.utils.Extensions.setImageViewBusy
 import com.footzone.footzone.utils.Extensions.setImageViewisBusy
 import com.footzone.footzone.utils.Extensions.showBottomSheet
-import com.footzone.footzone.R
-import com.footzone.footzone.adapter.CommentAdapter
-import com.footzone.footzone.adapter.CustomAdapter
-import com.footzone.footzone.databinding.FragmentPitchDetailBinding
-import com.footzone.footzone.model.Comment
-import com.footzone.footzone.model.Pitch
-import com.footzone.footzone.model.TimeManager
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.util.*
@@ -40,11 +42,10 @@ class PitchDetailFragment : Fragment() {
     lateinit var pitch: Pitch
     private lateinit var bottomSheet: View
     private lateinit var sheetBehavior: BottomSheetBehavior<View>
-    var times: java.util.ArrayList<TimeManager> = java.util.ArrayList()
+    var times: ArrayList<TimeManager> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         pitch = arguments?.get(PITCH_DETAIL) as Pitch
     }
 
@@ -52,7 +53,6 @@ class PitchDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_pitch_detail, container, false)
     }
 
@@ -90,6 +90,7 @@ class PitchDetailFragment : Fragment() {
         }
 
         binding.cordLayout.setOnClickListener { sheetBehavior.hideBottomSheet() }
+
     }
 
     private fun refreshAdapter() {
@@ -134,17 +135,23 @@ class PitchDetailFragment : Fragment() {
         times.add(TimeManager("21:00", "23:30", "band qilinmoqda"))
     }
 
+    /**
+     * this function, controls the time it takes to apply to the stadium
+     */
     private fun controlBottomSheetActions() {
         val timeList = resources.getStringArray(R.array.timelist)
         var boolStart: Boolean = false
         var boolFinish: Boolean = false
 
         binding.bottomSheet.ivCalendar.setOnClickListener {
-            val dialog = CalendarDIalog{
+            val dialog = CalendarDIalog{ date ->
+                binding.bottomSheet.tvDate.text = date
 
             }
 
-            dialog.showOneIDLoginDialog(requireActivity())
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                dialog.showCalendarDialog(requireActivity())
+            }
         }
 
         binding.bottomSheet.startTime.minValue = 1
@@ -225,20 +232,34 @@ class PitchDetailFragment : Fragment() {
         })
 
         binding.bottomSheet.tvCancel.setOnClickListener { sheetBehavior.hideBottomSheet() }
+
+        sheetBehavior.addBottomSheetCallback(object :BottomSheetBehavior.BottomSheetCallback(){
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED){
+                    binding.frameWrapper.setBackgroundColor(Color.parseColor("#40000000"))
+                }
+                if (newState == BottomSheetBehavior.STATE_HIDDEN){
+                    binding.frameWrapper.setBackgroundColor(Color.TRANSPARENT)
+                }
+
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+
+        })
     }
 
+    /**
+     * this function, gives the NumberPicker sound and vibrate
+     */
     fun checkVibrationIsOn(context: Context) {
         val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         if (am.ringerMode == AudioManager.RINGER_MODE_VIBRATE) {
             val v: Vibrator =
                 requireActivity().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
             v.vibrate(70)
-        } else /*if (1 == Settings.System.getInt(context.contentResolver,
-                "vibrate_when_ringing",
-                0)
-        )*/
-        {
-
+        } else {
             val mMediaPlayer = MediaPlayer.create(context, R.raw.mouse_1)
             val audioManager =
                 requireActivity().getSystemService(Context.AUDIO_SERVICE) as AudioManager
