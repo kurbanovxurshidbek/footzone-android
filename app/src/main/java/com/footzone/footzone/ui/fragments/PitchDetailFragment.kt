@@ -75,8 +75,6 @@ class PitchDetailFragment : Fragment() {
             requireActivity().onBackPressed()
         }
 
-        binding.bottomSheet
-
         sheetBehavior = BottomSheetBehavior.from(bottomSheet)
         sheetBehavior.hideBottomSheet()
 
@@ -153,6 +151,7 @@ class PitchDetailFragment : Fragment() {
                 dialog.showCalendarDialog(requireActivity())
             }
         }
+
 
         binding.bottomSheet.startTime.minValue = 1
         binding.bottomSheet.startTime.maxValue = 47
@@ -232,22 +231,8 @@ class PitchDetailFragment : Fragment() {
         })
 
         binding.bottomSheet.tvCancel.setOnClickListener { sheetBehavior.hideBottomSheet() }
+        binding.bottomSheet.tvOccupancy.setOnClickListener { sheetBehavior.hideBottomSheet() }
 
-        sheetBehavior.addBottomSheetCallback(object :BottomSheetBehavior.BottomSheetCallback(){
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED){
-                    binding.frameWrapper.setBackgroundColor(Color.parseColor("#40000000"))
-                }
-                if (newState == BottomSheetBehavior.STATE_HIDDEN){
-                    binding.frameWrapper.setBackgroundColor(Color.TRANSPARENT)
-                }
-
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-            }
-
-        })
     }
 
     /**

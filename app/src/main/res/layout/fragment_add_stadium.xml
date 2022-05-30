@@ -57,19 +57,25 @@
             android:overScrollMode="never"
             app:spanCount="1"/>
 
-        <EditText
-            android:id="@+id/etPitchName"
-            android:layout_marginHorizontal="16dp"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/EditTextInputLayoutStyle"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/edittext_backround"
-            android:gravity="center_vertical"
-            android:hint="Maydon nomi"
-            android:paddingStart="16dp"
-            android:textColor="@color/black"
-            android:textColorHint="#616161"
-            android:textSize="16sp" />
+            android:layout_marginEnd="16dp"
+            android:hint="@string/str_stadium_name"
+            app:backgroundTint="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPitchName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:inputType="textCapWords"
+                android:textColor="#0A0A0A"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_marginHorizontal="16dp"
@@ -102,19 +108,26 @@
                 android:src="@drawable/ic_location"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <EditText
-            android:id="@+id/etPitchPhoneNumber"
-            android:layout_marginHorizontal="16dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutName"
+            style="@style/EditTextInputLayoutStyle"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/edittext_backround"
-            android:gravity="center_vertical"
-            android:hint="Telefon raqam"
-            android:paddingHorizontal="16dp"
-            android:textColor="@color/black"
-            android:textColorHint="#616161"
-            android:textSize="16sp" />
+            android:layout_marginEnd="16dp"
+            android:hint="@string/str_phone_number"
+            app:backgroundTint="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPitchPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:inputType="textCapWords"
+                android:textColor="#0A0A0A"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_marginHorizontal="16dp"
@@ -147,19 +160,25 @@
                 android:src="@drawable/ic_work_time"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <EditText
-            android:id="@+id/etPitchPrice"
-            android:layout_marginHorizontal="16dp"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/EditTextInputLayoutStyle"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/edittext_backround"
-            android:gravity="center_vertical"
-            android:hint="Narxi (so’m/soat)"
-            android:paddingHorizontal="16dp"
-            android:textColor="@color/black"
-            android:textColorHint="#616161"
-            android:textSize="16sp" />
+            android:layout_marginEnd="16dp"
+            android:hint="@string/str_prise"
+            app:backgroundTint="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPitchPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:inputType="textCapWords"
+                android:textColor="#0A0A0A"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView
             android:id="@+id/imageView"
