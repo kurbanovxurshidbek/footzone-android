@@ -52,12 +52,8 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
         <action
-            android:id="@+id/action_myStadiumFragment_to_editStadiumFragment"
-            app:destination="@id/editStadiumFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            android:id="@+id/action_myStadiumFragment_to_stadiumFragment"
+            app:destination="@id/stadiumFragment" />
     </fragment>
     <fragment
         android:id="@+id/addStadiumFragment"
@@ -87,11 +83,6 @@
         android:name="com.footzone.footzone.ui.fragments.ChooseWorkTimeFragment"
         android:label="ChooseWorkTimeFragment" />
     <fragment
-        android:id="@+id/editStadiumFragment"
-        android:name="com.footzone.footzone.ui.fragments.EditStadiumFragment"
-        android:label="fragment_edit_stadium"
-        tools:layout="@layout/fragment_edit_stadium" />
-    <fragment
         android:id="@+id/signInFragment"
         android:name="com.footzone.footzone.ui.fragments.SignInFragment"
         android:label="fragment_sign_in"
@@ -110,4 +101,12 @@
         android:name="com.footzone.footzone.ui.fragments.VerificationFragment"
         android:label="fragment_verification"
         tools:layout="@layout/fragment_verification" />
+    <fragment
+        android:id="@+id/stadiumFragment"
+        android:name="com.footzone.footzone.ui.fragments.StadiumFragment"
+        android:label="StadiumFragment" >
+        <action
+            android:id="@+id/action_stadiumFragment_to_addStadiumFragment"
+            app:destination="@id/addStadiumFragment" />
+    </fragment>
 </navigation>

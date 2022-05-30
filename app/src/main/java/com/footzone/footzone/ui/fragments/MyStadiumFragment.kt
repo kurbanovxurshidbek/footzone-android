@@ -41,22 +41,27 @@ class MyStadiumFragment : Fragment() {
             openAddStadium()
         }
 
-        binding.tvJustText.text = "Hozir sizda maydonlar mavjud emas.\nMaydon qo’shish uchun yuqoridagi\n“+” tugmasini bosing"
+        if (getPitches().size > 0){
+            binding.recyclerView.visibility = View.VISIBLE
+            binding.llView.visibility = View.GONE
+            refreshAdapter()
+        }else{
+            binding.recyclerView.visibility = View.GONE
+            binding.llView.visibility = View.VISIBLE
+            binding.tvJustText.text = "Hozir sizda maydonlar mavjud emas.\nMaydon qo’shish uchun yuqoridagi\n“+” tugmasini bosing"
 
-        refreshAdapter()
-
+        }
     }
 
     private fun refreshAdapter() {
-        Log.d("###$$$", getPitches().toString())
         val adapter = MyPitchAdapter(requireContext(), getPitches()){ pitch ->
             openEditStadium(pitch)
         }
-        Log.d("###$$$", adapter.toString())
         binding.recyclerView.adapter = adapter
     }
 
     private fun getPitches(): ArrayList<Pitch> {
+
         return ArrayList<Pitch>().apply {
             this.add(
                 Pitch(
@@ -105,8 +110,8 @@ class MyStadiumFragment : Fragment() {
 
     private fun openEditStadium(pitch: Pitch) {
         findNavController().navigate(
-            R.id.action_myStadiumFragment_to_addStadiumFragment,
-            bundleOf(KeyValues.PITCH_DETAIL to pitch, KeyValues.TYPE_DETAIL to 1)
+            R.id.action_myStadiumFragment_to_stadiumFragment,
+            bundleOf(KeyValues.PITCH_DETAIL to pitch)
         )
     }
 }
