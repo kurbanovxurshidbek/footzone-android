@@ -41,9 +41,6 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.PermissionListener
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallback {
@@ -60,14 +57,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
     private lateinit var bottomSheetBehaviorType: BottomSheetBehavior<View>
     private lateinit var topSheetBehavior: TopSheetBehavior<View>
 
-    /////////
-
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var lastLocation: Location? = null
     private val myLocationZoom = 16.0f
-    private var polyLines: MutableList<Polyline>? = null
-    private var markerList = ArrayList<Marker>()
-    private var cameraCurrentLatLng: LatLng? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -81,7 +72,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
         binding = FragmentHomeBinding.bind(view)
 
         initViews(view)
-        btnMyLocationClickManager()
     }
 
     override fun onMapReady(p0: GoogleMap) {
@@ -99,16 +89,10 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
             binding.mapIcon.animate().translationY(0f).setDuration(300).start()
 
             val target = mMap.cameraPosition.target
-
+            showBottomSheet(bottomSheetBehaviorType)
+            bottomSheetBehaviorType.isHideable = false
             //todo send request for nearby stadions
         }
-        mMap.setOnMarkerClickListener(object :GoogleMap.OnMarkerClickListener{
-            override fun onMarkerClick(p0: Marker): Boolean {
-                Toast.makeText(requireContext(), p0.title, Toast.LENGTH_SHORT).show()
-                return false
-            }
-
-        })
 
         fun updateMyCurrentLocation() {
             mMap.animateCamera(
@@ -127,7 +111,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
             updateMyCurrentLocation()
         }
     }
-
 
 
     override fun onCancel() {
@@ -415,6 +398,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
                     mMap.moveCamera(
                         CameraUpdateFactory.newCameraPosition(cameraUpdate)
                     )
+                    lastLocation = location
                     isFirstTime = false
                 }
 
@@ -466,36 +450,5 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
             mMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
             mMap.moveCamera(CameraUpdateFactory.newLatLng(locationList[i]))
         }
-
-
     }
-
-
-    private fun calculateDestination(response: GeoResponse, latlng: LatLng): GeoCodeInfo? {
-        var geoCodeInfo: GeoCodeInfo? = null
-        var minDistance = Double.MAX_VALUE
-
-        for (datum in response.data) {
-            if (minDistance > distance(
-                    datum.latitude,
-                    datum.longitude,
-                    latlng.latitude,
-                    latlng.longitude
-                )
-            ) {
-                minDistance =
-                    distance(datum.latitude, datum.longitude, latlng.latitude, latlng.longitude)
-                geoCodeInfo = datum
-            }
-        }
-
-        return geoCodeInfo
-
-    }
-
-    private fun btnMyLocationClickManager() {
-        request()
-    }
-
-
 }
