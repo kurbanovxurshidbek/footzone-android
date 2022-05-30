@@ -48,11 +48,9 @@ class MyStadiumFragment : Fragment() {
     }
 
     private fun refreshAdapter() {
-        Log.d("###$$$", getPitches().toString())
         val adapter = MyPitchAdapter(requireContext(), getPitches()){ pitch ->
             openEditStadium(pitch)
         }
-        Log.d("###$$$", adapter.toString())
         binding.recyclerView.adapter = adapter
     }
 

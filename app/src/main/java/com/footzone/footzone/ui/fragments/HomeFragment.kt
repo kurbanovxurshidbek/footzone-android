@@ -1,19 +1,25 @@
 package com.footzone.footzone.ui.fragments
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.graphics.Color
+import android.graphics.Rect
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
 import androidx.core.os.bundleOf
@@ -44,9 +50,9 @@ import com.karumi.dexter.listener.single.PermissionListener
 
 
 class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallback {
-    val location1=LatLng(41.33243612881973, 69.23638124609397)
-    val location2=LatLng(41.325604130328664, 69.24281854772987)
-    private var locationList=ArrayList<LatLng>()
+    val location1 = LatLng(41.33243612881973, 69.23638124609397)
+    val location2 = LatLng(41.325604130328664, 69.24281854772987)
+    private var locationList = ArrayList<LatLng>()
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: FragmentHomeBinding
@@ -85,21 +91,15 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
 
             val target = mMap.cameraPosition.target
 
-            //todo send request for nearby stadions
         }
-        mMap.setOnMarkerClickListener(object :GoogleMap.OnMarkerClickListener{
-            override fun onMarkerClick(p0: Marker): Boolean {
-                Toast.makeText(requireContext(), p0.title, Toast.LENGTH_SHORT).show()
-                return false
-            }
-
-        })
+        mMap.setOnMarkerClickListener { onMarkerClickListener ->
+            Toast.makeText(requireContext(), onMarkerClickListener.title, Toast.LENGTH_SHORT).show()
+            false
+        }
         // Add a marker in Sydney and move the camera
         permissionRequest()
 
-
     }
-
 
 
     override fun onCancel() {
@@ -110,6 +110,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
         TODO("Not yet implemented")
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initViews(view: View) {
         val bottomSheetTypes = view.findViewById<View>(R.id.bottomSheetTypes)
         bottomSheet = view.findViewById(R.id.bottomSheetPitchList)
@@ -141,6 +142,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
                 hideBottomSheet(bottomSheetBehaviorType)
                 showPitches()
             }
+            a()
         }
 
         hideBottomSheet(bottomSheetBehavior)
@@ -162,6 +164,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
         }
 
         controlOnBackPressed()
+        controlBottomSheetType()
     }
 
     private fun controlOnBackPressed() {
@@ -221,6 +224,14 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
         )
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    fun a() {
+        binding.coordinator.setOnTouchListener { view, motionEvent ->
+            bottomSheetBehaviorType.state = BottomSheetBehavior.STATE_HIDDEN
+            true
+        }
+    }
+
     private fun showPitches() {
         openPitchListBottomSheet()
         openTopSheet()
@@ -271,6 +282,21 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+        })
+    }
+
+    private fun controlBottomSheetType() {
+        bottomSheetBehaviorType.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    hideKeyboard()
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+            }
         })
     }
 
@@ -397,7 +423,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
 
                 override fun onPermissionDenied(response: PermissionDeniedResponse?) { /* ... */
                     //open settings
-
                 }
 
                 override fun onPermissionRationaleShouldBeShown(
@@ -410,15 +435,13 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
             }).check()
     }
 
-    private fun findMultipleLocation(){
+    private fun findMultipleLocation() {
         locationList.add(location1)
         locationList.add(location2)
-        for (i in locationList.indices){
+        for (i in locationList.indices) {
             mMap.addMarker(MarkerOptions().position(locationList[i]).title("Marker"))
             mMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
             mMap.moveCamera(CameraUpdateFactory.newLatLng(locationList[i]))
         }
-
-
     }
 }

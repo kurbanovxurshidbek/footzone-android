@@ -11,7 +11,9 @@ import com.footzone.footzone.databinding.ItemPitchLayoutBinding
 import com.footzone.footzone.model.Pitch
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 
-class PitchAdapter(private var onPitchClick: ((Pitch) -> Unit)) :
+class PitchAdapter(
+    private var onPitchClick: ((Pitch) -> Unit)
+) :
     RecyclerView.Adapter<PitchAdapter.VH>() {
 
     private var pitches = ArrayList<Pitch>()
@@ -38,6 +40,10 @@ class PitchAdapter(private var onPitchClick: ((Pitch) -> Unit)) :
             rbPitch.setIsIndicator(true)
             tvRatingNums.text = "(${pitch.ratingNums})"
             tvPitchPrice.text = "${pitch.price} so'm/soat"
+
+            btnNavigate.setOnClickListener {
+
+            }
 
             btnBook.setOnClickListener {
                 onPitchClick.invoke(pitch)

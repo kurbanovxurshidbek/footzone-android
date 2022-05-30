@@ -86,9 +86,12 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_pitch.xml" value="0.1" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_pitch_default.xml" value="0.1" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_pitch_grey.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_plus_blue.xml" value="0.21" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_selected_pitch.xml" value="0.1" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_table.xml" value="0.1" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_table_active.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/imageview_circle_grey.xml" value="0.1425" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/imageview_circle_plus.xml" value="0.1425" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/item_bottom_nav_pitch.xml" value="0.1" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/item_bottom_nav_profile.xml" value="0.1" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/item_bottom_nav_table.xml" value="0.1" />
@@ -103,13 +106,17 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/bottom_sheet_types.xml" value="0.2613390928725702" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/bottomsheet_pitch_zone_list.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_pitch_detail.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_pitch_detail.xml" value="0.18" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_played_pitch.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_playing_pitch.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_sign_in.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_sign_up.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_table.xml" value="0.16" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_comment.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_detail_entry_bottom_sheet.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_pitch_image_layout.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_pitch_layout.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_pitch_layout.xml" value="0.6602209944751382" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_played_pitch.xml" value="0.2" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_playing_pitch.xml" value="0.2" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_rv.xml" value="0.3212669683257919" />

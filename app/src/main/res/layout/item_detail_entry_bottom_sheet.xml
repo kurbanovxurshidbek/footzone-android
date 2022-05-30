@@ -87,25 +87,25 @@
                         android:gravity="center_vertical">
 
                         <ImageView
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
                             android:id="@+id/ivStartImage"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_marginStart="16dp"
-                            android:src="@drawable/ic_busy"/>
+                            android:src="@drawable/ic_busy"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <NumberPicker
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             android:id="@+id/startTime"
                             android:layout_width="90dp"
-                            android:soundEffectsEnabled="true"
                             android:layout_height="wrap_content"
                             android:selectionDividerHeight="0dp"
-                            android:theme="@style/NumberPicker" />
+                            android:soundEffectsEnabled="true"
+                            android:theme="@style/NumberPicker"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <LinearLayout
@@ -127,24 +127,24 @@
                         android:gravity="center_vertical">
 
                         <NumberPicker
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             android:id="@+id/finishTime"
                             android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:selectionDividerHeight="0dp"
-                            android:theme="@style/NumberPicker" />
+                            android:theme="@style/NumberPicker"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:layout_marginEnd="16dp"
                             android:id="@+id/ivFinishImage"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
+                            android:layout_marginEnd="16dp"
                             android:layout_weight="1"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
                             tools:ignore="NestedWeights" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -219,8 +219,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
-                android:textColor="@color/black"
                 android:text="2 soat"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -240,8 +240,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
-                android:textColor="@color/black"
                 android:text="100 00 so'm"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
         </LinearLayout>
 
