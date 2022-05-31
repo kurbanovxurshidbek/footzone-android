@@ -13,6 +13,8 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.core.graphics.TypefaceCompatUtil.getTempFile
@@ -83,14 +85,25 @@ open class AddStadiumFragment : Fragment() {
             tvOccupancy.setOnClickListener { requireActivity().onBackPressed() }
             ivChooseLocation.setOnClickListener { openStadiumLocation() }
             ivChooseWorkTime.setOnClickListener { openChooseWorkTime() }
-
         }
+
+        setAdapterToAutoTextView(binding.tvRegion, arrayListOf("a", "b", "c"))
+        setAdapterToAutoTextView(binding.tvDistrict, arrayListOf("aa", "bb", "cc"))
 
         if (type == 1) {
             initViewsEdit()
         } else {
             initViewsAdd()
         }
+    }
+
+    private fun setAdapterToAutoTextView(
+        autoCompleteTextView: AutoCompleteTextView,
+        list: java.util.ArrayList<String>
+    ) {
+        val adapter: ArrayAdapter<String> =
+            ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, list)
+        autoCompleteTextView.setAdapter(adapter)
     }
 
     override fun onAttach(context: Context) {
