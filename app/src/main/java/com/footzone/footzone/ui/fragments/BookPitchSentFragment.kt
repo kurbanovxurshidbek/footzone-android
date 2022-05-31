@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.PitchBookSentAdapter
 import com.footzone.footzone.databinding.FragmentBookPitchSentBinding
+import com.footzone.footzone.databinding.LayoutAcceptBinding
+import com.footzone.footzone.databinding.LayoutDeclineBinding
 import com.footzone.footzone.model.Hour
 import com.footzone.footzone.model.PitchHistory
 import com.footzone.footzone.utils.AcceptDeclineDialog
@@ -44,8 +46,20 @@ class BookPitchSentFragment : Fragment() {
 
     private fun manageAcceptDeclineClick(toAccept: Boolean) {
         if (toAccept) {
-            val acceptDeclineDialog = AcceptDeclineDialog(requireContext()).instance(R.layout.layout_accept_decline)
-            acceptDeclineDialog.manageResponse()
+            val acceptDeclineDialog =
+                AcceptDeclineDialog(requireContext()).instance(
+                    LayoutAcceptBinding.inflate(
+                        LayoutInflater.from(requireContext())
+                    ).root
+                )
+            acceptDeclineDialog.show()
+        } else {
+            val acceptDeclineDialog =
+                AcceptDeclineDialog(requireContext()).instance(
+                    LayoutDeclineBinding.inflate(
+                        LayoutInflater.from(requireContext())
+                    ).root
+                )
             acceptDeclineDialog.show()
         }
     }

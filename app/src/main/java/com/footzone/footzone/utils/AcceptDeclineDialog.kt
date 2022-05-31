@@ -2,17 +2,14 @@ package com.footzone.footzone.utils
 
 import android.app.Dialog
 import android.content.Context
-import android.view.LayoutInflater
-import android.widget.Toast
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.footzone.footzone.R
-import com.footzone.footzone.databinding.LayoutAcceptDeclineBinding
 
 class AcceptDeclineDialog(val context1: Context) : Dialog(context1) {
     private var _instance: AcceptDeclineDialog? = null
-    val binding = LayoutAcceptDeclineBinding.inflate(LayoutInflater.from(context1))
 
-    fun instance(layoutResID: Int): AcceptDeclineDialog {
+    fun instance(layoutResID: ConstraintLayout): AcceptDeclineDialog {
         if (_instance == null) {
             _instance = this
         }
@@ -20,22 +17,23 @@ class AcceptDeclineDialog(val context1: Context) : Dialog(context1) {
         return _instance!!
     }
 
-    private fun setLayout(layoutResID: Int) {
+    private fun setLayout(layoutResID: ConstraintLayout) {
         _instance!!.setContentView(layoutResID)
         _instance!!.window!!.setBackgroundDrawableResource(R.drawable.rounded_view)
         _instance!!.window!!.setLayout(
             pxFromDp(context1, 320).toInt(),
             pxFromDp(context1, 200).toInt()
         )
-    }
 
-    fun manageResponse() {
-        binding.tvYes.setOnClickListener {
-            Toast.makeText(context1, "Ha", Toast.LENGTH_SHORT).show()
+        val tvYes = layoutResID.findViewById<TextView>(R.id.tvYes)
+        val tvNo = layoutResID.findViewById<TextView>(R.id.tvNo)
+
+        tvYes.setOnClickListener {
+            _instance!!.dismiss()
         }
 
-        binding.tvNo.setOnClickListener {
-            Toast.makeText(context1, "Yo'q", Toast.LENGTH_SHORT).show()
+        tvNo.setOnClickListener {
+            _instance!!.dismiss()
         }
     }
 
