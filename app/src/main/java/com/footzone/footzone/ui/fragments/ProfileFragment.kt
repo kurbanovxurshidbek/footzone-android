@@ -23,7 +23,6 @@ import com.footzone.footzone.utils.SharedPref
 import java.io.File
 
 class ProfileFragment : Fragment() {
-
     private val PICK_FROM_FILE_ADD: Int = 1001
     private lateinit var binding: FragmentProfileBinding
     lateinit var sharedPref: SharedPref
@@ -80,6 +79,8 @@ class ProfileFragment : Fragment() {
                 when (item?.itemId) {
 
                     R.id.logOut -> {
+                        sharedPref.saveLogIn("LogIn", false)
+                        findNavController().popBackStack()
                         Toast.makeText(requireContext(), "log out", Toast.LENGTH_SHORT).show()
                         true
                     }
@@ -89,6 +90,7 @@ class ProfileFragment : Fragment() {
             inflate(R.menu.action_bar_menu)
             show()
         }
+
         binding.tvEnterAccount.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_signInFragment)
         }
