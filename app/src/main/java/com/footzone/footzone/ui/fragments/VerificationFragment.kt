@@ -11,8 +11,10 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentVerificationBinding
+import com.footzone.footzone.utils.SharedPref
 
 class VerificationFragment : Fragment() {
+    lateinit var sharedPref: SharedPref
     lateinit var binding: FragmentVerificationBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,10 +32,22 @@ class VerificationFragment : Fragment() {
     }
 
     private fun initViews() {
+        sharedPref= SharedPref(requireContext())
         verificationCodeErrorControl()
         binding.backButton.setOnClickListener {
             closeSignInFragment()
         }
+        binding.confirmationButton.setOnClickListener {
+            sharedPref.saveLogIn("LogIn",true)
+            returnHomeFragment()
+
+
+        }
+    }
+
+    private fun returnHomeFragment() {
+        findNavController().navigate(R.id.action_verificationFragment_to_homeFragment)
+
     }
 
     private fun verificationCodeErrorControl() {
@@ -55,15 +69,15 @@ class VerificationFragment : Fragment() {
     private fun registerButtonControl() {
         if (checkData()) {
             binding.apply {
-                registerButton.setBackgroundResource(R.drawable.button_register_filled_rounded_corner2)
-                registerButton.isClickable = true
-                registerButton.setTextColor(Color.WHITE)
+                confirmationButton.setBackgroundResource(R.drawable.button_register_filled_rounded_corner2)
+                confirmationButton.isClickable = true
+                confirmationButton.setTextColor(Color.WHITE)
             }
         } else {
             binding.apply {
-                registerButton.setBackgroundResource(R.drawable.button_register_filled_rounded_corner1)
-                registerButton.isClickable = false
-                registerButton.setTextColor(R.color.buttonDisabledTextColor)
+                confirmationButton.setBackgroundResource(R.drawable.button_register_filled_rounded_corner1)
+                confirmationButton.isClickable = false
+                confirmationButton.setTextColor(R.color.buttonDisabledTextColor)
 
             }
         }

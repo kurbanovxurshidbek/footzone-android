@@ -37,6 +37,7 @@
             android:inputType="text"
             android:paddingHorizontal="10dp"
             android:singleLine="true"
+            android:fontFamily="@font/poppins_bold"
             android:textColor="@color/black"
             android:textColorHint="#616161"
             android:textSize="16sp" />
@@ -63,6 +64,7 @@
                     android:src="@drawable/ic_near_me" />
 
                 <TextView
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -88,6 +90,7 @@
                     android:src="@drawable/ic_bookmark_border" />
 
                 <TextView
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -122,6 +125,7 @@
                     android:src="@drawable/ic_history" />
 
                 <TextView
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -147,6 +151,7 @@
                     android:src="@drawable/ic_maydon" />
 
                 <TextView
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"

@@ -167,6 +167,10 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
             false
         }
 
+        binding.notificationButton.setOnClickListener {
+            findNavController().navigate(R.id.userNotificationFragment)
+        }
+
         binding.bottomSheetTypes.edtPitchSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 hideKeyboard()

@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentPlayedPitchBinding
 import com.footzone.footzone.databinding.FragmentSignInBinding
+import com.footzone.footzone.utils.SharedPref
 
 class SignInFragment : Fragment() {
     lateinit var binding: FragmentSignInBinding
@@ -38,6 +39,10 @@ class SignInFragment : Fragment() {
         }
         binding.backButton.setOnClickListener {
             closeSignInFragment()
+        }
+        binding.enterButton.setOnClickListener {
+
+            findNavController().navigate(R.id.action_signInFragment_to_verificationFragment)
         }
         checkAllFields()
     }

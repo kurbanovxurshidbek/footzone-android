@@ -15,24 +15,23 @@
         android:layout_height="match_parent" />
 
     <LinearLayout
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingVertical="20dp">
+        >
+        <ImageView
+            android:id="@+id/notificationButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="16dp"
+            android:padding="15dp"
+            android:background="@drawable/imageview_circle_without_stroke"
+            android:src="@drawable/ic_notification_home" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="sizning manzilingiz"
-            android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/locationAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="sizning manzilingiz"
-            android:textSize="16sp" />
 
 
     </LinearLayout>

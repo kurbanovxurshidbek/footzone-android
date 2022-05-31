@@ -75,6 +75,11 @@
     <style name="circle">
         <item name="cornerSize">50%</item>
     </style>
+    <style name="BottomNavigationViewTextStyle">
+        ...
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        ...
+    </style>
 
     <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
         <item name="android:popupBackground">#ffffff</item>

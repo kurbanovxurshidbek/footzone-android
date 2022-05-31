@@ -12,8 +12,13 @@ import android.view.*
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentProfileBinding
+import com.footzone.footzone.utils.SharedPref
 import java.io.File
 
 class ProfileFragment : Fragment() {
@@ -43,6 +48,17 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initViews() {
+        sharedPref= SharedPref(requireContext())
+
+        val LogIn= sharedPref.getLogIn("LogIn",false)
+        if (!LogIn){
+            binding.linerProfile.visibility=View.GONE
+            binding.linearProfileNoSignIn.visibility=View.VISIBLE
+        }else{
+            binding.linerProfile.visibility=View.VISIBLE
+            binding.linearProfileNoSignIn.visibility=View.GONE
+
+        }
         binding.ivAdd.setOnClickListener {
             openLocalStorage()
         }
@@ -66,6 +82,9 @@ class ProfileFragment : Fragment() {
             }
             inflate(R.menu.action_bar_menu)
             show()
+        }
+        binding.tvEnterAccount.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_signInFragment)
         }
     }
 
