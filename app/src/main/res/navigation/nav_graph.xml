@@ -29,7 +29,11 @@
         android:id="@+id/tableFragment"
         android:name="com.footzone.footzone.ui.fragments.TableFragment"
         android:label="fragment_table"
-        tools:layout="@layout/fragment_table" />
+        tools:layout="@layout/fragment_table" >
+        <action
+            android:id="@+id/action_tableFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.footzone.footzone.ui.fragments.ProfileFragment"

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.TableViewPagerAdapter
@@ -34,6 +35,7 @@ class TableFragment : Fragment() {
     }
 
     private fun initViews() {
+
         tableViewPagerAdapter = TableViewPagerAdapter(requireActivity())
         if (!isPitchOwner) {
             addFragmentsToVPUser()
@@ -46,6 +48,14 @@ class TableFragment : Fragment() {
         } else {
             addFragmentsToVPOwner()
             binding.vpPitchTable.adapter = tableViewPagerAdapter
+        binding.tabLayoutPitch.setupWithViewPager(
+            binding.vpPitchTable,
+            arrayListOf("O'ynaladi", "O'ynalgan")
+        )
+        binding.tvEnterAccount.setOnClickListener {
+            findNavController().navigate(R.id.action_tableFragment_to_signInFragment)
+        }
+
 
             binding.tabLayoutPitch.setupWithViewPager(
                 binding.vpPitchTable,
