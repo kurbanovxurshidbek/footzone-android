@@ -70,7 +70,7 @@
                     android:textSize="28sp" />
 
                 <ImageView
-                    android:id="@+id/imageEditName"
+                    android:id="@+id/ivEditName"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:paddingStart="3dp"
@@ -104,7 +104,7 @@
                     android:textSize="16sp" />
 
                 <ImageView
-                    android:id="@+id/imageEditNumber"
+                    android:id="@+id/ivEditNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:paddingStart="3dp"
@@ -116,29 +116,31 @@
         </LinearLayout>
 
         <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="122dp"
+            android:layout_height="122dp"
             android:layout_marginStart="16dp"
+            android:background="@drawable/imageview_circle_grey"
             app:layout_constraintBottom_toTopOf="@id/bottom"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/top">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivProfile"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:adjustViewBounds="true"
-                android:background="@drawable/imageview_circle_grey"
-                android:padding="65dp"
-                android:scaleType="centerCrop" />
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:theme="@style/circle" />
 
             <ImageView
+                android:id="@+id/ivDefaultPerson"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_person" />
 
             <ImageView
+                android:id="@+id/ivAdd"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="end|bottom"
@@ -171,6 +173,7 @@
             android:textSize="16sp" />
 
         <LinearLayout
+            android:id="@+id/linearNotification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -209,6 +212,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLanguage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"

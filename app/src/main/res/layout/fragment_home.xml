@@ -7,29 +7,47 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.HomeFragment">
 
-    <fragment
+
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map_view"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="300dp"
-        app:cardCornerRadius="20dp">
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingVertical="20dp">
 
-        <ImageView
-            android:id="@+id/findMyLocation"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:padding="10dp"
-            android:src="@drawable/ic_find_my_loc" />
-    </androidx.cardview.widget.CardView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sizning manzilingiz"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/locationAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sizning manzilingiz"
+            android:textSize="16sp" />
+
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/findMyLocation"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="16dp"
+        android:padding="17dp"
+        android:layout_marginBottom="246dp"
+        android:background="@drawable/imageview_circle_without_stroke"
+        android:src="@drawable/ic_find_my_loc" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/map_icon"

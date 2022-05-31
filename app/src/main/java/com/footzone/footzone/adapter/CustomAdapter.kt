@@ -1,4 +1,5 @@
 package com.footzone.footzone.adapter
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -23,15 +24,14 @@ class CustomAdapter(var items: ArrayList<String>) :
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = items[position]
-        holder.view.apply {
-            Glide.with(itemImageView)
-                .load(item[position])
-                .into(itemImageView)
-        }
+//        holder.view.apply {
+//            Glide.with(itemImageView.context)
+//                .load(item[position])
+//                .into(itemImageView)
+//        }
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
-
 }

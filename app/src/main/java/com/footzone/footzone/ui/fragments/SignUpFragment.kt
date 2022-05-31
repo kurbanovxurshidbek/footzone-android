@@ -28,6 +28,7 @@ class SignUpFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_sign_up, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -38,7 +39,6 @@ class SignUpFragment : Fragment() {
 
     private fun initViews() {
         roleSpinner()
-        passwordErrorControl()
         registerButtonControl()
         binding.textViewSignIn.setOnClickListener {
             openSignInFragment()
@@ -65,12 +65,7 @@ class SignUpFragment : Fragment() {
         binding.editTextNumber.doAfterTextChanged {
             registerButtonControl()
         }
-        binding.editTextPassword.doAfterTextChanged {
-            registerButtonControl()
-        }
-        binding.editTextConfirmPassword.doAfterTextChanged {
-            registerButtonControl()
-        }
+
         binding.filledExposedDropdown.doAfterTextChanged {
             registerButtonControl()
         }
@@ -99,36 +94,14 @@ class SignUpFragment : Fragment() {
         val name = binding.editTextName.text.toString()
         val surname = binding.editTextSurname.text.toString()
         val number = binding.editTextNumber.text.toString()
-        val password = binding.editTextPassword.text.toString()
-        val confirmPassword = binding.editTextConfirmPassword.text.toString()
 
-        return role.isNotEmpty() && name!!.isNotEmpty() && surname!!.isNotEmpty() &&
-                number!!.isNotEmpty() && password!!.isNotEmpty() && confirmPassword == password
+
+        return role.isNotEmpty() && name.isNotEmpty() && surname.isNotEmpty() &&
+                number!!.isNotEmpty()
     }
 
     private fun openSignInFragment() {
         findNavController().navigate(R.id.signInFragment)
-    }
-
-
-
-
-    private fun passwordErrorControl() {
-        binding.editTextPassword.doAfterTextChanged {
-            if (it!!.toString().length<6){
-                binding.textInputLayoutPassword.error = "Parol 6 ta belgidan iborat bo'lishi kerak"
-            } else {
-                binding.textInputLayoutPassword.error = null
-            }
-        }
-
-        binding.editTextConfirmPassword.doAfterTextChanged {
-            if (it.toString() != binding.editTextPassword.text.toString()) {
-                binding.textInputLayoutConfirmPassword.error = "Parolingiz bir xil emas. Tekshirib qayta kiriting"
-            } else {
-                binding.textInputLayoutConfirmPassword.error = null
-            }
-        }
     }
 
     //this function for get role exp: Stadium owner or User

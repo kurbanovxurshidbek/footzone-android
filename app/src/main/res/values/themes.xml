@@ -71,4 +71,8 @@
         <item name="hintTextColor">@color/selector_hint_text_color</item>
         <item name="boxStrokeWidth">2dp</item>
     </style>
+
+    <style name="circle">
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

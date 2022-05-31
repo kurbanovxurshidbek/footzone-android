@@ -70,6 +70,8 @@
                     android:id="@+id/filled_exposed_dropdown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:focusable="false"
                     android:fontFamily="@font/roboto"
                     android:inputType="none"
                     android:textSize="16sp" />
@@ -137,58 +139,10 @@
                     app:mask="## ### ## ##" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutPassword"
-                style="@style/LoginTextInputLayoutStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:hint="Parol"
-                app:endIconMode="password_toggle"
-                app:errorEnabled="true"
-                app:errorTextColor="#C8303F">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
-                    android:inputType="textPassword"
-                    android:maxLength="12"
-                    android:maxLines="1"
-                    android:textColor="#0A0A0A"
-                    android:textSize="16sp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutConfirmPassword"
-                style="@style/LoginTextInputLayoutStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:hint="Parolni qaytaring"
-                app:endIconMode="password_toggle"
-                app:errorEnabled="true"
-                app:errorTextColor="#C8303F">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextConfirmPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
-                    android:inputType="textPassword"
-                    android:maxLength="12"
-                    android:maxLines="1"
-                    android:textColor="#0A0A0A"
-                    android:textSize="16sp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="end">
 
@@ -201,7 +155,6 @@
                     android:background="@drawable/button_register_filled_rounded_corner1"
                     android:clickable="false"
                     android:fontFamily="@font/roboto"
-                    android:maxLines="1"
                     android:text="Ro'yxatdan o'tish"
                     android:textAllCaps="false"
                     android:textColor="#8F8F8F"
