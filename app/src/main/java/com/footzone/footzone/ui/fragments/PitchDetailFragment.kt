@@ -32,7 +32,6 @@ import com.footzone.footzone.utils.Extensions.setImageViewisBusy
 import com.footzone.footzone.utils.Extensions.showBottomSheet
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import java.lang.Integer.parseInt
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -94,7 +93,6 @@ class PitchDetailFragment : Fragment() {
         binding.cordLayout.setOnClickListener {
             Toast.makeText(requireContext(), "sdhgcvb ndcsavvv", Toast.LENGTH_SHORT).show()
             sheetBehavior.hideBottomSheet() }
-
     }
 
     private fun refreshAdapter() {
@@ -147,6 +145,8 @@ class PitchDetailFragment : Fragment() {
         val timeList = resources.getStringArray(R.array.timelist)
         var boolStart: Boolean = false
         var boolFinish: Boolean = false
+        var timeStart: String? = ""
+        var timeFinish: String? = null
 
         binding.bottomSheet.ivCalendar.setOnClickListener {
             val dialog = CalendarDIalog { date ->
@@ -173,23 +173,16 @@ class PitchDetailFragment : Fragment() {
 
         binding.bottomSheet.startTime.setOnValueChangedListener(NumberPicker.OnValueChangeListener { numberPicker, i, i1 ->
 
+            timeStart = timeList[i]
+
                 var inswv  = LocalDate.now().atTime(LocalTime.parse(timeList[i]))
                     .format(DateTimeFormatter.ofPattern("HH:mm"))
 
                 Log.d("TAG", "controlBottomSheetActions: ${inswv}")
 
-                val startTime = "05:30"
-                val sts = startTime.split(":");
-                val endTime = "15:00"
-                val ets = endTime.split(":");
-
-                val stMin = (parseInt(sts[0]) * 60 + parseInt(sts[1]));
-                val etMin = (parseInt(ets[0]) * 60 + parseInt(ets[1]));
-                if( etMin > stMin) {
-                    Toast.makeText(requireContext(), "true", Toast.LENGTH_SHORT).show()
-                }
-
             checkVibrationIsOn(requireContext())
+
+
 
             for (time in times) {
                 if (time.startTime == timeList[i]) {
@@ -222,6 +215,9 @@ class PitchDetailFragment : Fragment() {
 
         binding.bottomSheet.finishTime.setOnValueChangedListener(NumberPicker.OnValueChangeListener { numberPicker, i, i1 ->
             checkVibrationIsOn(requireContext())
+
+            timeFinish = timeList[i]
+            timeGap(timeStart!!, timeFinish.toString())
 
             for (time in times) {
                 if (time.startTime == timeList[i]) {
@@ -284,5 +280,33 @@ class PitchDetailFragment : Fragment() {
                 }
             }, 500)
         }
+    }
+
+    fun timeGap(st: String, et: String): String {
+        val t1 = getTimeInSeconds(st)
+        val t2 = getTimeInSeconds(et)
+        val time_diff = if (t1 - t2 < 0) t2 - t1 else t1 - t2
+        Log.d("TAG", "timeGap: ${convertSecToTime(time_diff)}")
+        return convertSecToTime(time_diff)
+    }
+    fun convertSecToTime(t: Int): String{
+        val hours = t / 60
+        val hh =
+            if (hours < 10)
+                "0" + Integer.toString(hours)
+            else
+                Integer.toString(hours)
+        val min = t % 60
+        val mm =
+            if (min < 10)
+                "0" + Integer.toString(min)
+            else
+                Integer.toString(min)
+
+        return "$hh:$mm"
+    }
+    fun getTimeInSeconds(str: String): Int {
+        val curr_time = str.split(":").toTypedArray()
+        return curr_time[0].toInt() * 60 + curr_time[1].toInt()
     }
 }
