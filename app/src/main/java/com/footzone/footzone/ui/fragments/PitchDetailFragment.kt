@@ -91,9 +91,7 @@ class PitchDetailFragment : Fragment() {
             controlBottomSheetActions()
         }
 
-        binding.cordLayout.setOnClickListener {
-            Toast.makeText(requireContext(), "sdhgcvb ndcsavvv", Toast.LENGTH_SHORT).show()
-            sheetBehavior.hideBottomSheet() }
+        binding.cordLayout.setOnClickListener { sheetBehavior.hideBottomSheet() }
 
     }
 
