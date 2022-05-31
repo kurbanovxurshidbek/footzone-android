@@ -15,10 +15,11 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentProfileBinding
+import com.footzone.footzone.utils.SharedPref
 import java.io.File
 
 class ProfileFragment : Fragment() {
-
+    lateinit var sharedPref: SharedPref
     private val PICK_FROM_FILE_ADD: Int = 1001
     private lateinit var binding: FragmentProfileBinding
 
@@ -39,6 +40,17 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initViews() {
+        sharedPref= SharedPref(requireContext())
+
+        val LogIn= sharedPref.getLogIn("LogIn",false)
+        if (!LogIn){
+            binding.linerProfile.visibility=View.GONE
+            binding.linearProfileNoSignIn.visibility=View.VISIBLE
+        }else{
+            binding.linerProfile.visibility=View.VISIBLE
+            binding.linearProfileNoSignIn.visibility=View.GONE
+
+        }
         binding.ivAdd.setOnClickListener {
             openLocalStorage()
         }

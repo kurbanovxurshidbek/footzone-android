@@ -10,11 +10,12 @@ import androidx.viewpager2.widget.ViewPager2
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.TableViewPagerAdapter
 import com.footzone.footzone.databinding.FragmentTableBinding
+import com.footzone.footzone.utils.SharedPref
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class TableFragment : Fragment() {
-
+    lateinit var sharedPref: SharedPref
     private lateinit var binding: FragmentTableBinding
     private lateinit var tableViewPagerAdapter: TableViewPagerAdapter
     private var isPitchOwner = true
@@ -35,7 +36,16 @@ class TableFragment : Fragment() {
     }
 
     private fun initViews() {
+        sharedPref= SharedPref(requireContext())
+       val LogIn= sharedPref.getLogIn("LogIn",false)
+       if (!LogIn){
+           binding.tabelFragmentSignIn.visibility=View.GONE
+           binding.tabelFragmentNoSignIn.visibility=View.VISIBLE
+       }else{
+           binding.tabelFragmentSignIn.visibility=View.VISIBLE
+           binding.tabelFragmentNoSignIn.visibility=View.GONE
 
+       }
         tableViewPagerAdapter = TableViewPagerAdapter(requireActivity())
         if (!isPitchOwner) {
             addFragmentsToVPUser()
