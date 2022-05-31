@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,65 +9,137 @@
     android:paddingTop="24dp"
     tools:context=".ui.fragments.TableFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBar"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tabelFragmentSignIn"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:elevation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff"
-            app:elevation="0dp">
+            android:layout_height="?attr/actionBarSize"
+            app:elevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
+            <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="Maydonlar"
-                android:textAllCaps="false"
-                android:textColor="#0A0A0A"
-                android:textSize="22sp" />
+                android:background="#ffffff"
+                app:elevation="0dp">
 
-        </androidx.appcompat.widget.Toolbar>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="Maydonlar"
+                    android:textAllCaps="false"
+                    android:textColor="#0A0A0A"
+                    android:textSize="22sp" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+            </androidx.appcompat.widget.Toolbar>
 
-    <com.google.android.material.tabs.TabLayout
-        android:layout_marginHorizontal="16dp"
-        android:id="@+id/tabLayoutPitch"
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayoutPitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBar"
+            app:tabIndicator="@drawable/tab_background"
+            app:tabIndicatorColor="#0C64E6"
+            app:tabSelectedTextColor="#0A0A0A"
+            app:tabTextAppearance="@style/CustomTextAppearanceTab">
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0"
+            app:layout_constraintBottom_toBottomOf="@id/tabLayoutPitch"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vpPitchTable"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tabLayoutPitch" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tabelFragmentNoSignIn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBar"
-        app:tabIndicator="@drawable/tab_background"
-        app:tabIndicatorColor="#0C64E6"
-        app:tabSelectedTextColor="#0A0A0A"
-        app:tabTextAppearance="@style/CustomTextAppearanceTab">
+        android:layout_height="match_parent">
 
-    </com.google.android.material.tabs.TabLayout>
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar2"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:elevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#E0E0E0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/tabLayoutPitch"/>
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                app:elevation="0dp">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/vpPitchTable"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tabLayoutPitch" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="Maydonlar"
+                    android:textAllCaps="false"
+                    android:textColor="#0A0A0A"
+                    android:textSize="22sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <TextView
+            android:textSize="16sp"
+            android:id="@+id/tvNoSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Maydonlar jadvalini ko'rish uchun\n
+safihangizga kiring"
+            android:textColor="#424242"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvEnterAccount"
+            android:textSize="17sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/enter_button_backround"
+            android:gravity="center"
+            android:paddingHorizontal="25dp"
+            android:paddingVertical="10dp"
+            android:text="Kirish"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvNoSignIn"
+            app:layout_constraintVertical_bias="0.1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
