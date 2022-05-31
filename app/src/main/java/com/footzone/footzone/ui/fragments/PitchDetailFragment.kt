@@ -31,8 +31,6 @@ import com.footzone.footzone.utils.Extensions.hideBottomSheet
 import com.footzone.footzone.utils.Extensions.setImageViewBusy
 import com.footzone.footzone.utils.Extensions.setImageViewisBusy
 import com.footzone.footzone.utils.Extensions.showBottomSheet
-import com.footzone.footzone.utils.GoogleMapHelper
-import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.util.*
@@ -151,7 +149,7 @@ class PitchDetailFragment : Fragment() {
         var boolFinish: Boolean = false
 
         binding.bottomSheet.ivCalendar.setOnClickListener {
-            val dialog = CalendarDIalog { date ->
+            val dialog = CalendarDIalog{ date ->
                 binding.bottomSheet.tvDate.text = date
 
             }
@@ -173,6 +171,22 @@ class PitchDetailFragment : Fragment() {
 
 
         binding.bottomSheet.startTime.setOnValueChangedListener(NumberPicker.OnValueChangeListener { numberPicker, i, i1 ->
+
+                var inswv  = LocalDate.now().atTime(LocalTime.parse(timeList[i]))
+                    .format(DateTimeFormatter.ofPattern("HH:mm"))
+
+                Log.d("TAG", "controlBottomSheetActions: ${inswv}")
+
+                val startTime = "05:30"
+                val sts = startTime.split(":");
+                val endTime = "15:00"
+                val ets = endTime.split(":");
+
+                val stMin = (parseInt(sts[0]) * 60 + parseInt(sts[1]));
+                val etMin = (parseInt(ets[0]) * 60 + parseInt(ets[1]));
+                if( etMin > stMin) {
+                    Toast.makeText(requireContext(), "true", Toast.LENGTH_SHORT).show()
+                }
 
             checkVibrationIsOn(requireContext())
 
@@ -240,12 +254,12 @@ class PitchDetailFragment : Fragment() {
 
         binding.bottomSheet.tvCancel.setOnClickListener { sheetBehavior.hideBottomSheet() }
 
-        sheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        sheetBehavior.addBottomSheetCallback(object :BottomSheetBehavior.BottomSheetCallback(){
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED){
                     binding.frameWrapper.setBackgroundColor(Color.parseColor("#40000000"))
                 }
-                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                if (newState == BottomSheetBehavior.STATE_HIDDEN){
                     binding.frameWrapper.setBackgroundColor(Color.TRANSPARENT)
                 }
 
@@ -283,6 +297,6 @@ class PitchDetailFragment : Fragment() {
                     })
                 }
             }, 500)
-        }
+       }
     }
 }
