@@ -16,6 +16,7 @@ class TableFragment : Fragment() {
 
     private lateinit var binding: FragmentTableBinding
     private lateinit var tableViewPagerAdapter: TableViewPagerAdapter
+    private var isPitchOwner = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,19 +34,32 @@ class TableFragment : Fragment() {
     }
 
     private fun initViews() {
-
         tableViewPagerAdapter = TableViewPagerAdapter(requireActivity())
-        addFragmentsToVP()
-        binding.vpPitchTable.adapter = tableViewPagerAdapter
+        if (!isPitchOwner) {
+            addFragmentsToVPUser()
+            binding.vpPitchTable.adapter = tableViewPagerAdapter
 
-        binding.tabLayoutPitch.setupWithViewPager(
-            binding.vpPitchTable,
-            arrayListOf("O'ynaladi", "O'ynalgan")
-        )
+            binding.tabLayoutPitch.setupWithViewPager(
+                binding.vpPitchTable,
+                arrayListOf("O'ynaladi", "O'ynalgan")
+            )
+        } else {
+            addFragmentsToVPOwner()
+            binding.vpPitchTable.adapter = tableViewPagerAdapter
 
+            binding.tabLayoutPitch.setupWithViewPager(
+                binding.vpPitchTable,
+                arrayListOf("So'rov tushgan", "O'ynalgan")
+            )
+        }
     }
 
-    private fun addFragmentsToVP() {
+    private fun addFragmentsToVPOwner() {
+        tableViewPagerAdapter.addFragment(BookPitchSentFragment())
+        tableViewPagerAdapter.addFragment(PlayedPitchFragment())
+    }
+
+    private fun addFragmentsToVPUser() {
         tableViewPagerAdapter.addFragment(PlayingPitchFragment())
         tableViewPagerAdapter.addFragment(PlayedPitchFragment())
     }
