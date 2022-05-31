@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.*
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -25,6 +26,7 @@ class ProfileFragment : Fragment() {
 
     private val PICK_FROM_FILE_ADD: Int = 1001
     private lateinit var binding: FragmentProfileBinding
+    lateinit var sharedPref: SharedPref
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -48,19 +50,23 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initViews() {
-        sharedPref= SharedPref(requireContext())
+        sharedPref = SharedPref(requireContext())
 
-        val LogIn= sharedPref.getLogIn("LogIn",false)
-        if (!LogIn){
-            binding.linerProfile.visibility=View.GONE
-            binding.linearProfileNoSignIn.visibility=View.VISIBLE
-        }else{
-            binding.linerProfile.visibility=View.VISIBLE
-            binding.linearProfileNoSignIn.visibility=View.GONE
-
+        val logIn = sharedPref.getLogIn("LogIn", false)
+        Log.d("TAG", "initViews: $logIn")
+        if (!logIn) {
+            binding.linerProfile.visibility = View.GONE
+            binding.linearProfileNoSignIn.visibility = View.VISIBLE
+        } else {
+            binding.linerProfile.visibility = View.VISIBLE
+            binding.linearProfileNoSignIn.visibility = View.GONE
         }
         binding.ivAdd.setOnClickListener {
             openLocalStorage()
+        }
+
+        binding.tvEnterAccount.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_signInFragment)
         }
 
         binding.ivLogOut.setOnClickListener {
