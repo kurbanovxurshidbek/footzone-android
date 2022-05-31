@@ -24,6 +24,7 @@
             android:src="@drawable/ic_icon" />
 
         <TextView
+            android:fontFamily="@font/poppins_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Yaqin atrofdagi maydonlar"
@@ -38,6 +39,7 @@
         android:layout_marginTop="12dp">
 
         <TextView
+            android:fontFamily="@font/poppins_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/textview_rounded_background"
@@ -48,6 +50,7 @@
             android:textSize="14sp" />
 
         <TextView
+            android:fontFamily="@font/poppins_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"

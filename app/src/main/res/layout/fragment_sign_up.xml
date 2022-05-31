@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_weight="1"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Ro`yxatdan o`tish"
                     android:textColor="#0A0A0A"
                     android:textSize="22sp"
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:editable="false"
                     android:focusable="false"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/poppins_bold"
                     android:inputType="none"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -92,7 +92,7 @@
                     android:id="@+id/editTextName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/poppins_bold"
                     android:inputType="textCapWords"
                     android:textColor="#0A0A0A"
                     android:textSize="16sp" />
@@ -112,7 +112,7 @@
                     android:id="@+id/editTextSurname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/poppins_bold"
                     android:inputType="textCapWords"
                     android:textColor="#0A0A0A"
                     android:textSize="16sp" />
@@ -134,7 +134,7 @@
                     android:id="@+id/editTextNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/poppins_bold"
                     android:inputType="phone"
                     app:mask="## ### ## ##" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -154,7 +154,7 @@
                     android:layout_margin="2dp"
                     android:background="@drawable/button_register_filled_rounded_corner1"
                     android:clickable="false"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Ro'yxatdan o'tish"
                     android:textAllCaps="false"
                     android:textColor="#8F8F8F"
@@ -164,6 +164,7 @@
             </LinearLayout>
 
             <TextView
+                android:fontFamily="@font/poppins_bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -174,6 +175,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:fontFamily="@font/poppins_bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -183,6 +185,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:fontFamily="@font/poppins_bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -215,7 +218,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto"
+                android:fontFamily="@font/poppins_bold"
                 android:maxLines="1"
                 android:text="Akkauntingiz bormi?"
                 android:textColor="#424242"
@@ -226,7 +229,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:fontFamily="@font/roboto"
+                android:fontFamily="@font/poppins_bold"
                 android:maxLines="1"
                 android:text="Kirish"
                 android:textColor="#0C64E6"

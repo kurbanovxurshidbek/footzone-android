@@ -31,6 +31,7 @@
                 app:elevation="0dp">
 
                 <TextView
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -44,6 +45,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.material.tabs.TabLayout
+            android:fontFamily="@font/poppins_bold"
             android:id="@+id/tabLayoutPitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -98,6 +100,7 @@
                 app:elevation="0dp">
 
                 <TextView
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -111,6 +114,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <TextView
+            android:fontFamily="@font/poppins_bold"
             android:textSize="16sp"
             android:id="@+id/tvNoSignIn"
             android:layout_width="match_parent"
@@ -123,6 +127,7 @@ safihangizga kiring"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:fontFamily="@font/poppins_bold"
             android:id="@+id/tvEnterAccount"
             android:textSize="17sp"
             android:layout_width="wrap_content"

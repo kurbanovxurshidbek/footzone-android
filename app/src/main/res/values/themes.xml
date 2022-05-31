@@ -75,4 +75,9 @@
     <style name="circle">
         <item name="cornerSize">50%</item>
     </style>
+    <style name="BottomNavigationViewTextStyle">
+        ...
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        ...
+    </style>
 </resources>

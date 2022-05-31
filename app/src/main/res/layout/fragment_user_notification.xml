@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_weight="1"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Bildirishnomalar"
                     android:textColor="#0A0A0A"
                     android:textSize="22sp"/>

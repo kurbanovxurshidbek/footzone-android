@@ -22,6 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:fontFamily="@font/poppins_bold"
         android:id="@+id/tvPitchName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,6 +54,7 @@
             android:progressTint="#FFC107" />
 
         <TextView
+            android:fontFamily="@font/poppins_bold"
             android:id="@+id/tvRatingNums"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,6 +72,7 @@
         app:layout_constraintTop_toBottomOf="@id/linear">
 
         <TextView
+            android:fontFamily="@font/poppins_bold"
             android:id="@+id/tvOpenClose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,6 +81,7 @@
             android:textSize="12sp" />
 
         <TextView
+            android:fontFamily="@font/poppins_bold"
             android:id="@+id/tvOpenCloseHour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -89,6 +93,7 @@
     </LinearLayout>
 
     <TextView
+        android:fontFamily="@font/poppins_bold"
         android:id="@+id/tvPitchPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -125,6 +130,7 @@
                 android:src="@drawable/ic_pitch_white" />
 
             <TextView
+                android:fontFamily="@font/poppins_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -151,6 +157,7 @@
                 android:src="@drawable/ic_navigate" />
 
             <TextView
+                android:fontFamily="@font/poppins_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"

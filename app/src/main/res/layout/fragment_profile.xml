@@ -177,6 +177,7 @@
 
 
                 <TextView
+                    android:fontFamily="@font/poppins_bold"
                     android:textSize="16sp"
                     android:id="@+id/tvNoSignIn"
                     android:layout_width="match_parent"
@@ -191,6 +192,7 @@ safihangizga kiring"
                 <TextView
                     android:id="@+id/tvEnterAccount"
                     android:textSize="17sp"
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/enter_button_backround"
@@ -224,6 +226,7 @@ safihangizga kiring"
             android:paddingBottom="20dp">
 
             <TextView
+                android:fontFamily="@font/poppins_bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -253,6 +256,7 @@ safihangizga kiring"
                     android:orientation="vertical">
 
                     <TextView
+                        android:fontFamily="@font/poppins_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Bildirishnomalar"
@@ -260,6 +264,7 @@ safihangizga kiring"
                         android:textSize="16sp" />
 
                     <TextView
+                        android:fontFamily="@font/poppins_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Bildirishnomalar sozlamalari"
@@ -292,6 +297,7 @@ safihangizga kiring"
                     android:orientation="vertical">
 
                     <TextView
+                        android:fontFamily="@font/poppins_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Til"
@@ -299,6 +305,7 @@ safihangizga kiring"
                         android:textSize="16sp" />
 
                     <TextView
+                        android:fontFamily="@font/poppins_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="O'zbekcha"
@@ -317,6 +324,7 @@ safihangizga kiring"
             android:background="#F5F5F5" />
 
         <TextView
+            android:fontFamily="@font/poppins_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -346,6 +354,7 @@ safihangizga kiring"
 
 
                 <TextView
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ilova versiyasi"
@@ -353,6 +362,7 @@ safihangizga kiring"
                     android:textSize="16sp" />
 
                 <TextView
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1.0.0"
