@@ -46,9 +46,6 @@ class SignInFragment : Fragment() {
         binding.editTextNumber.doAfterTextChanged {
             enterButtonControl()
         }
-        binding.editTextPassword.doAfterTextChanged {
-            enterButtonControl()
-        }
     }
 
     @SuppressLint("ResourceAsColor")
@@ -70,8 +67,7 @@ class SignInFragment : Fragment() {
 
     private fun checkData(): Boolean {
         val number = binding.editTextNumber.text.toString()
-        val password = binding.editTextPassword.text.toString()
-        return number.length == 12 && password.length > 5
+        return number.length == 12
     }
 
     private fun closeSignInFragment() {

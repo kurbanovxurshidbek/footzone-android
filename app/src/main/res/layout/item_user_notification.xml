@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/unchecked_item_user_notification_background"
+    android:padding="16dp"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/messageBody"
+        android:textColor="#0A0A0A"
+        android:text="Maydon band qilish uchun so’rovingiz maydon egasiga yuborildi. So’rovingiz qabul qilinishi yoki rad etilishi bilanoq sizga bildirishnoma keladi. So’rovingiz qabul qilinganda maydon “Jadval” bo’limida paydo bo’ladi."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/messageDate"
+        android:layout_marginTop="6dp"
+        android:textColor="#0A0A0A"
+        android:text="17.04.2022 • 16:04"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
