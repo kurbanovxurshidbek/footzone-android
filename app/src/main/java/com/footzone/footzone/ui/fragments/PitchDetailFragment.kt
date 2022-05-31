@@ -31,8 +31,13 @@ import com.footzone.footzone.utils.Extensions.hideBottomSheet
 import com.footzone.footzone.utils.Extensions.setImageViewBusy
 import com.footzone.footzone.utils.Extensions.setImageViewisBusy
 import com.footzone.footzone.utils.Extensions.showBottomSheet
+import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import java.lang.Integer.parseInt
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
