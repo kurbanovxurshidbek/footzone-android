@@ -40,8 +40,8 @@ class CalendarDIalog(private var onEnterClick: ((String) -> Unit)) {
         dialog.setCancelable(true)
 
         binding.calendarView.setOnDateChangeListener { _, year, month, date ->
-            val monthad: String = DateFormatSymbols().getMonths().get(month - 1)
-            dateChoose = "$day ${monthad.lowercase()} $year"
+            val monthad: String = DateFormatSymbols().getMonths().get(month)
+            dateChoose = "$date ${monthad.lowercase()} $year"
         }
 
         binding.tvSelection.setOnClickListener {
