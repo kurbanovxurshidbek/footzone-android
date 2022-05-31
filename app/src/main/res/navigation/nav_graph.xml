@@ -38,7 +38,11 @@
         android:id="@+id/profileFragment"
         android:name="com.footzone.footzone.ui.fragments.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
     <fragment
         android:id="@+id/pitchDetailFragment"
         android:name="com.footzone.footzone.ui.fragments.PitchDetailFragment"
