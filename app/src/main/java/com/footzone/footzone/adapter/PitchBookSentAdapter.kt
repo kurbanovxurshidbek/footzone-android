@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.footzone.footzone.databinding.ItemPitchBookSentBinding
 import com.footzone.footzone.model.PitchHistory
 
-class PitchBookSentAdapter :
+class PitchBookSentAdapter(val onRespondClick: (Boolean) -> Unit) :
     RecyclerView.Adapter<PitchBookSentAdapter.VH>() {
 
     private val playedPitchList = ArrayList<PitchHistory>()
@@ -23,6 +23,14 @@ class PitchBookSentAdapter :
             tvDate.text = pitch.date
             tvHours.text = "${pitch.hour.start}-${pitch.hour.end}, 2 soat"
             tvPrice.text = "${pitch.price} so'm"
+
+            btnAccept.setOnClickListener {
+                onRespondClick.invoke(true)
+            }
+
+            btnDecline.setOnClickListener {
+                onRespondClick.invoke(false)
+            }
         }
     }
 

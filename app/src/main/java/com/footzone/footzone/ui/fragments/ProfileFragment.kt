@@ -8,10 +8,10 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.view.*
+import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentProfileBinding
 import java.io.File
@@ -20,6 +20,11 @@ class ProfileFragment : Fragment() {
 
     private val PICK_FROM_FILE_ADD: Int = 1001
     private lateinit var binding: FragmentProfileBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +45,27 @@ class ProfileFragment : Fragment() {
     private fun initViews() {
         binding.ivAdd.setOnClickListener {
             openLocalStorage()
+        }
+
+        binding.ivLogOut.setOnClickListener {
+            showPopup(it)
+        }
+    }
+
+    private fun showPopup(v: View) {
+        PopupMenu(requireContext(), v).apply {
+            setOnMenuItemClickListener { item ->
+                when (item?.itemId) {
+
+                    R.id.logOut -> {
+                        Toast.makeText(requireContext(), "log out", Toast.LENGTH_SHORT).show()
+                        true
+                    }
+                    else -> false
+                }
+            }
+            inflate(R.menu.action_bar_menu)
+            show()
         }
     }
 

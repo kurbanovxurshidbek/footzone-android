@@ -10,6 +10,7 @@ import com.footzone.footzone.adapter.PitchBookSentAdapter
 import com.footzone.footzone.databinding.FragmentBookPitchSentBinding
 import com.footzone.footzone.model.Hour
 import com.footzone.footzone.model.PitchHistory
+import com.footzone.footzone.utils.AcceptDeclineDialog
 import java.util.ArrayList
 
 class BookPitchSentFragment : Fragment() {
@@ -34,9 +35,19 @@ class BookPitchSentFragment : Fragment() {
     }
 
     private fun initViews() {
-        playingPitchAdapter = PitchBookSentAdapter()
+        playingPitchAdapter = PitchBookSentAdapter { toAccept ->
+            manageAcceptDeclineClick(toAccept)
+        }
         playingPitchAdapter.submitData(getPlayedPitchHistory())
         refreshAdapter()
+    }
+
+    private fun manageAcceptDeclineClick(toAccept: Boolean) {
+        if (toAccept) {
+            val acceptDeclineDialog = AcceptDeclineDialog(requireContext()).instance(R.layout.layout_accept_decline)
+            acceptDeclineDialog.manageResponse()
+            acceptDeclineDialog.show()
+        }
     }
 
     private fun refreshAdapter() {
