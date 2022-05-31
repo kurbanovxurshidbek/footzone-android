@@ -39,6 +39,9 @@ class SignInFragment : Fragment() {
         binding.backButton.setOnClickListener {
             closeSignInFragment()
         }
+        binding.enterButton.setOnClickListener {
+            findNavController().navigate(R.id.action_signInFragment_to_verificationFragment)
+        }
         checkAllFields()
     }
 

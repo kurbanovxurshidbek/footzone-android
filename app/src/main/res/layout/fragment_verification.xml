@@ -38,7 +38,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/roboto"
-                    android:text="Ro`yxatdan o`tish"
+                    android:text="Tasdiqlash kodi"
                     android:textColor="#0A0A0A"
                     android:textSize="22sp"
                     android:textStyle="bold" />
@@ -112,7 +112,7 @@
                 android:clickable="false"
                 android:fontFamily="@font/roboto"
                 android:maxLines="1"
-                android:text="Ro’yxatdan o’tish"
+                android:text="Tasdiqlash"
                 android:textAllCaps="false"
                 android:textColor="#8F8F8F"
                 android:textSize="14sp"

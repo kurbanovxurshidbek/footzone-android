@@ -6,183 +6,329 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.fragments.ProfileFragment">
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/top"
-            android:layout_width="match_parent"
-            android:layout_height="208dp"
-            android:background="@drawable/profile_rectangle"
-            android:paddingStart="20dp"
-            android:paddingEnd="26dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/imageBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="76dp"
-                android:src="@drawable/ic_icon"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/white" />
-
-            <ImageView
-                android:id="@+id/imageLogOut"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="76dp"
-                android:src="@drawable/ic_profile_spinner"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <LinearLayout
-            android:id="@+id/bottom"
+            android:visibility="gone"
+            android:id="@+id/linerProfile"
             android:layout_width="match_parent"
-            android:layout_height="192dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/top">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <LinearLayout
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
-                android:gravity="center_vertical"
-                android:paddingStart="16dp">
+                android:layout_height="400dp"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/top"
+                    android:layout_width="match_parent"
+                    android:layout_height="208dp"
+                    android:background="@drawable/image1"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="26dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageBack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="76dp"
+                        android:src="@drawable/ic_icon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/white" />
+
+                    <ImageView
+                        android:id="@+id/imageLogOut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="76dp"
+                        android:src="@drawable/ic_profile_spinner"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="192dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/top">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="80dp"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp">
+
+                        <TextView
+                            android:id="@+id/tvName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Akmal Bunyodov"
+                            android:textColor="@color/black"
+                            android:textSize="28sp" />
+
+                        <ImageView
+                            android:id="@+id/ivEditName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:paddingStart="3dp"
+                            android:paddingEnd="19dp"
+                            android:src="@drawable/ic_edit_button" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="19dp">
+
+                        <ImageView
+                            android:id="@+id/imagePhone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:paddingEnd="19dp"
+                            android:src="@drawable/ic_phone" />
+
+                        <TextView
+                            android:id="@+id/tvNumber"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="+998 99 777 66 55"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:id="@+id/ivEditNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:paddingStart="3dp"
+                            android:paddingEnd="19dp"
+                            android:src="@drawable/ic_edit_button" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <FrameLayout
+                    android:layout_width="122dp"
+                    android:layout_height="122dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/imageview_circle_grey"
+                    app:layout_constraintBottom_toTopOf="@id/bottom"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/top">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivProfile"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        android:theme="@style/circle" />
+
+                    <ImageView
+                        android:id="@+id/ivDefaultPerson"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_person" />
+
+                    <ImageView
+                        android:id="@+id/ivAdd"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="end|bottom"
+                        android:background="@drawable/imageview_circle_plus"
+                        android:src="@drawable/ic_plus_blue" />
+
+                </FrameLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="400dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/accountNoSignIn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
 
                 <TextView
-                    android:id="@+id/tvName"
-                    android:layout_width="0dp"
+                    android:textSize="16sp"
+                    android:id="@+id/tvNoSignIn"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Akmal Bunyodov"
-                    android:textColor="@color/black"
-                    android:textSize="28sp" />
+                    android:gravity="center"
+                    android:text="Sahifangiz sozlamalarini ko'rish uchun\n
+safihangizga kiring"
+                    android:textColor="#424242"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvEnterAccount"
+                    android:textSize="17sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/enter_button_backround"
+                    android:gravity="center"
+                    android:paddingHorizontal="25dp"
+                    android:paddingVertical="10dp"
+                    android:text="Kirish"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvNoSignIn"
+                    app:layout_constraintVertical_bias="0.06" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="#F5F5F5" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="16dp"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Sozlamalar"
+                android:textColor="#424242"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/linearNotification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/ivEditName"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingStart="3dp"
-                    android:paddingEnd="19dp"
-                    android:src="@drawable/ic_edit_button" />
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_bell" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bildirishnomalar"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bildirishnomalar sozlamalari"
+                        android:textColor="#424242"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearLanguage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="24dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="19dp">
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/imagePhone"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingEnd="19dp"
-                    android:src="@drawable/ic_phone" />
-
-                <TextView
-                    android:id="@+id/tvNumber"
-                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="+998 99 777 66 55"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:src="@drawable/ic_ear" />
 
-                <ImageView
-                    android:id="@+id/ivEditNumber"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingStart="3dp"
-                    android:paddingEnd="19dp"
-                    android:src="@drawable/ic_edit_button" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Til"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="O'zbekcha"
+                        android:textColor="#424242"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <FrameLayout
-            android:layout_width="122dp"
-            android:layout_height="122dp"
-            android:layout_marginStart="16dp"
-            android:background="@drawable/imageview_circle_grey"
-            app:layout_constraintBottom_toTopOf="@id/bottom"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/top">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivProfile"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:scaleType="centerCrop"
-                android:theme="@style/circle" />
-
-            <ImageView
-                android:id="@+id/ivDefaultPerson"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_person" />
-
-            <ImageView
-                android:id="@+id/ivAdd"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="end|bottom"
-                android:background="@drawable/imageview_circle_plus"
-                android:src="@drawable/ic_plus_blue" />
-
-        </FrameLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:background="#F5F5F5" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingEnd="16dp"
-        android:paddingBottom="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="#F5F5F5" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:text="Sozlamalar"
+            android:text="Ilova haqida"
             android:textColor="#424242"
             android:textSize="16sp" />
 
         <LinearLayout
-            android:id="@+id/linearNotification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="20dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -190,123 +336,32 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_bell" />
+                android:src="@drawable/ic_information" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="18dp"
                 android:orientation="vertical">
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bildirishnomalar"
-                    android:textColor="@color/black"
+                    android:text="Ilova versiyasi"
+                    android:textColor="#0A0A0A"
                     android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bildirishnomalar sozlamalari"
+                    android:text="1.0.0"
                     android:textColor="#424242"
                     android:textSize="14sp" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLanguage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="24dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_ear" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Til"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="O'zbekcha"
-                    android:textColor="#424242"
-                    android:textSize="14sp" />
-
             </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:background="#F5F5F5" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Ilova haqida"
-        android:textColor="#424242"
-        android:textSize="16sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_information" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:orientation="vertical">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ilova versiyasi"
-                android:textColor="#0A0A0A"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1.0.0"
-                android:textColor="#424242"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-    </LinearLayout>
     </LinearLayout>
 
 
