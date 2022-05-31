@@ -1,6 +1,7 @@
 package com.footzone.footzone.adapter
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -28,10 +29,12 @@ class UserNotificationAdapter(var items: ArrayList<UserNotification>) :
             messageDate.setText(item.date)
             if (item.isChecked){
                 itemUserNotificationRoot.setBackgroundResource(R.drawable.checked_item_user_notification_background)
-                messageBody.setTextColor(R.color.lightTextColor)
+                messageBody.setTextColor(Color.parseColor("#424242"))
+                messageDate.setTextColor(Color.parseColor("#424242"))
             } else {
                 itemUserNotificationRoot.setBackgroundResource(R.drawable.unchecked_item_user_notification_background)
-                messageBody.setTextColor(R.color.darkTextColor)
+                messageBody.setTextColor(Color.parseColor("#0A0A0A"))
+                messageDate.setTextColor(Color.parseColor("#0A0A0A"))
             }
         }
     }
