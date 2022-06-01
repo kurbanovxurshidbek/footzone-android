@@ -144,14 +144,6 @@ open class AddStadiumFragment : Fragment() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) intent.action = Intent.ACTION_GET_CONTENT
         val chooserIntent = Intent.createChooser(intent, "Complete action using")
 
-        val captured_image = System.currentTimeMillis().toString() + ".jpg"
-        val file = File(Environment.getExternalStorageDirectory(), captured_image)
-        //val outputFileUri = Uri.fromFile(file)
-        val captureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, "")
-        captureIntent.putExtra("return-data", true)
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(captureIntent))
-
         if (type == PICK_FROM_FILE_ADD) {
             startActivityForResult(chooserIntent, PICK_FROM_FILE_ADD)
         } else {

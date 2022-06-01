@@ -1,7 +1,6 @@
 package com.footzone.footzone.ui.fragments
 
 import android.content.Context
-import android.graphics.Color
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Build
@@ -13,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.footzone.footzone.CalendarDIalog
 import com.footzone.footzone.R
@@ -34,7 +32,6 @@ import com.footzone.footzone.utils.Extensions.showBottomSheet
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import java.lang.Integer.parseInt
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -174,29 +171,23 @@ class PitchDetailFragment : Fragment() {
         binding.bottomSheet.startTime.setOnLongPressUpdateInterval(8000)
         binding.bottomSheet.finishTime.setOnLongPressUpdateInterval(8000)
 
+        val value = "" + binding.bottomSheet.startTime.getValue()
+
+        Log.d("TAG", "controlBottomSheetActions: ${value}")
+
 
         binding.bottomSheet.startTime.setOnValueChangedListener(NumberPicker.OnValueChangeListener { numberPicker, i, i1 ->
+//
+//            var inswv  = LocalDate.now().atTime(LocalTime.parse(timeList[i1]))
+//                .format(DateTimeFormatter.ofPattern("HH:mm"))
 
-                var inswv  = LocalDate.now().atTime(LocalTime.parse(timeList[i]))
-                    .format(DateTimeFormatter.ofPattern("HH:mm"))
-
-                Log.d("TAG", "controlBottomSheetActions: ${inswv}")
-
-                val startTime = "05:30"
-                val sts = startTime.split(":");
-                val endTime = "15:00"
-                val ets = endTime.split(":");
-
-                val stMin = (parseInt(sts[0]) * 60 + parseInt(sts[1]));
-                val etMin = (parseInt(ets[0]) * 60 + parseInt(ets[1]));
-                if( etMin > stMin) {
-                    Toast.makeText(requireContext(), "true", Toast.LENGTH_SHORT).show()
-                }
+           // Log.d("TAG", "controlBottomSheetActions: ${inswv}")
+           // Log.d("TAG", "controlBottomSheetActions: ${i1}")
 
             checkVibrationIsOn(requireContext())
 
             for (time in times) {
-                if (time.startTime == timeList[i]) {
+                if (time.startTime == timeList[i1]) {
                     boolStart = false
                     binding.bottomSheet.tvOccupancy.changeTextBackgroundBlue(boolStart, boolFinish)
                     if (time.type.equals("band")) {
@@ -229,7 +220,7 @@ class PitchDetailFragment : Fragment() {
             checkVibrationIsOn(requireContext())
 
             for (time in times) {
-                if (time.startTime == timeList[i]) {
+                if (time.startTime == timeList[i1]) {
                     boolFinish = false
                     binding.bottomSheet.tvOccupancy.changeTextBackgroundBlue(boolStart, boolFinish)
                     if (time.type.equals("band")) {
@@ -259,21 +250,7 @@ class PitchDetailFragment : Fragment() {
 
         binding.bottomSheet.tvCancel.setOnClickListener { sheetBehavior.hideBottomSheet() }
 
-        sheetBehavior.addBottomSheetCallback(object :BottomSheetBehavior.BottomSheetCallback(){
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED){
-                    binding.frameWrapper.setBackgroundColor(Color.parseColor("#40000000"))
-                }
-                if (newState == BottomSheetBehavior.STATE_HIDDEN){
-                    binding.frameWrapper.setBackgroundColor(Color.TRANSPARENT)
-                }
 
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-            }
-
-        })
     }
 
     /**

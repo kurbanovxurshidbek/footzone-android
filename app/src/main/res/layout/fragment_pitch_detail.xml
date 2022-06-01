@@ -9,11 +9,6 @@
     android:paddingTop="24dp"
     tools:context=".ui.fragments.PitchDetailFragment">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/frameWrapper"/>
-
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
