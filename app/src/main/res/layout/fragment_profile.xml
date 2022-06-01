@@ -13,11 +13,11 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/linerProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,22 +37,11 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:id="@+id/ivBack"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="60dp"
-                        android:padding="16dp"
-                        android:src="@drawable/ic_icon"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:tint="@color/white" />
-
-                    <ImageView
                         android:id="@+id/ivLogOut"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        android:layout_marginTop="60dp"
+                        android:layout_marginTop="30dp"
                         android:padding="16dp"
                         android:src="@drawable/ic_profile_spinner"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -76,11 +65,11 @@
                         android:paddingStart="16dp">
 
                         <TextView
-                            android:fontFamily="@font/poppins_bold"
                             android:id="@+id/tvName"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/poppins_bold"
                             android:text="Akmal Bunyodov"
                             android:textColor="@color/black"
                             android:textSize="28sp" />
@@ -111,11 +100,11 @@
                             android:src="@drawable/ic_phone" />
 
                         <TextView
-                            android:fontFamily="@font/poppins_bold"
                             android:id="@+id/tvNumber"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/poppins_bold"
                             android:text="+998 99 777 66 55"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
@@ -170,11 +159,13 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/linearProfileNoSignIn"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="400dp">
+            android:layout_height="400dp"
+            android:orientation="vertical">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/accountNoSignIn"
                 android:layout_width="match_parent"
@@ -182,10 +173,10 @@
 
 
                 <TextView
-                    android:fontFamily="@font/poppins_bold"
                     android:id="@+id/tvNoSignIn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
                     android:text="Sahifangiz sozlamalarini ko'rish uchun\n
 safihangizga kiring"
@@ -196,16 +187,16 @@ safihangizga kiring"
 
                 <TextView
                     android:id="@+id/tvEnterAccount"
-                    android:textSize="17sp"
-                    android:fontFamily="@font/poppins_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/enter_button_backround"
+                    android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
                     android:paddingHorizontal="25dp"
                     android:paddingVertical="10dp"
                     android:text="Kirish"
                     android:textColor="@color/white"
+                    android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -231,11 +222,11 @@ safihangizga kiring"
             android:paddingBottom="20dp">
 
             <TextView
-                android:fontFamily="@font/poppins_bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Sozlamalar"
                 android:textColor="#424242"
                 android:textSize="16sp" />
@@ -261,17 +252,17 @@ safihangizga kiring"
                     android:orientation="vertical">
 
                     <TextView
-                        android:fontFamily="@font/poppins_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
                         android:text="Bildirishnomalar"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:fontFamily="@font/poppins_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
                         android:text="Bildirishnomalar sozlamalari"
                         android:textColor="#424242"
                         android:textSize="14sp" />
@@ -302,17 +293,17 @@ safihangizga kiring"
                     android:orientation="vertical">
 
                     <TextView
-                        android:fontFamily="@font/poppins_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
                         android:text="Til"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:fontFamily="@font/poppins_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
                         android:text="O'zbekcha"
                         android:textColor="#424242"
                         android:textSize="14sp" />
@@ -329,11 +320,11 @@ safihangizga kiring"
             android:background="#F5F5F5" />
 
         <TextView
-            android:fontFamily="@font/poppins_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_bold"
             android:text="Ilova haqida"
             android:textColor="#424242"
             android:textSize="16sp" />
@@ -359,17 +350,17 @@ safihangizga kiring"
 
 
                 <TextView
-                    android:fontFamily="@font/poppins_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Ilova versiyasi"
                     android:textColor="#0A0A0A"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:fontFamily="@font/poppins_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="1.0.0"
                     android:textColor="#424242"
                     android:textSize="14sp" />

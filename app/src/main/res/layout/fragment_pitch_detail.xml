@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:id="@+id/cordLayout"
-    android:paddingTop="24dp"
     tools:context=".ui.fragments.stadiumdetail.PitchDetailFragment">
 
     <FrameLayout
