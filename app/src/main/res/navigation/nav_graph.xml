@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.footzone.footzone.ui.fragments.HomeFragment"
+        android:name="com.footzone.footzone.ui.fragments.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/tableFragment"
-        android:name="com.footzone.footzone.ui.fragments.TableFragment"
+        android:name="com.footzone.footzone.ui.fragments.table.TableFragment"
         android:label="fragment_table"
         tools:layout="@layout/fragment_table" >
         <action
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.footzone.footzone.ui.fragments.ProfileFragment"
+        android:name="com.footzone.footzone.ui.fragments.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -45,12 +45,12 @@
     </fragment>
     <fragment
         android:id="@+id/pitchDetailFragment"
-        android:name="com.footzone.footzone.ui.fragments.PitchDetailFragment"
+        android:name="com.footzone.footzone.ui.fragments.stadiumdetail.PitchDetailFragment"
         android:label="fragment_pitch_detail"
         tools:layout="@layout/fragment_pitch_detail" />
     <fragment
         android:id="@+id/myStadiumFragment"
-        android:name="com.footzone.footzone.ui.fragments.MyStadiumFragment"
+        android:name="com.footzone.footzone.ui.fragments.mystadium.MyStadiumFragment"
         android:label="MyStadiumFragment">
         <action
             android:id="@+id/action_myStadiumFragment_to_addStadiumFragment"
@@ -65,7 +65,7 @@
     </fragment>
     <fragment
         android:id="@+id/addStadiumFragment"
-        android:name="com.footzone.footzone.ui.fragments.AddStadiumFragment"
+        android:name="com.footzone.footzone.ui.fragments.addstadium.AddStadiumFragment"
         android:label="AddStadiumFragment">
         <action
             android:id="@+id/action_addStadiumFragment_to_stadiumLocationFragment"
@@ -84,15 +84,15 @@
     </fragment>
     <fragment
         android:id="@+id/stadiumLocationFragment"
-        android:name="com.footzone.footzone.ui.fragments.StadiumLocationFragment"
+        android:name="com.footzone.footzone.ui.fragments.location.StadiumLocationFragment"
         android:label="StadiumLocationFragment" />
     <fragment
         android:id="@+id/chooseWorkTimeFragment"
-        android:name="com.footzone.footzone.ui.fragments.ChooseWorkTimeFragment"
+        android:name="com.footzone.footzone.ui.fragments.worktime.ChooseWorkTimeFragment"
         android:label="ChooseWorkTimeFragment" />
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.footzone.footzone.ui.fragments.SignInFragment"
+        android:name="com.footzone.footzone.ui.fragments.signin.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in" >
         <action
@@ -104,12 +104,12 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.footzone.footzone.ui.fragments.SignUpFragment"
+        android:name="com.footzone.footzone.ui.fragments.signup.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" />
     <fragment
         android:id="@+id/verificationFragment"
-        android:name="com.footzone.footzone.ui.fragments.VerificationFragment"
+        android:name="com.footzone.footzone.ui.fragments.verification.VerificationFragment"
         android:label="fragment_verification"
         tools:layout="@layout/fragment_verification" >
         <action
@@ -118,7 +118,7 @@
     </fragment>
     <fragment
         android:id="@+id/stadiumFragment"
-        android:name="com.footzone.footzone.ui.fragments.StadiumFragment"
+        android:name="com.footzone.footzone.ui.fragments.stadium.StadiumFragment"
         android:label="StadiumFragment" >
         <action
             android:id="@+id/action_stadiumFragment_to_addStadiumFragment"
@@ -126,12 +126,12 @@
     </fragment>
     <fragment
         android:id="@+id/userNotificationFragment"
-        android:name="com.footzone.footzone.ui.fragments.UserNotificationFragment"
+        android:name="com.footzone.footzone.ui.fragments.usernotification.UserNotificationFragment"
         android:label="fragment_user_notification"
         tools:layout="@layout/fragment_user_notification" />
     <fragment
         android:id="@+id/adminNotificationFragment"
-        android:name="com.footzone.footzone.ui.fragments.AdminNotificationFragment"
+        android:name="com.footzone.footzone.ui.fragments.adminnotification.AdminNotificationFragment"
         android:label="fragment_admin_notification"
         tools:layout="@layout/fragment_admin_notification" />
 </navigation>

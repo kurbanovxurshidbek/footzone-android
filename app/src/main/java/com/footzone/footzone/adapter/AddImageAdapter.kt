@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.footzone.footzone.databinding.ItemAddImageBinding
 import com.footzone.footzone.databinding.ItemStadiumImageBinding
 import com.footzone.footzone.model.Image
-import com.footzone.footzone.ui.fragments.AddStadiumFragment
+import com.footzone.footzone.ui.fragments.addstadium.AddStadiumFragment
 
 
 class AddImageAdapter(

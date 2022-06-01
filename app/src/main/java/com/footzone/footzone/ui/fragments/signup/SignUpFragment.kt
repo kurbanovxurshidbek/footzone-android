@@ -1,22 +1,16 @@
-package com.footzone.footzone.ui.fragments
+package com.footzone.footzone.ui.fragments.signup
 
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
-import com.footzone.footzone.databinding.FragmentSignInBinding
 import com.footzone.footzone.databinding.FragmentSignUpBinding
 
 class SignUpFragment : Fragment() {

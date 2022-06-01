@@ -1,7 +1,6 @@
-package com.footzone.footzone.ui.fragments
+package com.footzone.footzone.ui.fragments.mystadium
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.MyPitchAdapter
-import com.footzone.footzone.adapter.PitchAdapter
 import com.footzone.footzone.databinding.FragmentMyStadiumBinding
 import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.Time

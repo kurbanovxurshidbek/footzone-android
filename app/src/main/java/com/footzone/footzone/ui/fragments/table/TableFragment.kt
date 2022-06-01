@@ -1,4 +1,4 @@
-package com.footzone.footzone.ui.fragments
+package com.footzone.footzone.ui.fragments.table
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +10,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.TableViewPagerAdapter
 import com.footzone.footzone.databinding.FragmentTableBinding
+import com.footzone.footzone.ui.fragments.bookpitchsent.BookPitchSentFragment
+import com.footzone.footzone.ui.fragments.played.PlayedPitchFragment
+import com.footzone.footzone.ui.fragments.playing.PlayingPitchFragment
 import com.footzone.footzone.utils.SharedPref
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator

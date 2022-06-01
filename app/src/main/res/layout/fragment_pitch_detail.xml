@@ -7,7 +7,7 @@
     android:background="#FFFFFF"
     android:id="@+id/cordLayout"
     android:paddingTop="24dp"
-    tools:context=".ui.fragments.PitchDetailFragment">
+    tools:context=".ui.fragments.stadiumdetail.PitchDetailFragment">
 
     <FrameLayout
         android:layout_width="match_parent"

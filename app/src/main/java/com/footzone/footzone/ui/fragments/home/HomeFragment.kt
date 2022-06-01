@@ -1,4 +1,4 @@
-package com.footzone.footzone.ui.fragments
+package com.footzone.footzone.ui.fragments.home
 
 import android.Manifest
 import android.app.Activity

@@ -1,4 +1,4 @@
-package com.footzone.footzone.ui.fragments
+package com.footzone.footzone.ui.fragments.addstadium
 
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
@@ -8,20 +8,15 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.os.Parcelable
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.FileProvider
-import androidx.core.graphics.TypefaceCompatUtil.getTempFile
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
-import com.footzone.footzone.BuildConfig
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.AddImageAdapter
 import com.footzone.footzone.adapter.PitchImageEditAdapter
@@ -30,7 +25,6 @@ import com.footzone.footzone.model.Image
 import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.utils.KeyValues
 import java.io.File
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 

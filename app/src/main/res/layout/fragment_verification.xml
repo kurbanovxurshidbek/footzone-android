@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="24dp"
-    tools:context=".ui.fragments.VerificationFragment">
+    tools:context=".ui.fragments.verification.VerificationFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"

@@ -1,4 +1,4 @@
-package com.footzone.footzone.ui.fragments
+package com.footzone.footzone.ui.fragments.stadiumdetail
 
 import android.content.Context
 import android.graphics.Color

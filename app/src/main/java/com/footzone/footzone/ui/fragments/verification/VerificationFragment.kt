@@ -1,4 +1,4 @@
-package com.footzone.footzone.ui.fragments
+package com.footzone.footzone.ui.fragments.verification
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -23,6 +23,7 @@ class VerificationFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_verification, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -32,13 +33,13 @@ class VerificationFragment : Fragment() {
     }
 
     private fun initViews() {
-        sharedPref= SharedPref(requireContext())
+        sharedPref = SharedPref(requireContext())
         verificationCodeErrorControl()
         binding.backButton.setOnClickListener {
             closeSignInFragment()
         }
         binding.confirmationButton.setOnClickListener {
-            sharedPref.saveLogIn("LogIn",true)
+            sharedPref.saveLogIn("LogIn", true)
             returnHomeFragment()
 
 
@@ -52,7 +53,7 @@ class VerificationFragment : Fragment() {
 
     private fun verificationCodeErrorControl() {
         binding.editTextVerificationCode.doAfterTextChanged {
-            if (it!!.toString().length != 4){
+            if (it!!.toString().length != 4) {
                 binding.textInputLayoutVerificationCode.error = "Tekshirib ko'ring"
                 registerButtonControl()
             } else {
@@ -65,6 +66,7 @@ class VerificationFragment : Fragment() {
     private fun closeSignInFragment() {
         findNavController().popBackStack()
     }
+
     @SuppressLint("ResourceAsColor")
     private fun registerButtonControl() {
         if (checkData()) {
@@ -82,6 +84,7 @@ class VerificationFragment : Fragment() {
             }
         }
     }
+
     private fun checkData(): Boolean {
 
         return binding.editTextVerificationCode.text!!.toString().length == 4

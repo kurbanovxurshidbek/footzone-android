@@ -1,6 +1,5 @@
-package com.footzone.footzone.ui.fragments
+package com.footzone.footzone.ui.fragments.profile
 
-import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
