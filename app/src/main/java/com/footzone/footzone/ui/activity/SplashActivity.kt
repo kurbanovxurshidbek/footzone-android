@@ -5,9 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.location.Location
+import android.location.LocationManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.footzone.footzone.R
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.MyBackgroundService
@@ -17,8 +20,16 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         registerReceiver(locationReceiver, IntentFilter("location.update"))
-        val intent = Intent(this, MyBackgroundService::class.java)
-        startService(intent)
+        val locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            val intent = Intent(this, MyBackgroundService::class.java)
+            startService(intent)
+        } else {
+            //gpsni yoqing
+            
+        }
+
     }
 
     private val locationReceiver = object : BroadcastReceiver() {
