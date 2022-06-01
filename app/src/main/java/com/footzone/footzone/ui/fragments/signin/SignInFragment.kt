@@ -1,9 +1,8 @@
-package com.footzone.footzone.ui.fragments
+package com.footzone.footzone.ui.fragments.signin
 
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
-import com.footzone.footzone.databinding.FragmentPlayedPitchBinding
 import com.footzone.footzone.databinding.FragmentSignInBinding
 
 class SignInFragment : Fragment() {
@@ -39,14 +37,15 @@ class SignInFragment : Fragment() {
         binding.backButton.setOnClickListener {
             closeSignInFragment()
         }
+        binding.enterButton.setOnClickListener {
+
+            findNavController().navigate(R.id.action_signInFragment_to_verificationFragment)
+        }
         checkAllFields()
     }
 
     private fun checkAllFields() {
         binding.editTextNumber.doAfterTextChanged {
-            enterButtonControl()
-        }
-        binding.editTextPassword.doAfterTextChanged {
             enterButtonControl()
         }
     }
@@ -70,8 +69,7 @@ class SignInFragment : Fragment() {
 
     private fun checkData(): Boolean {
         val number = binding.editTextNumber.text.toString()
-        val password = binding.editTextPassword.text.toString()
-        return number.length == 12 && password.length > 5
+        return number.length == 12
     }
 
     private fun closeSignInFragment() {

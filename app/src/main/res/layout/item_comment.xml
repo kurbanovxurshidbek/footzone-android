@@ -27,6 +27,7 @@
         </LinearLayout>
 
         <TextView
+            android:fontFamily="@font/poppins_bold"
             android:id="@+id/commentOwnerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:fontFamily="@font/roboto"
+            android:fontFamily="@font/poppins_bold"
             android:text="17.04.2022"
             android:textColor="#616161"
             android:textSize="14dp" />
@@ -67,10 +68,11 @@
     </LinearLayout>
 
     <TextView
+
         android:id="@+id/bodyComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto"
+        android:fontFamily="@font/poppins_bold"
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Odio urna sagittis, elit, molestie dui in blandit cursus. Venenatis pellentesque viverra auctor odio commodo, iaculis sit senectus. Lorem sollicitudin pretium et sollicitudin vitae aliquet."
         android:textColor="#424242"
         android:textSize="14dp" />

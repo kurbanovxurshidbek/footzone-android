@@ -1,4 +1,4 @@
-package com.footzone.footzone.ui.fragments
+package com.footzone.footzone.ui.fragments.location
 
 import android.os.Bundle
 import android.view.LayoutInflater

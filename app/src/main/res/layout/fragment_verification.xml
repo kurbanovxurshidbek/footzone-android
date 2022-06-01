@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="24dp"
-    tools:context=".ui.fragments.VerificationFragment">
+    tools:context=".ui.fragments.verification.VerificationFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
@@ -37,8 +36,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_weight="1"
-                    android:fontFamily="@font/roboto"
-                    android:text="Ro`yxatdan o`tish"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Tasdiqlash kodi"
                     android:textColor="#0A0A0A"
                     android:textSize="22sp"
                     android:textStyle="bold" />
@@ -59,7 +58,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
+            android:fontFamily="@font/poppins_bold"
             android:gravity="center"
             android:text="Telefon raqamingizga maxfiy kod\nSMS sifatida yuborildi. Shu kodni tering"
             android:textColor="#424242"
@@ -79,7 +78,7 @@
                 android:id="@+id/editTextVerificationCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto"
+                android:fontFamily="@font/poppins_bold"
                 android:inputType="number"
                 android:maxLength="4"
                 android:maxLines="1"
@@ -97,22 +96,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/roboto"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Kodni qayta jo’natish"
                 android:textColor="#0C64E6"
                 android:textSize="14sp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/registerButton"
+                android:id="@+id/confirmationButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_margin="2dp"
                 android:background="@drawable/button_register_filled_rounded_corner1"
                 android:clickable="false"
-                android:fontFamily="@font/roboto"
+                android:fontFamily="@font/poppins_bold"
                 android:maxLines="1"
-                android:text="Ro’yxatdan o’tish"
+                android:text="Tasdiqlash"
                 android:textAllCaps="false"
                 android:textColor="#8F8F8F"
                 android:textSize="14sp"

@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:paddingTop="24dp"
-    tools:context=".ui.fragments.PitchDetailFragment">
+    tools:context=".ui.fragments.stadiumdetail.PitchDetailFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -34,6 +33,7 @@
                     android:src="@drawable/ic_back_icon" />
 
                 <TextView
+                    android:fontFamily="@font/poppins_bold"
                     android:id="@+id/tvAppBarPitchName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -80,9 +80,9 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
                     android:maxLines="1"
                     android:text="@string/acme_futbol_maydoni"
                     android:textColor="#0A0A0A"
@@ -107,7 +107,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/poppins_bold"
                         android:text="@string/amir_temur_ko_chasi_14_uy"
                         android:textColor="#424242"
                         android:textSize="16sp" />
@@ -131,7 +131,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/poppins_bold"
                         android:text="@string/_998_99_777_66_55"
                         android:textColor="#424242"
                         android:textSize="16sp" />
@@ -172,7 +172,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/poppins_bold"
                         android:text="00:00 da yopiladi"
                         android:textColor="#424242"
                         android:textSize="16sp" />
@@ -202,7 +202,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/poppins_bold"
                         android:text="50 000"
                         android:textColor="#424242"
                         android:textSize="16sp" />
@@ -211,7 +211,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/poppins_bold"
                         android:text="so'm/soat"
                         android:textColor="#424242"
                         android:textSize="16sp" />
@@ -255,7 +255,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
-                                android:fontFamily="@font/roboto"
+                                android:fontFamily="@font/poppins_bold"
                                 android:maxLines="1"
                                 android:text="Marshrut"
                                 android:textColor="#0C64E6"
@@ -282,7 +282,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
-                                android:fontFamily="@font/roboto"
+                                android:fontFamily="@font/poppins_bold"
                                 android:maxLines="1"
                                 android:text="Ulashish"
                                 android:textColor="#0C64E6"
@@ -305,7 +305,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:fontFamily="@font/roboto"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Baholar va sharhlar"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -329,7 +329,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/poppins_bold"
                         android:text="4,2"
                         android:textColor="@color/black"
                         android:textSize="45dp" />
@@ -354,7 +354,7 @@
                             android:id="@+id/textViewRateCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto"
+                            android:fontFamily="@font/poppins_bold"
                             android:text="24"
                             android:textColor="#616161"
                             android:textSize="12sp" />
@@ -363,7 +363,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
-                            android:fontFamily="@font/roboto"
+                            android:fontFamily="@font/poppins_bold"
                             android:text="ta ovoz"
                             android:textColor="#616161"
                             android:textSize="12sp" />
@@ -386,7 +386,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto"
+                            android:fontFamily="@font/poppins_bold"
                             android:text="5"
                             android:textColor="#616161"
                             android:textSize="12sp" />
@@ -413,7 +413,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto"
+                            android:fontFamily="@font/poppins_bold"
                             android:text="4"
                             android:textColor="#616161"
                             android:textSize="12sp" />
@@ -440,7 +440,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto"
+                            android:fontFamily="@font/poppins_bold"
                             android:text="3"
                             android:textColor="#616161"
                             android:textSize="12sp" />
@@ -467,7 +467,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto"
+                            android:fontFamily="@font/poppins_bold"
                             android:text="2"
                             android:textColor="#616161"
                             android:textSize="12sp" />
@@ -494,7 +494,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto"
+                            android:fontFamily="@font/poppins_bold"
                             android:text="1"
                             android:textColor="#616161"
                             android:textSize="12sp" />

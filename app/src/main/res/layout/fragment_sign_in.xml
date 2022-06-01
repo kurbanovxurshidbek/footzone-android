@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="24dp"
-    tools:context=".ui.fragments.SignInFragment">
+    tools:context=".ui.fragments.signin.SignInFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarSignIn"
@@ -32,11 +31,12 @@
                     android:src="@drawable/ic_back_icon" />
 
                 <TextView
+
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_weight="1"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Kirish"
                     android:textColor="#0A0A0A"
                     android:textSize="22sp"
@@ -71,59 +71,28 @@
                     android:id="@+id/editTextNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/poppins_bold"
                     android:inputType="phone"
                     app:mask="## ### ## ##" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutPassword"
-                style="@style/LoginTextInputLayoutStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="Parol"
-                app:endIconMode="password_toggle"
-                app:errorEnabled="true"
-                app:errorTextColor="#C8303F">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
-                    android:inputType="textPassword"
-                    android:maxLength="12"
-                    android:maxLines="1"
-                    android:textColor="#0A0A0A"
-                    android:textSize="16sp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:gravity="end"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/roboto"
-                    android:text="Parolingizni unutdingizmi?"
-                    android:textColor="#0C64E6"
-                    android:textSize="14sp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/enterButton"
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_margin="2dp"
                     android:background="@drawable/button_register_filled_rounded_corner1"
                     android:clickable="false"
-                    android:fontFamily="@font/roboto"
                     android:maxLines="1"
                     android:text="Kirish"
                     android:textAllCaps="false"
@@ -157,7 +126,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto"
+                android:fontFamily="@font/poppins_bold"
                 android:maxLines="1"
                 android:text="Akkauntingiz yo'qmi?"
                 android:textColor="#424242"
@@ -168,7 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:fontFamily="@font/roboto"
+                android:fontFamily="@font/poppins_bold"
                 android:maxLines="1"
                 android:text="Ro’yxatdan o’ting"
                 android:textColor="#0C64E6"

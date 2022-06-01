@@ -1,40 +1,21 @@
-package com.footzone.footzone.ui.fragments
+package com.footzone.footzone.ui.fragments.stadium
 
-import android.content.Context
-import android.graphics.Color
-import android.media.AudioManager
-import android.media.MediaPlayer
-import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Vibrator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.NumberPicker
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.footzone.footzone.CalendarDIalog
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.CommentAdapter
 import com.footzone.footzone.adapter.CustomAdapter
-import com.footzone.footzone.databinding.FragmentPitchDetailBinding
 import com.footzone.footzone.databinding.FragmentStadiumBinding
 import com.footzone.footzone.model.Comment
 import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.TimeManager
-import com.footzone.footzone.utils.Extensions.changeTextBackgroundBlue
-import com.footzone.footzone.utils.Extensions.changeTextColorGreen
-import com.footzone.footzone.utils.Extensions.changeTextColorRed
-import com.footzone.footzone.utils.Extensions.changeTextColorYellow
-import com.footzone.footzone.utils.Extensions.hideBottomSheet
-import com.footzone.footzone.utils.Extensions.setImageViewBusy
-import com.footzone.footzone.utils.Extensions.setImageViewisBusy
-import com.footzone.footzone.utils.Extensions.showBottomSheet
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.util.*
 
 
