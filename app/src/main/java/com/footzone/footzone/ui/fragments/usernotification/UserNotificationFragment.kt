@@ -9,18 +9,13 @@ import com.footzone.footzone.R
 import com.footzone.footzone.adapter.UserNotificationAdapter
 import com.footzone.footzone.databinding.FragmentUserNotificationBinding
 import com.footzone.footzone.model.UserNotification
+import com.footzone.footzone.ui.fragments.BaseFragment
 
 
-class UserNotificationFragment : Fragment() {
+class UserNotificationFragment : BaseFragment(R.layout.fragment_user_notification) {
+
     lateinit var binding: FragmentUserNotificationBinding
     lateinit var adapter: UserNotificationAdapter
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_notification, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

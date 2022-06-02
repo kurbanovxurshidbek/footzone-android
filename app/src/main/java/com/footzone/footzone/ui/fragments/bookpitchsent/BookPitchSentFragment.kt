@@ -12,21 +12,14 @@ import com.footzone.footzone.databinding.LayoutAcceptBinding
 import com.footzone.footzone.databinding.LayoutDeclineBinding
 import com.footzone.footzone.model.Hour
 import com.footzone.footzone.model.PitchHistory
+import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.AcceptDeclineDialog
 import java.util.ArrayList
 
-class BookPitchSentFragment : Fragment() {
+class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
 
     private lateinit var binding: FragmentBookPitchSentBinding
     private lateinit var playingPitchAdapter: PitchBookSentAdapter
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_book_pitch_sent, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

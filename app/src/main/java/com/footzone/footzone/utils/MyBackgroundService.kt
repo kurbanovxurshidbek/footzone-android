@@ -13,7 +13,6 @@ class MyBackgroundService : Service(), LocationHelper.LocationListener {
         return Binder()
     }
 
-
     private lateinit var locationHelper: LocationHelper
     override fun onCreate() {
         Toast.makeText(this, "create", Toast.LENGTH_SHORT).show()

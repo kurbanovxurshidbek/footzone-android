@@ -12,17 +12,12 @@ import com.footzone.footzone.adapter.MyPitchAdapter
 import com.footzone.footzone.databinding.FragmentMyStadiumBinding
 import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.Time
+import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
 
-class MyStadiumFragment : Fragment() {
-    lateinit var binding: FragmentMyStadiumBinding
+class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_my_stadium, container, false)
-    }
+    lateinit var binding: FragmentMyStadiumBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -28,7 +28,8 @@ import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
-open class AddStadiumFragment : Fragment() {
+
+open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     lateinit var binding: FragmentAddStadiumBinding
     var items = ArrayList<Image>()
     val PICK_FROM_FILE_ADD = 1001

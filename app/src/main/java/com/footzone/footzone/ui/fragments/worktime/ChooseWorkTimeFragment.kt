@@ -12,17 +12,11 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentChooseWorkTimeBinding
+import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
 
-class ChooseWorkTimeFragment : Fragment() {
+class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) {
     lateinit var binding: FragmentChooseWorkTimeBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_choose_work_time, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -81,15 +75,15 @@ class ChooseWorkTimeFragment : Fragment() {
 
     }
 
-    fun openTime(layout: RelativeLayout, bool: Boolean){
-        if (bool){
+    fun openTime(layout: RelativeLayout, bool: Boolean) {
+        if (bool) {
             layout.visibility = View.VISIBLE
-        }else{
+        } else {
             layout.visibility = View.GONE
         }
     }
 
-    fun numberPicker(startTime: NumberPicker, finishTime: NumberPicker){
+    fun numberPicker(startTime: NumberPicker, finishTime: NumberPicker) {
         val timeList = resources.getStringArray(R.array.timelist)
         startTime.minValue = 1
         startTime.maxValue = 47
@@ -99,40 +93,40 @@ class ChooseWorkTimeFragment : Fragment() {
         finishTime.displayedValues = timeList
     }
 
-    fun wortTime(): String{
+    fun wortTime(): String {
         var string = ""
-        if (binding.switchMo.isOn){
+        if (binding.switchMo.isOn) {
             string += "Du, "
             Log.d("#####@@", string)
             Log.d("#####@@", binding.switchMo.isOn.toString())
         }
 
-        if (binding.switchTu.isOn){
+        if (binding.switchTu.isOn) {
             string += "Se, "
             Log.d("#####@@", string)
         }
 
-        if (binding.switchWe.isOn){
+        if (binding.switchWe.isOn) {
             string += "Cho, "
             Log.d("#####@@", string)
         }
 
-        if (binding.switchTh.isOn){
+        if (binding.switchTh.isOn) {
             string += "Pa, "
             Log.d("#####@@", string)
         }
 
-        if (binding.switchFr.isOn){
+        if (binding.switchFr.isOn) {
             string += "Ju, "
             Log.d("#####@@", string)
         }
 
-        if (binding.switchSa.isOn){
+        if (binding.switchSa.isOn) {
             string += "Sha, "
             Log.d("#####@@", string)
         }
 
-        if (binding.switchSu.isOn){
+        if (binding.switchSu.isOn) {
             string += "Ya"
             Log.d("#####@@", string)
         }
