@@ -32,7 +32,11 @@
         tools:layout="@layout/fragment_table" >
         <action
             android:id="@+id/action_tableFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
+            app:destination="@id/signInFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -106,7 +110,11 @@
         android:id="@+id/signUpFragment"
         android:name="com.footzone.footzone.ui.fragments.signup.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_verificationFragment"
+            app:destination="@id/verificationFragment" />
+    </fragment>
     <fragment
         android:id="@+id/verificationFragment"
         android:name="com.footzone.footzone.ui.fragments.verification.VerificationFragment"

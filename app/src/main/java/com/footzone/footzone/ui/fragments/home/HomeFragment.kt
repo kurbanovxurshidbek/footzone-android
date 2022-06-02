@@ -2,6 +2,7 @@ package com.footzone.footzone.ui.fragments.home
 
 import android.Manifest
 import android.app.Activity
+import android.content.IntentSender
 import android.graphics.Color
 import android.location.Location
 import android.os.Build
@@ -14,6 +15,8 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
 import androidx.core.os.bundleOf
@@ -25,8 +28,12 @@ import com.footzone.footzone.adapter.PitchAdapter
 import com.footzone.footzone.databinding.FragmentHomeBinding
 import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.Time
+import com.footzone.footzone.ui.activity.MainActivity
+import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 import com.footzone.footzone.utils.LocationHelper
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -42,7 +49,8 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.PermissionListener
 
 
-class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallback {
+class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
+    GoogleMap.CancelableCallback {
     val location1 = LatLng(41.33243612881973, 69.23638124609397)
     val location2 = LatLng(41.325604130328664, 69.24281854772987)
     private var locationList = ArrayList<LatLng>()
@@ -58,13 +66,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
 
     private var lastLocation: Location? = null
     private val myLocationZoom = 16.0f
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -94,21 +95,51 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
         }
 
         fun updateMyCurrentLocation() {
-            mMap.animateCamera(
-                CameraUpdateFactory.newLatLngZoom(
-                    LatLng(
-                        lastLocation!!.latitude,
-                        lastLocation!!.longitude
-                    ), myLocationZoom
+            try {
+                mMap.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(
+                            lastLocation!!.latitude,
+                            lastLocation!!.longitude
+                        ), myLocationZoom
+                    )
                 )
-            )
-        }
+            } catch (e: Exception) {
 
-        permissionRequest()
+
+            }
+        }
 
         binding.findMyLocation.setOnClickListener {
-            updateMyCurrentLocation()
+            if ((requireActivity() as MainActivity).isLocationPermissionGranted()) {
+                showLocationOn()
+                updateMyCurrentLocation()
+            } else {
+                request()
+            }
         }
+    }
+
+    private fun request() {
+        Dexter.withContext(requireActivity())
+            .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+            .withListener(object : PermissionListener {
+                override fun onPermissionGranted(response: PermissionGrantedResponse?) { /* ... */
+                    showLocationOn()
+                }
+
+                override fun onPermissionDenied(response: PermissionDeniedResponse?) { /* ... */
+                    Toast.makeText(requireContext(), "Sorry", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    p0: com.karumi.dexter.listener.PermissionRequest?,
+                    p1: PermissionToken?
+                ) {
+                    p1?.continuePermissionRequest()
+                }
+
+            }).check()
     }
 
 
@@ -152,10 +183,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
                 showPitches()
             }
         }
-        binding.findMyLocation.setOnClickListener {
-            Toast.makeText(requireContext(), "show", Toast.LENGTH_SHORT).show()
-        }
-
 
         hideBottomSheet(bottomSheetBehavior)
         hideTopSheet()
@@ -368,7 +395,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
 
     private fun setLightStatusBar() {
         //setting light mode status bar
-        requireActivity().window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        requireActivity().window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         val view = View(requireContext())
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             var flags: Int = view.systemUiVisibility
@@ -382,11 +410,11 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
         if (checkCallingOrSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PermissionChecker.PERMISSION_GRANTED
+            ) == PermissionChecker.PERMISSION_GRANTED
         ) {
-            request()
+            showLocationOn()
         } else {
-            setUpCamera()
+            showLocationOn()
         }
     }
 
@@ -422,28 +450,45 @@ class HomeFragment : Fragment(), OnMapReadyCallback, GoogleMap.CancelableCallbac
         })
     }
 
-    private fun request() {
-        Dexter.withContext(requireContext())
-            .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-            .withListener(object : PermissionListener {
-                override fun onPermissionGranted(response: PermissionGrantedResponse?) { /* ... */
-                    setUpCamera()
+    private fun showLocationOn() {
+        val locationRequest = LocationRequest.create()
+        locationRequest.apply {
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+            interval = 30 * 1000.toLong()
+            fastestInterval = 5 * 1000.toLong()
+        }
+        val builder = LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest)
+        builder.setAlwaysShow(true)
+        val result =
+            LocationServices.getSettingsClient(requireActivity())
+                .checkLocationSettings(builder.build())
+        result.addOnCompleteListener {
+            try {
+                val response: LocationSettingsResponse = it.getResult(ApiException::class.java)
+                if (response.locationSettingsStates!!.isGpsPresent)
+                    Log.d("@@@", "ERROR")
+            } catch (e: ApiException) {
+                when (e.statusCode) {
+                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
+                        val intentSenderRequest =
+                            IntentSenderRequest.Builder(e.status.resolution!!).build()
+                        launcher.launch(intentSenderRequest)
+                    } catch (e: IntentSender.SendIntentException) {
+                    }
                 }
-
-                override fun onPermissionDenied(response: PermissionDeniedResponse?) { /* ... */
-                    //open settings
-
-                }
-
-                override fun onPermissionRationaleShouldBeShown(
-                    p0: com.karumi.dexter.listener.PermissionRequest?,
-                    p1: PermissionToken?
-                ) {
-                    p1?.continuePermissionRequest()
-                }
-
-            }).check()
+            }
+        }
     }
+
+    private var launcher =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                setUpCamera()
+            } else {
+                showLocationOn()
+            }
+        }
 
     private fun findMultipleLocation() {
         locationList.add(location1)

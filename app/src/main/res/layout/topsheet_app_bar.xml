@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:paddingHorizontal="20dp"
     android:paddingBottom="18dp"
-    android:paddingTop="42dp"
+    android:paddingTop="16dp"
     app:behavior_hideable="false"
     app:layout_behavior="@string/top_sheet_auto_close_behavior">
 

@@ -10,20 +10,13 @@ import com.footzone.footzone.adapter.PlayedPitchAdapter
 import com.footzone.footzone.databinding.FragmentPlayedPitchBinding
 import com.footzone.footzone.model.Hour
 import com.footzone.footzone.model.PitchHistory
+import com.footzone.footzone.ui.fragments.BaseFragment
 import java.util.ArrayList
 
-class PlayedPitchFragment : Fragment() {
+class PlayedPitchFragment : BaseFragment(R.layout.fragment_played_pitch) {
 
     private lateinit var binding: FragmentPlayedPitchBinding
     private lateinit var playedPitchAdapter: PlayedPitchAdapter
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_played_pitch, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

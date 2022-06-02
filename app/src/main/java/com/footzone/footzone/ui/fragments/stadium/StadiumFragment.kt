@@ -14,12 +14,13 @@ import com.footzone.footzone.databinding.FragmentStadiumBinding
 import com.footzone.footzone.model.Comment
 import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.TimeManager
+import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 import java.util.*
 
 
-class StadiumFragment : Fragment() {
+class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
 
     private lateinit var binding: FragmentStadiumBinding
     lateinit var adapter: CustomAdapter
@@ -30,13 +31,6 @@ class StadiumFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         pitch = arguments?.get(PITCH_DETAIL) as Pitch
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_stadium, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
