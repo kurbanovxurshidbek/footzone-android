@@ -28,7 +28,6 @@ import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
-
 open class AddStadiumFragment : Fragment() {
     lateinit var binding: FragmentAddStadiumBinding
     var items = ArrayList<Image>()
