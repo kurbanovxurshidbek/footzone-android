@@ -28,8 +28,9 @@ import com.footzone.footzone.utils.KeyValues
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     lateinit var binding: FragmentAddStadiumBinding
     var items = ArrayList<Image>()
