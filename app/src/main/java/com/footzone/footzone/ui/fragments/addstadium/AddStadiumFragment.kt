@@ -23,6 +23,7 @@ import com.footzone.footzone.adapter.PitchImageEditAdapter
 import com.footzone.footzone.databinding.FragmentAddStadiumBinding
 import com.footzone.footzone.model.Image
 import com.footzone.footzone.model.Pitch
+import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
 import java.io.File
 import java.util.*

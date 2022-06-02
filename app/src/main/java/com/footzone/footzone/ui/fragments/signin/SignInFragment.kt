@@ -8,14 +8,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentSignInBinding
+import com.footzone.footzone.model.User
 import com.footzone.footzone.ui.fragments.BaseFragment
+import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.KeyValues.PHONE_NUMBER
+import com.footzone.footzone.utils.UiStateObject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
+    private var phoneNumber: String? = null
     lateinit var binding: FragmentSignInBinding
+    private val viewModel by viewModels<SignInViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,13 +43,43 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
         binding.backButton.setOnClickListener {
             closeSignInFragment()
         }
+
+        checkAllFields()
+
         binding.enterButton.setOnClickListener {
 
-            Log.d("TAG", "initViews: ${binding.editTextNumber.text.toString().replace("\\s".toRegex(), "")}")
+            phoneNumber = "+998${binding.editTextNumber.text.toString().replace("\\s".toRegex(), "")}"
 
-            findNavController().navigate(R.id.action_signInFragment_to_verificationFragment)
+            viewModel.signIn(phoneNumber!!)
+
+            setupObservers()
         }
-        checkAllFields()
+    }
+
+    private fun setupObservers() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.userPhoneNumber.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
+
+                    is UiStateObject.SUCCESS -> {
+                        openVerificationFragment()
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }
+
+    private fun openVerificationFragment(){
+        findNavController().navigate(R.id.action_signInFragment_to_verificationFragment,
+            bundleOf(PHONE_NUMBER to phoneNumber)
+        )
     }
 
     private fun checkAllFields() {
