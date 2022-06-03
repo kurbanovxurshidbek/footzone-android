@@ -4,20 +4,18 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentVerificationBinding
+import com.footzone.footzone.model.SignInVerification
 import com.footzone.footzone.model.SmsVerification
 import com.footzone.footzone.model.User
 import com.footzone.footzone.ui.fragments.BaseFragment
-import com.footzone.footzone.ui.fragments.signup.SignUpViewModel
+import com.footzone.footzone.utils.KeyValues.PHONE_NUMBER
 import com.footzone.footzone.utils.KeyValues.USER_DETAIL
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
@@ -30,13 +28,23 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
     lateinit var binding: FragmentVerificationBinding
     private val viewModel by viewModels<VerificationViewModel>()
     private var user: User? = null
+    private var phoneNumber: String? = null
+    private var isToSignUp = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentVerificationBinding.bind(view)
-        user = arguments?.get(USER_DETAIL) as User
-        Log.d("TAG", "onViewCreated: $user")
+        if (arguments?.containsKey(USER_DETAIL)!!) {
+            user = arguments?.get(USER_DETAIL) as User
+            isToSignUp = true
+            Log.d("TAG", "onViewCreated: $user")
+        }
+        if (arguments?.containsKey(PHONE_NUMBER)!!) {
+            phoneNumber = arguments?.get(PHONE_NUMBER).toString()
+            Log.d("TAG", "onViewCreatedd: $phoneNumber")
+            isToSignUp = false
+        }
 
         initViews()
     }
@@ -48,17 +56,60 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
             closeSignInFragment()
         }
         binding.confirmationButton.setOnClickListener {
-            viewModel.signUp(
-                SmsVerification(
-                    binding.editTextVerificationCode.text.toString().toInt(),
-                    user?.phoneNumber.toString()
-                )
-            )
-            setupObservers()
+            if (isToSignUp) {
+                sendRequestToSignUp()
+                setupObserversSignUp()
+            } else {
+                sendRequestToSignIn()
+                setupObserversSignIn()
+            }
         }
     }
 
-    private fun setupObservers() {
+    private fun sendRequestToSignIn() {
+        viewModel.signIn(
+            SignInVerification(binding.editTextVerificationCode.text.toString().toInt(),
+                "Android",
+                "jwsbcbwcvuvc",
+                "Mobile",
+                phoneNumber!!)
+        )
+    }
+
+    private fun sendRequestToSignUp() {
+        viewModel.signUp(
+            SmsVerification(
+                binding.editTextVerificationCode.text.toString().toInt(),
+                user?.phoneNumber.toString()
+            )
+        )
+    }
+
+    private fun setupObserversSignIn() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.signInVerification.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
+
+                    is UiStateObject.SUCCESS -> {
+                        if (it.data.success) {
+                            Log.d("TAG", "setupObserversSignIn: ${it.data}")
+                            returnHomeFragment()
+                        }
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setupObserversSignUp() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             viewModel.smsVerification.collect {
                 when (it) {
@@ -68,7 +119,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
 
                     is UiStateObject.SUCCESS -> {
                         if (it.data.success) {
-                            Log.d("TAG", "setupObservers: ${it.data.success}")
+                            Log.d("TAG", "setupObserversSignUp: ${it.data.success}")
                             user!!.smsCode = binding.editTextVerificationCode.text.toString()
                             viewModel.registerUser(user!!)
                             setupObservers2()
@@ -77,7 +128,8 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
                     is UiStateObject.ERROR -> {
                         Log.d("TAG", "setupUI: ${it.message}")
                     }
-                    else -> {}
+                    else -> {
+                    }
                 }
             }
         }
@@ -102,7 +154,8 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
                     is UiStateObject.ERROR -> {
                         Log.d("TAG", "setupUI: ${it.message} error")
                     }
-                    else -> {}
+                    else -> {
+                    }
                 }
             }
         }

@@ -15,17 +15,34 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentProfileBinding
+import com.footzone.footzone.model.profile.UserData
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.SharedPref
+import com.footzone.footzone.utils.UiStateObject
 import java.io.File
+import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.FileOutputStream
 
+@AndroidEntryPoint
 class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     private val PICK_FROM_FILE_ADD: Int = 1001
     private lateinit var binding: FragmentProfileBinding
     lateinit var sharedPref: SharedPref
+    lateinit var image: File
+    private val viewModel by viewModels<ProfileViewModel>()
+
+    lateinit var fileUri: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -37,6 +54,8 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
         binding = FragmentProfileBinding.bind(view)
 
+        viewModel.getUserData("b98f1843-b09d-48a6-93a9-b370a78689fb")
+        setupObservers()
         initViews()
     }
 
@@ -53,7 +72,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             binding.linearProfileNoSignIn.visibility = View.GONE
         }
         binding.ivAdd.setOnClickListener {
-            openLocalStorage()
+            getImageFromGallery()
         }
 
         binding.tvEnterAccount.setOnClickListener {
@@ -63,6 +82,37 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         binding.ivLogOut.setOnClickListener {
             showPopup(it)
         }
+
+
+    }
+
+    private fun setupObservers() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.userData.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
+                    is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "setupObservers: ${it.data}")
+                        showUserData(it.data)
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showUserData(userData: UserData) {
+        binding.tvName.text = userData.data.fullName
+        binding.tvNumber.text = userData.data.phoneNumber
+        Glide.with(requireActivity())
+            .load("http://10.10.2.18:8081/images/user/${userData.data.photo.name}")
+            .into(binding.ivProfile)
     }
 
     private fun showPopup(v: View) {
@@ -88,33 +138,45 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         }
     }
 
-    private fun openLocalStorage() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        intent.type = "image/*"
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) intent.action = Intent.ACTION_GET_CONTENT
-        val chooserIntent = Intent.createChooser(intent, "Complete action using")
-
-        val capturedImage = System.currentTimeMillis().toString() + ".jpg"
-        val file = File(Environment.getExternalStorageDirectory(), capturedImage)
-        //val outputFileUri = Uri.fromFile(file)
-
-        startActivityForResult(chooserIntent, PICK_FROM_FILE_ADD)
-
+    private fun getImageFromGallery() {
+        getImageFromGallery.launch("image/*")
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_FROM_FILE_ADD && resultCode == RESULT_OK) {
-            try {
-                val selectedImageUri: Uri = data?.data!!
-                if (selectedImageUri.toString().isNotBlank()) {
-                    binding.ivDefaultPerson.visibility = View.GONE
-                    binding.ivProfile.setImageURI(selectedImageUri)
-                    binding.ivAdd.setImageResource(R.drawable.ic_edit_button)
+    private val getImageFromGallery = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        uri ?: return@registerForActivityResult
+        val ins = requireActivity().contentResolver.openInputStream(uri)
+        image = File.createTempFile("file", ".jpg", requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES))
+        val fileOutputStream = FileOutputStream(image)
+        ins?.copyTo(fileOutputStream)
+        ins?.close()
+        fileOutputStream.close()
+        if (image.length() == 0L) return@registerForActivityResult
+        Glide.with(requireActivity()).load(image).into(binding.ivProfile)
+
+        val reqFile: RequestBody = RequestBody.create("image/jpg".toMediaTypeOrNull(), image)
+        val body: MultipartBody.Part =
+            MultipartBody.Part.createFormData("file", image.name, reqFile)
+        viewModel.updateUserProfilePhoto("b98f1843-b09d-48a6-93a9-b370a78689fb",body)
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.userProfile.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
+                    is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "setupObservers: ${it.data}")
+
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {
+                    }
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
         }
     }

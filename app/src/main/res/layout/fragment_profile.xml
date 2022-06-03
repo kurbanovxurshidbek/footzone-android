@@ -16,8 +16,7 @@
             android:id="@+id/linerProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:orientation="vertical">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +28,7 @@
                     android:id="@+id/top"
                     android:layout_width="match_parent"
                     android:layout_height="208dp"
-                    android:background="@drawable/image1"
+                    android:background="@drawable/stadim2"
                     android:paddingStart="4dp"
                     android:paddingEnd="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -164,7 +163,8 @@
             android:id="@+id/linearProfileNoSignIn"
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/accountNoSignIn"

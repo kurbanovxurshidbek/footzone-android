@@ -23,6 +23,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.androidbolts.topsheet.TopSheetBehavior
 import com.footzone.footzone.R
@@ -54,6 +55,8 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.PermissionListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
@@ -84,6 +87,14 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
 
     override fun onMapReady(p0: GoogleMap) {
         mMap = p0
+        mMap.moveCamera(
+            CameraUpdateFactory.newLatLngZoom(
+                LatLng(41.2795325, 69.2143852),
+                myLocationZoom
+            )
+        )
+        mMap.setPadding(0, 0, 0, 500)
+
         mMap.setOnCameraMoveStartedListener {
             //todo start animate marker
             binding.mapIcon.animate().setDuration(300).translationY(-binding.mapIcon.height / 2.0f)
@@ -556,6 +567,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                 showLocationOn()
             }
         }
+
 
     private fun findMultipleLocation() {
         locationList.add(location1)

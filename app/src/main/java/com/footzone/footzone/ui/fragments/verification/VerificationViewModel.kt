@@ -2,10 +2,7 @@ package com.footzone.footzone.ui.fragments.verification
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.footzone.footzone.model.Response
-import com.footzone.footzone.model.SmsVerification
-import com.footzone.footzone.model.SmsVerificationResponse
-import com.footzone.footzone.model.User
+import com.footzone.footzone.model.*
 import com.footzone.footzone.repository.auth.AuthRepository
 import com.footzone.footzone.utils.UiStateList
 import com.footzone.footzone.utils.UiStateObject
@@ -26,6 +23,10 @@ class VerificationViewModel @Inject constructor(private val authRepository: Auth
         MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
     val registerUser = _registerUser
 
+    private val _signInVerification =
+        MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
+    val signInVerification = _signInVerification
+
     fun signUp(smsVerification: SmsVerification) = viewModelScope.launch {
         _smsVerification.value = UiStateObject.LOADING
 
@@ -39,6 +40,18 @@ class VerificationViewModel @Inject constructor(private val authRepository: Auth
         }
     }
 
+    fun signIn(signInVerification: SignInVerification) = viewModelScope.launch {
+        _signInVerification.value = UiStateObject.LOADING
+
+        try {
+            val response = authRepository.signInVerification(signInVerification)
+            _signInVerification.value = UiStateObject.SUCCESS(response)
+
+        } catch (e: Exception) {
+            _signInVerification.value =
+                UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
+        }
+    }
 
     fun registerUser(user: User) = viewModelScope.launch {
         _registerUser.value = UiStateObject.LOADING

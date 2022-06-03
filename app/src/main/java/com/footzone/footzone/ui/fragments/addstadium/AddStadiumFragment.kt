@@ -28,8 +28,9 @@ import com.footzone.footzone.utils.KeyValues
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     lateinit var binding: FragmentAddStadiumBinding
     var items = ArrayList<Image>()
@@ -60,6 +61,14 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             val result = bundle.getString("bundleKey")
             binding.tvPitchWorkTime.text = result.toString()
         }
+    }
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
+        return inflater.inflate(R.layout.fragment_add_stadium, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

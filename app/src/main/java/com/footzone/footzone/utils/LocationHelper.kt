@@ -1,13 +1,9 @@
 package com.footzone.footzone.utils
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
-import android.os.Bundle
 import android.os.Looper
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
@@ -30,7 +26,7 @@ class LocationHelper {
      * onLocationResult call when location is changed
      */
     private fun getLocationUpdates(context: Context) {
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(context!!)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
         locationRequest = LocationRequest()
         locationRequest.interval = 5000
         locationRequest.fastestInterval = 1000
