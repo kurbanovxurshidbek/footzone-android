@@ -46,6 +46,12 @@
         android:padding="17dp"
         android:src="@drawable/ic_find_my_loc" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/map_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_location" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"

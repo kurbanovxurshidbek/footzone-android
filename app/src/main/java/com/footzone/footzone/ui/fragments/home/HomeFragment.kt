@@ -31,7 +31,6 @@ import com.footzone.footzone.adapter.PitchAdapter
 import com.footzone.footzone.databinding.FragmentHomeBinding
 import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.Time
-import com.footzone.footzone.model.User
 import com.footzone.footzone.ui.activity.MainActivity
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
@@ -124,8 +123,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                     )
                 )
             } catch (e: Exception) {
-
-
             }
         }
 
