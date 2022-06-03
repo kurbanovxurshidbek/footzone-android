@@ -21,6 +21,8 @@ import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.androidbolts.topsheet.TopSheetBehavior
 import com.footzone.footzone.R
@@ -28,10 +30,14 @@ import com.footzone.footzone.adapter.PitchAdapter
 import com.footzone.footzone.databinding.FragmentHomeBinding
 import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.Time
+import com.footzone.footzone.model.User
 import com.footzone.footzone.ui.activity.MainActivity
 import com.footzone.footzone.ui.fragments.BaseFragment
+import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 import com.footzone.footzone.utils.LocationHelper
+import com.footzone.footzone.utils.UiStateList
+import com.footzone.footzone.utils.UiStateObject
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -47,13 +53,15 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.PermissionListener
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
     GoogleMap.CancelableCallback {
     val location1 = LatLng(41.33243612881973, 69.23638124609397)
     val location2 = LatLng(41.325604130328664, 69.24281854772987)
     private var locationList = ArrayList<LatLng>()
+    private val viewModel by viewModels<HomeViewModel>()
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: FragmentHomeBinding
@@ -172,10 +180,14 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
             }
             linearNearPitch.setOnClickListener {
                 hideBottomSheet(bottomSheetBehaviorType)
+                sendRequestToGetNearbyStadiums()
+                observeNearByStadiums()
                 showPitches()
             }
             linearSelectedPitch.setOnClickListener {
                 hideBottomSheet(bottomSheetBehaviorType)
+                sendRequestToGetFavouriteStadiums()
+                observeFavouriteStadiums()
                 showPitches()
             }
             linearBookedPitch.setOnClickListener {
@@ -207,6 +219,61 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
         }
 
         controlOnBackPressed()
+    }
+
+    private fun observeFavouriteStadiums() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.favouriteStadiums.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
+
+                    is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "observeNearByStadiums: $it.data")
+                        //set data to adapter
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }
+
+    private fun sendRequestToGetFavouriteStadiums() {
+        viewModel.getFavouriteStadiums("userID")
+    }
+
+    private fun sendRequestToGetNearbyStadiums() {
+        viewModel.getNearByStadiums(
+            com.footzone.footzone.model.Location(
+                41.327489446765156,
+                69.2287423147801
+            )
+        )
+    }
+
+    private fun observeNearByStadiums() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.nearByStadiums.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
+
+                    is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "observeNearByStadiums: $it.data")
+                        //set data to adapter
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {}
+                }
+            }
+        }
     }
 
     private fun controlOnBackPressed() {
