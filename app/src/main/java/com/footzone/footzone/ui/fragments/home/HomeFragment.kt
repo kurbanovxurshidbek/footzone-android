@@ -21,6 +21,7 @@ import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.androidbolts.topsheet.TopSheetBehavior
 import com.footzone.footzone.R
@@ -47,6 +48,8 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.PermissionListener
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
@@ -76,18 +79,22 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
 
     override fun onMapReady(p0: GoogleMap) {
         mMap = p0
+        mMap.moveCamera(
+            CameraUpdateFactory.newLatLngZoom(
+                LatLng(41.2795325, 69.2143852),
+                myLocationZoom
+            )
+        )
+        mMap.setPadding(0, 0, 0, 500)
+
         mMap.setOnCameraMoveStartedListener {
             //todo start animate marker
-            binding.mapIcon.animate().setDuration(300).translationY(-binding.mapIcon.height / 2.0f)
-                .start()
             hideBottomSheet(bottomSheetBehaviorType)
             hideBottomSheet(bottomSheetBehavior)
         }
         findMultipleLocation()
 
         mMap.setOnCameraIdleListener {
-            binding.mapIcon.animate().translationY(0f).setDuration(300).start()
-
             val target = mMap.cameraPosition.target
             showBottomSheet(bottomSheetBehaviorType)
             bottomSheetBehaviorType.isHideable = false
@@ -490,13 +497,13 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
             }
         }
 
+
     private fun findMultipleLocation() {
         locationList.add(location1)
         locationList.add(location2)
         for (i in locationList.indices) {
             mMap.addMarker(MarkerOptions().position(locationList[i]).title("Marker"))
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(locationList[i]))
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(locationList[i], myLocationZoom))
         }
     }
 }
