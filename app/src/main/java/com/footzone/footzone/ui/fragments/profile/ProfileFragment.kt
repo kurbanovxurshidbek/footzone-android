@@ -111,7 +111,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         binding.tvName.text = userData.data.fullName
         binding.tvNumber.text = userData.data.phoneNumber
         Glide.with(requireActivity())
-            .load("http://10.10.2.18:8081/images/${userData.data.photo.name}")
+            .load("http://10.10.2.18:8081/images/user/${userData.data.photo.name}")
             .into(binding.ivProfile)
     }
 
