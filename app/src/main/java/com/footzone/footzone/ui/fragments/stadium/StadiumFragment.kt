@@ -15,6 +15,7 @@ import com.footzone.footzone.model.Comment
 import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.TimeManager
 import com.footzone.footzone.ui.fragments.BaseFragment
+import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 import java.util.*
@@ -50,6 +51,10 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
         }
 
         binding.etStadium.setOnClickListener { openEditStadium(pitch) }
+
+        binding.linearNavigation.setOnClickListener {
+            requireActivity().shareLocationToGoogleMap(41.33324, 69.21896)
+        }
     }
 
     private fun refreshAdapter() {

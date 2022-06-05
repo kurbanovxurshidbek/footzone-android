@@ -4,20 +4,44 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/background_top_oval.xml" value="0.184" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/rounded_view.xml" value="0.184" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/view_rounded_corners.xml" value="0.184" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable/ic_stadium.xml" value="0.184" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable/rounded.xml" value="0.184" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable/selectordatetextcolor.xml" value="0.17" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable/tab_background.xml" value="0.184" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable/textview_rounded_background.xml" value="0.184" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable/view_rounded_corners_blue_4dp.xml" value="0.184" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable/view_rounded_corners_grey_4dp.xml" value="0.184" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable/view_rounded_corners_white_4dp.xml" value="0.184" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/calendar_dialog.xml" value="0.136" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_add_stadium.xml" value="0.14583333333333334" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_calendar.xml" value="0.27447916666666666" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_choose_time_bottom_sheet_dialog.xml" value="0.264" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_choose_work_time.xml" value="0.14583333333333334" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_my_stadium.xml" value="0.14583333333333334" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_pitch_detail.xml" value="0.14583333333333334" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_played_pitch.xml" value="0.27447916666666666" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_profile.xml" value="0.12" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_sign_in.xml" value="0.1265625" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_sign_up.xml" value="0.1265625" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_stadium.xml" value="0.14583333333333334" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_stadium_location.xml" value="0.14583333333333334" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_table.xml" value="0.14583333333333334" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_time_interval.xml" value="0.2" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_add_image.xml" value="0.14583333333333334" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_choose_time_view.xml" value="0.27447916666666666" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_choose_time_view_blue.xml" value="0.27447916666666666" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_choose_time_view_grey.xml" value="0.27447916666666666" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_choose_time_view_white.xml" value="0.1802536231884058" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_detail_entry_bottom_sheet.xml" value="0.14583333333333334" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_my_pitch_layout.xml" value="0.14583333333333334" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_stadium_image.xml" value="0.14583333333333334" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_stadium_image_edit.xml" value="0.14583333333333334" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_time_manager.xml" value="0.27447916666666666" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/item_time_view.xml" value="0.27447916666666666" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/layout_decline.xml" value="0.27447916666666666" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/toast_choose_time.xml" value="0.264" />
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/drawable/bottom_navigation_style.xml" value="0.1065" />
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/drawable/bottom_navigation_style_background.xml" value="0.1065" />
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/drawable/button_rounded_corner.xml" value="0.1065" />
