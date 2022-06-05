@@ -28,7 +28,7 @@
                     android:id="@+id/top"
                     android:layout_width="match_parent"
                     android:layout_height="208dp"
-                    android:background="@drawable/image1"
+                    android:background="@drawable/stadim2"
                     android:paddingStart="4dp"
                     android:paddingEnd="10dp"
                     app:layout_constraintEnd_toEndOf="parent"

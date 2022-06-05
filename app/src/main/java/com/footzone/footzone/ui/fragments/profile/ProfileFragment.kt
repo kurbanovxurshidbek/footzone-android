@@ -106,11 +106,9 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     private fun showUserData(userData: UserData) {
         binding.tvName.text = userData.data.fullName
         binding.tvNumber.text = userData.data.phoneNumber
-        Glide.with(requireActivity())
-            .load("http://10.10.2.18:8081/images/${userData.data.photo.name}")
-            .into(binding.ivProfile)
-
-        Log.d("TAG", "showUserData: ${"http://10.10.2.18:8081/images/${userData.data.photo.name}"}")
+//        Glide.with(requireActivity())
+//            .load("http://10.10.2.18:8081/images/${userData.data.photo.name}")
+//            .into(binding.ivProfile)
     }
 
     private fun showPopup(v: View) {
