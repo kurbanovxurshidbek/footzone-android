@@ -16,19 +16,8 @@ import com.footzone.footzone.databinding.FragmentChooseTimeBottomSheetDialogBind
 import com.footzone.footzone.utils.KeyValues
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-
 class ChooseTimeBottomSheetDialog : BottomSheetDialogFragment() {
     lateinit var binding: FragmentChooseTimeBottomSheetDialogBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setFragmentResultListener(KeyValues.TYPE_CHOOSE_TIME) { requestKey, bundle ->
-            val result = bundle.getString("bundleKey")
-            Log.d("TAG", "onCreate: ${result}")
-            binding.tvChooseTime.text = result.toString()
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
