@@ -168,6 +168,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
     }
 
     private fun initViews(view: View) {
+        showLocationOn()
         val bottomSheetTypes = view.findViewById<View>(R.id.bottomSheetTypes)
         bottomSheet = view.findViewById(R.id.bottomSheetPitchList)
         topSheet = view.findViewById(R.id.topSheet)
@@ -225,8 +226,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                 true
             } else false
         }
-
-        controlOnBackPressed()
     }
 
     private fun observeFavouriteStadiums() {
@@ -282,34 +281,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                 }
             }
         }
-    }
-
-    private fun controlOnBackPressed() {
-        activity?.onBackPressedDispatcher?.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    if (bottomSheetBehaviorType.state == BottomSheetBehavior.STATE_EXPANDED) {
-                        Log.d("TAG", "handleOnBackPressed: ok")
-                        bottomSheetBehaviorType.state = BottomSheetBehavior.STATE_COLLAPSED
-                        isEnabled = false
-                    }
-                    if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
-                        Log.d("TAG", "handleOnBackPressed: okk")
-                        hideBottomSheet(bottomSheetBehavior)
-                        isEnabled = false
-                    }
-                    if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
-                        Log.d("TAG", "handleOnBackPressed: okkk")
-                        hideBottomSheet(bottomSheetBehavior)
-                        isEnabled = false
-                    }
-                    if (isEnabled) {
-                        Log.d("TAG", "handleOnBackPressed: ok@")
-                        requireActivity().onBackPressed()
-                    }
-                }
-            })
     }
 
     private fun hideKeyboard() {
