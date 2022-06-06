@@ -21,11 +21,11 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:theme="@style/BottomNavigationViewTextStyle"
         android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:animateLayoutChanges="false"
         android:background="#ffffff"
+        android:theme="@style/BottomNavigationViewTextStyle"
         app:elevation="0dp"
         app:itemIconSize="@dimen/bottom_nav_icon_size"
         app:itemIconTint="@null"
