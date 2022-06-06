@@ -127,37 +127,10 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
         }
 
         binding.findMyLocation.setOnClickListener {
-            if ((requireActivity() as MainActivity).isLocationPermissionGranted()) {
-                showLocationOn()
-                updateMyCurrentLocation()
-            } else {
-                request()
-            }
+            showLocationOn()
+            updateMyCurrentLocation()
         }
     }
-
-    private fun request() {
-        Dexter.withContext(requireActivity())
-            .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-            .withListener(object : PermissionListener {
-                override fun onPermissionGranted(response: PermissionGrantedResponse?) { /* ... */
-                    showLocationOn()
-                }
-
-                override fun onPermissionDenied(response: PermissionDeniedResponse?) { /* ... */
-                    Toast.makeText(requireContext(), "Sorry", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onPermissionRationaleShouldBeShown(
-                    p0: com.karumi.dexter.listener.PermissionRequest?,
-                    p1: PermissionToken?
-                ) {
-                    p1?.continuePermissionRequest()
-                }
-
-            }).check()
-    }
-
 
     override fun onCancel() {
         TODO("Not yet implemented")
@@ -221,8 +194,13 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
 
         binding.bottomSheetTypes.edtPitchSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                hideKeyboard()
-                bottomSheetBehaviorType.state = BottomSheetBehavior.STATE_COLLAPSED
+                hideKeyboard(requireActivity())
+                if (binding.bottomSheetTypes.edtPitchSearch.text.isNotEmpty()) {
+                    hideBottomSheet(bottomSheetBehaviorType)
+                    showPitches()
+                } else {
+                    bottomSheetBehaviorType.state = BottomSheetBehavior.STATE_COLLAPSED
+                }
                 true
             } else false
         }
@@ -283,16 +261,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
         }
     }
 
-    private fun hideKeyboard() {
-        val imm =
-            requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        var view = requireActivity().currentFocus
-        if (view == null) {
-            view = View(activity)
-        }
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
-    }
-
     private fun openMyStadiumFragment() {
         findNavController().navigate(R.id.action_homeFragment_to_myStadiumFragment)
     }
@@ -311,7 +279,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
             bundleOf(PITCH_DETAIL to pitch)
         )
     }
-
 
     private fun showPitches() {
         openPitchListBottomSheet()
@@ -356,6 +323,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     showTopSheet()
                 }
+
                 if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                     showBottomSheet(bottomSheetBehaviorType)
                     bottomSheetBehaviorType.isHideable = false
@@ -363,21 +331,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
-        })
-    }
-
-    private fun controlBottomSheetType() {
-        bottomSheetBehaviorType.addBottomSheetCallback(object :
-            BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    hideKeyboard()
-                }
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-
-            }
         })
     }
 
@@ -452,18 +405,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
         }
     }
 
-    private fun permissionRequest() {
-        if (checkCallingOrSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PermissionChecker.PERMISSION_GRANTED
-        ) {
-            showLocationOn()
-        } else {
-            showLocationOn()
-        }
-    }
-
     private fun setUpCamera() {
         val locationHelper = LocationHelper()
         locationHelper.startLocationUpdates(requireContext())
@@ -535,7 +476,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                 showLocationOn()
             }
         }
-
 
     private fun findMultipleLocation() {
         locationList.add(location1)
