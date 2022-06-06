@@ -1,10 +1,12 @@
 package com.footzone.footzone.ui.fragments.stadiumdetail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.CommentAdapter
 import com.footzone.footzone.adapter.CustomAdapter
@@ -14,9 +16,12 @@ import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.TimeManager
 import com.footzone.footzone.ui.fragments.ChooseTimeBottomSheetDialog
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
+import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 
-
+/**
+ * In the TimeIntervalFragment, a user selects game times
+ */
 class PitchDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentPitchDetailBinding
@@ -56,8 +61,8 @@ class PitchDetailFragment : Fragment() {
 
 
         binding.btnOpenBottomSheet.setOnClickListener {
-            val sortRecipesBottomSheet = ChooseTimeBottomSheetDialog()
-            sortRecipesBottomSheet.show(childFragmentManager,sortRecipesBottomSheet.tag)
+            val chooseTimeBottomSheetDialog = ChooseTimeBottomSheetDialog()
+            chooseTimeBottomSheetDialog.show(childFragmentManager,chooseTimeBottomSheetDialog.tag)
         }
 
         binding.linearNavigation.setOnClickListener {

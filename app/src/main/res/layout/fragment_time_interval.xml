@@ -75,10 +75,13 @@
                 app:backgroundTint="@color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tvStartTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
                     android:inputType="textCapWords"
+                    android:editable="false"
+                    android:focusable="false"
                     android:drawableRight="@drawable/ic_close_circle"
                     android:textColor="#0A0A0A"
                     android:textSize="16sp" />
@@ -94,9 +97,12 @@
                 app:backgroundTint="@color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tvFinishTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
+                    android:editable="false"
+                    android:focusable="false"
                     android:drawableRight="@drawable/ic_close_circle"
                     android:inputType="textCapWords"
                     android:textColor="#0A0A0A"
@@ -106,6 +112,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
+            android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="3"
             android:layout_marginVertical="4dp"
