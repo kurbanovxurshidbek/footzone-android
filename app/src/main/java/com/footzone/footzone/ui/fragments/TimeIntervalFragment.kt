@@ -60,7 +60,7 @@ class TimeIntervalFragment : Fragment() {
                     if (!item.isSelected!!) {
                         view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_blue_4dp)
                         binding.tvFinishTime.setText("${item.startTime.toString()}")
-                        if (num > position){
+                        if (num < position){
                             binding.tvFinishTime.setText("${item.startTime.toString()}")
                         }else{
                             binding.tvFinishTime.setText(binding.tvStartTime.text)
