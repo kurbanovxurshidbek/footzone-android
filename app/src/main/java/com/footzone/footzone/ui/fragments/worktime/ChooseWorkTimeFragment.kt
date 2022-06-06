@@ -1,11 +1,12 @@
 package com.footzone.footzone.ui.fragments.worktime
 
+import android.content.Context
+import android.media.AudioManager
+import android.media.MediaPlayer
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.os.Handler
+import android.os.Vibrator
 import android.view.View
-import android.view.ViewGroup
 import android.widget.NumberPicker
 import android.widget.RelativeLayout
 import androidx.core.os.bundleOf
@@ -14,6 +15,7 @@ import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentChooseWorkTimeBinding
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
+import java.util.*
 
 class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) {
     lateinit var binding: FragmentChooseWorkTimeBinding
@@ -97,41 +99,61 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
         var string = ""
         if (binding.switchMo.isOn) {
             string += "Du, "
-            Log.d("#####@@", string)
-            Log.d("#####@@", binding.switchMo.isOn.toString())
         }
 
         if (binding.switchTu.isOn) {
             string += "Se, "
-            Log.d("#####@@", string)
         }
 
         if (binding.switchWe.isOn) {
             string += "Cho, "
-            Log.d("#####@@", string)
         }
 
         if (binding.switchTh.isOn) {
             string += "Pa, "
-            Log.d("#####@@", string)
         }
 
         if (binding.switchFr.isOn) {
             string += "Ju, "
-            Log.d("#####@@", string)
         }
 
         if (binding.switchSa.isOn) {
             string += "Sha, "
-            Log.d("#####@@", string)
         }
 
         if (binding.switchSu.isOn) {
             string += "Ya"
-            Log.d("#####@@", string)
         }
 
-        Log.d("#####@@", string)
         return string
+    }
+
+    /**
+     * this function, gives the NumberPicker sound and vibrate
+     */
+    fun checkVibrationIsOn(context: Context) {
+        val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        if (am.ringerMode == AudioManager.RINGER_MODE_VIBRATE) {
+            val v: Vibrator =
+                requireActivity().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            v.vibrate(70)
+        } else {
+            val mMediaPlayer = MediaPlayer.create(context, R.raw.mouse_1)
+            val audioManager =
+                requireActivity().getSystemService(Context.AUDIO_SERVICE) as AudioManager
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 5, 0);
+            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+            mMediaPlayer.start()
+
+            val handler = Handler()
+            val t = Timer()
+            t.schedule(object : TimerTask() {
+                override fun run() {
+                    handler.post(Runnable {
+                        mMediaPlayer.stop()
+                    })
+                }
+            }, 500)
+        }
     }
 }

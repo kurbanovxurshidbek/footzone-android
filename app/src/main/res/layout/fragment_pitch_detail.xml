@@ -569,8 +569,4 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-    <include
-        android:id="@+id/bottomSheet"
-        layout="@layout/item_detail_entry_bottom_sheet" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

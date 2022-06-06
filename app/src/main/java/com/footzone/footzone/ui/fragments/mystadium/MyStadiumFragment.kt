@@ -1,10 +1,7 @@
 package com.footzone.footzone.ui.fragments.mystadium
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
@@ -13,6 +10,7 @@ import com.footzone.footzone.databinding.FragmentMyStadiumBinding
 import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.Time
 import com.footzone.footzone.ui.fragments.BaseFragment
+import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues
 
 class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
@@ -47,7 +45,7 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
     }
 
     private fun refreshAdapter() {
-        val adapter = MyPitchAdapter(requireContext(), getPitches()){ pitch ->
+        val adapter = MyPitchAdapter(this, getPitches()){ pitch ->
             openEditStadium(pitch)
         }
         binding.recyclerView.adapter = adapter
@@ -95,6 +93,9 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
         }
     }
 
+    fun openMap(){
+        requireActivity().shareLocationToGoogleMap(41.33324, 69.21896)
+    }
 
     private fun openAddStadium() {
         findNavController().navigate(R.id.action_myStadiumFragment_to_addStadiumFragment,

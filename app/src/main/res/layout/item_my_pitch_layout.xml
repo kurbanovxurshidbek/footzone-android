@@ -140,7 +140,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/btnNavigate"
+            android:id="@+id/linearNavigation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"

@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.footzone.footzone.databinding.ItemMyPitchLayoutBinding
 import com.footzone.footzone.model.Pitch
+import com.footzone.footzone.ui.fragments.mystadium.MyStadiumFragment
+import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 
-class MyPitchAdapter(var context: Context, var pitches: ArrayList<Pitch>, private var onPitchClick: ((Pitch) -> Unit)):
+class MyPitchAdapter(var context: MyStadiumFragment, var pitches: ArrayList<Pitch>, private var onPitchClick: ((Pitch) -> Unit)):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = ItemMyPitchLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -37,6 +39,10 @@ class MyPitchAdapter(var context: Context, var pitches: ArrayList<Pitch>, privat
 
                 btnManagement.setOnClickListener {
                     onPitchClick.invoke(pitch)
+                }
+
+                linearNavigation.setOnClickListener {
+                    context.openMap()
                 }
             }
         }
