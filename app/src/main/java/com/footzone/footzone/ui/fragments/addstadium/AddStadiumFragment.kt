@@ -45,7 +45,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        items.add(Image())
         type = arguments?.get(KeyValues.TYPE_DETAIL).toString().toInt()
         if (type == 1) {
             pitch = arguments?.get(KeyValues.PITCH_DETAIL) as Pitch

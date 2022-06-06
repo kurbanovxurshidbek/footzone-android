@@ -40,7 +40,7 @@ open class BaseActivity : AppCompatActivity() {
                 }
 
                 override fun onPermissionDenied(response: PermissionDeniedResponse?) { /* ... */
-                    openMainActivity()
+                    request()
                 }
 
                 override fun onPermissionRationaleShouldBeShown(

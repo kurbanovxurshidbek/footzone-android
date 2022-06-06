@@ -8,5 +8,6 @@ object KeyValues {
     var LOCATION = "location"
     const val TYPE_LOCATION = "1001"
     const val TYPE_WORK_TIME = "1002"
+    const val TYPE_CHOOSE_TIME = "1003"
     const val PLAYED="PLAYED"
 }

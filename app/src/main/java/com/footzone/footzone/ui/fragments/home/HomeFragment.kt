@@ -21,6 +21,8 @@ import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.androidbolts.topsheet.TopSheetBehavior
@@ -31,8 +33,11 @@ import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.Time
 import com.footzone.footzone.ui.activity.MainActivity
 import com.footzone.footzone.ui.fragments.BaseFragment
+import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 import com.footzone.footzone.utils.LocationHelper
+import com.footzone.footzone.utils.UiStateList
+import com.footzone.footzone.utils.UiStateObject
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -48,15 +53,17 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.PermissionListener
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
     GoogleMap.CancelableCallback {
     val location1 = LatLng(41.33243612881973, 69.23638124609397)
     val location2 = LatLng(41.325604130328664, 69.24281854772987)
     private var locationList = ArrayList<LatLng>()
+    private val viewModel by viewModels<HomeViewModel>()
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: FragmentHomeBinding
@@ -89,12 +96,16 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
 
         mMap.setOnCameraMoveStartedListener {
             //todo start animate marker
+            binding.mapIcon.animate().setDuration(300).translationY(-binding.mapIcon.height / 2.0f)
+                .start()
             hideBottomSheet(bottomSheetBehaviorType)
             hideBottomSheet(bottomSheetBehavior)
         }
         findMultipleLocation()
 
         mMap.setOnCameraIdleListener {
+            binding.mapIcon.animate().translationY(0f).setDuration(300).start()
+
             val target = mMap.cameraPosition.target
             showBottomSheet(bottomSheetBehaviorType)
             bottomSheetBehaviorType.isHideable = false
@@ -112,43 +123,14 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                     )
                 )
             } catch (e: Exception) {
-
-
             }
         }
 
         binding.findMyLocation.setOnClickListener {
-            if ((requireActivity() as MainActivity).isLocationPermissionGranted()) {
-                showLocationOn()
-                updateMyCurrentLocation()
-            } else {
-                request()
-            }
+            showLocationOn()
+            updateMyCurrentLocation()
         }
     }
-
-    private fun request() {
-        Dexter.withContext(requireActivity())
-            .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-            .withListener(object : PermissionListener {
-                override fun onPermissionGranted(response: PermissionGrantedResponse?) { /* ... */
-                    showLocationOn()
-                }
-
-                override fun onPermissionDenied(response: PermissionDeniedResponse?) { /* ... */
-                    Toast.makeText(requireContext(), "Sorry", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onPermissionRationaleShouldBeShown(
-                    p0: com.karumi.dexter.listener.PermissionRequest?,
-                    p1: PermissionToken?
-                ) {
-                    p1?.continuePermissionRequest()
-                }
-
-            }).check()
-    }
-
 
     override fun onCancel() {
         TODO("Not yet implemented")
@@ -159,6 +141,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
     }
 
     private fun initViews(view: View) {
+        showLocationOn()
         val bottomSheetTypes = view.findViewById<View>(R.id.bottomSheetTypes)
         bottomSheet = view.findViewById(R.id.bottomSheetPitchList)
         topSheet = view.findViewById(R.id.topSheet)
@@ -179,10 +162,14 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
             }
             linearNearPitch.setOnClickListener {
                 hideBottomSheet(bottomSheetBehaviorType)
+                sendRequestToGetNearbyStadiums()
+                observeNearByStadiums()
                 showPitches()
             }
             linearSelectedPitch.setOnClickListener {
                 hideBottomSheet(bottomSheetBehaviorType)
+                sendRequestToGetFavouriteStadiums()
+                observeFavouriteStadiums()
                 showPitches()
             }
             linearBookedPitch.setOnClickListener {
@@ -207,51 +194,71 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
 
         binding.bottomSheetTypes.edtPitchSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                hideKeyboard()
-                bottomSheetBehaviorType.state = BottomSheetBehavior.STATE_COLLAPSED
+                hideKeyboard(requireActivity())
+                if (binding.bottomSheetTypes.edtPitchSearch.text.isNotEmpty()) {
+                    hideBottomSheet(bottomSheetBehaviorType)
+                    showPitches()
+                } else {
+                    bottomSheetBehaviorType.state = BottomSheetBehavior.STATE_COLLAPSED
+                }
                 true
             } else false
         }
-
-        controlOnBackPressed()
     }
 
-    private fun controlOnBackPressed() {
-        activity?.onBackPressedDispatcher?.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    if (bottomSheetBehaviorType.state == BottomSheetBehavior.STATE_EXPANDED) {
-                        Log.d("TAG", "handleOnBackPressed: ok")
-                        bottomSheetBehaviorType.state = BottomSheetBehavior.STATE_COLLAPSED
-                        isEnabled = false
+    private fun observeFavouriteStadiums() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.favouriteStadiums.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
                     }
-                    if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
-                        Log.d("TAG", "handleOnBackPressed: okk")
-                        hideBottomSheet(bottomSheetBehavior)
-                        isEnabled = false
+
+                    is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "observeNearByStadiums: $it.data")
+                        //set data to adapter
                     }
-                    if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
-                        Log.d("TAG", "handleOnBackPressed: okkk")
-                        hideBottomSheet(bottomSheetBehavior)
-                        isEnabled = false
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
                     }
-                    if (isEnabled) {
-                        Log.d("TAG", "handleOnBackPressed: ok@")
-                        requireActivity().onBackPressed()
-                    }
+                    else -> {}
                 }
-            })
+            }
+        }
     }
 
-    private fun hideKeyboard() {
-        val imm =
-            requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        var view = requireActivity().currentFocus
-        if (view == null) {
-            view = View(activity)
+    private fun sendRequestToGetFavouriteStadiums() {
+        viewModel.getFavouriteStadiums("userID")
+    }
+
+    private fun sendRequestToGetNearbyStadiums() {
+        viewModel.getNearByStadiums(
+            com.footzone.footzone.model.Location(
+                41.327489446765156,
+                69.2287423147801
+            )
+        )
+    }
+
+    private fun observeNearByStadiums() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.nearByStadiums.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
+
+                    is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "observeNearByStadiums: $it.data")
+                        //set data to adapter
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {}
+                }
+            }
         }
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     private fun openMyStadiumFragment() {
@@ -272,7 +279,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
             bundleOf(PITCH_DETAIL to pitch)
         )
     }
-
 
     private fun showPitches() {
         openPitchListBottomSheet()
@@ -317,6 +323,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     showTopSheet()
                 }
+
                 if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                     showBottomSheet(bottomSheetBehaviorType)
                     bottomSheetBehaviorType.isHideable = false
@@ -324,21 +331,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
-        })
-    }
-
-    private fun controlBottomSheetType() {
-        bottomSheetBehaviorType.addBottomSheetCallback(object :
-            BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    hideKeyboard()
-                }
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-
-            }
         })
     }
 
@@ -410,18 +402,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
             flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             view.systemUiVisibility = flags
             requireActivity().window.statusBarColor = Color.WHITE
-        }
-    }
-
-    private fun permissionRequest() {
-        if (checkCallingOrSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PermissionChecker.PERMISSION_GRANTED
-        ) {
-            showLocationOn()
-        } else {
-            showLocationOn()
         }
     }
 
@@ -497,13 +477,13 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
             }
         }
 
-
     private fun findMultipleLocation() {
         locationList.add(location1)
         locationList.add(location2)
         for (i in locationList.indices) {
             mMap.addMarker(MarkerOptions().position(locationList[i]).title("Marker"))
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(locationList[i], myLocationZoom))
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(locationList[i]))
         }
     }
 }
