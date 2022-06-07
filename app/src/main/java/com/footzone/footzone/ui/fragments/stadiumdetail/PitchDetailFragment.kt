@@ -1,7 +1,6 @@
 package com.footzone.footzone.ui.fragments.stadiumdetail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +11,10 @@ import com.footzone.footzone.R
 import com.footzone.footzone.adapter.CommentAdapter
 import com.footzone.footzone.adapter.CustomAdapter
 import com.footzone.footzone.databinding.FragmentPitchDetailBinding
-import com.footzone.footzone.model.Comment
 import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.TimeManager
+import com.footzone.footzone.model.holders.Comment
+import com.footzone.footzone.model.holders.Photo
 import com.footzone.footzone.ui.fragments.ChooseTimeBottomSheetDialog
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
@@ -90,8 +90,8 @@ class PitchDetailFragment : Fragment() {
 
 
         binding.btnOpenBottomSheet.setOnClickListener {
-            val sortRecipesBottomSheet = ChooseTimeBottomSheetDialog()
-            sortRecipesBottomSheet.show(childFragmentManager,sortRecipesBottomSheet.tag)
+            val chooseTimeBottomSheetDialog = ChooseTimeBottomSheetDialog()
+            chooseTimeBottomSheetDialog.show(childFragmentManager,chooseTimeBottomSheetDialog.tag)
         }
 
         binding.linearNavigation.setOnClickListener {
@@ -100,7 +100,7 @@ class PitchDetailFragment : Fragment() {
     }
 
     private fun refreshAdapter() {
-        adapter = CustomAdapter(pitch.images)
+        adapter = CustomAdapter(ArrayList<Photo>())
         binding.recyclerView.adapter = adapter
     }
 
@@ -111,22 +111,7 @@ class PitchDetailFragment : Fragment() {
 
     private fun getComments(): ArrayList<Comment> {
         val items = ArrayList<Comment>()
-        items.add(
-            Comment(
-                "Jonibek Xolmonov",
-                3.5f,
-                "18.05.2002",
-                "Measure the view and its content to determine the measured width and the measured height. This method is invoked by measure(int, int) and should be overridden by subclasses to provide accurate and efficient measurement of their contents."
-            )
-        )
-        items.add(
-            Comment(
-                "Odilbek Rustamov",
-                2f,
-                "11.05.2002",
-                "CONTRACT: When overriding this method, you must call setMeasuredDimension(int, int) to store the measured width and height of this view. Failure to do so will trigger an IllegalStateException, thrown by measure(int, int). Calling the superclass' onMeasure(int, int) is a valid use."
-            )
-        )
+
         return items
     }
 }

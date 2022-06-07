@@ -1,6 +1,7 @@
 package com.footzone.footzone.networking.service
 
 import com.footzone.footzone.model.*
+import com.footzone.footzone.model.holders.HolderStadiumResponse
 import com.footzone.footzone.model.playhistory.PlayHistoryResponse
 import com.footzone.footzone.model.profile.UserData
 import dagger.Binds
@@ -52,4 +53,8 @@ interface ApiService {
     //not yet fully connected
     @GET("stadium/{stadiumId}")
      fun getPitchData(@Path("stadiumId") stadiumId: String): Response
+
+    @Headers("Authorization:Bearer 9eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTAzNDExNTExIiwiaWF0IjoxNjU0MDY3MzU5LCJleHAiOjE2NTY2NTkzNTksInJvbGVzIjpbeyJpZCI6Ijg0OGQxNjkwLWIzNDUtNDgxZC1iMDBiLTY0YmNjYTM2NzVhYiIsImNyZWF0ZWRBdCI6MTY1NDA0MTUyNDg4NCwidXBkYXRlZEF0IjoxNjU0MDQxNTI0ODg0LCJjcmVhdGVkQnkiOm51bGwsInVwZGF0ZWRCeSI6bnVsbCwibmFtZSI6IlVzZXIiLCJkZXNjcmlwdGlvbiI6IlVzZXIifV19.wk4mhvMv6gW-SOrbt1wcl6jUOldZPZeKo2e-S3BanoCm8yXCq8V9ukaOb7MTh_qroCNGvAq_dvu80YXu-8G9Gg")
+    @GET("stadium/holder/{userId}")
+    suspend fun getHolderStadiums(@Path ("userId") userId: String): HolderStadiumResponse
 }

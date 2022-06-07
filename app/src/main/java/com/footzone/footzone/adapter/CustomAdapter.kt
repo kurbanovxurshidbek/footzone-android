@@ -5,8 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.footzone.footzone.databinding.ItemRvBinding
+import com.footzone.footzone.model.holders.Comment
+import com.footzone.footzone.model.holders.Photo
 
-class CustomAdapter(var items: ArrayList<String>) :
+class CustomAdapter(var items: ArrayList<Photo>) :
     RecyclerView.Adapter<CustomAdapter.VH>() {
 
 

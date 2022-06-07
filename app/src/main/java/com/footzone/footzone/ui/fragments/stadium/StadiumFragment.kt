@@ -1,24 +1,23 @@
 package com.footzone.footzone.ui.fragments.stadium
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.CommentAdapter
 import com.footzone.footzone.adapter.CustomAdapter
 import com.footzone.footzone.databinding.FragmentStadiumBinding
-import com.footzone.footzone.model.Comment
-import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.TimeManager
+import com.footzone.footzone.model.holders.Comment
+import com.footzone.footzone.model.holders.Data
+import com.footzone.footzone.model.holders.Photo
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
@@ -26,12 +25,12 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
     private lateinit var binding: FragmentStadiumBinding
     lateinit var adapter: CustomAdapter
     lateinit var adapterComment: CommentAdapter
-    lateinit var pitch: Pitch
+    lateinit var data: Data
     var times: ArrayList<TimeManager> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        pitch = arguments?.get(PITCH_DETAIL) as Pitch
+        data = arguments?.get(PITCH_DETAIL) as Data
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,7 +49,7 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
             requireActivity().onBackPressed()
         }
 
-        binding.etStadium.setOnClickListener { openEditStadium(pitch) }
+        binding.etStadium.setOnClickListener { openEditStadium(data) }
 
         binding.linearNavigation.setOnClickListener {
             requireActivity().shareLocationToGoogleMap(41.33324, 69.21896)
@@ -58,40 +57,20 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
     }
 
     private fun refreshAdapter() {
-        adapter = CustomAdapter(pitch.images)
+        adapter = CustomAdapter(data.photos as ArrayList<Photo>)
         binding.recyclerView.adapter = adapter
     }
 
     private fun refreshCommentAdapter() {
-        adapterComment = CommentAdapter(getComments())
+        adapterComment = CommentAdapter(data.comments as ArrayList<Comment>)
         binding.recyclerViewComment.adapter = adapterComment
     }
 
-    private fun getComments(): ArrayList<Comment> {
-        val items = ArrayList<Comment>()
-        items.add(
-            Comment(
-                "Jonibek Xolmonov",
-                3.5f,
-                "18.05.2002",
-                "Measure the view and its content to determine the measured width and the measured height. This method is invoked by measure(int, int) and should be overridden by subclasses to provide accurate and efficient measurement of their contents."
-            )
-        )
-        items.add(
-            Comment(
-                "Odilbek Rustamov",
-                2f,
-                "11.05.2002",
-                "CONTRACT: When overriding this method, you must call setMeasuredDimension(int, int) to store the measured width and height of this view. Failure to do so will trigger an IllegalStateException, thrown by measure(int, int). Calling the superclass' onMeasure(int, int) is a valid use."
-            )
-        )
-        return items
-    }
 
-    private fun openEditStadium(pitch: Pitch) {
+    private fun openEditStadium(data: Data) {
         findNavController().navigate(
             R.id.action_stadiumFragment_to_addStadiumFragment,
-            bundleOf(PITCH_DETAIL to pitch, KeyValues.TYPE_DETAIL to 1)
+            bundleOf(PITCH_DETAIL to data, KeyValues.TYPE_DETAIL to 1)
         )
     }
 }

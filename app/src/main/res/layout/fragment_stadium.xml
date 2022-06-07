@@ -46,7 +46,8 @@
                     android:id="@+id/etStadium"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:padding="15dp"
+                    android:paddingVertical="15dp"
+                    android:paddingStart="30dp"
                     android:src="@drawable/ic_edit"/>
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>

@@ -1,17 +1,17 @@
 package com.footzone.footzone.adapter
 
-import android.content.Context
 import android.text.Html
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.footzone.footzone.databinding.ItemMyPitchLayoutBinding
-import com.footzone.footzone.model.Pitch
+import com.footzone.footzone.model.holders.Comment
+import com.footzone.footzone.model.holders.Data
+import com.footzone.footzone.model.holders.Photo
 import com.footzone.footzone.ui.fragments.mystadium.MyStadiumFragment
-import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
+import java.time.LocalDateTime
 
-class MyPitchAdapter(var context: MyStadiumFragment, var pitches: ArrayList<Pitch>, private var onPitchClick: ((Pitch) -> Unit)):
+class MyPitchAdapter(var context: MyStadiumFragment, var items: ArrayList<Data>, private var onPitchClick: ((Data) -> Unit)):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = ItemMyPitchLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -19,26 +19,27 @@ class MyPitchAdapter(var context: MyStadiumFragment, var pitches: ArrayList<Pitc
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val pitch = pitches[position]
+        val data = items[position]
         if (holder is MyPitchViewHolder){
             holder.view.apply {
-                refreshImagesAdapter(pitch.images, rvPithPhotos)
-                tvPitchName.text = pitch.name
-                if (pitch.isOpen) {
+                refreshImagesAdapter(data.photos as ArrayList<Photo>, rvPithPhotos)
+                tvPitchName.text = data.name
+
+                if (data.isOpen.open) {
                     tvOpenClose.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
-                    tvOpenCloseHour.text = " · ${pitch.time.closingTime} da yopiladi"
+                    tvOpenCloseHour.text = " · ${data.isOpen.time.substring(0, 5)} da yopiladi"
                 } else {
                     tvOpenClose.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
-                    tvOpenCloseHour.text = " · ${pitch.time.openingTime} da ochiladi"
+                    tvOpenCloseHour.text = " · ${data.isOpen.time} da ochiladi"
                 }
                 setStrokeColorToRatingBar(rbPitch)
-                rbPitch.rating = pitch.rating
+                rbPitch.rating = context.resRating(data.comments as ArrayList<Comment>)
                 rbPitch.setIsIndicator(true)
-                tvRatingNums.text = "(${pitch.ratingNums})"
-                tvPitchPrice.text = "${pitch.price} so'm/soat"
+                tvRatingNums.text = "(${data.comments.size})"
+                tvPitchPrice.text = "${data.hourlyPrice} so'm/soat"
 
                 btnManagement.setOnClickListener {
-                    onPitchClick.invoke(pitch)
+                    onPitchClick.invoke(data)
                 }
 
                 linearNavigation.setOnClickListener {
@@ -48,14 +49,14 @@ class MyPitchAdapter(var context: MyStadiumFragment, var pitches: ArrayList<Pitc
         }
     }
 
-    private fun refreshImagesAdapter(images: ArrayList<String>, rvPithPhotos: RecyclerView) {
+    private fun refreshImagesAdapter(photos: ArrayList<Photo>, rvPithPhotos: RecyclerView) {
         val pitchImagesAdapter = PitchImagesAdapter()
-        pitchImagesAdapter.submitData(images)
+        pitchImagesAdapter.submitData(photos)
         rvPithPhotos.adapter = pitchImagesAdapter
     }
 
     override fun getItemCount(): Int {
-        return pitches.size
+        return items.size
     }
 
     class MyPitchViewHolder(val view: ItemMyPitchLayoutBinding) : RecyclerView.ViewHolder(view.root)
