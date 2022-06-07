@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.footzone.footzone.model.Location
 import com.footzone.footzone.model.StadiumResponse
+import com.footzone.footzone.model.playhistory.PlayHistoryResponse
 import com.footzone.footzone.repository.main.MainRepository
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,12 +26,8 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
     val favouriteStadiums = _favouriteStadiums
 
     private val _previouslyBookedStadiums =
-        MutableStateFlow<UiStateObject<StadiumResponse>>(UiStateObject.EMPTY)
+        MutableStateFlow<UiStateObject<PlayHistoryResponse>>(UiStateObject.EMPTY)
     val previouslyBookedStadiums = _previouslyBookedStadiums
-
-    private val _ownerStadiums =
-        MutableStateFlow<UiStateObject<StadiumResponse>>(UiStateObject.EMPTY)
-    val ownerStadiums = _ownerStadiums
 
     fun getNearByStadiums(location: Location) = viewModelScope.launch {
         _nearByStadiums.value = UiStateObject.LOADING
@@ -58,12 +55,11 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
         }
     }
 
-    //some correction
     fun getPreviouslyBookedStadiums(userId: String) = viewModelScope.launch {
         _previouslyBookedStadiums.value = UiStateObject.LOADING
 
         try {
-            val response = mainRepository.getFavouriteStadiums(userId)
+            val response = mainRepository.getUserPlayHistory(userId)
             _previouslyBookedStadiums.value = UiStateObject.SUCCESS(response)
 
         } catch (e: Exception) {

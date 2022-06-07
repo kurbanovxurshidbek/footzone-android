@@ -1,6 +1,7 @@
 package com.footzone.footzone.di
 
 import com.footzone.footzone.networking.service.ApiService
+import com.footzone.footzone.utils.SharedPref
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +19,8 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class ServerModule {
-    private val BASE_URL: String = "http://10.10.2.18:8081/api/v1/"
+    private val BASE_URL: String = "http://10.10.1.70:8081/api/v1/"
+//    private val sharedPref:SharedPref = SharedPref()
 
     @Provides
     @Singleton
@@ -44,10 +46,6 @@ class ServerModule {
         })
         .addInterceptor(Interceptor { chain ->
             val builder = chain.request().newBuilder()
-            //builder.header("Content-Type", "application/json")
-            /*  if (sharedPref.user != ""){
-                  builder.header("Authorization", "Bearer ${sharedPref.user}")
-              }*/
             chain.proceed(builder.build())
         })
         .build()

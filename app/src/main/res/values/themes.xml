@@ -8,6 +8,8 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+<!--        <item name="android:windowExitAnimation">@anim/fade_out</item>-->
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
@@ -32,18 +34,16 @@
         <item name="android:textSize">32sp</item>
     </style>
 
-    <style name="BottomSheetDialogTheme" >
+    <style name="BottomSheetDialogTheme">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@color/white</item>
     </style>
 
-    <style name="AppBottomSheetDialogTheme"
-        parent="Theme.Design.Light.BottomSheetDialog">
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
     </style>
 
-    <style name="AppModalStyle"
-        parent="Widget.Design.BottomSheet.Modal">
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/background_top_oval</item>
     </style>
 
@@ -63,6 +63,7 @@
         <item name="hintTextColor">@color/selector_hint_text_color</item>
         <item name="boxStrokeWidth">2dp</item>
     </style>
+
     <style name="LoginTextInputLayoutStyleRole" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
         <item name="boxStrokeColor">@color/text_input_box_stroke</item>
         <item name="android:textColorHint">#616161</item>
@@ -74,6 +75,7 @@
     <style name="circle">
         <item name="cornerSize">50%</item>
     </style>
+
     <style name="BottomNavigationViewTextStyle">
         ...
         <item name="android:fontFamily">@font/poppins_bold</item>
@@ -105,5 +107,12 @@
         <item name="cornerSizeTopLeft">16dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
+    <style name="NavigationAnimation">
+        <item name="popExitAnim">@anim/slide_out_right</item>
+        <item name="popEnterAnim">@anim/slide_in_left</item>
+        <item name="exitAnim">@anim/slide_out_left</item>
+        <item name="enterAnim">@anim/fade_in</item>
     </style>
 </resources>

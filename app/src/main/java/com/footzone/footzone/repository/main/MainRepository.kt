@@ -15,8 +15,11 @@ import javax.inject.Singleton
 class MainRepository @Inject constructor(private val apiService: ApiService) {
 
     suspend fun getUserData(userId: String) = apiService.getUserData(userId)
-    suspend fun getUserPlayHistory(userId: String)=apiService.getUserPlayHistory(userId)
-    suspend fun updateUserProfilePhoto(userId: String, file: MultipartBody.Part) = apiService.updateUserProfilePhoto(userId,file)
+
+    suspend fun getUserPlayHistory(userId: String) = apiService.getUserPlayHistory(userId)
+
+    suspend fun updateUserProfilePhoto(userId: String, file: MultipartBody.Part) =
+        apiService.updateUserProfilePhoto(userId, file)
 
     suspend fun getNearByStadiums(location: Location) =
         apiService.getNearByStadiums(location)

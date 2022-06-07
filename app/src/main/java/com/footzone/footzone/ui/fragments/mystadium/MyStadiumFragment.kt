@@ -1,8 +1,11 @@
 package com.footzone.footzone.ui.fragments.mystadium
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.MyPitchAdapter
@@ -12,10 +15,16 @@ import com.footzone.footzone.model.Time
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.UiStateObject
 
 class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
 
     lateinit var binding: FragmentMyStadiumBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,28 +33,27 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
     }
 
     private fun initViews() {
+
         binding.apply {
             icClose.setOnClickListener { requireActivity().onBackPressed() }
-        }
 
-        binding.ivAdd.setOnClickListener {
-            openAddStadium()
-        }
+            ivAdd.setOnClickListener { openAddStadium() }
 
-        if (getPitches().size > 0){
-            binding.recyclerView.visibility = View.VISIBLE
-            binding.llView.visibility = View.GONE
-            refreshAdapter()
-        }else{
-            binding.recyclerView.visibility = View.GONE
-            binding.llView.visibility = View.VISIBLE
-            binding.tvJustText.text = "Hozir sizda maydonlar mavjud emas.\nMaydon qo’shish uchun yuqoridagi\n“+” tugmasini bosing"
-
+            if (getPitches().size > 0) {
+                recyclerView.visibility = View.VISIBLE
+                llView.visibility = View.GONE
+                refreshAdapter()
+            } else {
+                recyclerView.visibility = View.GONE
+                llView.visibility = View.VISIBLE
+                tvJustText.text =
+                    "Hozir sizda maydonlar mavjud emas.\nMaydon qo’shish uchun yuqoridagi\n“+” tugmasini bosing"
+            }
         }
     }
 
     private fun refreshAdapter() {
-        val adapter = MyPitchAdapter(this, getPitches()){ pitch ->
+        val adapter = MyPitchAdapter(this, getPitches()) { pitch ->
             openEditStadium(pitch)
         }
         binding.recyclerView.adapter = adapter
@@ -93,13 +101,15 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
         }
     }
 
-    fun openMap(){
+    fun openMap() {
         requireActivity().shareLocationToGoogleMap(41.33324, 69.21896)
     }
 
     private fun openAddStadium() {
-        findNavController().navigate(R.id.action_myStadiumFragment_to_addStadiumFragment,
-            bundleOf(KeyValues.TYPE_DETAIL to 2))
+        findNavController().navigate(
+            R.id.action_myStadiumFragment_to_addStadiumFragment,
+            bundleOf(KeyValues.TYPE_DETAIL to 2)
+        )
     }
 
     private fun openEditStadium(pitch: Pitch) {

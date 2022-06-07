@@ -7,8 +7,24 @@ class SharedPref(private val context: Context) {
     fun saveLogIn(key: String, data: Boolean) {
         sharedPref.edit().putBoolean(key, data).apply()
     }
-    fun getLogIn(key: String, data: Boolean):Boolean {
-        return sharedPref.getBoolean(key,false)
+
+    fun getLogIn(key: String, data: Boolean): Boolean {
+        return sharedPref.getBoolean(key, false)
     }
 
+    fun saveUserId(key: String, data: String) {
+        sharedPref.edit().putString(key, data).apply()
+    }
+
+    fun getUserID(key: String, data: String): String {
+        return sharedPref.getString(key, data)!!
+    }
+
+    fun saveUserToken(key: String, data: String) {
+        sharedPref.edit().putString(key, data).apply()
+    }
+
+    fun getUserToken(key: String, data: String): String {
+        return sharedPref.getString(key, data)!!
+    }
 }

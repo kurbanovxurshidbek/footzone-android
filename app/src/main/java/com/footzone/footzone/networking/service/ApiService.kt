@@ -27,7 +27,6 @@ interface ApiService {
     @POST("auth/register")
     suspend fun registerUser(@Body user: User): Response
 
-    @Headers("Authorization:Bearer 9eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTAzNDExNTExIiwiaWF0IjoxNjU0MDY3MzU5LCJleHAiOjE2NTY2NTkzNTksInJvbGVzIjpbeyJpZCI6Ijg0OGQxNjkwLWIzNDUtNDgxZC1iMDBiLTY0YmNjYTM2NzVhYiIsImNyZWF0ZWRBdCI6MTY1NDA0MTUyNDg4NCwidXBkYXRlZEF0IjoxNjU0MDQxNTI0ODg0LCJjcmVhdGVkQnkiOm51bGwsInVwZGF0ZWRCeSI6bnVsbCwibmFtZSI6IlVzZXIiLCJkZXNjcmlwdGlvbiI6IlVzZXIifV19.wk4mhvMv6gW-SOrbt1wcl6jUOldZPZeKo2e-S3BanoCm8yXCq8V9ukaOb7MTh_qroCNGvAq_dvu80YXu-8G9Gg")
     @POST("stadium/viewNearStadiums")
     suspend fun getNearByStadiums(@Body location: Location): StadiumResponse
 
@@ -36,10 +35,10 @@ interface ApiService {
 
     @Headers("Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTAzNDExNTExIiwiaWF0IjoxNjU0MDY3MzU5LCJleHAiOjE2NTY2NTkzNTksInJvbGVzIjpbeyJpZCI6Ijg0OGQxNjkwLWIzNDUtNDgxZC1iMDBiLTY0YmNjYTM2NzVhYiIsImNyZWF0ZWRBdCI6MTY1NDA0MTUyNDg4NCwidXBkYXRlZEF0IjoxNjU0MDQxNTI0ODg0LCJjcmVhdGVkQnkiOm51bGwsInVwZGF0ZWRCeSI6bnVsbCwibmFtZSI6IlVzZXIiLCJkZXNjcmlwdGlvbiI6IlVzZXIifV19.wk4mhvMv6gW-SOrbt1wcl6jUOldZPZeKo2e-S3BanoCm8yXCq8V9ukaOb7MTh_qroCNGvAq_dvu80YXu-8G9Gg")
     @GET("user/{userId}")
-    suspend fun getUserData(@Path ("userId") userId: String): UserData
+    suspend fun getUserData(@Path("userId") userId: String): UserData
 
     @GET("stadium/history/{userId}")
-    suspend fun getUserPlayHistory(@Path ("userId") userId: String):PlayHistoryResponse
+    suspend fun getUserPlayHistory(@Path("userId") userId: String): PlayHistoryResponse
 
     @Headers("Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTAzNDExNTExIiwiaWF0IjoxNjU0MDY3MzU5LCJleHAiOjE2NTY2NTkzNTksInJvbGVzIjpbeyJpZCI6Ijg0OGQxNjkwLWIzNDUtNDgxZC1iMDBiLTY0YmNjYTM2NzVhYiIsImNyZWF0ZWRBdCI6MTY1NDA0MTUyNDg4NCwidXBkYXRlZEF0IjoxNjU0MDQxNTI0ODg0LCJjcmVhdGVkQnkiOm51bGwsInVwZGF0ZWRCeSI6bnVsbCwibmFtZSI6IlVzZXIiLCJkZXNjcmlwdGlvbiI6IlVzZXIifV19.wk4mhvMv6gW-SOrbt1wcl6jUOldZPZeKo2e-S3BanoCm8yXCq8V9ukaOb7MTh_qroCNGvAq_dvu80YXu-8G9Gg")
     @Multipart
