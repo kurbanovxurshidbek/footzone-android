@@ -1,10 +1,13 @@
 package com.footzone.footzone.ui.fragments.stadiumdetail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.CommentAdapter
 import com.footzone.footzone.adapter.CustomAdapter
@@ -15,18 +18,22 @@ import com.footzone.footzone.model.TimeManager
 import com.footzone.footzone.ui.fragments.ChooseTimeBottomSheetDialog
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
+import com.footzone.footzone.utils.UiStateObject
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class PitchDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentPitchDetailBinding
     lateinit var adapter: CustomAdapter
     lateinit var adapterComment: CommentAdapter
+    private val viewModel by viewModels<PitchDetailViewModel>()
     lateinit var pitch: Pitch
     var times: ArrayList<TimeManager> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.getPitchData("4805e032-454a-40b5-9dda-ed8e06a1d3cc")
         pitch = arguments?.get(PITCH_DETAIL) as Pitch
     }
 
@@ -41,7 +48,34 @@ class PitchDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentPitchDetailBinding.bind(view)
+        setupObservers()
         initViews()
+    }
+
+    private fun setupObservers() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.pitchData.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
+
+                    is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "setupObservers: ${it.data}")
+                        showPitchData(it.data.data)
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showPitchData(data: Any) {
+        Log.d("@@@", "showPitchData: ")
     }
 
     private fun initViews() {

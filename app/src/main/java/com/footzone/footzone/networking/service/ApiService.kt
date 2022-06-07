@@ -44,4 +44,9 @@ interface ApiService {
         @Path("userId") userId: String,
         @Part file: MultipartBody.Part
     ): String
+
+
+    //not yet fully connected
+    @GET("stadium/{stadiumId}")
+     fun getPitchData(@Path("stadiumId") stadiumId: String): Response
 }
