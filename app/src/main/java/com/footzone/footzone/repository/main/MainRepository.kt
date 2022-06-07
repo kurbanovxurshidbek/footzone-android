@@ -4,7 +4,6 @@ import com.footzone.footzone.model.Location
 import com.footzone.footzone.networking.service.ApiService
 import okhttp3.MultipartBody
 import javax.inject.Inject
-
 class MainRepository @Inject constructor(private val apiService: ApiService) {
 
     suspend fun getUserData(userId: String) = apiService.getUserData(userId)
@@ -17,4 +16,6 @@ class MainRepository @Inject constructor(private val apiService: ApiService) {
     suspend fun getFavouriteStadiums(userId: String) = apiService.getFavouriteStadiums(userId)
 
     suspend fun getHolderStadiums(userId: String) = apiService.getHolderStadiums(userId)
+
+    suspend fun getPitchData(stadiumId: String) = apiService.getPitchData(stadiumId)
 }
