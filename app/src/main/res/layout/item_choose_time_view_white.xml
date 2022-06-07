@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearFreeToBook"
     android:layout_width="match_parent"
     android:layout_height="56dp"
-    android:gravity="center"
     android:layout_margin="4dp"
-    android:background="@drawable/view_rounded_corners_white_4dp">
+    android:background="@drawable/view_rounded_corners_white_4dp"
+    android:gravity="center">
 
     <TextView
         android:id="@+id/tvStartTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="14:00"
-        android:textSize="20sp"
-        android:textColor="@color/colorNeutral100"/>
+        android:textColor="@color/colorNeutral100"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="3dp"
         android:text="|"
-        android:textSize="22sp"
-        android:textColor="@color/colorNeutral100"/>
+        android:textColor="@color/colorNeutral100"
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/tvFinishTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="14:30"
-        android:textSize="20sp"
-        android:textColor="@color/colorNeutral100"/>
+        android:textColor="@color/colorNeutral100"
+        android:textSize="20sp" />
 </LinearLayout>

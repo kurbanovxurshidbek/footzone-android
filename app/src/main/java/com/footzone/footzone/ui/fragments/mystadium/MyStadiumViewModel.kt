@@ -8,4 +8,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MyStadiumViewModel  @Inject constructor(private val mainRepository: MainRepository) :
     ViewModel() {
+
+
+
 }
