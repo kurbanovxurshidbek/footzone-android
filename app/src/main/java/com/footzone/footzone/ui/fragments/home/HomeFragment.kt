@@ -1,6 +1,5 @@
 package com.footzone.footzone.ui.fragments.home
 
-import android.Manifest
 import android.app.Activity
 import android.content.IntentSender
 import android.graphics.Color
@@ -8,21 +7,12 @@ import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.PermissionChecker
-import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.androidbolts.topsheet.TopSheetBehavior
@@ -31,12 +21,9 @@ import com.footzone.footzone.adapter.PitchAdapter
 import com.footzone.footzone.databinding.FragmentHomeBinding
 import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.Time
-import com.footzone.footzone.ui.activity.MainActivity
 import com.footzone.footzone.ui.fragments.BaseFragment
-import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 import com.footzone.footzone.utils.LocationHelper
-import com.footzone.footzone.utils.UiStateList
 import com.footzone.footzone.utils.UiStateObject
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.*
@@ -48,14 +35,7 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
-import com.karumi.dexter.listener.single.PermissionListener
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,

@@ -1,16 +1,9 @@
 package com.footzone.footzone.repository.main
 
 import com.footzone.footzone.model.Location
-import com.footzone.footzone.model.User
 import com.footzone.footzone.networking.service.ApiService
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import okhttp3.MultipartBody
-import java.io.File
 import javax.inject.Inject
-import javax.inject.Singleton
 
 class MainRepository @Inject constructor(private val apiService: ApiService) {
 
@@ -22,4 +15,6 @@ class MainRepository @Inject constructor(private val apiService: ApiService) {
         apiService.getNearByStadiums(location)
 
     suspend fun getFavouriteStadiums(userId: String) = apiService.getFavouriteStadiums(userId)
+
+    suspend fun getHolderStadiums(userId: String) = apiService.getHolderStadiums(userId)
 }

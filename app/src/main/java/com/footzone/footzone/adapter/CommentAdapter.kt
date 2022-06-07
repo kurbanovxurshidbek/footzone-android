@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.footzone.footzone.databinding.ItemCommentBinding
-import com.footzone.footzone.model.Comment
+import com.footzone.footzone.model.holders.Comment
 
 class CommentAdapter(var items: ArrayList<Comment>) :
     RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() {
@@ -23,11 +23,11 @@ class CommentAdapter(var items: ArrayList<Comment>) :
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
         val item = items[position]
         holder.view.apply {
-            commentOwnerName.text = item.name
-            ratingBarComment.rating = item.rate
-            ratingBarComment.setIsIndicator(true)
-            bodyComment.text = item.body
-            dateComment.text = item.date
+//            commentOwnerName.text = item.name
+//            ratingBarComment.rating = item.rate
+//            ratingBarComment.setIsIndicator(true)
+//            bodyComment.text = item.body
+//            dateComment.text = item.date
         }
     }
 

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.footzone.footzone.databinding.ItemPitchLayoutBinding
 import com.footzone.footzone.model.Pitch
+import com.footzone.footzone.model.holders.Photo
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 
 class PitchAdapter(
@@ -26,7 +27,7 @@ class PitchAdapter(
     override fun onBindViewHolder(holder: VH, position: Int) {
         val pitch = pitches[position]
         holder.view.apply {
-            refreshImagesAdapter(pitch.images, rvPithPhotos)
+           // refreshImagesAdapter(pitch.images, rvPithPhotos)
             tvPitchName.text = pitch.name
             if (pitch.isOpen) {
                 tvOpenClose.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
@@ -51,9 +52,9 @@ class PitchAdapter(
         }
     }
 
-    private fun refreshImagesAdapter(images: ArrayList<String>, rvPithPhotos: RecyclerView) {
+    private fun refreshImagesAdapter(images: ArrayList<Photo>, rvPithPhotos: RecyclerView) {
         val pitchImagesAdapter = PitchImagesAdapter()
-        pitchImagesAdapter.submitData(images)
+        pitchImagesAdapter.submitData(images as ArrayList<Photo>)
         rvPithPhotos.adapter = pitchImagesAdapter
     }
 
