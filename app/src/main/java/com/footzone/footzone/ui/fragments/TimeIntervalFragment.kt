@@ -40,15 +40,20 @@ class TimeIntervalFragment : Fragment() {
     }
 
     private fun initViews() {
+        var finishTime = ""
         val adapter = TimeManagerAdapter(){ position , view, item->
+
             if (num == -1){
                 num = position
                 if (!item.isSelected!!) {
                     view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_blue_4dp)
-                } else {
+                    Log.d("TAG", "initViews: 0")
+                }else{
                     view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_white_4dp)
+                    Log.d("TAG", "initViews: 1")
                 }
                 item.isSelected = !item.isSelected!!
+                finishTime = item.finishTime.toString()
                 binding.tvStartTime.setText("${item.startTime.toString()}")
             }else{
                 if ( beforePosition(num) > position ||  afterPosition(num) <position ){
@@ -56,16 +61,18 @@ class TimeIntervalFragment : Fragment() {
                     view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_white_4dp)
                     binding.tvStartTime.text!!.clear()
                     num = -1
+                    Log.d("TAG", "initViews: 2")
                 }else{
                     if (!item.isSelected!!) {
                         view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_blue_4dp)
                         binding.tvFinishTime.setText("${item.startTime.toString()}")
                         if (num < position){
-                            binding.tvFinishTime.setText("${item.startTime.toString()}")
+                            binding.tvFinishTime.setText("${item.finishTime.toString()}")
+                            Log.d("TAG", "initViews: 3")
                         }else{
-                            binding.tvFinishTime.setText(binding.tvStartTime.text)
+                            binding.tvFinishTime.setText(finishTime)
                             binding.tvStartTime.setText("${item.startTime.toString()}")
-
+                            Log.d("TAG", "initViews: 4")
                         }
                         item.isSelected = !item.isSelected!!
                         num = -1
@@ -73,7 +80,9 @@ class TimeIntervalFragment : Fragment() {
                         view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_white_4dp)
                         item.isSelected = !item.isSelected!!
                         binding.tvStartTime.text!!.clear()
+                        binding.tvFinishTime.text!!.clear()
                         num = -1
+                        Log.d("TAG", "initViews: 5")
                     }
                 }
             }
