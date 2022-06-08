@@ -2,6 +2,7 @@ package com.footzone.footzone.ui.fragments.signup
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -18,6 +19,7 @@ import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues.USER_DETAIL
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
@@ -63,8 +65,8 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                         val isStadiumHolder =
                             binding.filledExposedDropdown.text.toString() == "Maydon egasi"
                         val user = User(
-                            "Android xiamsf",
-                            "uaeghjhevujaguyf68aev7yua",
+                            getDeviceName(),
+                            System.currentTimeMillis().toString(),
                             "mobile",
                             fullname,
                             "UZ",
@@ -167,5 +169,13 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
         val editTextFilledExposedDropdown = binding.filledExposedDropdown
 
         editTextFilledExposedDropdown.setAdapter(adapter)
+    }
+
+    fun getDeviceName(): String? {
+        val manufacturer = Build.MANUFACTURER
+        val model = Build.MODEL
+        return if (model.startsWith(manufacturer)) {
+            model
+        } else "$manufacturer $model"
     }
 }

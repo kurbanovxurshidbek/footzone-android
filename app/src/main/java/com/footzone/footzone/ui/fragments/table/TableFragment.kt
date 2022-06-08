@@ -68,13 +68,13 @@ class TableFragment : BaseFragment(R.layout.fragment_table) {
     }
 
     private fun showPlayHistory(items: PlayHistoryResponse) {
-        for (data in items.data){
-            if (data.status==PLAYED){
-                playedHistory.add(data)
-            }else{
-                notPlayHistory.add(data)
-            }
-        }
+//        for (data in items){
+//            if (data.status==PLAYED){
+//                playedHistory.add(data)
+//            }else{
+//                notPlayHistory.add(data)
+//            }
+//        }
 
 
     }

@@ -40,9 +40,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
     GoogleMap.CancelableCallback {
-    val location1 = LatLng(41.33243612881973, 69.23638124609397)
-    val location2 = LatLng(41.325604130328664, 69.24281854772987)
-    private var locationList = ArrayList<LatLng>()
     private val viewModel by viewModels<HomeViewModel>()
 
     private lateinit var mMap: GoogleMap
@@ -81,7 +78,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
             hideBottomSheet(bottomSheetBehaviorType)
             hideBottomSheet(bottomSheetBehavior)
         }
-        findMultipleLocation()
 
         mMap.setOnCameraIdleListener {
             binding.mapIcon.animate().translationY(0f).setDuration(300).start()
@@ -154,6 +150,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
             }
             linearBookedPitch.setOnClickListener {
                 hideBottomSheet(bottomSheetBehaviorType)
+                sendRequestToGetPreviouslyBookedStadiums()
+                observePreviouslyBookedStadiums()
                 showPitches()
             }
         }
@@ -186,9 +184,26 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
         }
     }
 
-    private fun observeFavouriteStadiums() {
+    private fun sendRequestToGetPreviouslyBookedStadiums() {
+        viewModel.getPreviouslyBookedStadiums("b98f1843-b09d-48a6-93a9-b370a78689fb")
+    }
+
+    private fun sendRequestToGetFavouriteStadiums() {
+        viewModel.getFavouriteStadiums("b98f1843-b09d-48a6-93a9-b370a78689fb")
+    }
+
+    private fun sendRequestToGetNearbyStadiums() {
+        viewModel.getNearByStadiums(
+            com.footzone.footzone.model.Location(
+                41.327489446765156,
+                69.2287423147801
+            )
+        )
+    }
+
+    private fun observePreviouslyBookedStadiums() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.favouriteStadiums.collect {
+            viewModel.previouslyBookedStadiums.collect {
                 when (it) {
                     UiStateObject.LOADING -> {
                         //show progress
@@ -207,22 +222,30 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
         }
     }
 
-    private fun sendRequestToGetFavouriteStadiums() {
-        viewModel.getFavouriteStadiums("userID")
-    }
-
-    private fun sendRequestToGetNearbyStadiums() {
-        viewModel.getNearByStadiums(
-            com.footzone.footzone.model.Location(
-                41.327489446765156,
-                69.2287423147801
-            )
-        )
-    }
-
     private fun observeNearByStadiums() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             viewModel.nearByStadiums.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
+
+                    is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "observeNearByStadiums: $it.data")
+                        //set data to adapter
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }
+
+    private fun observeFavouriteStadiums() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.favouriteStadiums.collect {
                 when (it) {
                     UiStateObject.LOADING -> {
                         //show progress
@@ -457,13 +480,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
             }
         }
 
-    private fun findMultipleLocation() {
-        locationList.add(location1)
-        locationList.add(location2)
-        for (i in locationList.indices) {
-            mMap.addMarker(MarkerOptions().position(locationList[i]).title("Marker"))
+    private fun findMultipleLocation(stadiumLocationList: ArrayList<LatLng>) {
+        for (i in stadiumLocationList.indices) {
+            mMap.addMarker(MarkerOptions().position(stadiumLocationList[i]).title("Marker"))
             mMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(locationList[i]))
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(stadiumLocationList[i]))
         }
     }
 }

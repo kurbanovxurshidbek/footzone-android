@@ -1,52 +1,51 @@
 package com.footzone.footzone.ui.fragments.profile
 
-import android.app.Activity.RESULT_OK
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
-import android.view.*
 import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.annotation.GlideModule
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentProfileBinding
-import com.footzone.footzone.model.profile.UserData
+import com.footzone.footzone.model.profile.Data
 import com.footzone.footzone.ui.fragments.BaseFragment
+import com.footzone.footzone.utils.KeyValues.LOG_IN
+import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
+import com.squareup.picasso.Picasso
 import java.io.File
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.FileOutputStream
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
-    private val PICK_FROM_FILE_ADD: Int = 1001
+
     private lateinit var binding: FragmentProfileBinding
+
+    @Inject
     lateinit var sharedPref: SharedPref
+
     lateinit var image: File
     private val viewModel by viewModels<ProfileViewModel>()
-
-    lateinit var fileUri: Uri
-    lateinit var file: File
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
         super.onCreate(savedInstanceState)
+
+        if (sharedPref.getUserID(USER_ID, "").isNotEmpty())
+            viewModel.getUserData(sharedPref.getUserID(USER_ID, ""))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,36 +53,36 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
         binding = FragmentProfileBinding.bind(view)
 
-        viewModel.getUserData("b98f1843-b09d-48a6-93a9-b370a78689fb")
-        setupObservers()
         initViews()
     }
 
     private fun initViews() {
-        sharedPref = SharedPref(requireContext())
 
-        val logIn = sharedPref.getLogIn("LogIn", false)
-        Log.d("TAG", "initViews: $logIn")
-        if (!logIn) {
-            binding.linerProfile.visibility = View.GONE
-            binding.linearProfileNoSignIn.visibility = View.VISIBLE
-        } else {
-            binding.linerProfile.visibility = View.VISIBLE
-            binding.linearProfileNoSignIn.visibility = View.GONE
+        val logIn = sharedPref.getLogIn(LOG_IN, false)
+
+        setupObservers()
+
+        binding.apply {
+            if (!logIn) {
+                linerProfile.visibility = View.GONE
+                linearProfileNoSignIn.visibility = View.VISIBLE
+            } else {
+                linerProfile.visibility = View.VISIBLE
+                linearProfileNoSignIn.visibility = View.GONE
+            }
+            ivAdd.setOnClickListener {
+                getImageFromGallery()
+            }
+
+            tvEnterAccount.setOnClickListener {
+                findNavController().navigate(R.id.action_profileFragment_to_signInFragment)
+            }
+
+            ivLogOut.setOnClickListener {
+                showPopup(it)
+            }
+
         }
-        binding.ivAdd.setOnClickListener {
-            getImageFromGallery()
-        }
-
-        binding.tvEnterAccount.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_signInFragment)
-        }
-
-        binding.ivLogOut.setOnClickListener {
-            showPopup(it)
-        }
-
-
     }
 
     private fun setupObservers() {
@@ -96,7 +95,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
                     is UiStateObject.SUCCESS -> {
                         Log.d("TAG", "setupObservers: ${it.data}")
-                        showUserData(it.data)
+                        showUserData(it.data.data)
                     }
                     is UiStateObject.ERROR -> {
                         Log.d("TAG", "setupUI: ${it.message}")
@@ -108,13 +107,15 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         }
     }
 
-    private fun showUserData(userData: UserData) {
-        binding.tvName.text = userData.data.fullName
-        binding.tvNumber.text = userData.data.phoneNumber
+    private fun showUserData(userData: Data) {
+        binding.apply {
+            tvName.text = userData.fullName
+            tvNumber.text = userData.phoneNumber
 
-        Glide.with(requireActivity())
-            .load("http://10.10.2.18:8081/images/${userData.data.photo.name}")
-            .into(binding.ivProfile)
+            Picasso.get()
+                .load("http://10.10.1.70:8081/images/user/${userData.photo.name}")
+                .into(ivProfile)
+        }
     }
 
     private fun showPopup(v: View) {
@@ -123,7 +124,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                 when (item?.itemId) {
 
                     R.id.logOut -> {
-                        sharedPref.saveLogIn("LogIn", false)
+                        sharedPref.saveLogIn(LOG_IN, false)
                         findNavController().popBackStack()
                         Toast.makeText(requireContext(), "log out", Toast.LENGTH_SHORT).show()
                         true
@@ -145,23 +146,35 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         getImageFromGallery.launch("image/*")
     }
 
-    private val getImageFromGallery = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        uri ?: return@registerForActivityResult
-        val ins = requireActivity().contentResolver.openInputStream(uri)
-        image = File.createTempFile("file", ".jpg", requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES))
-        val fileOutputStream = FileOutputStream(image)
-        ins?.copyTo(fileOutputStream)
-        ins?.close()
-        fileOutputStream.close()
-        if (image.length() == 0L) return@registerForActivityResult
-        Glide.with(requireActivity()).load(image).into(binding.ivProfile)
+    private val getImageFromGallery =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri ?: return@registerForActivityResult
+            val ins = requireActivity().contentResolver.openInputStream(uri)
+            image = File.createTempFile(
+                "file",
+                ".jpg",
+                requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+            )
+            val fileOutputStream = FileOutputStream(image)
+            ins?.copyTo(fileOutputStream)
+            ins?.close()
+            fileOutputStream.close()
+            if (image.length() == 0L) return@registerForActivityResult
+            Glide.with(requireActivity()).load(image).into(binding.ivProfile)
 
-        val reqFile: RequestBody = RequestBody.create("image/jpg".toMediaTypeOrNull(), image)
-        val body: MultipartBody.Part =
-            MultipartBody.Part.createFormData("file", image.name, reqFile)
-        viewModel.updateUserProfilePhoto("b98f1843-b09d-48a6-93a9-b370a78689fb",body)
+
+            val reqFile: RequestBody = RequestBody.create("image/jpg".toMediaTypeOrNull(), image)
+            val body: MultipartBody.Part =
+                MultipartBody.Part.createFormData("file", image.name, reqFile)
+
+            sendRequestToLoadImage(body)
+        }
+
+    private fun sendRequestToLoadImage(body: MultipartBody.Part) {
+        viewModel.updateUserProfilePhoto(sharedPref.getUserID(USER_ID, ""), body)
         observeViewModel()
     }
+
     private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             viewModel.userProfile.collect {
