@@ -26,7 +26,7 @@ interface ApiService {
     suspend fun signInVerification(@Body signInVerification: SignInVerification): Response
 
     @POST("auth/register")
-    suspend fun registerUser(@Body user: User): Response
+    suspend fun registerUser(@Body user: User): RegisterResponse
 
     @POST("stadium/viewNearStadiums")
     suspend fun getNearByStadiums(@Body location: Location): StadiumResponse

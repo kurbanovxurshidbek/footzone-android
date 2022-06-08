@@ -60,7 +60,8 @@ dependencies {
     implementation 'com.karumi:dexter:6.2.3'
 
     implementation 'com.github.bumptech.glide:glide:4.13.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
+    kapt 'com.github.bumptech.glide:compiler:4.13.0'
+
     implementation 'me.zhanghai.android.materialratingbar:library:1.4.0'
 
     implementation 'com.orhanobut:dialogplus:1.11@aar'
@@ -68,6 +69,9 @@ dependencies {
 
     //Switch
     implementation 'com.github.angads25:toggle:1.1.0'
+
+    //picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
     //Masked Edittext
     implementation 'io.github.vicmikhailau:MaskedEditText:4.0.7'

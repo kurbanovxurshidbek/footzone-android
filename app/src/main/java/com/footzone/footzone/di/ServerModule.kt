@@ -1,10 +1,12 @@
 package com.footzone.footzone.di
 
 import com.footzone.footzone.networking.service.ApiService
+import com.footzone.footzone.utils.KeyValues.USER_TOKEN
 import com.footzone.footzone.utils.SharedPref
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.ConnectionSpec
 import okhttp3.Interceptor
@@ -20,7 +22,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class ServerModule {
     private val BASE_URL: String = "http://10.10.1.70:8081/api/v1/"
-//    private val sharedPref:SharedPref = SharedPref()
 
     @Provides
     @Singleton
@@ -37,7 +38,7 @@ class ServerModule {
 
     @Provides
     @Singleton
-    fun getClient(): OkHttpClient = OkHttpClient.Builder()
+    fun getClient(sharedPref: SharedPref): OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(60, TimeUnit.SECONDS)
         .readTimeout(60, TimeUnit.SECONDS)
         //   .addInterceptor(ChuckInterceptor(context))
@@ -46,6 +47,9 @@ class ServerModule {
         })
         .addInterceptor(Interceptor { chain ->
             val builder = chain.request().newBuilder()
+            builder.addHeader("Authorization", "Bearer ${sharedPref.getUserToken(USER_TOKEN, "")}")
+            builder.addHeader("Content-Type", "application/json")
+            builder.addHeader("Accept", "application/json")
             chain.proceed(builder.build())
         })
         .build()

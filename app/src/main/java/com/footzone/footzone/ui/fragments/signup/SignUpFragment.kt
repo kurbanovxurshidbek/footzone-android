@@ -66,7 +66,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                             binding.filledExposedDropdown.text.toString() == "Maydon egasi"
                         val user = User(
                             getDeviceName(),
-                            "uaeghjhevujaguyf68aevsads7yua",
+                            System.currentTimeMillis().toString(),
                             "mobile",
                             fullname,
                             "UZ",
