@@ -18,7 +18,7 @@ import com.footzone.footzone.model.holders.Comment
 import com.footzone.footzone.model.holders.Photo
 import com.footzone.footzone.ui.fragments.ChooseTimeBottomSheetDialog
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
-import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
+import com.footzone.footzone.utils.KeyValues.STADIUM_ID
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,13 +29,13 @@ class PitchDetailFragment : Fragment() {
     lateinit var adapter: CustomAdapter
     lateinit var adapterComment: CommentAdapter
     private val viewModel by viewModels<PitchDetailViewModel>()
-    lateinit var pitch: Pitch
+    lateinit var stadiumId: String
     var times: ArrayList<TimeManager> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        stadiumId = arguments?.get(STADIUM_ID).toString()
         viewModel.getPitchData("4805e032-454a-40b5-9dda-ed8e06a1d3cc")
-        pitch = arguments?.get(PITCH_DETAIL) as Pitch
     }
 
     override fun onCreateView(
@@ -92,7 +92,7 @@ class PitchDetailFragment : Fragment() {
 
         binding.btnOpenBottomSheet.setOnClickListener {
             val chooseTimeBottomSheetDialog = ChooseTimeBottomSheetDialog()
-            chooseTimeBottomSheetDialog.show(childFragmentManager,chooseTimeBottomSheetDialog.tag)
+            chooseTimeBottomSheetDialog.show(childFragmentManager, chooseTimeBottomSheetDialog.tag)
         }
 
         binding.linearNavigation.setOnClickListener {

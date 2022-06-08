@@ -16,6 +16,8 @@ class MainRepository @Inject constructor(private val apiService: ApiService) {
     suspend fun getNearByStadiums(location: Location) =
         apiService.getNearByStadiums(location)
 
+    suspend fun addToFavouriteStadiums(stadiumId: String) = apiService.addToFavouriteStadiums(stadiumId)
+
     suspend fun getFavouriteStadiums(userId: String) = apiService.getFavouriteStadiums(userId)
 
     suspend fun getHolderStadiums(userId: String) = apiService.getHolderStadiums(userId)

@@ -1,7 +1,8 @@
 package com.footzone.footzone.utils
 
 object KeyValues {
-    const val PITCH_DETAIL = "pitchDetail"
+    val PITCH_DETAIL: String = "pitchDetail"
+    const val STADIUM_ID = "stadiumID"
     const val TYPE_DETAIL = "type"
     const val USER_DETAIL = "user"
     const val PHONE_NUMBER = "phoneNumber"

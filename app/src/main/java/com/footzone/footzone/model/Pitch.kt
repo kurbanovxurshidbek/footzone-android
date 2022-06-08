@@ -3,7 +3,7 @@ package com.footzone.footzone.model
 import java.io.Serializable
 
 data class Pitch(
-    val id: Long,
+    val id: String,
     var images: ArrayList<String>,
     var name: String?,
     var rating: Float,

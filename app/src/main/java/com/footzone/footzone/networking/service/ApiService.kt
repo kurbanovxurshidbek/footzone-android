@@ -34,6 +34,9 @@ interface ApiService {
     @GET("favorites/{userId}")
     suspend fun getFavouriteStadiums(@Path("userId") userId: String): StadiumResponse
 
+    @POST("favorites")
+    suspend fun addToFavouriteStadiums(@Body stadiumId: String): Response
+
     @Headers("Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTAzNDExNTExIiwiaWF0IjoxNjU0MDY3MzU5LCJleHAiOjE2NTY2NTkzNTksInJvbGVzIjpbeyJpZCI6Ijg0OGQxNjkwLWIzNDUtNDgxZC1iMDBiLTY0YmNjYTM2NzVhYiIsImNyZWF0ZWRBdCI6MTY1NDA0MTUyNDg4NCwidXBkYXRlZEF0IjoxNjU0MDQxNTI0ODg0LCJjcmVhdGVkQnkiOm51bGwsInVwZGF0ZWRCeSI6bnVsbCwibmFtZSI6IlVzZXIiLCJkZXNjcmlwdGlvbiI6IlVzZXIifV19.wk4mhvMv6gW-SOrbt1wcl6jUOldZPZeKo2e-S3BanoCm8yXCq8V9ukaOb7MTh_qroCNGvAq_dvu80YXu-8G9Gg")
     @GET("user/{userId}")
     suspend fun getUserData(@Path("userId") userId: String): UserData
@@ -52,9 +55,9 @@ interface ApiService {
 
     //not yet fully connected
     @GET("stadium/{stadiumId}")
-     fun getPitchData(@Path("stadiumId") stadiumId: String): Response
+    fun getPitchData(@Path("stadiumId") stadiumId: String): Response
 
     @Headers("Authorization:Bearer 9eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTAzNDExNTExIiwiaWF0IjoxNjU0MDY3MzU5LCJleHAiOjE2NTY2NTkzNTksInJvbGVzIjpbeyJpZCI6Ijg0OGQxNjkwLWIzNDUtNDgxZC1iMDBiLTY0YmNjYTM2NzVhYiIsImNyZWF0ZWRBdCI6MTY1NDA0MTUyNDg4NCwidXBkYXRlZEF0IjoxNjU0MDQxNTI0ODg0LCJjcmVhdGVkQnkiOm51bGwsInVwZGF0ZWRCeSI6bnVsbCwibmFtZSI6IlVzZXIiLCJkZXNjcmlwdGlvbiI6IlVzZXIifV19.wk4mhvMv6gW-SOrbt1wcl6jUOldZPZeKo2e-S3BanoCm8yXCq8V9ukaOb7MTh_qroCNGvAq_dvu80YXu-8G9Gg")
     @GET("stadium/holder/{userId}")
-    suspend fun getHolderStadiums(@Path ("userId") userId: String): HolderStadiumResponse
+    suspend fun getHolderStadiums(@Path("userId") userId: String): HolderStadiumResponse
 }

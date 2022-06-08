@@ -8,12 +8,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.footzone.footzone.databinding.ItemPitchLayoutBinding
+import com.footzone.footzone.helper.OnClickEvent
 import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.holders.Photo
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 
 class PitchAdapter(
-    private var onPitchClick: ((Pitch) -> Unit)
+    private var onClickEvent: OnClickEvent
 ) :
     RecyclerView.Adapter<PitchAdapter.VH>() {
 
@@ -27,7 +28,7 @@ class PitchAdapter(
     override fun onBindViewHolder(holder: VH, position: Int) {
         val pitch = pitches[position]
         holder.view.apply {
-           // refreshImagesAdapter(pitch.images, rvPithPhotos)
+            // refreshImagesAdapter(pitch.images, rvPithPhotos)
             tvPitchName.text = pitch.name
             if (pitch.isOpen) {
                 tvOpenClose.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
@@ -43,11 +44,15 @@ class PitchAdapter(
             tvPitchPrice.text = "${pitch.price} so'm/soat"
 
             btnNavigate.setOnClickListener {
+                onClickEvent.setOnNavigateClickListener(1.0, 2.0)
+            }
 
+            ivBookmark.setOnClickListener {
+                onClickEvent.setOnBookMarkClickListener(pitch.id)
             }
 
             btnBook.setOnClickListener {
-                onPitchClick.invoke(pitch)
+                onClickEvent.setOnBookClickListener(pitch.id)
             }
         }
     }

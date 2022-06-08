@@ -3,6 +3,7 @@ package com.footzone.footzone.ui.fragments.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.footzone.footzone.model.Location
+import com.footzone.footzone.model.Response
 import com.footzone.footzone.model.StadiumResponse
 import com.footzone.footzone.model.playhistory.PlayHistoryResponse
 import com.footzone.footzone.repository.main.MainRepository
@@ -28,6 +29,10 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
     private val _previouslyBookedStadiums =
         MutableStateFlow<UiStateObject<PlayHistoryResponse>>(UiStateObject.EMPTY)
     val previouslyBookedStadiums = _previouslyBookedStadiums
+
+    private val _addToFavouriteStadiums =
+        MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
+    val addToFavouriteStadiums = _addToFavouriteStadiums
 
     fun getNearByStadiums(location: Location) = viewModelScope.launch {
         _nearByStadiums.value = UiStateObject.LOADING
@@ -64,6 +69,19 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
 
         } catch (e: Exception) {
             _previouslyBookedStadiums.value =
+                UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
+        }
+    }
+
+    fun addToFavouriteStadiums(stadiumId: String) = viewModelScope.launch {
+        _addToFavouriteStadiums.value = UiStateObject.LOADING
+
+        try {
+            val response = mainRepository.addToFavouriteStadiums(stadiumId)
+            _addToFavouriteStadiums.value = UiStateObject.SUCCESS(response)
+
+        } catch (e: Exception) {
+            _addToFavouriteStadiums.value =
                 UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
         }
     }
