@@ -24,7 +24,8 @@ import java.time.format.DateTimeFormatter
 
 class TimeIntervalFragment : Fragment() {
     lateinit var binding: FragmentTimeIntervalBinding
-    var num: Int = - 1
+    private lateinit var adapter: TimeManagerAdapter
+    var num: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,54 +41,12 @@ class TimeIntervalFragment : Fragment() {
     }
 
     private fun initViews() {
-        var finishTime = ""
-        val adapter = TimeManagerAdapter(){ position , view, item->
+        val a = IntArray(2)
+        a[0] = 49
+        a[1] = -1
+        adapter = TimeManagerAdapter { p ->
 
-            if (num == -1){
-                num = position
-                if (!item.isSelected!!) {
-                    view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_blue_4dp)
-                    Log.d("TAG", "initViews: 0")
-                }else{
-                    view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_white_4dp)
-                    Log.d("TAG", "initViews: 1")
-                }
-                item.isSelected = !item.isSelected!!
-                finishTime = item.finishTime.toString()
-                binding.tvStartTime.setText("${item.startTime.toString()}")
-            }else{
-                if ( beforePosition(num) > position ||  afterPosition(num) <position ){
-                    Toast.makeText(requireContext(), "Bu vaqtda sadion band qilingan", Toast.LENGTH_SHORT).show()
-                    view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_white_4dp)
-                    binding.tvStartTime.text!!.clear()
-                    num = -1
-                    Log.d("TAG", "initViews: 2")
-                }else{
-                    if (!item.isSelected!!) {
-                        view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_blue_4dp)
-                        binding.tvFinishTime.setText("${item.startTime.toString()}")
-                        if (num < position){
-                            binding.tvFinishTime.setText("${item.finishTime.toString()}")
-                            Log.d("TAG", "initViews: 3")
-                        }else{
-                            binding.tvFinishTime.setText(finishTime)
-                            binding.tvStartTime.setText("${item.startTime.toString()}")
-                            Log.d("TAG", "initViews: 4")
-                        }
-                        item.isSelected = !item.isSelected!!
-                        num = -1
-                    } else {
-                        view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_white_4dp)
-                        item.isSelected = !item.isSelected!!
-                        binding.tvStartTime.text!!.clear()
-                        binding.tvFinishTime.text!!.clear()
-                        num = -1
-                        Log.d("TAG", "initViews: 5")
-                    }
-                }
-            }
         }
-
 
         adapter.submitList(timeManager(allTime(LocalTime.parse("07:00"), LocalTime.parse("23:30")),
             gameTime()))
@@ -151,22 +110,22 @@ class TimeIntervalFragment : Fragment() {
         return halfIntervalHourView
     }
 
-    private fun beforePosition(position: Int): Int{
+    private fun beforePosition(position: Int): Int {
         val array = timeManager(allTime(LocalTime.parse("07:00"), LocalTime.parse("23:30")),
             gameTime())
 
-        for (pos in position downTo 0){
+        for (pos in position downTo 0) {
             if (array[pos].status == "ACCEPTED" || array[pos].status == "PENDING")
                 return pos + 1
         }
         return 0
     }
 
-    private fun afterPosition(position: Int): Int{
+    private fun afterPosition(position: Int): Int {
         val array = timeManager(allTime(LocalTime.parse("07:00"), LocalTime.parse("23:30")),
             gameTime())
 
-        for (pos in position..array.size-1 ){
+        for (pos in position until array.size) {
             if (array[pos].status == "ACCEPTED" || array[pos].status == "PENDING")
                 return pos - 1
         }
@@ -174,6 +133,6 @@ class TimeIntervalFragment : Fragment() {
     }
 
 
-    fun LocalTime.isBetween(openTime: LocalTime, closeTime: LocalTime): Boolean =
+    private fun LocalTime.isBetween(openTime: LocalTime, closeTime: LocalTime): Boolean =
         (this.isAfter(openTime) || this == openTime) && (this.isBefore(closeTime) || (this == closeTime))
 }

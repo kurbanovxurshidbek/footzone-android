@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,8 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.AddImageAdapter
@@ -23,12 +26,23 @@ import com.footzone.footzone.adapter.PitchImageEditAdapter
 import com.footzone.footzone.databinding.FragmentAddStadiumBinding
 import com.footzone.footzone.model.Image
 import com.footzone.footzone.model.Pitch
+import com.footzone.footzone.model.addstadium.Stadium
+import com.footzone.footzone.model.addstadium.WorkingDay
 import com.footzone.footzone.ui.fragments.BaseFragment
+import com.footzone.footzone.ui.fragments.profile.ProfileViewModel
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.UiStateObject
+import com.google.gson.Gson
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.FileOutputStream
+import java.time.LocalTime
 
 @AndroidEntryPoint
 open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
@@ -42,6 +56,12 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     var pitch: Pitch? = null
     var type: Int = 2
     var position = 0
+    var latitude = 0.0
+    var longitude = 0.0
+    var result = ArrayList<WorkingDay>()
+    private val viewModel by viewModels<AddStadiumViewModel>()
+
+    var files = ArrayList<File>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,13 +73,13 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         }
 
         setFragmentResultListener(KeyValues.TYPE_LOCATION) { requestKey, bundle ->
-            val result = bundle.getString("bundleKey")
-            binding.tvPichLocation.text = result.toString()
+            latitude = 41.3248628798667
+            longitude = 69.23367757896234
+            // binding.tvPichLocation.text = result.toString()
         }
 
         setFragmentResultListener(KeyValues.TYPE_WORK_TIME) { requestKey, bundle ->
-            val result = bundle.getString("bundleKey")
-            binding.tvPitchWorkTime.text = result.toString()
+            result.addAll(bundle.getString("bundleKey") as ArrayList<WorkingDay>)
         }
     }
 
@@ -75,14 +95,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAddStadiumBinding.bind(view)
 
-        binding.apply {
-            icClose.setOnClickListener { requireActivity().onBackPressed() }
-            tvCancel.setOnClickListener { requireActivity().onBackPressed() }
-            tvOccupancy.setOnClickListener { requireActivity().onBackPressed() }
-            ivChooseLocation.setOnClickListener { openStadiumLocation() }
-            ivChooseWorkTime.setOnClickListener { openChooseWorkTime() }
-        }
-
         if (type == 1) {
             initViewsEdit()
         } else {
@@ -91,6 +103,13 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     }
 
     private fun initViewsEdit() {
+        binding.apply {
+            icClose.setOnClickListener { requireActivity().onBackPressed() }
+            tvCancel.setOnClickListener { requireActivity().onBackPressed() }
+            tvOccupancy.setOnClickListener { requireActivity().onBackPressed() }
+            ivChooseLocation.setOnClickListener { openStadiumLocation() }
+            ivChooseWorkTime.setOnClickListener { openChooseWorkTime() }
+        }
         binding.apply {
             tvTitle.text = getText(R.string.str_edit_stadium)
             etPitchName.setText(pitch!!.name);
@@ -114,6 +133,52 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             selectImage(PICK_FROM_FILE_ADD)
         }
         binding.recyclerView.adapter = adapterAdd
+
+        binding.apply {
+            icClose.setOnClickListener { requireActivity().onBackPressed() }
+            tvCancel.setOnClickListener { requireActivity().onBackPressed() }
+            ivChooseLocation.setOnClickListener { openStadiumLocation() }
+            ivChooseWorkTime.setOnClickListener { openChooseWorkTime() }
+        }
+
+        binding.tvOccupancy.setOnClickListener {
+            val stadium =
+                Stadium("", "", 20, 63.387784, 49.78327684, "Odil", ArrayList<WorkingDay>())
+            val builder = MultipartBody.Builder()
+            builder.setType(MultipartBody.FORM)
+            for (i in files) {
+                builder.addFormDataPart("files",
+                    i.name,
+                    i.asRequestBody("image/jpg".toMediaTypeOrNull()))
+            }
+
+            builder.addFormDataPart("stadium", Gson().toJson(stadium))
+            val body = builder.build()
+            viewModel.postHolderStadium(body)
+            observeViewModel()
+
+        }
+    }
+
+    private fun observeViewModel() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.postStadium.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
+                    is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "setupObservers: ${it.data}")
+
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {
+                    }
+                }
+            }
+        }
     }
 
     private fun selectImage(type: Int) {
@@ -138,8 +203,26 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                 val selectedImageUri: Uri = data?.data!!
                 if (position == 0) {
                     items.add(Image(selectedImageUri))
+                    val ins = requireActivity().contentResolver.openInputStream(selectedImageUri)
+                    var image = File.createTempFile("file",
+                        ".jpg",
+                        requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES))
+                    val fileOutputStream = FileOutputStream(image)
+                    ins?.copyTo(fileOutputStream)
+                    ins?.close()
+                    fileOutputStream.close()
+//                    val reqFile: RequestBody =
+//                        RequestBody.create("image/jpg".toMediaTypeOrNull(), image)
+//                    val body: MultipartBody.Part =
+//                        MultipartBody.Part.createFormData("files", image.name, reqFile)
+
+                    files.add(image)
+
+                    Log.d("TAG", "onActivityResult: ${files.size}")
                 } else {
+
                     items[position].imageUri = selectedImageUri
+
                 }
                 adapterAdd.notifyDataSetChanged()
             } catch (e: Exception) {

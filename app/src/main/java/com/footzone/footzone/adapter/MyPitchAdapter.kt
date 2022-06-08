@@ -36,7 +36,7 @@ class MyPitchAdapter(var context: MyStadiumFragment, var items: ArrayList<Data>,
                 rbPitch.rating = context.resRating(data.comments as ArrayList<Comment>)
                 rbPitch.setIsIndicator(true)
                 tvRatingNums.text = "(${data.comments.size})"
-                tvPitchPrice.text = "${data.hourlyPrice} so'm/soat"
+                tvPitchPrice.text = "${data.hourlyPrice.toString().substring(0, data.hourlyPrice.toString().indexOf('.'))} so'm/soat"
 
                 btnManagement.setOnClickListener {
                     onPitchClick.invoke(data)

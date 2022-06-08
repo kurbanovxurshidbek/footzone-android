@@ -13,8 +13,10 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentChooseWorkTimeBinding
+import com.footzone.footzone.model.addstadium.WorkingDay
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
+import java.time.LocalTime
 import java.util.*
 
 class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) {
@@ -32,8 +34,9 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
             icClose.setOnClickListener { requireActivity().onBackPressed() }
             tvCancel.setOnClickListener { requireActivity().onBackPressed() }
             tvSelection.setOnClickListener {
-                val result = wortTime()
-                setFragmentResult(KeyValues.TYPE_WORK_TIME, bundleOf("bundleKey" to result))
+                val workTimes = ArrayList<WorkingDay>()
+
+                setFragmentResult(KeyValues.TYPE_WORK_TIME, bundleOf("bundleKey" to workTimes))
                 requireActivity().onBackPressed()
             }
         }

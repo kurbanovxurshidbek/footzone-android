@@ -9,6 +9,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface ApiService {
@@ -49,7 +50,7 @@ interface ApiService {
     @POST("user/changeProfilePicture/{userId}")
     suspend fun updateUserProfilePhoto(
         @Path("userId") userId: String,
-        @Part file: MultipartBody.Part
+        @Part file: MultipartBody.Part,
     ): String
 
 
@@ -60,4 +61,17 @@ interface ApiService {
     @Headers("Authorization:Bearer 9eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTAzNDExNTExIiwiaWF0IjoxNjU0MDY3MzU5LCJleHAiOjE2NTY2NTkzNTksInJvbGVzIjpbeyJpZCI6Ijg0OGQxNjkwLWIzNDUtNDgxZC1iMDBiLTY0YmNjYTM2NzVhYiIsImNyZWF0ZWRBdCI6MTY1NDA0MTUyNDg4NCwidXBkYXRlZEF0IjoxNjU0MDQxNTI0ODg0LCJjcmVhdGVkQnkiOm51bGwsInVwZGF0ZWRCeSI6bnVsbCwibmFtZSI6IlVzZXIiLCJkZXNjcmlwdGlvbiI6IlVzZXIifV19.wk4mhvMv6gW-SOrbt1wcl6jUOldZPZeKo2e-S3BanoCm8yXCq8V9ukaOb7MTh_qroCNGvAq_dvu80YXu-8G9Gg")
     @GET("stadium/holder/{userId}")
     suspend fun getHolderStadiums(@Path("userId") userId: String): HolderStadiumResponse
+
+//    @Headers("Content-Type:multipart/form-data")
+//    @Multipart
+//    @POST("stadium")
+//    suspend fun postHolderStadium(
+//        @Part("stadium") stadium: Stadium,
+//        @Part files: List<MultipartBody.Part>,
+//    ): String
+
+    @POST("stadium")
+    suspend fun postHolderStadium(
+        @Body body: RequestBody,
+    ): String
 }
