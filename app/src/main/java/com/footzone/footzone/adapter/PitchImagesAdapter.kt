@@ -1,4 +1,6 @@
 package com.footzone.footzone.adapter
+import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -18,8 +20,9 @@ class PitchImagesAdapter() :
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = stadiumImages[position]
-        val uri = "http://10.10.2.18:8081/images/stadium/${item.name}"
-        Glide.with(holder.binding.ivPitch)
+        val uri = "http://10.10.1.78:8081/images/stadium/${item.name}"
+        Log.d("TAG", "onBindViewHolder: ${uri}")
+        Glide.with(holder.binding.ivPitch.context)
             .load(uri)
             .into(holder.binding.ivPitch)
     }

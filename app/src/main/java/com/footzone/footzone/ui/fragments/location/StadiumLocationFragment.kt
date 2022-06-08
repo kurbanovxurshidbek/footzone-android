@@ -29,8 +29,9 @@ class StadiumLocationFragment : BaseFragment(R.layout.fragment_stadium_location)
             icClose.setOnClickListener { requireActivity().onBackPressed() }
             tvCancel.setOnClickListener { requireActivity().onBackPressed() }
             tvSelection.setOnClickListener {
-                val result = "Toshkent, Bodomzor ko'chasi"
-                setFragmentResult(KeyValues.TYPE_LOCATION, bundleOf("bundleKey" to result))
+                val latitude = 41.3248628798667
+                val longitude = 69.23367757896234
+                setFragmentResult(KeyValues.TYPE_LOCATION, bundleOf("latitude" to latitude, "longitude" to longitude))
                 requireActivity().onBackPressed()
             }
         }

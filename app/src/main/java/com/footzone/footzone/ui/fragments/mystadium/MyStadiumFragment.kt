@@ -1,6 +1,7 @@
 package com.footzone.footzone.ui.fragments.mystadium
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
@@ -44,11 +45,13 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
                         val holderStadiumsList = it.data.data as ArrayList<Data>
                         controlVisibility(holderStadiumsList.isEmpty())
 
+                        Log.d("TAG", "setupObservers: ${holderStadiumsList}")
                         if (holderStadiumsList.isNotEmpty()) {
                             refreshAdapter(holderStadiumsList)
                         }
                     }
                     is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupObservers: eror")
                     }
                     else -> {
                     }

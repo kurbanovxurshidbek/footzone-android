@@ -9,8 +9,9 @@ import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemChooseTimeViewGreyBinding
 import com.footzone.footzone.databinding.ItemChooseTimeViewWhiteBinding
 import com.footzone.footzone.model.TimeManager
+import java.time.LocalTime
 
-class TimeManagerAdapter(private var onItemClicked: ((Int, ItemChooseTimeViewWhiteBinding, TimeManager) -> Unit)) :
+class TimeManagerAdapter(private var onItemSelected: ((Int) -> Unit)) :
     ListAdapter<TimeManager, RecyclerView.ViewHolder>(DiffUtil()) {
     private val TYPE_ITEM_WHITE = 1001
     private val TYPE_ITEM_GREY = 1002
@@ -42,11 +43,14 @@ class TimeManagerAdapter(private var onItemClicked: ((Int, ItemChooseTimeViewWhi
         val item = getItem(position)
         when (holder) {
             is ViewHolder.TimeManagerViewHolderWhite -> {
-                holder.view.tvStartTime.text = item.startTime.toString()
-                holder.view.tvFinishTime.text = item.finishTime.toString()
+                holder.view.apply {
+                    tvStartTime.text = item.startTime.toString()
+                    tvFinishTime.text = item.finishTime.toString()
 
-                holder.view.linearFreeToBook.setOnClickListener {
-                    onItemClicked.invoke(position, holder.view, item)
+                    linearFreeToBook.setOnClickListener {
+                        onItemSelected.invoke(position)
+                        linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_blue_4dp)
+                    }
                 }
             }
 
