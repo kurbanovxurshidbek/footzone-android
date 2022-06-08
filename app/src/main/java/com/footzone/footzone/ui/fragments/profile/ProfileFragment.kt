@@ -162,7 +162,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             if (image.length() == 0L) return@registerForActivityResult
             Glide.with(requireActivity()).load(image).into(binding.ivProfile)
 
-
             val reqFile: RequestBody = RequestBody.create("image/jpg".toMediaTypeOrNull(), image)
             val body: MultipartBody.Part =
                 MultipartBody.Part.createFormData("file", image.name, reqFile)
