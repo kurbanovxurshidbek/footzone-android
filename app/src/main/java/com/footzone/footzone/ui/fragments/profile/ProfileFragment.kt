@@ -24,9 +24,10 @@ import com.footzone.footzone.utils.UiStateObject
 import com.squareup.picasso.Picasso
 import java.io.File
 import dagger.hilt.android.AndroidEntryPoint
-import id.zelory.compressor.Compressor
-import id.zelory.compressor.constraint.default
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import me.shouheng.compress.Compress
+import me.shouheng.compress.concrete
+import me.shouheng.compress.strategy.config.ScaleMode
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -150,6 +151,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         getImageFromGallery.launch("image/*")
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private val getImageFromGallery =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri ?: return@registerForActivityResult
@@ -166,17 +168,27 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             if (image.length() == 0L) return@registerForActivityResult
             Glide.with(requireActivity()).load(image).into(binding.ivProfile)
 
-            //compress image
-         //   lifecycleScope.launch {
-         //       compressedImageFile = Compressor.compress(requireContext(), image)
-//
-                val reqFile: RequestBody = RequestBody.create("image/jpg".toMediaTypeOrNull(), image)
 
-                val body: MultipartBody.Part =
-                    MultipartBody.Part.createFormData("file", image.name, reqFile)
+            GlobalScope.launch {
+                val result = Compress.with(requireContext(), image)
+                    .setQuality(80)
+                    .concrete {
+                        withMaxWidth(480f)
+                        withMaxHeight(480f)
+                        withScaleMode(ScaleMode.SCALE_HEIGHT)
+                        withIgnoreIfSmaller(true)
+                    }
+                    .get(Dispatchers.IO)
+                withContext(Dispatchers.Main) {
+                    val reqFile: RequestBody = RequestBody.create("image/jpg".toMediaTypeOrNull(), result)
+                    val body: MultipartBody.Part =
+                        MultipartBody.Part.createFormData("file", result.name, reqFile)
+                    sendRequestToLoadImage(body)
+                }
+            }
 
-                sendRequestToLoadImage(body)
-         //   }
+
+
 
 
         }

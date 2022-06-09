@@ -98,7 +98,8 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:2.41"
 
     //image Compressor
-    implementation 'id.zelory:compressor:3.0.1'
+  //  implementation 'id.zelory:compressor:3.0.1'
+    implementation 'com.github.Shouheng88:compressor:1.6.0'
 
     //interceptor
     debugImplementation "com.github.chuckerteam.chucker:library:3.4.0"
