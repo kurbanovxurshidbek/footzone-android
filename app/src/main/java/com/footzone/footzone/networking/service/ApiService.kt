@@ -54,7 +54,7 @@ interface ApiService {
 
     //not yet fully connected
     @GET("stadium/{stadiumId}")
-    fun getPitchData(@Path("stadiumId") stadiumId: String): Response
+    suspend fun getPitchData(@Path("stadiumId") stadiumId: String): Response
 
     @GET("stadium/holder/{userId}")
     suspend fun getHolderStadiums(@Path("userId") userId: String): HolderStadiumResponse
