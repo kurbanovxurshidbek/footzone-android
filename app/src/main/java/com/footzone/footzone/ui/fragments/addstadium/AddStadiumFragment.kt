@@ -49,7 +49,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     var position = 0
     var latitude = 0.0
     var longitude = 0.0
-    var result = ArrayList<WorkingDay>()
+    var workTimes = ArrayList<WorkingDay>()
     private val viewModel by viewModels<AddStadiumViewModel>()
 
     var files = ArrayList<File>()
@@ -63,14 +63,16 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             images = pitch!!.images
         }
 
-        setFragmentResultListener(KeyValues.TYPE_LOCATION) { requestKey, bundle ->
-            latitude = 41.3248628798667
-            longitude = 69.23367757896234
-            // binding.tvPichLocation.text = result.toString()
+       setFragmentResultListener(KeyValues.TYPE_LOCATION) { _, bundle ->
+           latitude = bundle.get("latitude").toString().toDouble()
+           longitude = bundle.get("longitude").toString().toDouble()
         }
 
         setFragmentResultListener(KeyValues.TYPE_WORK_TIME) { requestKey, bundle ->
-            result.addAll(bundle.getString("bundleKey") as ArrayList<WorkingDay>)
+            Log.d("TAG", "onCreate: ${bundle.get("workTimes") as ArrayList<*>}")
+            Log.d("TAG", "onCreate: ${bundle.get("wortTime")}")
+            workTimes.addAll(bundle.get("workTimes") as ArrayList<WorkingDay>)
+            binding.tvPitchWorkTime.text = bundle.get("wortTime").toString()
         }
     }
 
@@ -133,8 +135,12 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         }
 
         binding.tvOccupancy.setOnClickListener {
+            val stadiumAddress = binding.etPitchAddress.text.toString()
+            val stadiumName = binding.etPitchName.text.toString()
+            val stadiumNumber =  "+998${binding.etPitchPhoneNumber.text.toString().replace("\\s".toRegex(), "")}"
+            val stadiumPrice = binding.etPitchPrice.text.toString()
             val stadium =
-                Stadium("", "", 20, 63.387784, 49.78327684, "Odil", ArrayList<WorkingDay>())
+                Stadium(stadiumAddress, stadiumNumber, stadiumPrice.toInt(), latitude, longitude, stadiumName, workTimes)
             val builder = MultipartBody.Builder()
             builder.setType(MultipartBody.FORM)
             for (i in files) {
