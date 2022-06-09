@@ -113,7 +113,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             tvNumber.text = userData.phoneNumber
 
             Picasso.get()
-                .load("http://10.10.1.70:8081/images/user/${userData.photo.name}")
+                .load("https://footzone-server.herokuapp.com/images/user/${userData.photo.name}")
                 .into(ivProfile)
         }
     }

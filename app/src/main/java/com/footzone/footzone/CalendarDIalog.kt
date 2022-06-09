@@ -40,7 +40,7 @@ class CalendarDIalog(private var onEnterClick: ((String) -> Unit)) {
         dialog.setCancelable(true)
 
         binding.calendarView.setOnDateChangeListener { _, year, month, date ->
-            val monthad: String = DateFormatSymbols().getMonths().get(month)
+            val monthad: String = DateFormatSymbols().months[month]
             dateChoose = "$date ${monthad.lowercase()} $year"
         }
 

@@ -8,9 +8,11 @@ import android.widget.Toast
 import androidx.core.view.marginEnd
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemStadiumImageEditBinding
+import com.footzone.footzone.model.holderstadium.Photo
 
-class PitchImageEditAdapter( var context: Context, var pitchImages : ArrayList<String>,  private var onItemClicked: ((Int) -> Unit)) :
+class PitchImageEditAdapter( var context: Context, var pitchImages : ArrayList<Photo>,  private var onItemClicked: ((Int) -> Unit)) :
     RecyclerView.Adapter<PitchImageEditAdapter.VH>()  {
 
 
@@ -25,7 +27,11 @@ class PitchImageEditAdapter( var context: Context, var pitchImages : ArrayList<S
             .load(pitchImages[position])
             .into(holder.binding.ivPitch)
 
-      //  Log.d("@@@###", pitchImages[position])
+        val uri = "https://footzone-server.herokuapp.com/images/user/${pitchImages[position].name}"
+        Glide.with(holder.binding.ivPitch.context)
+            .load(uri)
+            .placeholder(R.drawable.stadim2)
+            .into(holder.binding.ivPitch)
 
         holder.binding.apply {
             llConvert.setOnClickListener {

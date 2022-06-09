@@ -21,7 +21,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class ServerModule {
-    private val BASE_URL: String = "http://10.10.1.74:8081/api/v1/"
+    private val BASE_URL: String = "https://footzone-server.herokuapp.com/api/v1/"
 
     @Provides
     @Singleton
@@ -39,7 +39,7 @@ class ServerModule {
     @Provides
     @Singleton
     fun getClient(sharedPref: SharedPref): OkHttpClient = OkHttpClient.Builder()
-        .connectTimeout(60, TimeUnit.SECONDS)
+        .connectTimeout(100, TimeUnit.SECONDS)
         .readTimeout(60, TimeUnit.SECONDS)
         //   .addInterceptor(ChuckInterceptor(context))
         .addInterceptor(HttpLoggingInterceptor().apply {
@@ -53,8 +53,8 @@ class ServerModule {
                     "Bearer ${sharedPref.getUserToken(USER_TOKEN, "")}"
                 )
             }
-            builder.addHeader("Content-Type", "application/json")
-            builder.addHeader("Accept", "application/json")
+//            builder.addHeader("Content-Type", "application/json")
+//            builder.addHeader("Accept", "application/json")
             chain.proceed(builder.build())
         })
         .build()

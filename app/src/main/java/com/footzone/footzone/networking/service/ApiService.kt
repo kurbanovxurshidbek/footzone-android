@@ -1,7 +1,9 @@
 package com.footzone.footzone.networking.service
 
 import com.footzone.footzone.model.*
+import com.footzone.footzone.model.addstadium.Stadium
 import com.footzone.footzone.model.holders.HolderStadiumResponse
+import com.footzone.footzone.model.holderstadium.HolderStadium
 import com.footzone.footzone.model.playhistory.PlayHistoryResponse
 import com.footzone.footzone.model.profile.UserData
 import dagger.Binds
@@ -59,16 +61,14 @@ interface ApiService {
     @GET("stadium/holder/{userId}")
     suspend fun getHolderStadiums(@Path("userId") userId: String): HolderStadiumResponse
 
-//    @Headers("Content-Type:multipart/form-data")
-//    @Multipart
-//    @POST("stadium")
-//    suspend fun postHolderStadium(
-//        @Part("stadium") stadium: Stadium,
-//        @Part files: List<MultipartBody.Part>,
-//    ): String
-
+    //the stadium owner adds the stadium
+    @Multipart
     @POST("stadium")
     suspend fun postHolderStadium(
-        @Body body: RequestBody,
+        @Part("stadium") stadium: Stadium,
+        @Part files: List<MultipartBody.Part>,
     ): String
+
+    @GET("stadium/{stadiumId}")
+    suspend fun getHolderStadium(@Path("stadiumId") stadiumId: String): HolderStadium
 }
