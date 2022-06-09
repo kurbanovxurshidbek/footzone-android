@@ -81,6 +81,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvStadiumName"
                     android:fontFamily="@font/poppins_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -152,7 +153,7 @@
                         android:src="@drawable/ic_time" />
 
                     <TextView
-                        android:id="@+id/textViewStatus"
+                        android:id="@+id/tvOpenClose"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
@@ -170,7 +171,8 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tvOpenCloseHour"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_bold"
@@ -328,6 +330,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvResultRate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -394,6 +397,7 @@
                             android:textSize="12sp" />
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
+                            android:id="@+id/lpRate5"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -421,6 +425,7 @@
                             android:textSize="12sp" />
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
+                            android:id="@+id/lpRate4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -448,6 +453,7 @@
                             android:textSize="12sp" />
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
+                            android:id="@+id/lpRate3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -475,6 +481,7 @@
                             android:textSize="12sp" />
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
+                            android:id="@+id/lpRate2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -502,6 +509,7 @@
                             android:textSize="12sp" />
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
+                            android:id="@+id/lpRate1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"

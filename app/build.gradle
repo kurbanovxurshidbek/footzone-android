@@ -96,4 +96,12 @@ dependencies {
     // dagger hilt
     implementation "com.google.dagger:hilt-android:2.41"
     kapt "com.google.dagger:hilt-android-compiler:2.41"
+
+    //image Compressor
+  //  implementation 'id.zelory:compressor:3.0.1'
+    implementation 'com.github.Shouheng88:compressor:1.6.0'
+
+    //interceptor
+    debugImplementation "com.github.chuckerteam.chucker:library:3.4.0"
+    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.4.0"
 }

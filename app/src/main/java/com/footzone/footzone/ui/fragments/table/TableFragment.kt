@@ -2,10 +2,7 @@ package com.footzone.footzone.ui.fragments.table
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,8 +16,6 @@ import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.ui.fragments.bookpitchsent.BookPitchSentFragment
 import com.footzone.footzone.ui.fragments.played.PlayedPitchFragment
 import com.footzone.footzone.ui.fragments.playing.PlayingPitchFragment
-import com.footzone.footzone.ui.fragments.profile.ProfileViewModel
-import com.footzone.footzone.utils.KeyValues.PLAYED
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
 import com.google.android.material.tabs.TabLayout

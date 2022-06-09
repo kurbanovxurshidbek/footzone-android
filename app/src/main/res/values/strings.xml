@@ -27,6 +27,7 @@
     <string name="str_save">Saqlash</string>
     <string name="str_edit_stadium">Maydonni tahrirlash</string>
     <string name="str_time_interval">Vaqt oralig’i</string>
+    <string name="str_stadium_address">Stadion address</string>
 
     <string-array name="timelist">
         <item>00:00</item>

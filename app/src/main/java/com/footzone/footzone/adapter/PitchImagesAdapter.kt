@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemPitchImageLayoutBinding
 import com.footzone.footzone.model.holders.Photo
 
@@ -20,10 +21,10 @@ class PitchImagesAdapter() :
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = stadiumImages[position]
-        val uri = "http://10.10.1.78:8081/images/stadium/${item.name}"
-        Log.d("TAG", "onBindViewHolder: ${uri}")
+        val uri = "https://footzone-server.herokuapp.com/images/stadium/${item.name}"
         Glide.with(holder.binding.ivPitch.context)
             .load(uri)
+            .placeholder(R.drawable.stadim2)
             .into(holder.binding.ivPitch)
     }
 

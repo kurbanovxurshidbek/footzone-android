@@ -21,6 +21,7 @@ import java.util.*
 
 class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) {
     lateinit var binding: FragmentChooseWorkTimeBinding
+    val workTimes = ArrayList<WorkingDay>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,9 +35,7 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
             icClose.setOnClickListener { requireActivity().onBackPressed() }
             tvCancel.setOnClickListener { requireActivity().onBackPressed() }
             tvSelection.setOnClickListener {
-                val workTimes = ArrayList<WorkingDay>()
-
-                setFragmentResult(KeyValues.TYPE_WORK_TIME, bundleOf("bundleKey" to workTimes))
+                setFragmentResult(KeyValues.TYPE_WORK_TIME, bundleOf("workTimes" to workTimes, "wortTime" to wortTime()))
                 requireActivity().onBackPressed()
             }
         }
@@ -96,39 +95,62 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
         finishTime.minValue = 1
         finishTime.maxValue = 47
         finishTime.displayedValues = timeList
+
+        startTime.setOnScrollListener { numberPicker, i ->
+            checkVibrationIsOn(requireContext())
+        }
+
+
+        finishTime.setOnScrollListener { numberPicker, i ->
+            checkVibrationIsOn(requireContext())
+        }
     }
 
     fun wortTime(): String {
         var string = ""
         if (binding.switchMo.isOn) {
             string += "Du, "
+            addTime(binding.startTimeMo, binding.finishTimeMo, "MONDAY")
         }
 
         if (binding.switchTu.isOn) {
             string += "Se, "
+            addTime(binding.startTimeTu, binding.finishTimeTu, "TUESDAY")
         }
 
         if (binding.switchWe.isOn) {
             string += "Cho, "
+            addTime(binding.startTimeWe, binding.finishTimeWe, "WEDNESDAY")
         }
 
         if (binding.switchTh.isOn) {
             string += "Pa, "
+            addTime(binding.startTimeTh, binding.finishTimeTh, "THURSDAY")
         }
 
         if (binding.switchFr.isOn) {
             string += "Ju, "
+            addTime(binding.startTimeFr, binding.finishTimeFr, "FRIDAY")
         }
 
         if (binding.switchSa.isOn) {
             string += "Sha, "
+            addTime(binding.startTimeSa, binding.finishTimeSa, "SATURDAY")
         }
 
         if (binding.switchSu.isOn) {
             string += "Ya"
+            addTime(binding.startTimeSu, binding.finishTimeSu, "SUNDAY")
         }
 
         return string
+    }
+
+    private fun addTime(startTime: NumberPicker, finishTime: NumberPicker, day: String){
+        val timeList = resources.getStringArray(R.array.timelist)
+        val startTime = timeList[startTime.value].toString()
+        val finishTime = timeList[finishTime.value].toString()
+        workTimes.add(WorkingDay(day, startTime, finishTime))
     }
 
     /**
@@ -144,7 +166,7 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
             val mMediaPlayer = MediaPlayer.create(context, R.raw.mouse_1)
             val audioManager =
                 requireActivity().getSystemService(Context.AUDIO_SERVICE) as AudioManager
-            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 5, 0);
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 8, 0);
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
             mMediaPlayer.start()
 

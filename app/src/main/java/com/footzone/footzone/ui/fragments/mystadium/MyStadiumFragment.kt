@@ -28,7 +28,7 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMyStadiumBinding.bind(view)
-        viewModel.getHolderStadiums("347829e7-832c-4257-9d26-25439b5f8d61")
+        viewModel.getHolderStadiums("f202e46a-eef4-4ad0-b04c-3c62e5505fe1")
         setupObservers()
         initViews()
     }
@@ -51,7 +51,7 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
                         }
                     }
                     is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupObservers: eror")
+                        Log.d("TAG", "setupObservers:${it}")
                     }
                     else -> {
                     }
@@ -84,8 +84,8 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
     }
 
     private fun refreshAdapter(stadiums: ArrayList<Data>) {
-        val adapter = MyPitchAdapter(this, stadiums) { data ->
-            openEditStadium(data)
+        val adapter = MyPitchAdapter(this, stadiums) { stadiumId ->
+            openEditStadium(stadiumId)
         }
         binding.recyclerView.adapter = adapter
     }
@@ -105,13 +105,13 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
 
     private fun openAddStadium() {
         findNavController().navigate(R.id.action_myStadiumFragment_to_addStadiumFragment,
-            bundleOf(KeyValues.TYPE_DETAIL to 2))
+            bundleOf(KeyValues.TYPE_DETAIL to false))
     }
 
-    private fun openEditStadium(data: Data) {
+    private fun openEditStadium(stadiumId: String) {
         findNavController().navigate(
             R.id.action_myStadiumFragment_to_stadiumFragment,
-            bundleOf(KeyValues.PITCH_DETAIL to data)
+            bundleOf(KeyValues.PITCH_DETAIL to stadiumId)
         )
     }
 }

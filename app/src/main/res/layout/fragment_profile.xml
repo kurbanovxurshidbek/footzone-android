@@ -107,15 +107,6 @@
                             android:text="+998 99 777 66 55"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
-
-                        <ImageView
-                            android:id="@+id/ivEditNumber"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:paddingStart="3dp"
-                            android:paddingEnd="19dp"
-                            android:src="@drawable/ic_edit_button" />
-
                     </LinearLayout>
 
                 </LinearLayout>
