@@ -47,142 +47,168 @@
         android:orientation="vertical"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="144dp"
-            android:orientation="horizontal"
-            android:overScrollMode="never"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:spanCount="1" />
+       <androidx.core.widget.NestedScrollView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_weight="1">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/EditTextInputLayoutStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/str_stadium_name"
-            app:backgroundTint="@color/white">
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPitchName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto"
-                android:inputType="textCapWords"
-                android:textColor="#0A0A0A"
-                android:textSize="16sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+               <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/recyclerView"
+                   android:layout_width="match_parent"
+                   android:layout_height="144dp"
+                   android:orientation="horizontal"
+                   android:overScrollMode="never"
+                   app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                   app:spanCount="1" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/ivChooseLocation"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/edittext_backround"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="16dp">
+               <com.google.android.material.textfield.TextInputLayout
+                   style="@style/EditTextInputLayoutStyle"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="16dp"
+                   android:layout_marginTop="16dp"
+                   android:layout_marginEnd="16dp"
+                   android:hint="@string/str_stadium_name"
+                   app:backgroundTint="@color/white">
 
-            <TextView
-                android:id="@+id/tvPichLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Manzil"
-                android:textColor="#616161"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                   <com.google.android.material.textfield.TextInputEditText
+                       android:id="@+id/etPitchName"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:fontFamily="@font/roboto"
+                       android:inputType="textCapWords"
+                       android:textColor="#0A0A0A"
+                       android:textSize="16sp" />
+               </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageView
-                android:layout_width="36dp"
-                android:layout_height="40dp"
-                android:padding="10dp"
-                android:src="@drawable/ic_location"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+               <com.google.android.material.textfield.TextInputLayout
+                   style="@style/EditTextInputLayoutStyle"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="16dp"
+                   android:layout_marginTop="16dp"
+                   android:layout_marginEnd="16dp"
+                   android:hint="@string/str_stadium_address"
+                   app:backgroundTint="@color/white">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/EditTextInputLayoutStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
-            android:hint="@string/str_phone_number"
-            app:prefixText="+998"
-            app:prefixTextColor="#0A0A0A">
-
-            <com.vicmikhailau.maskededittext.MaskedEditText
-                android:id="@+id/etPitchPhoneNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto"
-                android:inputType="phone"
-                app:mask="## ### ## ##" />
-        </com.google.android.material.textfield.TextInputLayout>
+                   <com.google.android.material.textfield.TextInputEditText
+                       android:id="@+id/etPitchAddress"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:fontFamily="@font/roboto"
+                       android:inputType="textCapWords"
+                       android:textColor="#0A0A0A"
+                       android:textSize="16sp" />
+               </com.google.android.material.textfield.TextInputLayout>
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/ivChooseWorkTime"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/edittext_backround"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="16dp">
+               <androidx.constraintlayout.widget.ConstraintLayout
+                   android:id="@+id/ivChooseLocation"
+                   android:layout_width="match_parent"
+                   android:layout_height="50dp"
+                   android:layout_marginHorizontal="16dp"
+                   android:layout_marginTop="16dp"
+                   android:background="@drawable/edittext_backround"
+                   android:gravity="center_vertical"
+                   android:paddingHorizontal="16dp">
 
-            <TextView
-                android:id="@+id/tvPitchWorkTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ish vaqtlari"
-                android:textColor="#616161"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                   <TextView
+                       android:id="@+id/tvPichLocation"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Manzil"
+                       android:textColor="#616161"
+                       android:textSize="16sp"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:layout_width="36dp"
-                android:layout_height="40dp"
-                android:padding="10dp"
-                android:src="@drawable/ic_work_time"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                   <ImageView
+                       android:layout_width="36dp"
+                       android:layout_height="40dp"
+                       android:padding="10dp"
+                       android:src="@drawable/ic_location"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintTop_toTopOf="parent" />
+               </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/EditTextInputLayoutStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/str_prise"
-            app:backgroundTint="@color/white">
+               <com.google.android.material.textfield.TextInputLayout
+                   style="@style/EditTextInputLayoutStyle"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginHorizontal="16dp"
+                   android:layout_marginTop="16dp"
+                   android:hint="@string/str_phone_number"
+                   app:prefixText="+998"
+                   app:prefixTextColor="#0A0A0A">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPitchPrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto"
-                android:inputType="textCapWords"
-                android:textColor="#0A0A0A"
-                android:textSize="16sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                   <com.vicmikhailau.maskededittext.MaskedEditText
+                       android:id="@+id/etPitchPhoneNumber"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:fontFamily="@font/roboto"
+                       android:inputType="phone"
+                       app:mask="## ### ## ##" />
+               </com.google.android.material.textfield.TextInputLayout>
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+               <androidx.constraintlayout.widget.ConstraintLayout
+                   android:id="@+id/ivChooseWorkTime"
+                   android:layout_width="match_parent"
+                   android:layout_height="50dp"
+                   android:layout_marginHorizontal="16dp"
+                   android:layout_marginTop="16dp"
+                   android:background="@drawable/edittext_backround"
+                   android:gravity="center_vertical"
+                   android:paddingHorizontal="16dp">
+
+                   <TextView
+                       android:id="@+id/tvPitchWorkTime"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Ish vaqtlari"
+                       android:textColor="#616161"
+                       android:textSize="16sp"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toTopOf="parent" />
+
+                   <ImageView
+                       android:layout_width="36dp"
+                       android:layout_height="40dp"
+                       android:padding="10dp"
+                       android:src="@drawable/ic_work_time"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintTop_toTopOf="parent" />
+               </androidx.constraintlayout.widget.ConstraintLayout>
+
+               <com.google.android.material.textfield.TextInputLayout
+                   style="@style/EditTextInputLayoutStyle"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="16dp"
+                   android:layout_marginTop="16dp"
+                   android:layout_marginEnd="16dp"
+                   android:hint="@string/str_prise"
+                   app:backgroundTint="@color/white">
+
+                   <com.google.android.material.textfield.TextInputEditText
+                       android:id="@+id/etPitchPrice"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:fontFamily="@font/roboto"
+                       android:inputType="phone"
+                       android:textColor="#0A0A0A"
+                       android:textSize="16sp" />
+               </com.google.android.material.textfield.TextInputLayout>
+           </LinearLayout>
+       </androidx.core.widget.NestedScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"

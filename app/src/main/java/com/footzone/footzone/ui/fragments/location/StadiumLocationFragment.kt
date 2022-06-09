@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentStadiumLocationBinding
 import com.footzone.footzone.ui.fragments.BaseFragment
@@ -32,7 +33,7 @@ class StadiumLocationFragment : BaseFragment(R.layout.fragment_stadium_location)
                 val latitude = 41.3248628798667
                 val longitude = 69.23367757896234
                 setFragmentResult(KeyValues.TYPE_LOCATION, bundleOf("latitude" to latitude, "longitude" to longitude))
-                requireActivity().onBackPressed()
+                findNavController().popBackStack()
             }
         }
     }

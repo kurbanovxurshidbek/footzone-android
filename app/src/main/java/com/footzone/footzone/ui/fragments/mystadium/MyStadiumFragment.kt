@@ -51,7 +51,7 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
                         }
                     }
                     is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupObservers: eror")
+                        Log.d("TAG", "setupObservers:${it}")
                     }
                     else -> {
                     }
