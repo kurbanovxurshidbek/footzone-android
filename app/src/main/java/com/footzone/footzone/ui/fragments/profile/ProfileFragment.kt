@@ -1,5 +1,6 @@
 package com.footzone.footzone.ui.fragments.profile
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -23,6 +24,11 @@ import com.footzone.footzone.utils.UiStateObject
 import com.squareup.picasso.Picasso
 import java.io.File
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
+import me.shouheng.compress.Compress
+import me.shouheng.compress.concrete
+import me.shouheng.compress.strategy.config.ScaleMode
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -36,7 +42,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     @Inject
     lateinit var sharedPref: SharedPref
-
     lateinit var image: File
     private val viewModel by viewModels<ProfileViewModel>()
 
@@ -113,7 +118,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             tvNumber.text = userData.phoneNumber
 
             Picasso.get()
-                .load("https://footzone-server.herokuapp.com/images/user/${userData.photo.name}")
+                .load("http://10.10.1.74:8081/images/user/${userData.photo.name}")
                 .into(ivProfile)
         }
     }
@@ -146,6 +151,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         getImageFromGallery.launch("image/*")
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private val getImageFromGallery =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri ?: return@registerForActivityResult
@@ -162,11 +168,29 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             if (image.length() == 0L) return@registerForActivityResult
             Glide.with(requireActivity()).load(image).into(binding.ivProfile)
 
-            val reqFile: RequestBody = RequestBody.create("image/jpg".toMediaTypeOrNull(), image)
-            val body: MultipartBody.Part =
-                MultipartBody.Part.createFormData("file", image.name, reqFile)
 
-            sendRequestToLoadImage(body)
+            GlobalScope.launch {
+                val result = Compress.with(requireContext(), image)
+                    .setQuality(80)
+                    .concrete {
+                        withMaxWidth(480f)
+                        withMaxHeight(480f)
+                        withScaleMode(ScaleMode.SCALE_HEIGHT)
+                        withIgnoreIfSmaller(true)
+                    }
+                    .get(Dispatchers.IO)
+                withContext(Dispatchers.Main) {
+                    val reqFile: RequestBody = RequestBody.create("image/jpg".toMediaTypeOrNull(), result)
+                    val body: MultipartBody.Part =
+                        MultipartBody.Part.createFormData("file", result.name, reqFile)
+                    sendRequestToLoadImage(body)
+                }
+            }
+
+
+
+
+
         }
 
     private fun sendRequestToLoadImage(body: MultipartBody.Part) {
