@@ -21,7 +21,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class ServerModule {
-    private val BASE_URL: String = "http://10.10.1.70:8081/api/v1/"
+    private val BASE_URL: String = "http://10.10.1.74:8081/api/v1/"
 
     @Provides
     @Singleton
@@ -47,7 +47,12 @@ class ServerModule {
         })
         .addInterceptor(Interceptor { chain ->
             val builder = chain.request().newBuilder()
-            builder.addHeader("Authorization", "Bearer ${sharedPref.getUserToken(USER_TOKEN, "")}")
+            if (sharedPref.getUserToken(USER_TOKEN, "").isNotEmpty()) {
+                builder.addHeader(
+                    "Authorization",
+                    "Bearer ${sharedPref.getUserToken(USER_TOKEN, "")}"
+                )
+            }
             builder.addHeader("Content-Type", "application/json")
             builder.addHeader("Accept", "application/json")
             chain.proceed(builder.build())
