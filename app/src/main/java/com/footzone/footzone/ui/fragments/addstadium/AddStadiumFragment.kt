@@ -2,7 +2,6 @@ package com.footzone.footzone.ui.fragments.addstadium
 
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -13,9 +12,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -29,20 +25,15 @@ import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.addstadium.Stadium
 import com.footzone.footzone.model.addstadium.WorkingDay
 import com.footzone.footzone.ui.fragments.BaseFragment
-import com.footzone.footzone.ui.fragments.profile.ProfileViewModel
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.UiStateObject
 import com.google.gson.Gson
-import java.io.File
-import java.util.*
-import kotlin.collections.ArrayList
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 import java.io.FileOutputStream
-import java.time.LocalTime
 
 @AndroidEntryPoint
 open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {

@@ -2,11 +2,10 @@ package com.footzone.footzone.ui.fragments.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.footzone.footzone.model.Location
-import com.footzone.footzone.model.Response
-import com.footzone.footzone.model.StadiumResponse
+import com.footzone.footzone.model.*
 import com.footzone.footzone.model.playhistory.PlayHistoryResponse
 import com.footzone.footzone.repository.main.MainRepository
+import com.footzone.footzone.utils.UiStateList
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,6 +32,14 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
     private val _addToFavouriteStadiums =
         MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
     val addToFavouriteStadiums = _addToFavouriteStadiums
+
+    private val _addToFavouriteStadiumsDB =
+        MutableStateFlow<UiStateObject<Unit>>(UiStateObject.EMPTY)
+    val addToFavouriteStadiumsDB = _addToFavouriteStadiumsDB
+
+    private val _getFavouriteStadiumsDB =
+        MutableStateFlow<UiStateList<FavouriteStadium>>(UiStateList.EMPTY)
+    val getFavouriteStadiumsDB = _getFavouriteStadiumsDB
 
     fun getNearByStadiums(location: Location) = viewModelScope.launch {
         _nearByStadiums.value = UiStateObject.LOADING
@@ -73,16 +80,44 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
         }
     }
 
-    fun addToFavouriteStadiums(stadiumId: String) = viewModelScope.launch {
-        _addToFavouriteStadiums.value = UiStateObject.LOADING
+    fun addToFavouriteStadiums(favouriteStadiumRequest: FavouriteStadiumRequest) =
+        viewModelScope.launch {
+            _addToFavouriteStadiums.value = UiStateObject.LOADING
+
+            try {
+                val response = mainRepository.addToFavouriteStadiums(favouriteStadiumRequest)
+                _addToFavouriteStadiums.value = UiStateObject.SUCCESS(response)
+
+            } catch (e: Exception) {
+                _addToFavouriteStadiums.value =
+                    UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
+            }
+        }
+
+    fun getFavouriteStadiumsDB() = viewModelScope.launch {
+        _getFavouriteStadiumsDB.value = UiStateList.LOADING
 
         try {
-            val response = mainRepository.addToFavouriteStadiums(stadiumId)
-            _addToFavouriteStadiums.value = UiStateObject.SUCCESS(response)
+            val response = mainRepository.getFavouriteStadiumsDB()
+            _getFavouriteStadiumsDB.value = UiStateList.SUCCESS(response)
 
         } catch (e: Exception) {
-            _addToFavouriteStadiums.value =
+            _getFavouriteStadiumsDB.value =
+                UiStateList.ERROR(e.localizedMessage ?: "No connection", false)
+        }
+    }
+
+    fun addToFavouriteStadiumsDB(favouriteStadium: FavouriteStadium) = viewModelScope.launch {
+        _addToFavouriteStadiumsDB.value = UiStateObject.LOADING
+
+        try {
+            val response = mainRepository.addToFavouriteStadiumsDB(favouriteStadium)
+            _addToFavouriteStadiumsDB.value = UiStateObject.SUCCESS(response)
+
+        } catch (e: Exception) {
+            _addToFavouriteStadiumsDB.value =
                 UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
         }
     }
+
 }

@@ -48,7 +48,7 @@ class PitchAdapter(
             }
 
             ivBookmark.setOnClickListener {
-                onClickEvent.setOnBookMarkClickListener(pitch.id)
+                onClickEvent.setOnBookMarkClickListener("8c0c9599-90c0-43c9-a5cf-ffe1765a35e5", pitch.name!!)
             }
 
             btnBook.setOnClickListener {

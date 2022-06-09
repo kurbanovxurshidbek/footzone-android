@@ -47,7 +47,12 @@ class ServerModule {
         })
         .addInterceptor(Interceptor { chain ->
             val builder = chain.request().newBuilder()
-            builder.addHeader("Authorization", "Bearer ${sharedPref.getUserToken(USER_TOKEN, "")}")
+            if (sharedPref.getUserToken(USER_TOKEN, "").isNotEmpty()) {
+                builder.addHeader(
+                    "Authorization",
+                    "Bearer ${sharedPref.getUserToken(USER_TOKEN, "")}"
+                )
+            }
             builder.addHeader("Content-Type", "application/json")
             builder.addHeader("Accept", "application/json")
             chain.proceed(builder.build())

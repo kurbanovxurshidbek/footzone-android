@@ -20,14 +20,15 @@ import com.footzone.footzone.R
 import com.footzone.footzone.adapter.PitchAdapter
 import com.footzone.footzone.databinding.FragmentHomeBinding
 import com.footzone.footzone.helper.OnClickEvent
+import com.footzone.footzone.model.FavouriteStadium
+import com.footzone.footzone.model.FavouriteStadiumRequest
 import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.Time
 import com.footzone.footzone.ui.fragments.BaseFragment
-import com.footzone.footzone.utils.GoogleMapHelper
+import com.footzone.footzone.utils.*
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues.STADIUM_ID
-import com.footzone.footzone.utils.LocationHelper
-import com.footzone.footzone.utils.UiStateObject
+import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -39,11 +40,16 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
     GoogleMap.CancelableCallback {
+
     private val viewModel by viewModels<HomeViewModel>()
+
+    @Inject
+    lateinit var sharedPref: SharedPref
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: FragmentHomeBinding
@@ -149,6 +155,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                 hideBottomSheet(bottomSheetBehaviorType)
                 sendRequestToGetFavouriteStadiums()
                 observeFavouriteStadiums()
+                observeFavouriteStadiumsDB()
                 showPitches()
             }
             linearBookedPitch.setOnClickListener {
@@ -187,12 +194,36 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
         }
     }
 
+    private fun observeFavouriteStadiumsDB() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.getFavouriteStadiumsDB.collect {
+                when (it) {
+                    UiStateList.LOADING -> {
+                        //show progress
+                    }
+
+                    is UiStateList.SUCCESS -> {
+                        Log.d("TAG", "observeNearByStadiums: $it.data")
+                    }
+                    is UiStateList.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }
+
     private fun sendRequestToGetPreviouslyBookedStadiums() {
         viewModel.getPreviouslyBookedStadiums("b98f1843-b09d-48a6-93a9-b370a78689fb")
     }
 
     private fun sendRequestToGetFavouriteStadiums() {
+        // to get from server
         viewModel.getFavouriteStadiums("b98f1843-b09d-48a6-93a9-b370a78689fb")
+
+        //to get from DB
+        viewModel.getFavouriteStadiumsDB()
     }
 
     private fun sendRequestToGetNearbyStadiums() {
@@ -256,7 +287,54 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
 
                     is UiStateObject.SUCCESS -> {
                         Log.d("TAG", "observeNearByStadiums: $it.data")
-                        //set data to adapter
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }
+
+    private fun observeAddFavouriteStadiums(stadiumId: String, stadiumName: String) {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.addToFavouriteStadiums.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
+
+                    is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "observeAddFavouriteStadiums: ${it.data}")
+                        viewModel.addToFavouriteStadiumsDB(FavouriteStadium(stadiumId, stadiumName))
+                        observerAddToFavouriteDB()
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }
+
+    private fun sendRequestToAddFavouriteStadiums(stadiumId: String) {
+        val favouriteStadiumRequest =
+            FavouriteStadiumRequest(stadiumId, sharedPref.getUserID(USER_ID, ""))
+        viewModel.addToFavouriteStadiums(favouriteStadiumRequest)
+    }
+
+    private fun observerAddToFavouriteDB() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.addToFavouriteStadiumsDB.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
+
+                    is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "observeNearByStadiums: $it.data")
                     }
                     is UiStateObject.ERROR -> {
                         Log.d("TAG", "setupUI: ${it.message}")
@@ -281,39 +359,13 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                 requireActivity().shareLocationToGoogleMap(latitude, longitude)
             }
 
-            override fun setOnBookMarkClickListener(stadiumId: String) {
+            override fun setOnBookMarkClickListener(stadiumId: String, stadiumName: String) {
                 sendRequestToAddFavouriteStadiums(stadiumId)
+                observeAddFavouriteStadiums(stadiumId, stadiumName)
             }
-
         })
         adapter.submitData(getPitches())
         binding.bottomSheetPitchList.rvPitch.adapter = adapter
-    }
-
-    private fun sendRequestToAddFavouriteStadiums(stadiumId: String) {
-        viewModel.addToFavouriteStadiums(stadiumId)
-        observerAddToFavourite()
-    }
-
-    private fun observerAddToFavourite() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.addToFavouriteStadiums.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
-
-                    is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "observeNearByStadiums: $it.data")
-                        //set data to adapter
-                    }
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
-                    }
-                    else -> {}
-                }
-            }
-        }
     }
 
     private fun openPitchDetailFragment(stadiumId: String) {
