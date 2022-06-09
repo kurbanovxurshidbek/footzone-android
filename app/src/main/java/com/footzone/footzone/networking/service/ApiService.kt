@@ -49,7 +49,7 @@ interface ApiService {
     suspend fun updateUserProfilePhoto(
         @Path("userId") userId: String,
         @Part file: MultipartBody.Part,
-    ): String
+    ): Response
 
 
     //not yet fully connected

@@ -1,5 +1,7 @@
 package com.footzone.footzone.di
 
+import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.footzone.footzone.networking.service.ApiService
 import com.footzone.footzone.utils.KeyValues.USER_TOKEN
 import com.footzone.footzone.utils.SharedPref
@@ -41,7 +43,7 @@ class ServerModule {
     fun getClient(sharedPref: SharedPref): OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(60, TimeUnit.SECONDS)
         .readTimeout(60, TimeUnit.SECONDS)
-        //   .addInterceptor(ChuckInterceptor(context))
+          // .addInterceptor(ChuckerInterceptor(context))
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         })

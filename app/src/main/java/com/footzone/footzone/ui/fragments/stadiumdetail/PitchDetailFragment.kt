@@ -113,6 +113,7 @@ class PitchDetailFragment : Fragment() {
     private fun getComments(): ArrayList<Comment> {
         val items = ArrayList<Comment>()
 
+
         return items
     }
 }

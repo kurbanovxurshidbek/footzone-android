@@ -21,7 +21,7 @@ class ProfileViewModel @Inject constructor(private val mainRepository: MainRepos
     private val _userData = MutableStateFlow<UiStateObject<UserData>>(UiStateObject.EMPTY)
     val userData = _userData
 
-    private val _userProfile = MutableStateFlow<UiStateObject<String>>(UiStateObject.EMPTY)
+    private val _userProfile = MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
     val userProfile = _userProfile
 
     fun getUserData(userId: String) = viewModelScope.launch {
