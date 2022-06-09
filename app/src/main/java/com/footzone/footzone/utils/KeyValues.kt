@@ -1,6 +1,7 @@
 package com.footzone.footzone.utils
 
 object KeyValues {
+    val BASE_URL = "https://footzone-server.herokuapp.com/images/user/"
     val PITCH_DETAIL: String = "pitchDetail"
     const val STADIUM_ID = "stadiumID"
     const val TYPE_DETAIL = "type"

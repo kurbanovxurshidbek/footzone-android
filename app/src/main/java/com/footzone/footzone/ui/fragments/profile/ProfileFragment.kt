@@ -16,6 +16,7 @@ import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentProfileBinding
 import com.footzone.footzone.model.profile.Data
 import com.footzone.footzone.ui.fragments.BaseFragment
+import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.LOG_IN
 import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.SharedPref
@@ -112,8 +113,8 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             tvName.text = userData.fullName
             tvNumber.text = userData.phoneNumber
 
-            Picasso.get()
-                .load("http://10.10.1.70:8081/images/user/${userData.photo.name}")
+            Glide.with(requireContext())
+                .load("${KeyValues.BASE_URL}${userData.photo.name}")
                 .into(ivProfile)
         }
     }

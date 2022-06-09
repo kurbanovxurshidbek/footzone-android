@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.ImageView
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
@@ -297,7 +298,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
         }
     }
 
-    private fun observeAddFavouriteStadiums(stadiumId: String, stadiumName: String) {
+    private fun observeAddFavouriteStadiums(
+        stadiumId: String,
+        stadiumName: String,
+        ivBookmark: ImageView
+    ) {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             viewModel.addToFavouriteStadiums.collect {
                 when (it) {
@@ -307,6 +312,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
 
                     is UiStateObject.SUCCESS -> {
                         Log.d("TAG", "observeAddFavouriteStadiums: ${it.data}")
+                        ivBookmark.setBackgroundResource(R.drawable.imageview_circle_fill_blue)
+                        ivBookmark.setImageResource(R.drawable.ic_bookmark_white)
                         viewModel.addToFavouriteStadiumsDB(FavouriteStadium(stadiumId, stadiumName))
                         observerAddToFavouriteDB()
                     }
@@ -359,9 +366,13 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                 requireActivity().shareLocationToGoogleMap(latitude, longitude)
             }
 
-            override fun setOnBookMarkClickListener(stadiumId: String, stadiumName: String) {
+            override fun setOnBookMarkClickListener(
+                stadiumId: String,
+                stadiumName: String,
+                ivBookmark: ImageView
+            ) {
                 sendRequestToAddFavouriteStadiums(stadiumId)
-                observeAddFavouriteStadiums(stadiumId, stadiumName)
+                observeAddFavouriteStadiums(stadiumId, stadiumName, ivBookmark)
             }
         })
         adapter.submitData(getPitches())

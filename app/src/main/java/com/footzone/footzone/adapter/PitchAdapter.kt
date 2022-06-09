@@ -7,6 +7,7 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemPitchLayoutBinding
 import com.footzone.footzone.helper.OnClickEvent
 import com.footzone.footzone.model.Pitch
@@ -48,7 +49,11 @@ class PitchAdapter(
             }
 
             ivBookmark.setOnClickListener {
-                onClickEvent.setOnBookMarkClickListener("8c0c9599-90c0-43c9-a5cf-ffe1765a35e5", pitch.name!!)
+                onClickEvent.setOnBookMarkClickListener(
+                    "8c0c9599-90c0-43c9-a5cf-ffe1765a35e5",
+                    pitch.name!!,
+                    ivBookmark
+                )
             }
 
             btnBook.setOnClickListener {
