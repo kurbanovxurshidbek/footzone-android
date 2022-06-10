@@ -1,28 +1,25 @@
 package com.footzone.footzone.di
 
-import android.content.Context
 import com.footzone.footzone.networking.service.ApiService
 import com.footzone.footzone.utils.KeyValues.USER_TOKEN
 import com.footzone.footzone.utils.SharedPref
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.ConnectionSpec
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 class ServerModule {
-    private val BASE_URL: String = "https://footzone-server.herokuapp.com/api/v1/"
+   // private val BASE_URL: String = "https://footzone-server.herokuapp.com/api/v1/"
+    private val BASE_URL: String = "http://10.10.4.203:8081/api/v1/"
 
     @Provides
     @Singleton

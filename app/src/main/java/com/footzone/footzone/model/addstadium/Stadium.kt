@@ -7,5 +7,6 @@ data class Stadium(
     val latitude: Double,
     val longitude: Double,
     val name: String,
+    val userId: String,
     val workingDays: List<WorkingDay>
 )

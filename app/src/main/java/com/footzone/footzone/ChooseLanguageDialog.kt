@@ -10,7 +10,7 @@ import com.footzone.footzone.databinding.ChooseLanguageDialogBinding
 
 class ChooseLanguageDialog(private var onEnterClick: ((String) -> Unit)) {
 
-    fun showCalendarDialog(activity: Activity?) {
+    fun showChooseLanguageDialog(activity: Activity?) {
 
         val binding = ChooseLanguageDialogBinding.inflate(LayoutInflater.from(activity))
         val dialog = Dialog(activity!!)
@@ -22,17 +22,17 @@ class ChooseLanguageDialog(private var onEnterClick: ((String) -> Unit)) {
         dialog.setCancelable(true)
 
         binding.llUz.setOnClickListener {
-            onEnterClick.invoke("O'zbekcha")
+            onEnterClick.invoke( "uz")
             dialog.dismiss()
         }
 
         binding.llRu.setOnClickListener {
-            onEnterClick.invoke("Ruscha")
+            onEnterClick.invoke( "ru")
             dialog.dismiss()
         }
 
         binding.llEng.setOnClickListener {
-            onEnterClick.invoke("Inglizcha")
+            onEnterClick.invoke( "en")
             dialog.dismiss()
         }
         dialog.show()

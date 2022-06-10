@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="15dp"
+    android:gravity="center"
     android:background="@drawable/view_rounded_corners_grey_4dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/str_select_language"
+        android:textSize="18sp"
+        android:paddingVertical="4dp"
+        android:fontFamily="@font/poppins_bold"/>
 
     <LinearLayout
         android:id="@+id/llUz"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:gravity="center_vertical">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            app:cardCornerRadius="15dp">
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            app:cardCornerRadius="18dp">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -29,20 +38,22 @@
             android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/str_uzbekistan"/>
+            android:text="@string/str_uzbekistan"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_bold"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/llRu"
-        android:layout_marginVertical="5dp"
-        android:layout_width="match_parent"
+        android:layout_marginVertical="10dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:gravity="center_vertical">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            app:cardCornerRadius="15dp">
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            app:cardCornerRadius="18dp">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -55,19 +66,21 @@
             android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/str_russian"/>
+            android:text="@string/str_russian"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_bold"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/llEng"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:gravity="center_vertical">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            app:cardCornerRadius="15dp">
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            app:cardCornerRadius="18dp">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -80,6 +93,8 @@
             android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/str_united_kingdom"/>
+            android:text="@string/str_united_kingdom"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_bold"/>
     </LinearLayout>
 </LinearLayout>

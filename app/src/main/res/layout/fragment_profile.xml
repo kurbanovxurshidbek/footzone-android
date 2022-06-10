@@ -218,7 +218,7 @@ safihangizga kiring"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins_bold"
-                android:text="Sozlamalar"
+                android:text="@string/str_setings"
                 android:textColor="#424242"
                 android:textSize="16sp" />
 
@@ -292,10 +292,11 @@ safihangizga kiring"
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/tvLanguage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="O'zbekcha"
+                        android:text="@string/str_lang"
                         android:textColor="#424242"
                         android:textSize="14sp" />
 

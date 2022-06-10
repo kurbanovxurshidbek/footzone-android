@@ -161,7 +161,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
                         val userPriority = it.data.data
                         saveToSharedPref(userPriority.user_id,
                             userPriority.token,
-                            user!!.isStadiumHolder)
+                            user!!.stadiumHolder)
                         findNavController().popBackStack()
                     }
                     is UiStateObject.ERROR -> {

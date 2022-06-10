@@ -83,8 +83,13 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
                 tvOpenClose.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
                 tvOpenCloseHour.text = " · ${data.isOpen.time.substring(0, 5)} da yopiladi"
             } else {
-                tvOpenClose.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
-                tvOpenCloseHour.text = " · ${data.isOpen.time.substring(0, 5)} da ochiladi"
+                if (data.isOpen.time != null){
+                    tvOpenClose.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
+                    tvOpenCloseHour.text = " · ${data.isOpen.time.substring(0, 5)} da ochiladi"
+                }else{
+                    tvOpenCloseHour.text = "Stadion bugun ishlamaydi."
+                    tvOpenClose.visibility = View.GONE
+                }
             }
 
             textViewPrice.text = data.hourlyPrice.toString()

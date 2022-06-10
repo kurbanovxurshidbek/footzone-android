@@ -13,6 +13,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -22,6 +24,7 @@ import com.footzone.footzone.R
 import com.footzone.footzone.adapter.AddImageAdapter
 import com.footzone.footzone.adapter.PitchImageEditAdapter
 import com.footzone.footzone.databinding.FragmentAddStadiumBinding
+import com.footzone.footzone.databinding.ToastChooseTimeBinding
 import com.footzone.footzone.model.Image
 import com.footzone.footzone.model.addstadium.Stadium
 import com.footzone.footzone.model.addstadium.WorkingDay
@@ -29,6 +32,7 @@ import com.footzone.footzone.model.holderstadium.Data
 import com.footzone.footzone.model.holderstadium.Photo
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -36,6 +40,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 import java.io.FileOutputStream
+import javax.inject.Inject
 
 @AndroidEntryPoint
 open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
@@ -53,6 +58,8 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     private val viewModel by viewModels<AddStadiumViewModel>()
     lateinit var stadiumId: String
     var files = ArrayList<MultipartBody.Part>()
+    @Inject
+    lateinit var sharedPref: SharedPref
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +72,8 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
        setFragmentResultListener(KeyValues.TYPE_LOCATION) { _, bundle ->
            latitude = bundle.get("latitude").toString().toDouble()
            longitude = bundle.get("longitude").toString().toDouble()
+           Log.d("TAG", "onCreate: ${latitude}")
+           Log.d("TAG", "onCreate: ${longitude}")
         }
 
         setFragmentResultListener(KeyValues.TYPE_WORK_TIME) { requestKey, bundle ->
@@ -154,9 +163,11 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                 val stadiumName = binding.etPitchName.text.toString()
                 val stadiumNumber =  "+998${binding.etPitchPhoneNumber.text.toString().replace("\\s".toRegex(), "")}"
                 val stadiumPrice = binding.etPitchPrice.text.toString()
+                val userId = sharedPref.getUserID(KeyValues.USER_ID, "")
                 val stadium =
-                    Stadium(stadiumAddress, stadiumNumber, stadiumPrice.toInt(), latitude, longitude, stadiumName, workTimes)
+                    Stadium(stadiumAddress, stadiumNumber, stadiumPrice.toInt(), latitude, longitude, stadiumName,userId, workTimes)
                 viewModel.postHolderStadium(stadium, files)
+
                 observeViewModel()
             }
         }
@@ -229,11 +240,23 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         //show progress
                     }
                     is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "setupObservers: ${it.data}")
+                        val binding = ToastChooseTimeBinding.inflate(LayoutInflater.from(requireActivity()))
+
+                        binding.tvToast.text = "Maydon muvofaqiyatli qo'shildi."
+                        val custToast = Toast(requireContext())
+                        custToast.setView(binding.root)
+                        custToast.show()
+                        requireActivity().onBackPressed()
 
                     }
                     is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
+                        val binding = ToastChooseTimeBinding.inflate(LayoutInflater.from(requireActivity()))
+
+                        binding.tvToast.text = "Maydon muvofaqiyatli qo'shildi."
+                        val custToast = Toast(requireContext())
+                        custToast.setView(binding.root)
+                        custToast.show()
+                        requireActivity().onBackPressed()
                     }
                     else -> {
                     }
@@ -276,7 +299,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                     val body: MultipartBody.Part =
                         MultipartBody.Part.createFormData("files", image.name, reqFile)
 
-                    Log.d("TAG", "onActivityResult: ${body}")
                     files.add(body)
                 } else {
                     items[position].imageUri = selectedImageUri
