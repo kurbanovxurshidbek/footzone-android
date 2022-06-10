@@ -1,7 +1,6 @@
 package com.footzone.footzone.di
 
 import android.content.Context
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.footzone.footzone.networking.service.ApiService
 import com.footzone.footzone.utils.KeyValues.USER_TOKEN
 import com.footzone.footzone.utils.SharedPref

@@ -187,11 +187,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                     sendRequestToLoadImage(body)
                 }
             }
-
-
-
-
-
         }
 
     private fun sendRequestToLoadImage(body: MultipartBody.Part) {

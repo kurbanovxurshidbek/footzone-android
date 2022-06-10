@@ -28,6 +28,9 @@
     <string name="str_edit_stadium">Maydonni tahrirlash</string>
     <string name="str_time_interval">Vaqt oralig’i</string>
     <string name="str_stadium_address">Stadion address</string>
+    <string name="str_united_kingdom">United Kingdom</string>
+    <string name="str_russian">Russian</string>
+    <string name="str_uzbekistan">Uzbekistan</string>
 
     <string-array name="timelist">
         <item>00:00</item>

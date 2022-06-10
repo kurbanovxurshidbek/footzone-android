@@ -15,6 +15,7 @@ import com.footzone.footzone.model.SignInVerification
 import com.footzone.footzone.model.SmsVerification
 import com.footzone.footzone.model.User
 import com.footzone.footzone.ui.fragments.BaseFragment
+import com.footzone.footzone.utils.KeyValues.IS_OWNER
 import com.footzone.footzone.utils.KeyValues.LOG_IN
 import com.footzone.footzone.utils.KeyValues.PHONE_NUMBER
 import com.footzone.footzone.utils.KeyValues.USER_DETAIL
@@ -140,10 +141,11 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
         }
     }
 
-    private fun saveToSharedPref(userID: String, userToken: String) {
+    private fun saveToSharedPref(userID: String, userToken: String, stadiumHolder: Boolean?) {
         sharedPref.saveLogIn(LOG_IN, true)
         sharedPref.saveUserId(USER_ID, userID)
         sharedPref.saveUserToken(USER_TOKEN, userToken)
+        sharedPref.saveIsOwner(IS_OWNER, stadiumHolder!!)
 
     }
 
@@ -157,7 +159,9 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
 
                     is UiStateObject.SUCCESS -> {
                         val userPriority = it.data.data
-                        saveToSharedPref(userPriority.user_id, userPriority.token)
+                        saveToSharedPref(userPriority.user_id,
+                            userPriority.token,
+                            user!!.isStadiumHolder)
                         findNavController().popBackStack()
                     }
                     is UiStateObject.ERROR -> {

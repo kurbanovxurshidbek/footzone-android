@@ -14,5 +14,6 @@ object KeyValues {
     const val TYPE_CHOOSE_TIME = "1003"
     const val USER_ID = "userID"
     const val USER_TOKEN = "userToken"
+    const val IS_OWNER = "isOwner"
     const val LOG_IN = "LogIn"
 }

@@ -30,4 +30,12 @@ class SharedPref @Inject constructor(@ApplicationContext val context: Context) {
     fun getUserToken(key: String, data: String): String {
         return sharedPref.getString(key, data)!!
     }
+
+    fun saveIsOwner(key: String, data: Boolean) {
+        sharedPref.edit().putBoolean(key, data).apply()
+    }
+
+    fun getIsOwner(key: String): Boolean {
+        return sharedPref.getBoolean(key, false)
+    }
 }
