@@ -16,4 +16,5 @@ object KeyValues {
     const val USER_TOKEN = "userToken"
     const val IS_OWNER = "isOwner"
     const val LOG_IN = "LogIn"
+    const val LANGUAGE = "language"
 }

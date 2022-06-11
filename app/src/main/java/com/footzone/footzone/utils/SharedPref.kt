@@ -38,4 +38,12 @@ class SharedPref @Inject constructor(@ApplicationContext val context: Context) {
     fun getIsOwner(key: String): Boolean {
         return sharedPref.getBoolean(key, false)
     }
+
+    fun saveLanguage(key: String, language: String) {
+        sharedPref.edit().putString(key, language).apply()
+    }
+
+    fun getLanguage(key: String, language: String): String {
+        return sharedPref.getString(key, language)!!
+    }
 }

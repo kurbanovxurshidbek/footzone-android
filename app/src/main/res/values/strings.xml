@@ -32,7 +32,7 @@
     <string name="str_russian">Russian</string>
     <string name="str_uzbekistan">Uzbekistan</string>
     <string name="str_select_language">Tilni tanlang</string>
-    <string name="str_setings">Sozlamalar</string>
+    <string name="str_setings">Settings</string>
     <string name="str_lang">English</string>
 
     <string-array name="timelist">

@@ -35,6 +35,7 @@
             android:value="AIzaSyDIQLTyvAVuV9DSy0h0cIF6_vDja5ayKYU" />
 
         <activity
+            android:configChanges="locale"
             android:name=".ui.activity.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustNothing">
@@ -46,6 +47,7 @@
         </activity>
 
         <activity
+            android:configChanges="locale"
             android:name=".ui.activity.SplashActivity" />
     </application>
 
