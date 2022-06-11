@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.footzone.footzone.databinding.ItemMyPitchLayoutBinding
 import com.footzone.footzone.model.holders.Comment
 import com.footzone.footzone.model.holders.Data
-import com.footzone.footzone.model.holders.Photo
+import com.footzone.footzone.model.holderstadium.Photo
 import com.footzone.footzone.ui.fragments.mystadium.MyStadiumFragment
-import java.time.LocalDateTime
 
 class MyPitchAdapter(var context: MyStadiumFragment, var items: ArrayList<Data>, private var onPitchClick: ((String) -> Unit)):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {

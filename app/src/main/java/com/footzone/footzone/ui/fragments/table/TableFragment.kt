@@ -50,7 +50,7 @@ class TableFragment : BaseFragment(R.layout.fragment_table) {
 
                     is UiStateObject.SUCCESS -> {
                         Log.d("TAG", "setupObservers: ${it.data}")
-                        showPlayHistory(it.data)
+                       // showPlayHistory(it.data)
                     }
                     is UiStateObject.ERROR -> {
                         Log.d("TAG", "setupUI: ${it.message}")

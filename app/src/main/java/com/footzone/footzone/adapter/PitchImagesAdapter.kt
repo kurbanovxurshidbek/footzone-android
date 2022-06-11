@@ -1,13 +1,13 @@
 package com.footzone.footzone.adapter
-import android.content.Context
-import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemPitchImageLayoutBinding
-import com.footzone.footzone.model.holders.Photo
+import com.footzone.footzone.model.holderstadium.Photo
+import com.footzone.footzone.utils.KeyValues
 
 class PitchImagesAdapter() :
     RecyclerView.Adapter<PitchImagesAdapter.VH>() {
@@ -21,7 +21,7 @@ class PitchImagesAdapter() :
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = stadiumImages[position]
-        val uri = "https://footzone-server.herokuapp.com/images/stadium/${item.name}"
+        val uri = "${KeyValues.STADIUM_IMAGE_BASE_URL}${item.name}"
         Glide.with(holder.binding.ivPitch.context)
             .load(uri)
             .placeholder(R.drawable.stadim2)
@@ -30,7 +30,8 @@ class PitchImagesAdapter() :
 
     override fun getItemCount(): Int = stadiumImages.size
 
-    fun submitData(stadiumImages: ArrayList<Photo>) {
+    fun submitData(stadiumImages: List<Photo>) {
         this.stadiumImages.addAll(stadiumImages)
+        notifyDataSetChanged()
     }
 }

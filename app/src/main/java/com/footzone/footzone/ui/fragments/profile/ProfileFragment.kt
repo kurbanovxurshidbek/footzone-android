@@ -119,7 +119,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             tvNumber.text = userData.phoneNumber
 
             Glide.with(requireContext())
-                .load("${KeyValues.BASE_URL}${userData.photo.name}")
+                .load("${KeyValues.USER_IMAGE_BASE_URL}${userData.photo.name}")
                 .into(ivProfile)
         }
     }

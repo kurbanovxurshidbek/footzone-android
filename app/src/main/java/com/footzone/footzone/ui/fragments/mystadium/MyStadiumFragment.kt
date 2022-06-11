@@ -90,14 +90,6 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
         binding.recyclerView.adapter = adapter
     }
 
-    fun resRating(comments: ArrayList<Comment>): Float {
-        return try {
-            (comments.sumOf { it.number * it.rate } / comments.sumOf { it.number }).toFloat()
-        } catch (e: Exception) {
-            2.5f
-        }
-    }
-
 
     fun openMap() {
         requireActivity().shareLocationToGoogleMap(41.33324, 69.21896)

@@ -17,8 +17,16 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(private val mainRepository: MainRepository) :
     ViewModel() {
 
-    private val _nearByStadiums =
+    private val _allStadiums =
+        MutableStateFlow<UiStateObject<AllStadiumResponse>>(UiStateObject.EMPTY)
+    val allStadiums = _allStadiums
+
+    private val _searchedStadiums =
         MutableStateFlow<UiStateObject<StadiumResponse>>(UiStateObject.EMPTY)
+    val searchedStadiums = _searchedStadiums
+
+    private val _nearByStadiums =
+        MutableStateFlow<UiStateObject<NearStadiumResponse>>(UiStateObject.EMPTY)
     val nearByStadiums = _nearByStadiums
 
     private val _favouriteStadiums =
@@ -26,7 +34,7 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
     val favouriteStadiums = _favouriteStadiums
 
     private val _previouslyBookedStadiums =
-        MutableStateFlow<UiStateObject<PlayHistoryResponse>>(UiStateObject.EMPTY)
+        MutableStateFlow<UiStateObject<StadiumResponse>>(UiStateObject.EMPTY)
     val previouslyBookedStadiums = _previouslyBookedStadiums
 
     private val _addToFavouriteStadiums =
@@ -120,4 +128,29 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
         }
     }
 
+    fun getAllStadiums() = viewModelScope.launch {
+        _allStadiums.value = UiStateObject.LOADING
+
+        try {
+            val response = mainRepository.getAllStadiums()
+            _allStadiums.value = UiStateObject.SUCCESS(response)
+
+        } catch (e: Exception) {
+            _allStadiums.value =
+                UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
+        }
+    }
+
+    fun getSearchedStadiums(search: String) = viewModelScope.launch {
+        _searchedStadiums.value = UiStateObject.LOADING
+
+        try {
+            val response = mainRepository.getSearchedStadiums(search)
+            _searchedStadiums.value = UiStateObject.SUCCESS(response)
+
+        } catch (e: Exception) {
+            _searchedStadiums.value =
+                UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
+        }
+    }
 }
