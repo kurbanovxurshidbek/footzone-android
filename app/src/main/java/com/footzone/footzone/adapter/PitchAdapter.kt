@@ -7,20 +7,19 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemPitchLayoutBinding
 import com.footzone.footzone.helper.OnClickEvent
-import com.footzone.footzone.model.StadiumData
-import com.footzone.footzone.model.holders.Comment
-import com.footzone.footzone.model.holderstadium.Photo
+import com.footzone.footzone.model.Pitch
+import com.footzone.footzone.model.holders.Photo
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
-import java.lang.Exception
 
 class PitchAdapter(
     private var onClickEvent: OnClickEvent
 ) :
     RecyclerView.Adapter<PitchAdapter.VH>() {
 
-    private var pitches = ArrayList<StadiumData>()
+    private var pitches = ArrayList<Pitch>()
 
     inner class VH(val view: ItemPitchLayoutBinding) : RecyclerView.ViewHolder(view.root)
 
@@ -30,20 +29,20 @@ class PitchAdapter(
     override fun onBindViewHolder(holder: VH, position: Int) {
         val pitch = pitches[position]
         holder.view.apply {
-            refreshImagesAdapter(pitch.photos, rvPithPhotos)
+            // refreshImagesAdapter(pitch.images, rvPithPhotos)
             tvPitchName.text = pitch.name
-            if (pitch.isOpen.open) {
+            if (pitch.isOpen) {
                 tvOpenClose.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
-                tvOpenCloseHour.text = " · ${pitch.isOpen.time} da yopiladi"
+                tvOpenCloseHour.text = " · ${pitch.time.closingTime} da yopiladi"
             } else {
                 tvOpenClose.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
-                tvOpenCloseHour.text = " · ${pitch.isOpen.time} da ochiladi"
+                tvOpenCloseHour.text = " · ${pitch.time.openingTime} da ochiladi"
             }
             setStrokeColorToRatingBar(rbPitch)
-            rbPitch.rating = resRating(pitch.comments)
+            rbPitch.rating = pitch.rating
             rbPitch.setIsIndicator(true)
-            tvRatingNums.text = "(${pitch.comments.size})"
-            tvPitchPrice.text = "${pitch.hourlyPrice} so'm/soat"
+            tvRatingNums.text = "(${pitch.ratingNums})"
+            tvPitchPrice.text = "${pitch.price} so'm/soat"
 
             btnNavigate.setOnClickListener {
                 onClickEvent.setOnNavigateClickListener(1.0, 2.0)
@@ -51,29 +50,28 @@ class PitchAdapter(
 
             ivBookmark.setOnClickListener {
                 onClickEvent.setOnBookMarkClickListener(
-                    pitch.stadiumId,
-                    pitch.name,
+                    "8c0c9599-90c0-43c9-a5cf-ffe1765a35e5",
+                    pitch.name!!,
                     ivBookmark
                 )
             }
 
             btnBook.setOnClickListener {
-                onClickEvent.setOnBookClickListener(pitch.stadiumId)
+                onClickEvent.setOnBookClickListener(pitch.id)
             }
         }
     }
 
-    private fun refreshImagesAdapter(images: List<Photo>, rvPithPhotos: RecyclerView) {
+    private fun refreshImagesAdapter(images: ArrayList<Photo>, rvPithPhotos: RecyclerView) {
         val pitchImagesAdapter = PitchImagesAdapter()
-        pitchImagesAdapter.submitData(images)
+        pitchImagesAdapter.submitData(images as ArrayList<String>)
         rvPithPhotos.adapter = pitchImagesAdapter
     }
 
     override fun getItemCount(): Int = pitches.size
 
-    fun submitData(pitches: ArrayList<StadiumData>) {
+    fun submitData(pitches: ArrayList<Pitch>) {
         this.pitches.addAll(pitches)
-        notifyDataSetChanged()
     }
 }
 
@@ -82,12 +80,4 @@ fun setStrokeColorToRatingBar(ratingBar: MaterialRatingBar) {
     stars.getDrawable(2).setColorFilter(Color.parseColor("#FFC107"), PorterDuff.Mode.SRC_ATOP)
     stars.getDrawable(0).setColorFilter(Color.parseColor("#FFC107"), PorterDuff.Mode.SRC_ATOP)
     stars.getDrawable(1).setColorFilter(Color.parseColor("#FFC107"), PorterDuff.Mode.SRC_ATOP)
-}
-
-fun resRating(comments: ArrayList<Comment>): Float {
-    return try {
-        (comments.sumOf { it.number * it.rate } / comments.sumOf { it.number }).toFloat()
-    } catch (e: Exception) {
-        2.5f
-    }
 }

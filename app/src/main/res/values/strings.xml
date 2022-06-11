@@ -5,11 +5,11 @@
 
     <string name="for_back_button">for back button</string>
     <string name="item_recyclerview">item recyclerView</string>
-    <string name="acme_futbol_maydoni">Acme futbol maydoni</string>
-    <string name="amir_temur_ko_chasi_14_uy">Amir Temur ko\'chasi, 14-uy</string>
+    <string name="acme_futbol_maydoni">Acme football field</string>
+    <string name="amir_temur_ko_chasi_14_uy">Amir Temur street, 14</string>
     <string name="_998_99_777_66_55">+998 99 777 66 55</string>
 
-    <string name="str_busy">Band qilish</string>
+    <string name="str_busy">Busy</string>
     <string name="str_date">Sana</string>
     <string name="str_cancel">Bekor qilish</string>
     <string name="str_occupancy">Band qilish</string>

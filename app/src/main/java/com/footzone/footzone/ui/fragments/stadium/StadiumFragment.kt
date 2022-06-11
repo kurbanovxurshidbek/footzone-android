@@ -10,12 +10,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.CustomAdapter
-import com.footzone.footzone.adapter.HolderCommentAdapter
 import com.footzone.footzone.adapter.HolderStadiumAdapter
 import com.footzone.footzone.databinding.FragmentStadiumBinding
-import com.footzone.footzone.model.holderstadium.Comment
-import com.footzone.footzone.model.holderstadium.Data
-import com.footzone.footzone.model.holderstadium.Photo
+import com.footzone.footzone.model.holderpitch.Data
+import com.footzone.footzone.model.holderpitch.Photo
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues
@@ -70,14 +68,14 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
         }
     }
 
-    private fun refreshData(data: com.footzone.footzone.model.holderstadium.Data) {
+    private fun refreshData(data: Data) {
         binding.apply {
-            tvAppBarPitchName.text = data.name
-            tvStadiumName.text = data.name
+            tvAppBarPitchName.text = data.stadiumName
+            tvStadiumName.text = data.stadiumName
             textViewAddress.text = data.address
             textViewNumber.text = data.number
 
-            textViewRateCount.text = data.comments.size.toString()
+           // textViewRateCount.text = data.comments.size.toString()
 
             if (data.isOpen.open) {
                 tvOpenClose.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
@@ -105,8 +103,8 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
         }
 
         refreshAdapter(data.photos as ArrayList<Photo>)
-        refreshCommentAdapter(data.comments as ArrayList<Comment>)
-        resultRate(data.comments)
+//        refreshCommentAdapter(data.comments as ArrayList<Comment>)
+//        resultRate(data.comments)
 
         binding.etStadium.setOnClickListener {
             openEditStadium(data.stadiumId)
@@ -125,39 +123,39 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
         binding.recyclerView.adapter = adapter
     }
 
-    private fun refreshCommentAdapter(comments: ArrayList<Comment>) {
-        val adapterComment = HolderCommentAdapter(comments)
-        binding.recyclerViewComment.adapter = adapterComment
-    }
-
-    private fun resultRate(comments: ArrayList<Comment>){
-        var rate5 = 0
-        var rate4 = 0
-        var rate3 = 0
-        var rate2 = 0
-        var rate1 = 0
-        var result = 0
-        for (comment in comments){
-            if (comment.rate == 5){
-                rate5++
-            }else if (comment.rate == 4){
-                rate4++
-            }else if (comment.rate == 3){
-                rate3++
-            }else if (comment.rate == 2){
-                rate2++
-            }else{
-                rate1++
-            }
-            result = result + comment.rate
-        }
-        binding.apply {
-            tvResultRate.text = (result.toFloat() / comments.size).toString()
-            lpRate5.progress = ((result.toFloat() / rate5) * 100).toInt()
-            lpRate4.progress = ((result.toFloat() / rate4) * 100).toInt()
-            lpRate3.progress = ((result.toFloat() / rate3) * 100).toInt()
-            lpRate2.progress = ((result.toFloat() / rate2) * 100).toInt()
-            lpRate1.progress = ((result.toFloat() / rate1) * 100).toInt()
-        }
-    }
+//    private fun refreshCommentAdapter(comments: ArrayList<Comment>) {
+//        val adapterComment = HolderCommentAdapter(comments)
+//        binding.recyclerViewComment.adapter = adapterComment
+//    }
+//
+//    private fun resultRate(comments: ArrayList<Comment>){
+//        var rate5 = 0
+//        var rate4 = 0
+//        var rate3 = 0
+//        var rate2 = 0
+//        var rate1 = 0
+//        var result = 0
+//        for (comment in comments){
+//            if (comment.rate == 5){
+//                rate5++
+//            }else if (comment.rate == 4){
+//                rate4++
+//            }else if (comment.rate == 3){
+//                rate3++
+//            }else if (comment.rate == 2){
+//                rate2++
+//            }else{
+//                rate1++
+//            }
+//            result = result + comment.rate
+//        }
+//        binding.apply {
+//            tvResultRate.text = (result.toFloat() / comments.size).toString()
+//            lpRate5.progress = ((result.toFloat() / rate5) * 100).toInt()
+//            lpRate4.progress = ((result.toFloat() / rate4) * 100).toInt()
+//            lpRate3.progress = ((result.toFloat() / rate3) * 100).toInt()
+//            lpRate2.progress = ((result.toFloat() / rate2) * 100).toInt()
+//            lpRate1.progress = ((result.toFloat() / rate1) * 100).toInt()
+//        }
+//    }
 }

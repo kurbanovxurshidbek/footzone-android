@@ -2,8 +2,7 @@ package com.footzone.footzone.ui.fragments.stadium
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.footzone.footzone.model.holders.HolderStadiumResponse
-import com.footzone.footzone.model.holderstadium.HolderStadium
+import com.footzone.footzone.model.holderpitch.HolderStadium
 import com.footzone.footzone.repository.main.MainRepository
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +24,7 @@ class StadiumViewModel  @Inject constructor(private val mainRepository: MainRepo
 
         try {
             val response = mainRepository.getHolderStadium(stadiumId)
-            _getHolderStadium.value = UiStateObject.SUCCESS(response)
+            _getHolderStadium.value = UiStateObject.SUCCESS(response as HolderStadium)
 
         } catch (e: Exception) {
             _getHolderStadium.value =

@@ -10,13 +10,11 @@ import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.MyPitchAdapter
 import com.footzone.footzone.databinding.FragmentMyStadiumBinding
-import com.footzone.footzone.model.holders.Comment
-import com.footzone.footzone.model.holders.Data
+import com.footzone.footzone.model.holderpitchs.Comment
+import com.footzone.footzone.model.holderpitchs.Data
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues
-import com.footzone.footzone.utils.KeyValues.IS_OWNER
-import com.footzone.footzone.utils.KeyValues.STADIUM_ID
 import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
@@ -36,7 +34,6 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMyStadiumBinding.bind(view)
         val userId = sharedPref.getUserID(USER_ID, "")
-        Log.d("TAG", "onViewCreated: $userId")
         viewModel.getHolderStadiums(userId)
         setupObservers()
         initViews()
@@ -53,14 +50,12 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
                     is UiStateObject.SUCCESS -> {
                         val holderStadiumsList = it.data.data as ArrayList<Data>
                         controlVisibility(holderStadiumsList.isEmpty())
-
-                        Log.d("TAG", "setupObservers: ${holderStadiumsList}")
                         if (holderStadiumsList.isNotEmpty()) {
                             refreshAdapter(holderStadiumsList)
                         }
                     }
                     is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupObservers:${it}")
+
                     }
                     else -> {
                     }

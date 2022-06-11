@@ -13,7 +13,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.setFragmentResultListener
@@ -28,8 +27,8 @@ import com.footzone.footzone.databinding.ToastChooseTimeBinding
 import com.footzone.footzone.model.Image
 import com.footzone.footzone.model.addstadium.Stadium
 import com.footzone.footzone.model.addstadium.WorkingDay
-import com.footzone.footzone.model.holderstadium.Data
-import com.footzone.footzone.model.holderstadium.Photo
+import com.footzone.footzone.model.holderpitch.Data
+import com.footzone.footzone.model.holderpitch.Photo
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.SharedPref
@@ -138,7 +137,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         }
         binding.apply {
             tvTitle.text = getText(R.string.str_edit_stadium)
-            etPitchName.setText(data.name);
+            etPitchName.setText(data.stadiumName);
             etPitchAddress.setText(data.address)
             etPitchPhoneNumber.setText(data.number)
            // tvPitchWorkTime.text = "Du, SHe, Cho, Pa, Ju, Sha, Ya"
