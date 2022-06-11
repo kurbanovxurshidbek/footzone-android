@@ -52,7 +52,6 @@ class TimeIntervalFragment : Fragment() {
         adapter = TimeManagerAdapter { p, view->
            managerTime(p, view)
         }
-
         adapter.submitList(timeManager(allTime(LocalTime.parse("07:00"), LocalTime.parse("23:30")),
             gameTime()))
 
