@@ -1,6 +1,9 @@
 package com.footzone.footzone.adapter
 
+import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +14,7 @@ import com.footzone.footzone.databinding.ItemChooseTimeViewWhiteBinding
 import com.footzone.footzone.model.TimeManager
 import java.time.LocalTime
 
-class TimeManagerAdapter(private var onItemSelected: ((Int) -> Unit)) :
+class TimeManagerAdapter(private var onItemSelected: ((Int, ItemChooseTimeViewWhiteBinding) -> Unit)) :
     ListAdapter<TimeManager, RecyclerView.ViewHolder>(DiffUtil()) {
     private val TYPE_ITEM_WHITE = 1001
     private val TYPE_ITEM_GREY = 1002
@@ -39,6 +42,7 @@ class TimeManagerAdapter(private var onItemSelected: ((Int) -> Unit)) :
         }
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
         when (holder) {
@@ -48,8 +52,13 @@ class TimeManagerAdapter(private var onItemSelected: ((Int) -> Unit)) :
                     tvFinishTime.text = item.finishTime.toString()
 
                     linearFreeToBook.setOnClickListener {
-                        onItemSelected.invoke(position)
-                        linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_blue_4dp)
+                        onItemSelected.invoke(position, holder.view)
+                    }
+                    if (item.between == true){
+                        linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_light_blue_4dp)
+                        tvLine.setTextColor(R.color.blue)
+                        tvStartTime.setTextColor(R.color.blue)
+                        tvFinishTime.setTextColor(R.color.blue)
                     }
                 }
             }

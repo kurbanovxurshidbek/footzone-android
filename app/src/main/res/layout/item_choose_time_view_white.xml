@@ -12,15 +12,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="14:00"
-        android:textColor="@color/colorNeutral100"
+        android:textColor="@color/black"
         android:textSize="20sp" />
 
     <TextView
+        android:id="@+id/tvLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="3dp"
         android:text="|"
-        android:textColor="@color/colorNeutral100"
+        android:textColor="@color/black"
         android:textSize="22sp" />
 
     <TextView
@@ -28,6 +29,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="14:30"
-        android:textColor="@color/colorNeutral100"
+        android:textColor="@color/black"
         android:textSize="20sp" />
 </LinearLayout>
