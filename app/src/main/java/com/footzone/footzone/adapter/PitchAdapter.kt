@@ -64,7 +64,7 @@ class PitchAdapter(
 
     private fun refreshImagesAdapter(images: ArrayList<Photo>, rvPithPhotos: RecyclerView) {
         val pitchImagesAdapter = PitchImagesAdapter()
-        pitchImagesAdapter.submitData(images as ArrayList<Photo>)
+        pitchImagesAdapter.submitData(images as ArrayList<String>)
         rvPithPhotos.adapter = pitchImagesAdapter
     }
 

@@ -1,18 +1,16 @@
 package com.footzone.footzone.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.marginEnd
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemStadiumImageEditBinding
-import com.footzone.footzone.model.holderstadium.Photo
+import com.footzone.footzone.model.holderpitch.Photo
 
-class PitchImageEditAdapter( var context: Context, var pitchImages : ArrayList<Photo>,  private var onItemClicked: ((Int) -> Unit)) :
+class PitchImageEditAdapter(var context: Context, var pitchImages : ArrayList<Photo>, private var onItemClicked: ((Int) -> Unit)) :
     RecyclerView.Adapter<PitchImageEditAdapter.VH>()  {
 
 

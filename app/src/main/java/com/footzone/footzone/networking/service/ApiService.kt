@@ -2,16 +2,11 @@ package com.footzone.footzone.networking.service
 
 import com.footzone.footzone.model.*
 import com.footzone.footzone.model.addstadium.Stadium
-import com.footzone.footzone.model.holders.HolderStadiumResponse
-import com.footzone.footzone.model.holderstadium.HolderStadium
+import com.footzone.footzone.model.holderpitch.HolderStadium
+import com.footzone.footzone.model.holderpitchs.HolderPitches
 import com.footzone.footzone.model.playhistory.PlayHistoryResponse
 import com.footzone.footzone.model.profile.UserData
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface ApiService {
@@ -59,7 +54,7 @@ interface ApiService {
     suspend fun getPitchData(@Path("stadiumId") stadiumId: String): Response
 
     @GET("stadium/holder/{userId}")
-    suspend fun getHolderStadiums(@Path("userId") userId: String): HolderStadiumResponse
+    suspend fun getHolderStadiums(@Path("userId") userId: String): HolderPitches
 
     //the stadium owner adds the stadium
     @Multipart
