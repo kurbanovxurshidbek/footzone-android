@@ -26,6 +26,7 @@ import com.footzone.footzone.model.*
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.*
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
+import com.footzone.footzone.utils.KeyValues.IS_OWNER
 import com.footzone.footzone.utils.KeyValues.STADIUM_ID
 import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.google.android.gms.common.api.ApiException
@@ -157,6 +158,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
 
     private fun initViews(view: View) {
         showLocationOn()
+        controlOwnerOption()
         val bottomSheetTypes = view.findViewById<View>(R.id.bottomSheetTypes)
         bottomSheet = view.findViewById(R.id.bottomSheetPitchList)
         topSheet = view.findViewById(R.id.topSheet)
@@ -259,6 +261,14 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
         }
     }
 
+    private fun controlOwnerOption() {
+        if (sharedPref.getIsOwner(IS_OWNER)) {
+            binding.bottomSheetTypes.linearMyStadium.visibility = View.VISIBLE
+        } else {
+            binding.bottomSheetTypes.linearMyStadium.visibility = View.GONE
+        }
+    }
+
     private fun observeFavouriteStadiumsDB() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             viewModel.getFavouriteStadiumsDB.collect {
@@ -273,7 +283,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                     is UiStateList.ERROR -> {
                         Log.d("TAG", "setupUI: ${it.message}")
                     }
-                    else -> {}
+                    else -> {
+                    }
                 }
             }
         }
@@ -327,7 +338,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                     is UiStateObject.ERROR -> {
                         Log.d("TAG", "setupUI: ${it.message}")
                     }
-                    else -> {}
+                    else -> {
+                    }
                 }
             }
         }
@@ -349,7 +361,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                     is UiStateObject.ERROR -> {
                         Log.d("TAG", "setupUI: ${it.message}")
                     }
-                    else -> {}
+                    else -> {
+                    }
                 }
             }
         }
@@ -371,7 +384,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                     is UiStateObject.ERROR -> {
                         Log.d("TAG", "setupUI: ${it.message}")
                     }
-                    else -> {}
+                    else -> {
+                    }
                 }
             }
         }
@@ -399,7 +413,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                     is UiStateObject.ERROR -> {
                         Log.d("TAG", "setupUI: ${it.message}")
                     }
-                    else -> {}
+                    else -> {
+                    }
                 }
             }
         }
@@ -425,7 +440,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                     is UiStateObject.ERROR -> {
                         Log.d("TAG", "setupUI: ${it.message}")
                     }
-                    else -> {}
+                    else -> {
+                    }
                 }
             }
         }
@@ -449,15 +465,14 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
             override fun setOnBookMarkClickListener(
                 stadiumId: String,
                 stadiumName: String,
-                ivBookmark: ImageView
+                ivBookmark: ImageView,
             ) {
                 sendRequestToAddFavouriteStadiums(stadiumId)
                 observeAddFavouriteStadiums(stadiumId, stadiumName, ivBookmark)
             }
         })
-        adapter.submitData(stadiums)
+        adapter.submitData(getPitches())
         binding.bottomSheetPitchList.rvPitch.adapter = adapter
-        showStadiumList()
     }
 
     private fun openPitchDetailFragment(stadiumId: String) {

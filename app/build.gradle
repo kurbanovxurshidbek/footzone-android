@@ -71,6 +71,7 @@ dependencies {
     implementation 'com.github.angads25:toggle:1.1.0'
 
     //picasso
+    //
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     //Masked Edittext

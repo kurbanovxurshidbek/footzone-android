@@ -15,20 +15,29 @@ import com.footzone.footzone.model.holders.Data
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.KeyValues.IS_OWNER
+import com.footzone.footzone.utils.KeyValues.STADIUM_ID
+import com.footzone.footzone.utils.KeyValues.USER_ID
+import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
 
     lateinit var binding: FragmentMyStadiumBinding
     private val viewModel by viewModels<MyStadiumViewModel>()
+    @Inject
+    lateinit var sharedPref: SharedPref
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMyStadiumBinding.bind(view)
-        viewModel.getHolderStadiums("f202e46a-eef4-4ad0-b04c-3c62e5505fe1")
+        val userId = sharedPref.getUserID(USER_ID, "")
+        Log.d("TAG", "onViewCreated: $userId")
+        viewModel.getHolderStadiums(userId)
         setupObservers()
         initViews()
     }

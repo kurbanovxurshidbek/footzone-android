@@ -1,5 +1,6 @@
 package com.footzone.footzone.ui.fragments
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -16,16 +17,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.TimeManagerAdapter
 import com.footzone.footzone.databinding.FragmentTimeIntervalBinding
+import com.footzone.footzone.databinding.ItemChooseTimeViewWhiteBinding
 import com.footzone.footzone.model.TimeManager
 import com.footzone.footzone.utils.KeyValues
 import com.google.type.DateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TimeIntervalFragment : Fragment() {
     lateinit var binding: FragmentTimeIntervalBinding
     private lateinit var adapter: TimeManagerAdapter
-    var num: Int = -1
+    var beforePosition = -1
+    var afterPosition = -1
+    var list = LinkedList<Int>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,20 +40,18 @@ class TimeIntervalFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_time_interval, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentTimeIntervalBinding.bind(view)
         initViews()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initViews() {
-        val a = IntArray(2)
-        a[0] = 49
-        a[1] = -1
-        adapter = TimeManagerAdapter { p ->
-
+        adapter = TimeManagerAdapter { p, view->
+           managerTime(p, view)
         }
-
         adapter.submitList(timeManager(allTime(LocalTime.parse("07:00"), LocalTime.parse("23:30")),
             gameTime()))
 
@@ -60,6 +64,90 @@ class TimeIntervalFragment : Fragment() {
 
         binding.icClose.setOnClickListener {
             requireActivity().onBackPressed()
+        }
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private fun managerTime(p: Int, view: ItemChooseTimeViewWhiteBinding) {
+        val array = timeManager(allTime(LocalTime.parse("07:00"), LocalTime.parse("23:30")),
+            gameTime())
+        if (list.isEmpty()){
+            list.add(p)
+            beforePosition = beforePosition(p)
+            afterPosition = afterPosition(p)
+            binding.tvStartTime.setText(array[list[0]].startTime!!.toString())
+            view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_blue_4dp)
+            view.tvFinishTime.setTextColor(R.color.white)
+            view.tvLine.setTextColor(R.color.white)
+            view.tvStartTime.setTextColor(R.color.white)
+        }else if (list.size == 1 && list[0] == p) {
+            list.remove(p)
+            view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_white_4dp)
+            view.tvFinishTime.setTextColor(R.color.black)
+            view.tvLine.setTextColor(R.color.black)
+            view.tvStartTime.setTextColor(R.color.black)
+            binding.tvStartTime.text!!.clear()
+        } else if (list.size == 1 && p >= beforePosition && p <= afterPosition){
+            list.add(p)
+            if (array[list[0]].startTime!! > array[list[1]].startTime){
+                binding.tvStartTime.setText(array[list[1]].startTime!!.toString())
+                binding.tvFinishTime.setText(array[list[0]].finishTime!!.toString())
+                for (pos in (list[1]+1)..(list[0]-1)){
+                    array[pos].between = true
+                }
+                adapter.submitList(array)
+                view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_blue_4dp)
+                view.tvFinishTime.setTextColor(R.color.white)
+                view.tvLine.setTextColor(R.color.white)
+                view.tvStartTime.setTextColor(R.color.white)
+            }else{
+                binding.tvStartTime.setText(array[list[0]].startTime!!.toString())
+                binding.tvFinishTime.setText(array[list[1]].finishTime!!.toString())
+                view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_blue_4dp)
+                view.tvFinishTime.setTextColor(R.color.white)
+                view.tvLine.setTextColor(R.color.white)
+                view.tvStartTime.setTextColor(R.color.white)
+                for (pos in (list[0]+1)..(list[1])-1){
+                    array[pos].between = true
+                }
+                adapter.submitList(array)
+            }
+        }else if (list.size == 2 && list[0] == p){
+            if (list[0] < list[1]){
+                for (pos in (list[0]+1)..(list[1])-1){
+                    array[pos].between = false
+                }
+            }else{
+                for (pos in (list[1]+1)..(list[0]-1)){
+                    array[pos].between = false
+                }
+            }
+            adapter.submitList(array)
+            list.remove(p)
+            view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_white_4dp)
+            view.tvFinishTime.setTextColor(R.color.black)
+            view.tvLine.setTextColor(R.color.black)
+            view.tvStartTime.setTextColor(R.color.black)
+            binding.tvFinishTime.text!!.clear()
+            binding.tvStartTime.setText(array[list[0]].startTime.toString())
+        }else if (list.size == 2 && list[1] == p){
+            if (list[0] < list[1]){
+                for (pos in (list[0]+1)..(list[1])-1){
+                    array[pos].between = false
+                }
+            }else{
+                for (pos in (list[1]+1)..(list[0]-1)){
+                    array[pos].between = false
+                }
+            }
+            adapter.submitList(array)
+            list.remove(p)
+            view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_white_4dp)
+            view.tvFinishTime.setTextColor(R.color.black)
+            view.tvLine.setTextColor(R.color.black)
+            view.tvStartTime.setTextColor(R.color.black)
+            binding.tvFinishTime.text!!.clear()
+            binding.tvStartTime.setText(array[list[0]].startTime.toString())
         }
     }
 

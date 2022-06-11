@@ -11,7 +11,7 @@ data class User(
     val language: String?,
     val phoneNumber: String?,
     var smsCode: String?,
-    val isStadiumHolder: Boolean?
+    val stadiumHolder: Boolean?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -32,7 +32,7 @@ data class User(
         parcel.writeString(language)
         parcel.writeString(phoneNumber)
         parcel.writeString(smsCode)
-        parcel.writeValue(isStadiumHolder)
+        parcel.writeValue(stadiumHolder)
     }
 
     override fun describeContents(): Int {

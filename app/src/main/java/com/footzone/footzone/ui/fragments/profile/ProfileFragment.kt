@@ -1,40 +1,43 @@
 package com.footzone.footzone.ui.fragments.profile
 
-import android.graphics.Bitmap
+import android.content.Intent
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
-import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.bumptech.glide.annotation.GlideModule
+import com.footzone.footzone.ChooseLanguageDialog
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentProfileBinding
 import com.footzone.footzone.model.profile.Data
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.KeyValues.LANGUAGE
 import com.footzone.footzone.utils.KeyValues.LOG_IN
 import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
-import com.squareup.picasso.Picasso
-import java.io.File
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import me.shouheng.compress.Compress
 import me.shouheng.compress.concrete
 import me.shouheng.compress.strategy.config.ScaleMode
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import java.io.File
 import java.io.FileOutputStream
+import java.util.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
@@ -89,7 +92,30 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             }
 
         }
+
+        binding.linearLanguage.setOnClickListener {
+            val dialog = ChooseLanguageDialog{  lang ->
+                var sharedPref = SharedPref(requireContext())
+                sharedPref.saveLanguage(LANGUAGE, lang)
+                setLocale(lang)
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                dialog.showChooseLanguageDialog(requireActivity())
+            }
+        }
     }
+
+    private fun setLocale(language: String) {
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.locale = locale
+        requireActivity().baseContext.resources.updateConfiguration(config,
+            requireActivity().baseContext.resources.displayMetrics)
+        requireActivity().finish();
+        startActivity(requireActivity().intent);
+    }
+
 
     private fun setupObservers() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
@@ -187,11 +213,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                     sendRequestToLoadImage(body)
                 }
             }
-
-
-
-
-
         }
 
     private fun sendRequestToLoadImage(body: MultipartBody.Part) {

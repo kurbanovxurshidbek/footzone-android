@@ -2,6 +2,7 @@ package com.footzone.footzone.adapter
 
 import android.text.Html
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.footzone.footzone.databinding.ItemMyPitchLayoutBinding
@@ -28,8 +29,13 @@ class MyPitchAdapter(var context: MyStadiumFragment, var items: ArrayList<Data>,
                     tvOpenClose.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
                     tvOpenCloseHour.text = " · ${data.isOpen.time.substring(0, 5)} da yopiladi"
                 } else {
-                    tvOpenClose.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
-                    tvOpenCloseHour.text = " · ${data.isOpen.time.substring(0, 5)} da ochiladi"
+                    if (data.isOpen.time != null){
+                        tvOpenClose.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
+                        tvOpenCloseHour.text = " · ${data.isOpen.time.substring(0, 5)} da ochiladi"
+                    }else{
+                        tvOpenCloseHour.text = "Stadion bugun ishlamaydi."
+                        tvOpenClose.visibility = View.GONE
+                    }
                 }
                 setStrokeColorToRatingBar(rbPitch)
                 rbPitch.rating = context.resRating(data.comments as ArrayList<Comment>)

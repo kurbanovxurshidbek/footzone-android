@@ -16,25 +16,31 @@ import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.ui.fragments.bookpitchsent.BookPitchSentFragment
 import com.footzone.footzone.ui.fragments.played.PlayedPitchFragment
 import com.footzone.footzone.ui.fragments.playing.PlayingPitchFragment
+import com.footzone.footzone.utils.KeyValues.IS_OWNER
+import com.footzone.footzone.utils.KeyValues.LOG_IN
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class TableFragment : BaseFragment(R.layout.fragment_table) {
-     private var playedHistory=ArrayList<Data>()
-     private var notPlayHistory=ArrayList<Data>()
+    private var playedHistory = ArrayList<Data>()
+    private var notPlayHistory = ArrayList<Data>()
+
+    @Inject
     lateinit var sharedPref: SharedPref
     private lateinit var binding: FragmentTableBinding
     private lateinit var tableViewPagerAdapter: TableViewPagerAdapter
-    private var isPitchOwner = true
+    private var isPitchOwner = false
     private val viewModel by viewModels<TableViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentTableBinding.bind(view)
+        isPitchOwner = sharedPref.getIsOwner(IS_OWNER)
         viewModel.getUserPlayHistory("b98f1843-b09d-48a6-93a9-b370a78689fb")
         setupObservers()
         initViews()
@@ -75,15 +81,13 @@ class TableFragment : BaseFragment(R.layout.fragment_table) {
     }
 
     private fun initViews() {
-        sharedPref = SharedPref(requireContext())
-        val LogIn = sharedPref.getLogIn("LogIn", false)
-        if (!LogIn) {
+        val logIn = sharedPref.getLogIn(LOG_IN, false)
+        if (!logIn) {
             binding.tabelFragmentSignIn.visibility = View.GONE
             binding.tabelFragmentNoSignIn.visibility = View.VISIBLE
         } else {
             binding.tabelFragmentSignIn.visibility = View.VISIBLE
             binding.tabelFragmentNoSignIn.visibility = View.GONE
-
         }
         tableViewPagerAdapter = TableViewPagerAdapter(requireActivity())
         if (!isPitchOwner) {

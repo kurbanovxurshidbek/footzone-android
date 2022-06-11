@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">FootZone</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">MapsActivity</string>
@@ -32,9 +34,8 @@
     <string name="str_russian">Russian</string>
     <string name="str_uzbekistan">Uzbekistan</string>
     <string name="str_select_language">Tilni tanlang</string>
-    <string name="str_setings">Settings</string>
-    <string name="str_lang">English</string>
-
+    <string name="str_setings">Настройки</string>
+    <string name="str_lang">Русский</string>
     <string-array name="timelist">
         <item>00:00</item>
         <item>00:30</item>
@@ -85,4 +86,5 @@
         <item>23:00</item>
         <item>23:30</item>
     </string-array>
+
 </resources>
