@@ -471,7 +471,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                 observeAddFavouriteStadiums(stadiumId, stadiumName, ivBookmark)
             }
         })
-        adapter.submitData(getPitches())
         binding.bottomSheetPitchList.rvPitch.adapter = adapter
     }
 
