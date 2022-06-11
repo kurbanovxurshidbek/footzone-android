@@ -7,19 +7,17 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemPitchLayoutBinding
 import com.footzone.footzone.helper.OnClickEvent
-import com.footzone.footzone.model.Pitch
-import com.footzone.footzone.model.holders.Photo
+import com.footzone.footzone.model.ShortStadiumDetail
+import com.footzone.footzone.utils.commonfunction.Functions
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 
 class PitchAdapter(
+    private val pitches: ArrayList<ShortStadiumDetail>,
     private var onClickEvent: OnClickEvent
 ) :
     RecyclerView.Adapter<PitchAdapter.VH>() {
-
-    private var pitches = ArrayList<Pitch>()
 
     inner class VH(val view: ItemPitchLayoutBinding) : RecyclerView.ViewHolder(view.root)
 
@@ -29,20 +27,20 @@ class PitchAdapter(
     override fun onBindViewHolder(holder: VH, position: Int) {
         val pitch = pitches[position]
         holder.view.apply {
-            // refreshImagesAdapter(pitch.images, rvPithPhotos)
+            refreshImagesAdapter(pitch.photos, rvPithPhotos)
             tvPitchName.text = pitch.name
-            if (pitch.isOpen) {
+            if (pitch.isOpen.open) {
                 tvOpenClose.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
-                tvOpenCloseHour.text = " · ${pitch.time.closingTime} da yopiladi"
+                tvOpenCloseHour.text = " · ${pitch.isOpen.time} da yopiladi"
             } else {
                 tvOpenClose.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
-                tvOpenCloseHour.text = " · ${pitch.time.openingTime} da ochiladi"
+                tvOpenCloseHour.text = " · ${pitch.isOpen.time} da ochiladi"
             }
             setStrokeColorToRatingBar(rbPitch)
-            rbPitch.rating = pitch.rating
+            rbPitch.rating = Functions.resRating(pitch.comments)
             rbPitch.setIsIndicator(true)
-            tvRatingNums.text = "(${pitch.ratingNums})"
-            tvPitchPrice.text = "${pitch.price} so'm/soat"
+            tvRatingNums.text = "(${pitch.comments.sumBy { it.number }})"
+            tvPitchPrice.text = "${pitch.hourlyPrice} so'm/soat"
 
             btnNavigate.setOnClickListener {
                 onClickEvent.setOnNavigateClickListener(1.0, 2.0)
@@ -50,29 +48,25 @@ class PitchAdapter(
 
             ivBookmark.setOnClickListener {
                 onClickEvent.setOnBookMarkClickListener(
-                    "8c0c9599-90c0-43c9-a5cf-ffe1765a35e5",
-                    pitch.name!!,
+                    pitch.stadiumId,
+                    pitch.name,
                     ivBookmark
                 )
             }
 
             btnBook.setOnClickListener {
-                onClickEvent.setOnBookClickListener(pitch.id)
+                onClickEvent.setOnBookClickListener(pitch.stadiumId)
             }
         }
     }
 
-    private fun refreshImagesAdapter(images: ArrayList<Photo>, rvPithPhotos: RecyclerView) {
+    private fun refreshImagesAdapter(images: ArrayList<String>, rvPithPhotos: RecyclerView) {
         val pitchImagesAdapter = PitchImagesAdapter()
-        pitchImagesAdapter.submitData(images as ArrayList<String>)
+        pitchImagesAdapter.submitData(images)
         rvPithPhotos.adapter = pitchImagesAdapter
     }
 
     override fun getItemCount(): Int = pitches.size
-
-    fun submitData(pitches: ArrayList<Pitch>) {
-        this.pitches.addAll(pitches)
-    }
 }
 
 fun setStrokeColorToRatingBar(ratingBar: MaterialRatingBar) {

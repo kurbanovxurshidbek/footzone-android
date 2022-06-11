@@ -2,8 +2,10 @@ package com.footzone.footzone.ui.fragments.addstadium
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.footzone.footzone.model.addstadium.Stadium
-import com.footzone.footzone.model.holderpitch.HolderStadium
+import com.footzone.footzone.model.AddStadiumRequest
+import com.footzone.footzone.model.FullStadiumDetailResponse
+import com.footzone.footzone.model.Response
+import com.footzone.footzone.model.ShortStadiumDetailResponse
 import com.footzone.footzone.repository.main.MainRepository
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,13 +19,13 @@ import javax.inject.Inject
 class AddStadiumViewModel  @Inject constructor(private val mainRepository: MainRepository) :
     ViewModel() {
 
-    private val _postStadium = MutableStateFlow<UiStateObject<String>>(UiStateObject.EMPTY)
+    private val _postStadium = MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
     val postStadium = _postStadium
 
-    private val _getHolderStadium = MutableStateFlow<UiStateObject<HolderStadium>>(UiStateObject.EMPTY)
+    private val _getHolderStadium = MutableStateFlow<UiStateObject<FullStadiumDetailResponse>>(UiStateObject.EMPTY)
     val getHolderStadium = _getHolderStadium
 
-    fun postHolderStadium(stadium: Stadium, files: ArrayList<MultipartBody.Part>) = viewModelScope.launch {
+    fun postHolderStadium(stadium: AddStadiumRequest, files: ArrayList<MultipartBody.Part>) = viewModelScope.launch {
         _postStadium.value = UiStateObject.LOADING
 
         try {

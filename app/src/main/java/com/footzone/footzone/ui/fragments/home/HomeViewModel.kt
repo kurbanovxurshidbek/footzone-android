@@ -22,19 +22,19 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
     val allStadiums = _allStadiums
 
     private val _searchedStadiums =
-        MutableStateFlow<UiStateObject<StadiumResponse>>(UiStateObject.EMPTY)
+        MutableStateFlow<UiStateObject<ShortStadiumDetailResponse>>(UiStateObject.EMPTY)
     val searchedStadiums = _searchedStadiums
 
     private val _nearByStadiums =
-        MutableStateFlow<UiStateObject<NearStadiumResponse>>(UiStateObject.EMPTY)
+        MutableStateFlow<UiStateObject<ShortStadiumDetailResponse>>(UiStateObject.EMPTY)
     val nearByStadiums = _nearByStadiums
 
     private val _favouriteStadiums =
-        MutableStateFlow<UiStateObject<StadiumResponse>>(UiStateObject.EMPTY)
+        MutableStateFlow<UiStateObject<ShortStadiumDetailResponse>>(UiStateObject.EMPTY)
     val favouriteStadiums = _favouriteStadiums
 
     private val _previouslyBookedStadiums =
-        MutableStateFlow<UiStateObject<StadiumResponse>>(UiStateObject.EMPTY)
+        MutableStateFlow<UiStateObject<ShortStadiumDetailResponse>>(UiStateObject.EMPTY)
     val previouslyBookedStadiums = _previouslyBookedStadiums
 
     private val _addToFavouriteStadiums =

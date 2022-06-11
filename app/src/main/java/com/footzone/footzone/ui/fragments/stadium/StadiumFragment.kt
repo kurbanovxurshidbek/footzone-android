@@ -12,8 +12,7 @@ import com.footzone.footzone.R
 import com.footzone.footzone.adapter.CustomAdapter
 import com.footzone.footzone.adapter.HolderStadiumAdapter
 import com.footzone.footzone.databinding.FragmentStadiumBinding
-import com.footzone.footzone.model.holderpitch.Data
-import com.footzone.footzone.model.holderpitch.Photo
+import com.footzone.footzone.model.*
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues
@@ -68,7 +67,7 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
         }
     }
 
-    private fun refreshData(data: Data) {
+    private fun refreshData(data: StadiumData) {
         binding.apply {
             tvAppBarPitchName.text = data.stadiumName
             tvStadiumName.text = data.stadiumName
@@ -102,7 +101,7 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
             }
         }
 
-        refreshAdapter(data.photos as ArrayList<Photo>)
+        refreshAdapter(data.photos as ArrayList<StadiumPhoto>)
 //        refreshCommentAdapter(data.comments as ArrayList<Comment>)
 //        resultRate(data.comments)
 
@@ -118,7 +117,7 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
         )
     }
 
-    private fun refreshAdapter(items: ArrayList<Photo>) {
+    private fun refreshAdapter(items: ArrayList<StadiumPhoto>) {
         val adapter = HolderStadiumAdapter(items)
         binding.recyclerView.adapter = adapter
     }

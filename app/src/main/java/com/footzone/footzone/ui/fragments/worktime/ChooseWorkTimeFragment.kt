@@ -13,7 +13,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentChooseWorkTimeBinding
-import com.footzone.footzone.model.addstadium.WorkingDay
+import com.footzone.footzone.model.WorkingDay
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
 import java.time.LocalTime
@@ -21,7 +21,7 @@ import java.util.*
 
 class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) {
     lateinit var binding: FragmentChooseWorkTimeBinding
-    val workTimes = ArrayList<WorkingDay>()
+    private val workTimes = ArrayList<WorkingDay>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -174,9 +174,9 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
             val t = Timer()
             t.schedule(object : TimerTask() {
                 override fun run() {
-                    handler.post(Runnable {
+                    handler.post {
                         mMediaPlayer.stop()
-                    })
+                    }
                 }
             }, 500)
         }

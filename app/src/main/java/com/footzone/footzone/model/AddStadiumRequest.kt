@@ -1,6 +1,6 @@
-package com.footzone.footzone.model.addstadium
+package com.footzone.footzone.model
 
-data class Stadium(
+data class AddStadiumRequest(
     val address: String,
     val number: String,
     val hourlyPrice: Int,
@@ -9,4 +9,10 @@ data class Stadium(
     val name: String,
     val userId: String,
     val workingDays: List<WorkingDay>
+)
+
+data class WorkingDay(
+    val dayName: String,
+    val endTime: String,
+    val startTime: String
 )

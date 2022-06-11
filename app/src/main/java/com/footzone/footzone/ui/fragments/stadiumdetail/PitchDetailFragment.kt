@@ -12,9 +12,9 @@ import com.footzone.footzone.R
 import com.footzone.footzone.adapter.CommentAdapter
 import com.footzone.footzone.adapter.CustomAdapter
 import com.footzone.footzone.databinding.FragmentPitchDetailBinding
+import com.footzone.footzone.model.FullComment
+import com.footzone.footzone.model.StadiumPhoto
 import com.footzone.footzone.model.TimeManager
-import com.footzone.footzone.model.holders.Comment
-import com.footzone.footzone.model.holders.Photo
 import com.footzone.footzone.ui.fragments.ChooseTimeBottomSheetDialog
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues.STADIUM_ID
@@ -34,7 +34,7 @@ class PitchDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         stadiumId = arguments?.get(STADIUM_ID).toString()
-        viewModel.getPitchData("4805e032-454a-40b5-9dda-ed8e06a1d3cc")
+        viewModel.getPitchData(stadiumId)
     }
 
     override fun onCreateView(
@@ -100,7 +100,7 @@ class PitchDetailFragment : Fragment() {
     }
 
     private fun refreshAdapter() {
-        adapter = CustomAdapter(ArrayList<Photo>())
+        adapter = CustomAdapter(ArrayList())
         binding.recyclerView.adapter = adapter
     }
 
@@ -109,10 +109,7 @@ class PitchDetailFragment : Fragment() {
         binding.recyclerViewComment.adapter = adapterComment
     }
 
-    private fun getComments(): ArrayList<Comment> {
-        val items = ArrayList<Comment>()
-
-
-        return items
+    private fun getComments(): ArrayList<FullComment> {
+        return ArrayList<FullComment>()
     }
 }

@@ -23,6 +23,7 @@ import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.LANGUAGE
 import com.footzone.footzone.utils.KeyValues.LOG_IN
 import com.footzone.footzone.utils.KeyValues.USER_ID
+import com.footzone.footzone.utils.KeyValues.USER_TOKEN
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
@@ -94,7 +95,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         }
 
         binding.linearLanguage.setOnClickListener {
-            val dialog = ChooseLanguageDialog{  lang ->
+            val dialog = ChooseLanguageDialog { lang ->
                 var sharedPref = SharedPref(requireContext())
                 sharedPref.saveLanguage(LANGUAGE, lang)
                 setLocale(lang)
@@ -110,8 +111,10 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         Locale.setDefault(locale)
         val config = Configuration()
         config.locale = locale
-        requireActivity().baseContext.resources.updateConfiguration(config,
-            requireActivity().baseContext.resources.displayMetrics)
+        requireActivity().baseContext.resources.updateConfiguration(
+            config,
+            requireActivity().baseContext.resources.displayMetrics
+        )
         requireActivity().finish();
         startActivity(requireActivity().intent);
     }
@@ -157,6 +160,8 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
                     R.id.logOut -> {
                         sharedPref.saveLogIn(LOG_IN, false)
+                        sharedPref.saveUserId(USER_ID, "")
+                        sharedPref.saveUserToken(USER_TOKEN, "")
                         findNavController().popBackStack()
                         Toast.makeText(requireContext(), "log out", Toast.LENGTH_SHORT).show()
                         true
@@ -207,7 +212,8 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                     }
                     .get(Dispatchers.IO)
                 withContext(Dispatchers.Main) {
-                    val reqFile: RequestBody = RequestBody.create("image/jpg".toMediaTypeOrNull(), result)
+                    val reqFile: RequestBody =
+                        RequestBody.create("image/jpg".toMediaTypeOrNull(), result)
                     val body: MultipartBody.Part =
                         MultipartBody.Part.createFormData("file", result.name, reqFile)
                     sendRequestToLoadImage(body)

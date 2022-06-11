@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.footzone.footzone.databinding.ItemCommentBinding
-import com.footzone.footzone.model.holders.Comment
+import com.footzone.footzone.model.FullComment
 
-class CommentAdapter(var items: ArrayList<Comment>) :
+class CommentAdapter(var items: ArrayList<FullComment>) :
     RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() {
 
 

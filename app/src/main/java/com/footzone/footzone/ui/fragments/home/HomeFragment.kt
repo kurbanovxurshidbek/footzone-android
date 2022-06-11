@@ -29,6 +29,7 @@ import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues.IS_OWNER
 import com.footzone.footzone.utils.KeyValues.STADIUM_ID
 import com.footzone.footzone.utils.KeyValues.USER_ID
+import com.footzone.footzone.utils.commonfunction.Functions.resRating
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -60,8 +61,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
     private lateinit var bottomSheetBehaviorType: BottomSheetBehavior<View>
     private lateinit var topSheetBehavior: TopSheetBehavior<View>
-    private var stadiumsList = ArrayList<StadiumData>()
-    private var stadiumsFilteredList = ArrayList<StadiumData>()
+    private var stadiumsList = ArrayList<ShortStadiumDetail>()
+    private var stadiumsFilteredList = ArrayList<ShortStadiumDetail>()
 
     private var lastLocation: Location? = null
     private val myLocationZoom = 16.0f
@@ -314,8 +315,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
     private fun sendRequestToGetNearbyStadiums() {
         viewModel.getNearByStadiums(
             Location(
-                0.0,
-                0.0
+                41.4577,
+                69.3477
             )
         )
         observeNearByStadiums()
@@ -333,7 +334,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                         Log.d("TAG", "observeNearByStadiums: $it.data")
                         stadiumsList = it.data.data
                         refreshAdapter(stadiumsList)
-                        showStadiumList()
                     }
                     is UiStateObject.ERROR -> {
                         Log.d("TAG", "setupUI: ${it.message}")
@@ -451,9 +451,9 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
         findNavController().navigate(R.id.action_homeFragment_to_myStadiumFragment)
     }
 
-    private fun refreshAdapter(stadiums: ArrayList<StadiumData>) {
+    private fun refreshAdapter(stadiums: ArrayList<ShortStadiumDetail>) {
         Log.d("TAG", "refreshAdapter: $stadiums")
-        val adapter = PitchAdapter(object : OnClickEvent {
+        val adapter = PitchAdapter(stadiums, object : OnClickEvent {
             override fun setOnBookClickListener(stadiumId: String) {
                 openPitchDetailFragment(stadiumId)
             }
@@ -472,6 +472,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
             }
         })
         binding.bottomSheetPitchList.rvPitch.adapter = adapter
+        showStadiumList()
     }
 
     private fun openPitchDetailFragment(stadiumId: String) {

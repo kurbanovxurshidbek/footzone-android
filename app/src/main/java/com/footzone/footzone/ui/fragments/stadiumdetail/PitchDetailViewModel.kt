@@ -2,6 +2,7 @@ package com.footzone.footzone.ui.fragments.stadiumdetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.footzone.footzone.model.FullStadiumDetailResponse
 import com.footzone.footzone.model.Response
 import com.footzone.footzone.repository.main.MainRepository
 import com.footzone.footzone.utils.UiStateObject
@@ -14,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PitchDetailViewModel  @Inject constructor(private val mainRepository: MainRepository) :
     ViewModel() {
-    private val _pitchData = MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
+    private val _pitchData = MutableStateFlow<UiStateObject<FullStadiumDetailResponse>>(UiStateObject.EMPTY)
     val pitchData = _pitchData
 
     fun getPitchData(stadiumId: String) = viewModelScope.launch {
