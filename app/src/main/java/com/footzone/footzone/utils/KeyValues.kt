@@ -1,7 +1,8 @@
 package com.footzone.footzone.utils
 
 object KeyValues {
-    val BASE_URL = "https://footzone-server.herokuapp.com/images/user/"
+    val STADIUM_IMAGE_BASE_URL = "https://footzone-server.herokuapp.com/images/stadium/"
+    val USER_IMAGE_BASE_URL = "https://footzone-server.herokuapp.com/images/user/"
     val PITCH_DETAIL: String = "pitchDetail"
     const val STADIUM_ID = "stadiumID"
     const val STADIUM_DATA = "stadiumdata"

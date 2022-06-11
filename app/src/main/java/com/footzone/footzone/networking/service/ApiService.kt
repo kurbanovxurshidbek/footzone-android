@@ -27,7 +27,7 @@ interface ApiService {
     suspend fun registerUser(@Body user: User): RegisterResponse
 
     @POST("stadium/viewNearStadiums")
-    suspend fun getNearByStadiums(@Body location: Location): StadiumResponse
+    suspend fun getNearByStadiums(@Body location: Location): NearStadiumResponse
 
     @GET("favorites/{userId}")
     suspend fun getFavouriteStadiums(@Path("userId") userId: String): StadiumResponse
@@ -39,7 +39,7 @@ interface ApiService {
     suspend fun getUserData(@Path("userId") userId: String): UserData
 
     @GET("stadium/history/{userId}")
-    suspend fun getUserPlayHistory(@Path("userId") userId: String): PlayHistoryResponse
+    suspend fun getUserPlayHistory(@Path("userId") userId: String): StadiumResponse
 
     @Multipart
     @POST("user/changeProfilePicture/{userId}")
@@ -66,4 +66,12 @@ interface ApiService {
 
     @GET("stadium/{stadiumId}")
     suspend fun getHolderStadium(@Path("stadiumId") stadiumId: String): HolderStadium
+
+    @GET("stadium/all")
+    suspend fun getAllStadiums(): AllStadiumResponse
+
+    @GET("stadium/all?")
+    suspend fun getSearchedStadiums(
+        @Query("search") search: String
+    ): StadiumResponse
 }

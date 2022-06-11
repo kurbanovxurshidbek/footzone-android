@@ -1,27 +1,18 @@
 package com.footzone.footzone.model
 
+import com.footzone.footzone.model.holders.Comment
+import com.footzone.footzone.model.holderstadium.IsOpen
+import com.footzone.footzone.model.holderstadium.Photo
+
 data class StadiumData(
-    val stadiumID: String,
-    val photos: List<Photo>,
+    val address: String,
+    val comments: ArrayList<Comment>,
+    val hourlyPrice: Double,
+    val isOpen: IsOpen,
+    val latitude: Double,
+    val longitude: Double,
     val name: String,
-    val hourlyPrice: Long,
-    val workingDays: List<WorkingDay>
+    val number: String,
+    val photos: List<Photo>,
+    val stadiumId: String
 )
-
-data class Photo(
-    val id: String,
-    val name: String
-)
-
-data class WorkingDay(
-    val id: String,
-    val dayName: String,
-    val startTime: TimeWorking,
-    val endTimeWorking: TimeWorking
-)
-
-data class TimeWorking(
-    val id: String,
-    val time: String
-)
-

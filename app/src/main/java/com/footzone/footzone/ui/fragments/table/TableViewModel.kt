@@ -2,6 +2,7 @@ package com.footzone.footzone.ui.fragments.table
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.footzone.footzone.model.StadiumResponse
 import com.footzone.footzone.model.playhistory.PlayHistoryResponse
 import com.footzone.footzone.model.profile.UserData
 import com.footzone.footzone.repository.main.MainRepository
@@ -15,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TableViewModel  @Inject constructor(private val mainRepository: MainRepository) :
     ViewModel() {
-    private val _playHistory = MutableStateFlow<UiStateObject<PlayHistoryResponse>>(UiStateObject.EMPTY)
+    private val _playHistory = MutableStateFlow<UiStateObject<StadiumResponse>>(UiStateObject.EMPTY)
     val playHistory = _playHistory
 
     fun getUserPlayHistory(userId: String) = viewModelScope.launch {

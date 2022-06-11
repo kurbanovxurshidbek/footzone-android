@@ -38,7 +38,14 @@ class MainRepository @Inject constructor(
 
     suspend fun getPitchData(stadiumId: String) = apiService.getPitchData(stadiumId)
 
-    suspend fun postHolderStadium(stadium: Stadium, files: ArrayList<MultipartBody.Part>) = apiService.postHolderStadium(stadium, files)
+    suspend fun postHolderStadium(stadium: Stadium, files: ArrayList<MultipartBody.Part>) =
+        apiService.postHolderStadium(stadium, files)
 
     suspend fun getHolderStadium(stadiumId: String) = apiService.getHolderStadium(stadiumId)
+
+    suspend fun getAllStadiums() =
+        apiService.getAllStadiums()
+
+    suspend fun getSearchedStadiums(search: String) =
+        apiService.getSearchedStadiums(search)
 }

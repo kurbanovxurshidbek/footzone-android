@@ -2,9 +2,7 @@ package com.footzone.footzone.ui.fragments.stadiumdetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.footzone.footzone.model.PitchData
 import com.footzone.footzone.model.Response
-import com.footzone.footzone.model.profile.UserData
 import com.footzone.footzone.repository.main.MainRepository
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.lifecycle.HiltViewModel

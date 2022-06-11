@@ -12,7 +12,6 @@ import com.footzone.footzone.R
 import com.footzone.footzone.adapter.CommentAdapter
 import com.footzone.footzone.adapter.CustomAdapter
 import com.footzone.footzone.databinding.FragmentPitchDetailBinding
-import com.footzone.footzone.model.Pitch
 import com.footzone.footzone.model.TimeManager
 import com.footzone.footzone.model.holders.Comment
 import com.footzone.footzone.model.holders.Photo

@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import com.footzone.footzone.model.holders.Comment
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Exception
 
 open class BaseFragment(private val layoutResID: Int) : Fragment() {
     override fun onCreateView(
@@ -27,5 +29,13 @@ open class BaseFragment(private val layoutResID: Int) : Fragment() {
             view = View(activity)
         }
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    open fun resRating(comments: ArrayList<Comment>): Float {
+        return try {
+            (comments.sumOf { it.number * it.rate } / comments.sumOf { it.number }).toFloat()
+        } catch (e: Exception) {
+            2.5f
+        }
     }
 }
