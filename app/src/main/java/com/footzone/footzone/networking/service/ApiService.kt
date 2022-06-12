@@ -17,7 +17,7 @@ interface ApiService {
     suspend fun checkValidation(@Body smsVerification: SmsVerification): SmsVerificationResponse
 
     @POST("auth/login")
-    suspend fun signInVerification(@Body signInVerification: SignInVerification): Response
+    suspend fun signInVerification(@Body signInVerification: SignInVerification): LogInResponse
 
     @POST("auth/register")
     suspend fun registerUser(@Body user: User): RegisterResponse

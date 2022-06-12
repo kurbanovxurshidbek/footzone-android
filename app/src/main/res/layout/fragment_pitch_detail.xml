@@ -71,11 +71,11 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvStadiumName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
                     android:maxLines="1"
-                    android:text="@string/acme_futbol_maydoni"
                     android:textColor="#0A0A0A"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -94,12 +94,10 @@
                         android:src="@drawable/ic_location_small" />
 
                     <TextView
-                        android:id="@+id/textViewAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:fontFamily="@font/roboto"
-                        android:text="@string/amir_temur_ko_chasi_14_uy"
                         android:textColor="#424242"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -118,12 +116,11 @@
                         android:src="@drawable/ic_phone" />
 
                     <TextView
-                        android:id="@+id/textViewNumber"
+                        android:id="@+id/tvNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:fontFamily="@font/roboto"
-                        android:text="@string/_998_99_777_66_55"
                         android:textColor="#424242"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -142,12 +139,11 @@
                         android:src="@drawable/ic_time" />
 
                     <TextView
-                        android:id="@+id/textViewStatus"
+                        android:id="@+id/tvStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:fontFamily="@font/roboto"
-                        android:text="Ochiq"
                         android:textColor="#177B4C"
                         android:textSize="16sp" />
 
@@ -160,11 +156,11 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/tvTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/roboto"
-                        android:text="00:00 da yopiladi"
                         android:textColor="#424242"
                         android:textSize="16sp" />
 
@@ -189,12 +185,11 @@
                         android:src="@drawable/ic_money" />
 
                     <TextView
-                        android:id="@+id/textViewPrice"
+                        android:id="@+id/tvPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:fontFamily="@font/roboto"
-                        android:text="50 000"
                         android:textColor="#424242"
                         android:textSize="16sp" />
 

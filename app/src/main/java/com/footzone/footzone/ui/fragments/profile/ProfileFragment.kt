@@ -1,6 +1,5 @@
 package com.footzone.footzone.ui.fragments.profile
 
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -147,10 +146,16 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             tvName.text = userData.fullName
             tvNumber.text = userData.phoneNumber
 
-            if (!userData.photo.name.startsWith("default"))
+            if (!userData.photo.name.startsWith("default")) {
+                ivProfile.setPadding(0, 0, 0, 0)
                 Glide.with(requireContext())
                     .load("${KeyValues.USER_IMAGE_BASE_URL}${userData.photo.name}")
                     .into(ivProfile)
+                ivAdd.setImageResource(R.drawable.ic_edit_button)
+            } else {
+                ivProfile.setPadding(90, 90, 90, 90)
+                ivProfile.setImageResource(R.drawable.ic_person)
+            }
         }
     }
 
@@ -165,7 +170,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                         sharedPref.saveUserId(USER_ID, "")
                         sharedPref.saveUserToken(USER_TOKEN, "")
                         findNavController().popBackStack()
-                        Toast.makeText(requireContext(), "log out", Toast.LENGTH_SHORT).show()
                         true
                     }
                     else -> false
@@ -200,6 +204,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             ins?.close()
             fileOutputStream.close()
             if (image.length() == 0L) return@registerForActivityResult
+            binding.ivProfile.setPadding(0, 0, 0, 0)
             Glide.with(requireActivity()).load(image).into(binding.ivProfile)
 
 

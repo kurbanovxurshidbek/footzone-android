@@ -43,7 +43,8 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
 
         binding.enterButton.setOnClickListener {
 
-            phoneNumber = "+998${binding.editTextNumber.text.toString().replace("\\s".toRegex(), "")}"
+            phoneNumber =
+                "+998${binding.editTextNumber.text.toString().replace("\\s".toRegex(), "")}"
 
             viewModel.signIn(phoneNumber!!)
 
@@ -60,6 +61,8 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
                     }
 
                     is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "setupObservers: ${it.data}")
+                        toastLong(it.data.data.toString())
                         openVerificationFragment()
                     }
                     is UiStateObject.ERROR -> {
@@ -71,8 +74,9 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
         }
     }
 
-    private fun openVerificationFragment(){
-        findNavController().navigate(R.id.action_signInFragment_to_verificationFragment,
+    private fun openVerificationFragment() {
+        findNavController().navigate(
+            R.id.action_signInFragment_to_verificationFragment,
             bundleOf(PHONE_NUMBER to phoneNumber)
         )
     }

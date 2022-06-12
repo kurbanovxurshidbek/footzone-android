@@ -57,8 +57,11 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                     }
 
                     is UiStateObject.SUCCESS -> {
+                        toastLong(it.data.data.toString())
                         val fullname =
-                            "${binding.editTextSurname.text.toString()} ${binding.editTextName.text.toString()}"
+                            "${
+                                binding.editTextSurname.text.toString().trim()
+                            } ${binding.editTextName.text.toString().trim()}"
                         var number = "+998${binding.editTextNumber.text.toString()}"
                         number = number.replace("\\s".toRegex(), "")
                         val phoneNumber = number

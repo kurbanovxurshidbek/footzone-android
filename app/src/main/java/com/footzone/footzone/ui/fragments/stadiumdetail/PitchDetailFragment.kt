@@ -1,6 +1,7 @@
 package com.footzone.footzone.ui.fragments.stadiumdetail
 
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +14,9 @@ import com.footzone.footzone.adapter.CommentAdapter
 import com.footzone.footzone.adapter.CustomAdapter
 import com.footzone.footzone.databinding.FragmentPitchDetailBinding
 import com.footzone.footzone.model.FullComment
-import com.footzone.footzone.model.StadiumPhoto
+import com.footzone.footzone.model.StadiumData
 import com.footzone.footzone.model.TimeManager
+import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.ui.fragments.ChooseTimeBottomSheetDialog
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues.STADIUM_ID
@@ -22,7 +24,7 @@ import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PitchDetailFragment : Fragment() {
+class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
 
     private lateinit var binding: FragmentPitchDetailBinding
     lateinit var adapter: CustomAdapter
@@ -35,13 +37,6 @@ class PitchDetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
         stadiumId = arguments?.get(STADIUM_ID).toString()
         viewModel.getPitchData(stadiumId)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_pitch_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,8 +69,20 @@ class PitchDetailFragment : Fragment() {
         }
     }
 
-    private fun showPitchData(data: Any) {
-        Log.d("@@@", "showPitchData: ")
+    private fun showPitchData(data: StadiumData) {
+        binding.apply {
+            tvAppBarPitchName.text = data.stadiumName
+            tvStadiumName.text = data.stadiumName
+            tvNumber.text = data.number
+            if (data.isOpen.open) {
+                tvStatus.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
+                tvTime.text = " · ${data.isOpen.time} da yopiladi"
+            } else {
+                tvStatus.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
+                tvTime.text = " · ${data.isOpen.time} da ochiladi"
+            }
+            tvPrice.text = data.hourlyPrice.toString()
+        }
     }
 
     private fun initViews() {

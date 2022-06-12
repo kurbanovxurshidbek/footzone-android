@@ -34,4 +34,8 @@ open class BaseFragment(private val layoutResID: Int) : Fragment() {
     open fun toast(msg:String){
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
+
+    open fun toastLong(msg:String){
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
+    }
 }

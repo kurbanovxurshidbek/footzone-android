@@ -129,12 +129,6 @@
                         android:scaleType="centerCrop"
                         android:theme="@style/circle" />
 
-                    <ImageView
-                        android:id="@+id/ivDefaultPerson"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_person" />
 
                     <ImageView
                         android:id="@+id/ivAdd"
