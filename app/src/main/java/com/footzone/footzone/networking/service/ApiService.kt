@@ -31,6 +31,9 @@ interface ApiService {
     @POST("favorites")
     suspend fun addToFavouriteStadiums(@Body favouriteStadiumRequest: FavouriteStadiumRequest): Response
 
+    @GET("favorites/list/{userId}")
+    suspend fun getFavouriteStadiumsList(@Path("userId") userId: String): FavouriteStadiumResponse
+
     @GET("user/{userId}")
     suspend fun getUserData(@Path("userId") userId: String): UserData
 
@@ -66,7 +69,7 @@ interface ApiService {
     @GET("stadium/all")
     suspend fun getAllStadiums(): AllStadiumResponse
 
-    @GET("stadium/all?")
+    @GET("stadium/search?")
     suspend fun getSearchedStadiums(
         @Query("search") search: String
     ): ShortStadiumDetailResponse

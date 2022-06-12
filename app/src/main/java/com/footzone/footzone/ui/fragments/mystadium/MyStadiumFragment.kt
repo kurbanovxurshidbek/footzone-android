@@ -99,7 +99,6 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
 
             override fun setOnBookMarkClickListener(
                 stadiumId: String,
-                stadiumName: String,
                 ivBookmark: ImageView
             ) {
                 //no action

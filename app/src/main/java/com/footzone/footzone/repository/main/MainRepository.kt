@@ -1,5 +1,9 @@
 package com.footzone.footzone.repository.main
 
+import com.footzone.footzone.model.AddStadiumRequest
+import com.footzone.footzone.model.FavouriteStadiumResponse
+import com.footzone.footzone.model.FavouriteStadiumRequest
+import com.footzone.footzone.model.Location
 import com.footzone.footzone.database.dao.FavouriteStadiumDao
 import com.footzone.footzone.model.*
 import com.footzone.footzone.networking.service.ApiService
@@ -7,8 +11,7 @@ import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(
-    private val apiService: ApiService,
-    private val favouriteStadiumDao: FavouriteStadiumDao
+    private val apiService: ApiService
 ) {
 
     suspend fun getUserData(userId: String) = apiService.getUserData(userId)
@@ -26,10 +29,8 @@ class MainRepository @Inject constructor(
 
     suspend fun getFavouriteStadiums(userId: String) = apiService.getFavouriteStadiums(userId)
 
-    suspend fun getFavouriteStadiumsDB() = favouriteStadiumDao.getFavouriteStadiumsDB()
-
-    suspend fun addToFavouriteStadiumsDB(favouriteStadium: FavouriteStadium) =
-        favouriteStadiumDao.addToFavouriteStadiums(favouriteStadium)
+    suspend fun getFavouriteStadiumsList(userId: String) =
+        apiService.getFavouriteStadiumsList(userId)
 
     suspend fun getHolderStadiums(userId: String) = apiService.getHolderStadiums(userId)
 
