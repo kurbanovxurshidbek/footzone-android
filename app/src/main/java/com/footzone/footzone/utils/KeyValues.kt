@@ -18,4 +18,8 @@ object KeyValues {
     const val IS_OWNER = "isOwner"
     const val LOG_IN = "LogIn"
     const val LANGUAGE = "language"
+    const val WORK_TIMES  = "workTimes"
+    const val WORK_TIME  = "workTime"
+    const val PICK_FROM_FILE_ADD = 1001
+    const val PICK_FROM_FILE_EDIT = 1002
 }

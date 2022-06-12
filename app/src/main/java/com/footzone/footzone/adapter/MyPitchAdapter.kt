@@ -45,10 +45,7 @@ class MyPitchAdapter(
                 rbPitch.rating = resRating(data.comments)
                 rbPitch.setIsIndicator(true)
                 tvRatingNums.text = "(${data.comments.size})"
-                tvPitchPrice.text = "${
-                    data.hourlyPrice.toString()
-                        .substring(0, data.hourlyPrice.toString().indexOf('.'))
-                } so'm/soat"
+                tvPitchPrice.text = "${data.hourlyPrice} so'm/soat"
 
                 btnManagement.setOnClickListener {
                     onClickEvent.setOnBookClickListener(data.stadiumId)

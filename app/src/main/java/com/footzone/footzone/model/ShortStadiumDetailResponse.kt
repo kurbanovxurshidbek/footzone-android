@@ -8,7 +8,7 @@ data class ShortStadiumDetailResponse(
 
 data class ShortStadiumDetail(
     val stadiumId: String,
-    val hourlyPrice: Long,
+    val hourlyPrice: Int,
     val longitude: Double,
     val latitude: Double,
     val photos: ArrayList<String>,

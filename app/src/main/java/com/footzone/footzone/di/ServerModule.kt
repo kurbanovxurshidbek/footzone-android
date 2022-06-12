@@ -18,8 +18,9 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class ServerModule {
-    private val BASE_URL: String = "https://footzone-server.herokuapp.com/api/v1/"
-   // private val BASE_URL: String = "http://10.10.4.203:8081/api/v1/"
+   // private val BASE_URL: String = "https://footzone-server.herokuapp.com/api/v1/"
+    private val BASE_URL: String = "http://192.168.1.9:8081/api/v1/"
+
 
     @Provides
     @Singleton

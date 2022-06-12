@@ -1,45 +1,78 @@
 package com.footzone.footzone.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.footzone.footzone.R
+import com.footzone.footzone.databinding.ItemAddImageBinding
 import com.footzone.footzone.databinding.ItemStadiumImageEditBinding
+import com.footzone.footzone.helper.OnClickEditEvent
+import com.footzone.footzone.model.EditPhoto
 import com.footzone.footzone.model.StadiumPhoto
 import com.footzone.footzone.utils.KeyValues
 
-class PitchImageEditAdapter(var context: Context, var pitchImages : ArrayList<StadiumPhoto>, private var onItemClicked: ((Int) -> Unit)) :
-    RecyclerView.Adapter<PitchImageEditAdapter.VH>()  {
+class PitchImageEditAdapter(var pitchImages : ArrayList<EditPhoto>,   private var onClickEditEvent: OnClickEditEvent) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
 
-    inner class VH(val binding: ItemStadiumImageEditBinding) : RecyclerView.ViewHolder(binding.root)
+    private val TYPE_ITEM_DEFAULT_IMAGE = 1
+    private val TYPE_ITEM_EDIT_IMAGE = 2
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH =
-        VH(ItemStadiumImageEditBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    override fun getItemViewType(position: Int): Int {
+        return if (position == 0) {
+            TYPE_ITEM_DEFAULT_IMAGE
+        }else {
+            TYPE_ITEM_EDIT_IMAGE
+        }
+    }
 
-    override fun onBindViewHolder(holder: VH, position: Int) {
-        Glide.with(holder.binding.ivPitch)
-            .load(pitchImages[position])
-            .into(holder.binding.ivPitch)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        if (viewType == TYPE_ITEM_DEFAULT_IMAGE){
+            val view = ItemAddImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return AddImageViewHolder(view)
+        }
 
-        val uri = "${KeyValues.STADIUM_IMAGE_BASE_URL}${pitchImages[position].name}"
-        Glide.with(holder.binding.ivPitch.context)
-            .load(uri)
-            .placeholder(R.drawable.stadim2)
-            .into(holder.binding.ivPitch)
+        val view = ItemStadiumImageEditBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return EditImageViewHolder(view)
+    }
 
-        holder.binding.apply {
-            llConvert.setOnClickListener {
-                onItemClicked.invoke(position)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val item = pitchImages[position]
+        if (holder is AddImageViewHolder){
+            holder.view.apply {
+                ivAddImage.setOnClickListener {
+                    onClickEditEvent.setOnAddClickListener()
+                }
             }
+        }
 
-            llDelete.setOnClickListener {
-                Toast.makeText(context, "Delete Image", Toast.LENGTH_SHORT).show()
+        if (holder is EditImageViewHolder){
+            Glide.with(holder.view.ivPitch)
+                .load(pitchImages[position])
+                .into(holder.view.ivPitch)
+
+            val uri = "${KeyValues.STADIUM_IMAGE_BASE_URL}${pitchImages[position].name}"
+            Glide.with(holder.view.ivPitch.context)
+                .load(uri)
+                .placeholder(R.drawable.stadim2)
+                .into(holder.view.ivPitch)
+
+            holder.view.apply {
+                llConvert.setOnClickListener {
+                    onClickEditEvent.setOnEditClickListener(position, item.id!!)
+                }
+
+                llDelete.setOnClickListener {
+                    onClickEditEvent.setOnDeleteClickListener(position, item.id!!)
+                }
             }
         }
     }
 
     override fun getItemCount(): Int = pitchImages.size
 }
+
+
+class AddImageViewHolder(val view: ItemAddImageBinding) : RecyclerView.ViewHolder(view.root)
+
+class EditImageViewHolder(val view: ItemStadiumImageEditBinding) : RecyclerView.ViewHolder(view.root)

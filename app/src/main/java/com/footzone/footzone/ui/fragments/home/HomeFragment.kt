@@ -663,9 +663,9 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
 
     private fun findMultipleLocation(stadiumLocationList: ArrayList<StadiumLocationName>) {
         for (i in stadiumLocationList) {
-            mMap.addMarker(MarkerOptions().position(LatLng(i.latitude, i.longitude)).title(i.name))
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(i.latitude, i.longitude)))
+//            mMap.addMarker(MarkerOptions().position(LatLng(i.latitude, i.longitude)).title(i.name))
+//            mMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
+//            mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(i.latitude, i.longitude)))
         }
     }
 }

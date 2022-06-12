@@ -4,6 +4,8 @@ import com.footzone.footzone.model.AddStadiumRequest
 import com.footzone.footzone.model.FavouriteStadiumResponse
 import com.footzone.footzone.model.FavouriteStadiumRequest
 import com.footzone.footzone.model.Location
+import com.footzone.footzone.database.dao.FavouriteStadiumDao
+import com.footzone.footzone.model.*
 import com.footzone.footzone.networking.service.ApiService
 import okhttp3.MultipartBody
 import javax.inject.Inject
@@ -47,4 +49,11 @@ class MainRepository @Inject constructor(
 
     suspend fun getSearchedStadiums(search: String) =
         apiService.getSearchedStadiums(search)
+
+    suspend fun editHolderStadium(
+        stadiumId: String,
+        stadium: AddStadiumRequest) =
+        apiService.editHolderStadium(stadiumId, stadium)
+
+    suspend fun editHolderStadiumPhoto(stadiumId: String, files: ArrayList<EditStadiumPhotoRequest>) = apiService.editHolderStadiumPhoto(stadiumId, files)
 }
