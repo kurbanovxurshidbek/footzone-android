@@ -70,4 +70,13 @@ interface ApiService {
     suspend fun getSearchedStadiums(
         @Query("search") search: String
     ): ShortStadiumDetailResponse
+
+    @PUT("stadium/edit/content/{stadiumId}")
+    suspend fun editHolderStadium(@Path ("stadiumId") stadiumId: String,
+                           @Body stadium: AddStadiumRequest): Response
+
+    @Multipart
+    @PUT("stadium/edit/photo/{stadiumId}")
+    suspend fun editHolderStadiumPhoto(@Path ("stadiumId") stadiumId: String,
+                                  @Part ("files") files: ArrayList<EditStadiumPhotoRequest>): Response
 }

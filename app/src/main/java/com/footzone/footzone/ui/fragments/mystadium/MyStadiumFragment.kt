@@ -1,7 +1,6 @@
 package com.footzone.footzone.ui.fragments.mystadium
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.core.os.bundleOf
@@ -20,7 +19,6 @@ import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
 import javax.inject.Inject
 
 @AndroidEntryPoint
