@@ -96,7 +96,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
         binding.linearLanguage.setOnClickListener {
             val dialog = ChooseLanguageDialog { lang ->
-                var sharedPref = SharedPref(requireContext())
+                val sharedPref = SharedPref(requireContext())
                 sharedPref.saveLanguage(LANGUAGE, lang)
                 setLocale(lang)
             }
@@ -147,11 +147,13 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             tvName.text = userData.fullName
             tvNumber.text = userData.phoneNumber
 
-            Glide.with(requireContext())
-                .load("${KeyValues.USER_IMAGE_BASE_URL}${userData.photo.name}")
-                .into(ivProfile)
+            if (!userData.photo.name.startsWith("default"))
+                Glide.with(requireContext())
+                    .load("${KeyValues.USER_IMAGE_BASE_URL}${userData.photo.name}")
+                    .into(ivProfile)
         }
     }
+
 
     private fun showPopup(v: View) {
         PopupMenu(requireContext(), v).apply {

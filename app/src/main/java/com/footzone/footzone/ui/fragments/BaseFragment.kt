@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.footzone.footzone.model.Comment
@@ -28,5 +29,9 @@ open class BaseFragment(private val layoutResID: Int) : Fragment() {
             view = View(activity)
         }
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    open fun toast(msg:String){
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
 }

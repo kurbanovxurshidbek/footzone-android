@@ -4,16 +4,20 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.LayerDrawable
 import android.text.Html
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemPitchLayoutBinding
 import com.footzone.footzone.helper.OnClickEvent
 import com.footzone.footzone.model.ShortStadiumDetail
 import com.footzone.footzone.utils.commonfunction.Functions
+import com.footzone.footzone.utils.commonfunction.Functions.setFavouriteBackground
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 
 class PitchAdapter(
+    private val favouriteStadiums: List<String>,
     private val pitches: ArrayList<ShortStadiumDetail>,
     private var onClickEvent: OnClickEvent
 ) :
@@ -25,6 +29,7 @@ class PitchAdapter(
         VH(ItemPitchLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
     override fun onBindViewHolder(holder: VH, position: Int) {
+        Log.d("TAG", "refreshAdapter: $favouriteStadiums $pitches")
         val pitch = pitches[position]
         holder.view.apply {
             refreshImagesAdapter(pitch.photos, rvPithPhotos)
@@ -42,6 +47,10 @@ class PitchAdapter(
             tvRatingNums.text = "(${pitch.comments.sumBy { it.number }})"
             tvPitchPrice.text = "${pitch.hourlyPrice} so'm/soat"
 
+            if (favouriteStadiums.contains(pitch.stadiumId)) {
+                ivBookmark.setFavouriteBackground()
+            }
+
             btnNavigate.setOnClickListener {
                 onClickEvent.setOnNavigateClickListener(1.0, 2.0)
             }
@@ -49,7 +58,6 @@ class PitchAdapter(
             ivBookmark.setOnClickListener {
                 onClickEvent.setOnBookMarkClickListener(
                     pitch.stadiumId,
-                    pitch.name,
                     ivBookmark
                 )
             }
