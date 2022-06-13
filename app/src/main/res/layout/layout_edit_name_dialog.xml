@@ -9,7 +9,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:text="Ismni o'zgarirish"
+        android:text="Ismni o'zgartirish"
         android:layout_gravity="center_horizontal"
         android:textColor="#0A0A0A"
         android:textSize="24sp"
