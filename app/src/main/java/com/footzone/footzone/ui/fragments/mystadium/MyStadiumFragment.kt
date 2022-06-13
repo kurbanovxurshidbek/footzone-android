@@ -89,7 +89,7 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
 
     private fun refreshAdapter(stadiums: ArrayList<ShortStadiumDetail>) {
         val adapter = MyPitchAdapter(stadiums, object : OnClickEvent {
-            override fun setOnBookClickListener(stadiumId: String) {
+            override fun setOnBookClickListener(stadiumId: String, isFavourite: Boolean) {
                 openEditStadium(stadiumId)
             }
 

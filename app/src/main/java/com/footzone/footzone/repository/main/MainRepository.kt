@@ -1,10 +1,8 @@
 package com.footzone.footzone.repository.main
 
 import com.footzone.footzone.model.AddStadiumRequest
-import com.footzone.footzone.model.FavouriteStadiumResponse
 import com.footzone.footzone.model.FavouriteStadiumRequest
 import com.footzone.footzone.model.Location
-import com.footzone.footzone.database.dao.FavouriteStadiumDao
 import com.footzone.footzone.model.*
 import com.footzone.footzone.networking.service.ApiService
 import okhttp3.MultipartBody
