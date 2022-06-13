@@ -2,10 +2,10 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cordLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:id="@+id/cordLayout"
     tools:context=".ui.fragments.stadiumdetail.PitchDetailFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -58,7 +58,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="180dp"
                 android:orientation="horizontal"
                 android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
@@ -94,6 +94,7 @@
                         android:src="@drawable/ic_location_small" />
 
                     <TextView
+                        android:id="@+id/tvAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
@@ -168,7 +169,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
-                        android:src="@drawable/ic_bottom" />
+                        android:src="@drawable/ic_bottom"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -278,6 +280,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/linearFavourite"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_marginEnd="6dp"
@@ -287,11 +290,13 @@
                             android:paddingVertical="10dp">
 
                             <ImageView
+                                android:id="@+id/ivFavourite"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:src="@drawable/ic_bookmark" />
 
                             <TextView
+                                android:id="@+id/tvFavourite"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"

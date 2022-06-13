@@ -36,10 +36,10 @@ class PitchAdapter(
             tvPitchName.text = pitch.name
             if (pitch.isOpen.open) {
                 tvOpenClose.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
-                tvOpenCloseHour.text = " · ${pitch.isOpen.time} da yopiladi"
+                tvOpenCloseHour.text = " · ${pitch.isOpen.time.substring(0, 5)} da yopiladi"
             } else {
                 tvOpenClose.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
-                tvOpenCloseHour.text = " · ${pitch.isOpen.time} da ochiladi"
+                tvOpenCloseHour.text = " · ${pitch.isOpen.time.substring(0, 5)} da ochiladi"
             }
             setStrokeColorToRatingBar(rbPitch)
             rbPitch.rating = Functions.resRating(pitch.comments)
@@ -63,7 +63,10 @@ class PitchAdapter(
             }
 
             btnBook.setOnClickListener {
-                onClickEvent.setOnBookClickListener(pitch.stadiumId)
+                onClickEvent.setOnBookClickListener(
+                    pitch.stadiumId,
+                    favouriteStadiums.contains(pitch.stadiumId)
+                )
             }
         }
     }

@@ -1,7 +1,6 @@
 package com.footzone.footzone.repository.main
 
 import com.footzone.footzone.model.AddStadiumRequest
-import com.footzone.footzone.model.FavouriteStadiumResponse
 import com.footzone.footzone.model.FavouriteStadiumRequest
 import com.footzone.footzone.model.Location
 import com.footzone.footzone.model.*
