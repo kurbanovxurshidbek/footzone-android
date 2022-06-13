@@ -37,6 +37,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
         super.onCreate(savedInstanceState)
         stadiumId = arguments?.get(STADIUM_ID).toString()
         viewModel.getPitchData(stadiumId)
+        viewModel.getCommentAllByStadiumId(stadiumId)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,7 +45,34 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
 
         binding = FragmentPitchDetailBinding.bind(view)
         setupObservers()
+        setupCommentObservers()
         initViews()
+    }
+
+    private fun setupCommentObservers() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.pitchComment.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
+
+                    is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "setupObservers: ${it.data}")
+                        showPitchComments(it.data.data)
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showPitchComments(data: Any) {
+        Log.d("@@comments", data.toString())
     }
 
     private fun setupObservers() {

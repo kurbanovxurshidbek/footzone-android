@@ -31,22 +31,22 @@
 
     <TextView
         android:paddingHorizontal="16dp"
-        android:id="@+id/tvYes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="Ha"
-        android:textColor="#0C64E6"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tvNo" />
-
-    <TextView
         android:id="@+id/tvNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:text="Yo'q"
         android:textColor="#616161"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvYes" />
+
+    <TextView
+        android:id="@+id/tvYes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ha"
+        android:textColor="#0C64E6"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

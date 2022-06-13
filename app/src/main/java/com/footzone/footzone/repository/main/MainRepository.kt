@@ -4,7 +4,6 @@ import com.footzone.footzone.model.AddStadiumRequest
 import com.footzone.footzone.model.FavouriteStadiumResponse
 import com.footzone.footzone.model.FavouriteStadiumRequest
 import com.footzone.footzone.model.Location
-import com.footzone.footzone.database.dao.FavouriteStadiumDao
 import com.footzone.footzone.model.*
 import com.footzone.footzone.networking.service.ApiService
 import okhttp3.MultipartBody
@@ -47,8 +46,14 @@ class MainRepository @Inject constructor(
     suspend fun getAllStadiums() =
         apiService.getAllStadiums()
 
+    suspend fun getCommentAllByStadiumId(stadiumId: String) =
+        apiService.getCommentAllByStadiumId(stadiumId)
+
     suspend fun getSearchedStadiums(search: String) =
         apiService.getSearchedStadiums(search)
+
+    suspend fun editUser(userId: String, body: EditNameRequest) =
+        apiService.editUser(userId, body)
 
     suspend fun editHolderStadium(
         stadiumId: String,

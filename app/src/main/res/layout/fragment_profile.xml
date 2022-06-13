@@ -71,7 +71,8 @@
                             android:fontFamily="@font/poppins_bold"
                             android:text="Akmal Bunyodov"
                             android:textColor="@color/black"
-                            android:textSize="28sp" />
+                            android:textSize="28sp"
+                            android:singleLine="true" />
 
                         <ImageView
                             android:id="@+id/ivEditName"
