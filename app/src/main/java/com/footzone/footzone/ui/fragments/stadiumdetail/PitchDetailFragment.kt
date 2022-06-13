@@ -83,7 +83,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
     }
 
     private fun showPitchComments(data: Any) {
-        Log.d("@@comments", data.toString())
+     //   Log.d("@@comments", data.toString())
     }
 
     private fun setupObservers() {
