@@ -71,8 +71,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        sendRequestToGetAllStadiums()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -80,11 +78,13 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
         binding = FragmentHomeBinding.bind(view)
 
         initViews(view)
-        observeAllStadiums()
         sendRequestToGetFavouriteStadiumsList()
     }
 
     override fun onMapReady(p0: GoogleMap) {
+        sendRequestToGetAllStadiums()
+        observeAllStadiums()
+
         mMap = p0
         mMap.moveCamera(
             CameraUpdateFactory.newLatLngZoom(
@@ -92,6 +92,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                 myLocationZoom
             )
         )
+
         mMap.setPadding(0, 0, 0, 500)
 
         mMap.setOnCameraMoveStartedListener {

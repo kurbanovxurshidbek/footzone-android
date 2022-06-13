@@ -124,10 +124,11 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                 )
         }
 
+        binding.linearFavourite
+
         binding.ivBack.setOnClickListener {
             requireActivity().onBackPressed()
         }
-
 
         binding.btnOpenBottomSheet.setOnClickListener {
             val chooseTimeBottomSheetDialog = ChooseTimeBottomSheetDialog()

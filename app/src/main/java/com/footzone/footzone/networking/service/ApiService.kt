@@ -75,11 +75,27 @@ interface ApiService {
     ): ShortStadiumDetailResponse
 
     @PUT("stadium/edit/content/{stadiumId}")
-    suspend fun editHolderStadium(@Path ("stadiumId") stadiumId: String,
-                           @Body stadium: AddStadiumRequest): Response
+    suspend fun editHolderStadium(
+        @Path("stadiumId") stadiumId: String,
+        @Body stadium: AddStadiumRequest
+    ): Response
 
     @Multipart
     @PUT("stadium/edit/photo/{stadiumId}")
-    suspend fun editHolderStadiumPhoto(@Path ("stadiumId") stadiumId: String,
-                                  @Part ("files") files: ArrayList<EditStadiumPhotoRequest>): Response
+    suspend fun editHolderStadiumPhoto(
+        @Path("stadiumId") stadiumId: String,
+        @Part("files") files: ArrayList<EditStadiumPhotoRequest>
+    ): Response
+
+    @POST("session")
+    fun sendBookingRequest(): Response
+
+    @PUT("session/{sessionId}")
+    fun editSession(@Path("sessionId") sessionId: String)
+
+    @POST("session/acceptOrDecline")
+    fun acceptOrDeclineBookingRequest(acceptDeclineRequest: AcceptDeclineRequest): Response
+
+    @GET("session/requests/{status}")
+    fun getSentBookingRequests(@Path("status") status: String): Response
 }
