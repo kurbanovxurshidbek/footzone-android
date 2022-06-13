@@ -6,6 +6,7 @@ import com.footzone.footzone.model.FavouriteStadiumRequest
 import com.footzone.footzone.model.FullStadiumDetailResponse
 import com.footzone.footzone.model.Response
 import com.footzone.footzone.repository.main.MainRepository
+import com.footzone.footzone.utils.UiStateList
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +21,9 @@ class PitchDetailViewModel @Inject constructor(private val mainRepository: MainR
     private val _pitchData =
         MutableStateFlow<UiStateObject<FullStadiumDetailResponse>>(UiStateObject.EMPTY)
     val pitchData = _pitchData
+
+    private val _pitchComment = MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
+    val pitchComment = _pitchComment
 
     private val _addToFavouriteStadiums =
         MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
@@ -36,6 +40,20 @@ class PitchDetailViewModel @Inject constructor(private val mainRepository: MainR
             _pitchData.value =
                 UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
         }
+    }
+
+    fun getCommentAllByStadiumId(stadiumId: String) = viewModelScope.launch {
+        _pitchComment.value = UiStateObject.LOADING
+
+        try {
+            val response = mainRepository.getCommentAllByStadiumId(stadiumId)
+            _pitchComment.value = UiStateObject.SUCCESS(response)
+
+        } catch (e: Exception) {
+            _pitchComment.value =
+                UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
+        }
+
     }
 
     fun addToFavouriteStadiums(favouriteStadiumRequest: FavouriteStadiumRequest) =

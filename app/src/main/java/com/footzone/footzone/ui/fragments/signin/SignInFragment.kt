@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
@@ -66,6 +67,8 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
                         openVerificationFragment()
                     }
                     is UiStateObject.ERROR -> {
+                        Toast.makeText(requireContext(), "Bu raqam orqali ro'yxatdan o'tilmagan. Iltimos ro'yxatdan o'ting.", Toast.LENGTH_LONG).show()
+                        openSignUpFragment()
                         Log.d("TAG", "setupUI: ${it.message}")
                     }
                     else -> {}

@@ -87,6 +87,15 @@ interface ApiService {
         @Part("files") files: ArrayList<EditStadiumPhotoRequest>
     ): Response
 
+    @PUT("user/edit/{userId}")
+    suspend fun editUser(
+        @Path("userId") userId: String,
+        @Body body: EditNameRequest
+    ): Response
+
+    @GET("comment/{stadiumId}")
+    suspend fun getCommentAllByStadiumId(@Path("stadiumId") stadiumId: String): Response
+
     @POST("session")
     fun sendBookingRequest(): Response
 

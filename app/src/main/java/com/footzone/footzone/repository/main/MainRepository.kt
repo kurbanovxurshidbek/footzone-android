@@ -45,8 +45,14 @@ class MainRepository @Inject constructor(
     suspend fun getAllStadiums() =
         apiService.getAllStadiums()
 
+    suspend fun getCommentAllByStadiumId(stadiumId: String) =
+        apiService.getCommentAllByStadiumId(stadiumId)
+
     suspend fun getSearchedStadiums(search: String) =
         apiService.getSearchedStadiums(search)
+
+    suspend fun editUser(userId: String, body: EditNameRequest) =
+        apiService.editUser(userId, body)
 
     suspend fun editHolderStadium(
         stadiumId: String,
