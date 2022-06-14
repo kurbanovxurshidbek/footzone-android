@@ -4,10 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.footzone.footzone.R
@@ -23,8 +20,6 @@ import com.footzone.footzone.utils.KeyValues.STADIUM_ID
 import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
-import com.footzone.footzone.utils.commonfunction.Functions.setFavouriteBackground
-import com.footzone.footzone.utils.commonfunction.Functions.setUnFavouriteBackground
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

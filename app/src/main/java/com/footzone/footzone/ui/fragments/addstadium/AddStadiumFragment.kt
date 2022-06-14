@@ -21,7 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.AddImageAdapter
-import com.footzone.footzone.adapter.PitchImageEditAdapter
+import com.footzone.footzone.adapter.PitchImageEditAdapterTest
 import com.footzone.footzone.databinding.FragmentAddStadiumBinding
 import com.footzone.footzone.databinding.ToastChooseTimeBinding
 import com.footzone.footzone.helper.OnClickEditEvent
@@ -49,20 +49,21 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     lateinit var binding: FragmentAddStadiumBinding
     var items = ArrayList<Image>()
     lateinit var adapterAdd: AddImageAdapter
-    lateinit var adapterEdit: PitchImageEditAdapter
+    lateinit var adapterEdit: PitchImageEditAdapterTest
     var isEdit: Boolean = false
     var position = 0
+    var positionImage = 0
     var latitude = 0.0
     var longitude = 0.0
     var workTimes = ArrayList<WorkingDay>()
     private val viewModel by viewModels<AddStadiumViewModel>()
     lateinit var stadiumId: String
     var files = ArrayList<MultipartBody.Part>()
-    var selectedImageUri: Uri? = null
-    var photos: ArrayList<EditPhoto> = ArrayList()
+    var photos: LinkedList<EditPhoto> = LinkedList();
     var uris = ArrayList<Uri>()
     val filesPhoto = ArrayList<EditStadiumPhotoRequest>()
     var jonibek = false
+    var stadiumNumber: String? = null
 
     @Inject
     lateinit var sharedPref: SharedPref
@@ -126,44 +127,94 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                 openChooseWorkTime()
             }
         }
+
+        binding.tvOccupancy.setOnClickListener {
+            val stadiumAddress = binding.etPitchAddress.text.toString()
+            val stadiumName = binding.etPitchName.text.toString()
+            val stadiumPrice = binding.etPitchPrice.text.toString()
+            val userId = sharedPref.getUserID(KeyValues.USER_ID, "")
+
+            if (binding.etPitchPhoneNumber.text!!.length > 5){
+                stadiumNumber =   "+998${binding.etPitchPhoneNumber.text.toString().replace("\\s".toRegex(), "")}"
+            }
+
+//            val workDat =
+//                if (workTimes.isNotEmpty()){
+//                    workTimes
+//                }else{
+//
+//                }
+
+            Log.d("TAG", "refreshData: ${photos}")
+            for (pos in 1..photos.size-1){
+                if (photos[pos].isExist == true && photos[pos].name is Uri){
+                    Log.d("TAG", "refreshData: ${photos[pos].name}")
+                    val body = convertUriMultipart(photos[pos].name as Uri)
+                    filesPhoto.add(EditStadiumPhotoRequest(photos[pos].id!!, body, true))
+                }else if (photos[pos].name is Uri){
+                    val body = convertUriMultipart(photos[pos].name as Uri)
+                    filesPhoto.add(EditStadiumPhotoRequest(photos[pos].id!!, body, true))
+                }
+            }
+            Log.d("TAG", "refreshData: ${filesPhoto}")
+
+            if (stadiumNumber!!.length == 13) {
+                try {
+                    val stadium =
+                        AddStadiumRequest(
+                            stadiumAddress,
+                            stadiumNumber!!,
+                            stadiumPrice.toInt(),
+                            latitude,
+                            longitude,
+                            stadiumName,
+                            userId,
+                            workTimes
+                        )
+
+                    viewModel.editHolderStadium(stadiumId, stadium)
+                    viewModel.editHolderStadiumPhoto(stadiumId, filesPhoto)
+                    observeViewModelEdit()
+                    observeViewModelEditPhoto()
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Narxni kiritishda xatolik",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }else{
+                toast("Telefon nomer kiritishda xatolik bor.")
+            }
+        }
     }
 
     private fun refreshAdapter() {
-        adapterEdit = PitchImageEditAdapter(photos, object : OnClickEditEvent{
+        adapterEdit = PitchImageEditAdapterTest(photos, object : OnClickEditEvent{
             override fun setOnAddClickListener() {
+                positionImage = 0
                 selectImage(PICK_FROM_FILE_EDIT)
-                if (selectedImageUri != null) {
-                    val body = convertUriMultipart(selectedImageUri!!)
-                    filesPhoto.add(EditStadiumPhotoRequest(UUID.randomUUID().toString(),
-                        body,
-                        true))
-                    photos.add(EditPhoto(UUID.randomUUID().toString(), selectedImageUri))
-                    adapterEdit.submitList(photos)
-                    Log.d("TAG", "setOnAddClickListener: ${photos}")
-                }
+            //filesPhoto.add(EditStadiumPhotoRequest(UUID.randomUUID().toString(), body, true))
             }
 
             override fun setOnEditClickListener(position: Int, id: String) {
+                Log.d("TAG", "setOnEditClickListener: ${position}")
+                positionImage = position
                 selectImage(PICK_FROM_FILE_EDIT)
-                if (selectedImageUri != null) {
-                    val body = convertUriMultipart(selectedImageUri!!)
-                    filesPhoto.add(EditStadiumPhotoRequest(id, body, true))
-                    photos[position].name = selectedImageUri
-                    adapterEdit.submitList(photos)
-                    Log.d("TAG", "setOnAddClickListener: ${photos}")
-                }
+//                    val body = convertUriMultipart(selectedImageUri!!)
+//                    //filesPhoto.add(EditStadiumPhotoRequest(id, body, true))
             }
 
             override fun setOnDeleteClickListener(position: Int, id: String) {
                 Toast.makeText(requireContext(), "Delete Image", Toast.LENGTH_SHORT).show()
                 filesPhoto.add(EditStadiumPhotoRequest(id, null, false))
                 photos.removeAt(position)
-                adapterEdit.submitList(photos)
-                Log.d("TAG", "setOnAddClickListener: ${photos}")
+                positionImage = 0
+                adapterEdit.notifyDataSetChanged()
+                Log.d("TAG", "setOnDeleteClickListener set: ${photos}")
             }
-
-
         })
+        binding.recyclerView.itemAnimator = null
         binding.recyclerView.adapter = adapterEdit
     }
 
@@ -179,7 +230,8 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         Log.d("TAG", "setupObservers: ${it}")
                         refreshData(it.data.data)
                         it.data.data.photos.forEach { it->
-                            photos.add(EditPhoto(it.id, it.name))
+                            photos.add(EditPhoto(it.id, it.name, true))
+                            Log.d("TAG", "setOnAddClickListener: ${photos}")
                         }
                     }
                     is UiStateObject.ERROR -> {
@@ -197,46 +249,10 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             tvTitle.text = getText(R.string.str_edit_stadium)
             etPitchName.setText(data.stadiumName);
             etPitchAddress.setText(data.address)
-            etPitchPhoneNumber.setMask(data.number)
             tvPitchWorkTime.text = "O'yin kunlarini o'zgartirish"
             etPitchPrice.setText(data.hourlyPrice.toString())
             recyclerView.adapter = adapterEdit
-
-        }
-
-        binding.tvOccupancy.setOnClickListener {
-            val stadiumAddress = binding.etPitchAddress.text.toString()
-            val stadiumName = binding.etPitchName.text.toString()
-            val stadiumNumber =
-                "+998${binding.etPitchPhoneNumber.text.toString().replace("\\s".toRegex(), "")}"
-            val stadiumPrice = binding.etPitchPrice.text.toString()
-            val userId = sharedPref.getUserID(KeyValues.USER_ID, "")
-
-            filesPhoto.add(EditStadiumPhotoRequest("72e3d9d5-fe24-481c-a023-9ade6e4b2dc7", null, false))
-
-            try {
-                val stadium =
-                    AddStadiumRequest(
-                        stadiumAddress,
-                        stadiumNumber,
-                        stadiumPrice.toInt(),
-                        latitude,
-                        longitude,
-                        stadiumName,
-                        userId,
-                        workTimes
-                    )
-                viewModel.editHolderStadium(stadiumId, stadium)
-                viewModel.editHolderStadiumPhoto(stadiumId, filesPhoto)
-                observeViewModelEdit()
-                observeViewModelEditPhoto()
-            } catch (e: Exception) {
-                Toast.makeText(
-                    requireContext(),
-                    "Narxni kiritishda xatolik",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            stadiumNumber = data.number
         }
     }
 
@@ -288,22 +304,24 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         val binding =
                             ToastChooseTimeBinding.inflate(LayoutInflater.from(requireActivity()))
 
-                        binding.tvToast.text = "Maydon muvofaqiyatli qo'shildi."
+                        binding.tvToast.text = "Maydon muvofaqiyatli tahrirlandi."
                         val custToast = Toast(requireContext())
                         custToast.setView(binding.root)
                         custToast.show()
                         requireActivity().onBackPressed()
+                        Log.d("TAG", "observeViewModelEdit: ${it}")
 
                     }
                     is UiStateObject.ERROR -> {
                         val binding =
                             ToastChooseTimeBinding.inflate(LayoutInflater.from(requireActivity()))
 
-                        binding.tvToast.text = "Maydon muvofaqiyatli qo'shildi."
+                        binding.tvToast.text = "Maydon muvofaqiyatli tahrirlanmadi, qayta urinib ko'ring."
                         val custToast = Toast(requireContext())
                         custToast.setView(binding.root)
                         custToast.show()
                         requireActivity().onBackPressed()
+                        Log.d("TAG", "observeViewModelEdit error: ${it}")
                     }
                     else -> {
                     }
@@ -319,21 +337,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         binding.tvOccupancy.setOnClickListener {
 
             uris.forEach { selectedImageUri ->
-                val ins = requireActivity().contentResolver.openInputStream(selectedImageUri)
-                val image = File.createTempFile(
-                    "file", ".jpg",
-                    requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                )
-                val fileOutputStream = FileOutputStream(image)
-                ins?.copyTo(fileOutputStream)
-                ins?.close()
-                fileOutputStream.close()
-                val reqFile: RequestBody =
-                    RequestBody.create("image/jpg".toMediaTypeOrNull(), image)
-                val body: MultipartBody.Part =
-                    MultipartBody.Part.createFormData("files", image.name, reqFile)
-
-                files.add(body)
+                files.add(convertUriMultipart(selectedImageUri))
             }
 
             if (checkData()) {
@@ -498,7 +502,15 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
 
         if (requestCode == PICK_FROM_FILE_EDIT && resultCode == RESULT_OK) {
             try {
-                selectedImageUri = data!!.data!!
+                val selectedImageUri = data!!.data!!
+                if (positionImage != 0){
+                    photos[positionImage].name = selectedImageUri
+                    positionImage = 0
+                }else {
+                    photos.add(EditPhoto(UUID.randomUUID().toString(),selectedImageUri, false))
+                    positionImage = 0
+                }
+                adapterEdit.notifyDataSetChanged()
             } catch (e: Exception) {
                 e.printStackTrace()
             }

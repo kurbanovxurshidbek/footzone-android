@@ -8,12 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.CalendarDIalog
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentChooseTimeBottomSheetDialogBinding
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.KeyValues.STADIUM_ID
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class ChooseTimeBottomSheetDialog : BottomSheetDialogFragment() {
@@ -59,7 +61,8 @@ class ChooseTimeBottomSheetDialog : BottomSheetDialogFragment() {
         }
 
         binding.rlTimeInterval.setOnClickListener {
-            findNavController().navigate(R.id.action_pitchDetailFragment_to_timeIntervalFragment)
+            findNavController().navigate(R.id.action_pitchDetailFragment_to_timeIntervalFragment,
+                bundleOf(STADIUM_ID, ))
         }
     }
 

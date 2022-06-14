@@ -153,7 +153,7 @@
     </dialog>
     <fragment
         android:id="@+id/timeIntervalFragment"
-        android:name="com.footzone.footzone.ui.fragments.TimeIntervalFragment"
+        android:name="com.footzone.footzone.ui.fragments.timeinterval.TimeIntervalFragment"
         android:label="fragment_time_interval"
         tools:layout="@layout/fragment_time_interval" />
 </navigation>

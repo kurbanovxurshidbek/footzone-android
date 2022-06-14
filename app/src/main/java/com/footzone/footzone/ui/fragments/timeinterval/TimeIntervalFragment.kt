@@ -1,37 +1,41 @@
-package com.footzone.footzone.ui.fragments
-
+package com.footzone.footzone.ui.fragments.timeinterval
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.TimeManagerAdapter
 import com.footzone.footzone.databinding.FragmentTimeIntervalBinding
 import com.footzone.footzone.databinding.ItemChooseTimeViewWhiteBinding
 import com.footzone.footzone.model.TimeManager
+import com.footzone.footzone.model.sessionsday.SessionsData
 import com.footzone.footzone.utils.KeyValues
-import com.google.type.DateTime
+import com.footzone.footzone.utils.UiStateObject
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
+@AndroidEntryPoint
 class TimeIntervalFragment : Fragment() {
     lateinit var binding: FragmentTimeIntervalBinding
     private lateinit var adapter: TimeManagerAdapter
     var beforePosition = -1
     var afterPosition = -1
     var list = LinkedList<Int>()
+    private val viewModel by viewModels<TimeIntervalViewModel>()
+    lateinit var sessionsData: SessionsData
+    var sessionTimes: ArrayList<TimeManager> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,20 +48,52 @@ class TimeIntervalFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentTimeIntervalBinding.bind(view)
-        initViews()
+        viewModel.getSessionsForSpecificDay("4f889195-06ff-4695-888c-c5fdea91ca39", "2022-07-09")
+        setupObservers()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun setupObservers() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.sessionsDay.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
+
+                    is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "setupObservers: ${it.data}")
+                        sessionsData = it.data.data
+                        val array = resources.getStringArray(R.array.timelist)
+                        sessionsData.sessionTimes.forEach { data->
+                            sessionTimes.add(TimeManager(startTime = LocalTime.parse(data.startTime), finishTime = LocalTime.parse(array[array.indexOf(data.endTime.substring(0, 5)) - 1]), status = "ACCEPTED"))
+                        }
+                        Log.d("TAG", "setupObservers: ${sessionTimes}")
+                        initViews()
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {
+                    }
+                }
+            }
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initViews() {
         adapter = TimeManagerAdapter { p, view->
-           managerTime(p, view)
+            managerTime(p, view)
         }
-        adapter.submitList(timeManager(allTime(LocalTime.parse("07:00"), LocalTime.parse("23:30")),
-            gameTime()))
+        adapter.submitList(timeManager(allTime(LocalTime.parse(sessionsData.workingStartTime), LocalTime.parse(sessionsData.workingEndTime)),
+            sessionTimes))
 
         binding.recyclerView.adapter = adapter
         binding.ivPinding.setOnClickListener {
             val result = "dscekv r"
+            val startTime = binding.tvStartTime.text.toString()
+            val finishTime = binding.tvFinishTime.text.toString()
             setFragmentResult(KeyValues.TYPE_CHOOSE_TIME, bundleOf("bundleKey" to result))
             requireActivity().onBackPressed()
         }
@@ -69,8 +105,8 @@ class TimeIntervalFragment : Fragment() {
 
     @SuppressLint("ResourceAsColor")
     private fun managerTime(p: Int, view: ItemChooseTimeViewWhiteBinding) {
-        val array = timeManager(allTime(LocalTime.parse("07:00"), LocalTime.parse("23:30")),
-            gameTime())
+        val array = timeManager(allTime(LocalTime.parse(sessionsData.workingStartTime), LocalTime.parse(sessionsData.workingEndTime)),
+            sessionTimes)
         if (list.isEmpty()){
             list.add(p)
             beforePosition = beforePosition(p)
@@ -83,9 +119,9 @@ class TimeIntervalFragment : Fragment() {
         }else if (list.size == 1 && list[0] == p) {
             list.remove(p)
             view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_white_4dp)
-            view.tvFinishTime.setTextColor(R.color.black)
-            view.tvLine.setTextColor(R.color.black)
-            view.tvStartTime.setTextColor(R.color.black)
+            view.tvFinishTime.setTextColor(Color.parseColor("#000000"))
+            view.tvLine.setTextColor(Color.parseColor("#000000"))
+            view.tvStartTime.setTextColor(Color.parseColor("#000000"))
             binding.tvStartTime.text!!.clear()
         } else if (list.size == 1 && p >= beforePosition && p <= afterPosition){
             list.add(p)
@@ -125,14 +161,14 @@ class TimeIntervalFragment : Fragment() {
             adapter.submitList(array)
             list.remove(p)
             view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_white_4dp)
-            view.tvFinishTime.setTextColor(R.color.black)
-            view.tvLine.setTextColor(R.color.black)
-            view.tvStartTime.setTextColor(R.color.black)
+            view.tvFinishTime.setTextColor(Color.parseColor("#000000"))
+            view.tvLine.setTextColor(Color.parseColor("#000000"))
+            view.tvStartTime.setTextColor(Color.parseColor("#000000"))
             binding.tvFinishTime.text!!.clear()
             binding.tvStartTime.setText(array[list[0]].startTime.toString())
         }else if (list.size == 2 && list[1] == p){
             if (list[0] < list[1]){
-                for (pos in (list[0]+1)..(list[1])-1){
+                for (pos in (list[0]+1) until (list[1])){
                     array[pos].between = false
                 }
             }else{
@@ -143,9 +179,9 @@ class TimeIntervalFragment : Fragment() {
             adapter.submitList(array)
             list.remove(p)
             view.linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_white_4dp)
-            view.tvFinishTime.setTextColor(R.color.black)
-            view.tvLine.setTextColor(R.color.black)
-            view.tvStartTime.setTextColor(R.color.black)
+            view.tvFinishTime.setTextColor(Color.parseColor("#000000"))
+            view.tvLine.setTextColor(Color.parseColor("#000000"))
+            view.tvStartTime.setTextColor(Color.parseColor("#000000"))
             binding.tvFinishTime.text!!.clear()
             binding.tvStartTime.setText(array[list[0]].startTime.toString())
         }
@@ -172,16 +208,6 @@ class TimeIntervalFragment : Fragment() {
         return halfIntervalHourView
     }
 
-    private fun gameTime(): ArrayList<TimeManager> {
-        val times = ArrayList<TimeManager>()
-        times.add(TimeManager(LocalTime.parse("09:00"), LocalTime.parse("11:00"), "ACCEPTED"))
-        times.add(TimeManager(LocalTime.parse("12:00"), LocalTime.parse("13:30"), "PENDING"))
-        times.add(TimeManager(LocalTime.parse("15:00"), LocalTime.parse("16:30"), "PENDING"))
-        times.add(TimeManager(LocalTime.parse("20:00"), LocalTime.parse("21:30"), "PENDING"))
-
-        return times
-    }
-
     private fun timeManager(
         halfIntervalHourView: ArrayList<TimeManager>,
         gameTime: ArrayList<TimeManager>,
@@ -199,8 +225,8 @@ class TimeIntervalFragment : Fragment() {
     }
 
     private fun beforePosition(position: Int): Int {
-        val array = timeManager(allTime(LocalTime.parse("07:00"), LocalTime.parse("23:30")),
-            gameTime())
+        val array = timeManager(allTime(LocalTime.parse(sessionsData.workingStartTime), LocalTime.parse(sessionsData.workingEndTime)),
+            sessionTimes)
 
         for (pos in position downTo 0) {
             if (array[pos].status == "ACCEPTED" || array[pos].status == "PENDING")
@@ -210,8 +236,8 @@ class TimeIntervalFragment : Fragment() {
     }
 
     private fun afterPosition(position: Int): Int {
-        val array = timeManager(allTime(LocalTime.parse("07:00"), LocalTime.parse("23:30")),
-            gameTime())
+        val array = timeManager(allTime(LocalTime.parse(sessionsData.workingStartTime), LocalTime.parse(sessionsData.workingEndTime)),
+            sessionTimes)
 
         for (pos in position until array.size) {
             if (array[pos].status == "ACCEPTED" || array[pos].status == "PENDING")

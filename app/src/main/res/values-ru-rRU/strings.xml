@@ -36,6 +36,14 @@
     <string name="str_select_language">Tilni tanlang</string>
     <string name="str_setings">Настройки</string>
     <string name="str_lang">Русский</string>
+    <string name="str_00_00_da_yopiladi">00:00 da yopiladi</string>
+    <string name="str_so_m_soat">so\'m/soat</string>
+    <string name="str_marshrut">Marshrut</string>
+    <string name="str_send">Ulashish</string>
+    <string name="str_ratings_and_reviews">Ratings and reviews</string>
+    <string name="str_votes">votes</string>
+    <string name="str_open">Open</string>
+
     <string-array name="timelist">
         <item>00:00</item>
         <item>00:30</item>
