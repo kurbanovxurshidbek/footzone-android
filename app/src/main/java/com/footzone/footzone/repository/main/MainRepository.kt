@@ -57,12 +57,23 @@ class MainRepository @Inject constructor(
 
     suspend fun editHolderStadium(
         stadiumId: String,
-        stadium: AddStadiumRequest) =
+        stadium: AddStadiumRequest
+    ) =
         apiService.editHolderStadium(stadiumId, stadium)
 
-    suspend fun editHolderStadiumPhoto(stadiumId: String, files: ArrayList<EditStadiumPhotoRequest>) = apiService.editHolderStadiumPhoto(stadiumId, files)
+    suspend fun editHolderStadiumPhoto(
+        stadiumId: String,
+        files: ArrayList<EditStadiumPhotoRequest>
+    ) = apiService.editHolderStadiumPhoto(stadiumId, files)
+
+    suspend fun acceptOrDeclineBookingRequest(acceptDeclineRequest: AcceptDeclineRequest) =
+        apiService.acceptOrDeclineBookingRequest(acceptDeclineRequest)
 
     suspend fun acceptOrDeclineBookingRequest(acceptDeclineRequest: AcceptDeclineRequest) = apiService.acceptOrDeclineBookingRequest(acceptDeclineRequest)
 
     suspend fun getSessionsForSpecificDay(stadiumId: String, date: String) = apiService.getSessionsForSpecificDay(stadiumId, date)
+    suspend fun sendBookingRequest(bookingRequest: BookingRequest) =
+        apiService.sendBookingRequest(bookingRequest)
+
+    suspend fun getSentBookingRequests(status: String) = apiService.getSentBookingRequests(status)
 }

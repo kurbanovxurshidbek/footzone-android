@@ -147,7 +147,7 @@
         tools:layout="@layout/fragment_admin_notification" />
     <dialog
         android:id="@+id/chooseTimeBottomSheetDialog"
-        android:name="com.footzone.footzone.ui.fragments.ChooseTimeBottomSheetDialog"
+        android:name="com.footzone.footzone.ui.fragments.bookBottomSheet.ChooseTimeBottomSheetDialog"
         android:label="ChooseTimeBottomSheetDialog" >
 
     </dialog>
