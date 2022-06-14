@@ -36,6 +36,14 @@ class TimeIntervalFragment : Fragment() {
     private val viewModel by viewModels<TimeIntervalViewModel>()
     lateinit var sessionsData: SessionsData
     var sessionTimes: ArrayList<TimeManager> = ArrayList()
+    lateinit var stadiumId: String
+    lateinit var bookDate: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        stadiumId = arguments?.get(KeyValues.STADIUM_ID) as String
+        bookDate = arguments?.get(KeyValues.STADIUM_DATA) as String
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +56,7 @@ class TimeIntervalFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentTimeIntervalBinding.bind(view)
-        viewModel.getSessionsForSpecificDay("4f889195-06ff-4695-888c-c5fdea91ca39", "2022-07-09")
+        viewModel.getSessionsForSpecificDay("43661857-1d9f-4080-8a5c-68b41971e4c1", "2022-07-09")
         setupObservers()
     }
 

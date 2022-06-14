@@ -18,6 +18,7 @@ import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentChooseTimeBottomSheetDialogBinding
 import com.footzone.footzone.model.BookingRequest
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.KeyValues.STADIUM_DATA
 import com.footzone.footzone.utils.KeyValues.STADIUM_ID
 import com.footzone.footzone.utils.UiStateObject
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -73,8 +74,13 @@ class ChooseTimeBottomSheetDialog(private val stadiumId: String) : BottomSheetDi
         }
 
         binding.rlTimeInterval.setOnClickListener {
-            findNavController().navigate(R.id.action_pitchDetailFragment_to_timeIntervalFragment,
-                bundleOf(STADIUM_ID, ))
+            if (binding.tvDate.text.isNotEmpty()) {
+                Log.d("TAG", "initView: ${binding.tvDate.text.toString()}")
+                findNavController().navigate(R.id.action_pitchDetailFragment_to_timeIntervalFragment,
+                    bundleOf(STADIUM_ID to stadiumId,STADIUM_DATA to binding.tvDate.text.toString()))
+            }else{
+                Toast.makeText(requireContext(), "O'yin kunini tanlang!!!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
