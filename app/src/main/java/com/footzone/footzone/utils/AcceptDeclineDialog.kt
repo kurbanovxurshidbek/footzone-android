@@ -5,8 +5,12 @@ import android.content.Context
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.footzone.footzone.R
+import com.footzone.footzone.helper.OnClickEventAcceptDecline
 
-class AcceptDeclineDialog(val context1: Context) : Dialog(context1) {
+class AcceptDeclineDialog(
+    val context1: Context,
+    val onClickEventAcceptDecline: OnClickEventAcceptDecline
+) : Dialog(context1) {
     private var _instance: AcceptDeclineDialog? = null
 
     fun instance(layoutResID: ConstraintLayout): AcceptDeclineDialog {
@@ -29,7 +33,8 @@ class AcceptDeclineDialog(val context1: Context) : Dialog(context1) {
         val tvNo = layoutResID.findViewById<TextView>(R.id.tvNo)
 
         tvYes.setOnClickListener {
-            _instance!!.dismiss()
+            onClickEventAcceptDecline.accept(true)
+            onClickEventAcceptDecline.decline(true)
         }
 
         tvNo.setOnClickListener {

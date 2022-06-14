@@ -42,11 +42,9 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
         if (arguments?.containsKey(USER_DETAIL)!!) {
             user = arguments?.get(USER_DETAIL) as User
             isToSignUp = true
-            Log.d("TAG", "onViewCreated: $user")
         }
         if (arguments?.containsKey(PHONE_NUMBER)!!) {
             phoneNumber = arguments?.get(PHONE_NUMBER).toString()
-            Log.d("TAG", "onViewCreatedd: $phoneNumber")
             isToSignUp = false
         }
 
@@ -75,7 +73,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
             SignInVerification(
                 binding.editTextVerificationCode.text.toString().toInt(),
                 "Android",
-                "jwsbcbwcvuvc",
+                System.currentTimeMillis().toString(),
                 "Mobile",
                 phoneNumber!!
             )
@@ -101,7 +99,8 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
 
                     is UiStateObject.SUCCESS -> {
                         if (it.data.success) {
-                            Log.d("TAG", "setupObserversSignIn: ${it.data}")
+                            val data = it.data.data
+                            saveToSharedPref(data.user_id, data.token, data.stadiumHolder)
                             returnHomeFragment()
                         }
                     }
@@ -159,9 +158,11 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
 
                     is UiStateObject.SUCCESS -> {
                         val userPriority = it.data.data
-                        saveToSharedPref(userPriority.user_id,
+                        saveToSharedPref(
+                            userPriority.user_id,
                             userPriority.token,
-                            user!!.stadiumHolder)
+                            user!!.stadiumHolder
+                        )
                         findNavController().popBackStack()
                     }
                     is UiStateObject.ERROR -> {
@@ -173,7 +174,6 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
             }
         }
     }
-
 
     private fun returnHomeFragment() {
         findNavController().navigate(R.id.action_verificationFragment_to_homeFragment)

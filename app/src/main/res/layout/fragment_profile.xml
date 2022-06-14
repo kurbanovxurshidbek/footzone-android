@@ -71,7 +71,8 @@
                             android:fontFamily="@font/poppins_bold"
                             android:text="Akmal Bunyodov"
                             android:textColor="@color/black"
-                            android:textSize="28sp" />
+                            android:textSize="28sp"
+                            android:singleLine="true" />
 
                         <ImageView
                             android:id="@+id/ivEditName"
@@ -129,12 +130,6 @@
                         android:scaleType="centerCrop"
                         android:theme="@style/circle" />
 
-                    <ImageView
-                        android:id="@+id/ivDefaultPerson"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_person" />
 
                     <ImageView
                         android:id="@+id/ivAdd"

@@ -5,6 +5,7 @@ object KeyValues {
     val USER_IMAGE_BASE_URL = "https://footzone-server.herokuapp.com/images/user/"
     val PITCH_DETAIL: String = "pitchDetail"
     const val STADIUM_ID = "stadiumID"
+    const val IS_FAVOURITE_STADIUM = "isFavouriteStadium"
     const val STADIUM_DATA = "stadiumdata"
     const val TYPE_DETAIL = "type"
     const val USER_DETAIL = "user"

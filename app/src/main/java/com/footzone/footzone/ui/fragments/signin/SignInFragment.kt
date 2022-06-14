@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
@@ -43,7 +44,8 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
 
         binding.enterButton.setOnClickListener {
 
-            phoneNumber = "+998${binding.editTextNumber.text.toString().replace("\\s".toRegex(), "")}"
+            phoneNumber =
+                "+998${binding.editTextNumber.text.toString().replace("\\s".toRegex(), "")}"
 
             viewModel.signIn(phoneNumber!!)
 
@@ -60,9 +62,13 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
                     }
 
                     is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "setupObservers: ${it.data}")
+                        toastLong(it.data.data.toString())
                         openVerificationFragment()
                     }
                     is UiStateObject.ERROR -> {
+                        Toast.makeText(requireContext(), "Bu raqam orqali ro'yxatdan o'tilmagan. Iltimos ro'yxatdan o'ting.", Toast.LENGTH_LONG).show()
+                        openSignUpFragment()
                         Log.d("TAG", "setupUI: ${it.message}")
                     }
                     else -> {}
@@ -71,8 +77,9 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
         }
     }
 
-    private fun openVerificationFragment(){
-        findNavController().navigate(R.id.action_signInFragment_to_verificationFragment,
+    private fun openVerificationFragment() {
+        findNavController().navigate(
+            R.id.action_signInFragment_to_verificationFragment,
             bundleOf(PHONE_NUMBER to phoneNumber)
         )
     }

@@ -2,9 +2,9 @@ package com.footzone.footzone.ui.fragments.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.footzone.footzone.model.EditNameRequest
 import com.footzone.footzone.model.Response
 import com.footzone.footzone.model.profile.UserData
-import com.footzone.footzone.repository.auth.AuthRepository
 import com.footzone.footzone.repository.main.MainRepository
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +23,9 @@ class ProfileViewModel @Inject constructor(private val mainRepository: MainRepos
 
     private val _userProfile = MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
     val userProfile = _userProfile
+
+    private val _userChangeName = MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
+    val userChangeName = _userChangeName
 
     fun getUserData(userId: String) = viewModelScope.launch {
         _userData.value = UiStateObject.LOADING
@@ -46,6 +49,19 @@ class ProfileViewModel @Inject constructor(private val mainRepository: MainRepos
 
         } catch (e: Exception) {
             _userProfile.value =
+                UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
+        }
+    }
+
+    fun editUser(userId: String, body: EditNameRequest) = viewModelScope.launch {
+        _userChangeName.value = UiStateObject.LOADING
+
+        try {
+            val response = mainRepository.editUser(userId, body)
+            _userChangeName.value = UiStateObject.SUCCESS(response)
+
+        } catch (e: Exception) {
+            _userChangeName.value =
                 UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
         }
     }

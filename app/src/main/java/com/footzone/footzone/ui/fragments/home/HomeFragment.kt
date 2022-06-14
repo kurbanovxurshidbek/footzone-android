@@ -25,6 +25,7 @@ import com.footzone.footzone.model.*
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.*
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
+import com.footzone.footzone.utils.KeyValues.IS_FAVOURITE_STADIUM
 import com.footzone.footzone.utils.KeyValues.IS_OWNER
 import com.footzone.footzone.utils.KeyValues.STADIUM_ID
 import com.footzone.footzone.utils.KeyValues.USER_ID
@@ -70,8 +71,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        sendRequestToGetAllStadiums()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,11 +78,13 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
         binding = FragmentHomeBinding.bind(view)
 
         initViews(view)
-        observeAllStadiums()
         sendRequestToGetFavouriteStadiumsList()
     }
 
     override fun onMapReady(p0: GoogleMap) {
+        sendRequestToGetAllStadiums()
+        observeAllStadiums()
+
         mMap = p0
         mMap.moveCamera(
             CameraUpdateFactory.newLatLngZoom(
@@ -91,6 +92,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
                 myLocationZoom
             )
         )
+
         mMap.setPadding(0, 0, 0, 500)
 
         mMap.setOnCameraMoveStartedListener {
@@ -478,8 +480,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
         }
 
         val adapter = PitchAdapter(favouriteStadiums, stadiums, object : OnClickEvent {
-            override fun setOnBookClickListener(stadiumId: String) {
-                openPitchDetailFragment(stadiumId)
+            override fun setOnBookClickListener(stadiumId: String, isFavourite: Boolean) {
+                openPitchDetailFragment(stadiumId, isFavourite)
             }
 
             override fun setOnNavigateClickListener(latitude: Double, longitude: Double) {
@@ -498,10 +500,10 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
         showStadiumList()
     }
 
-    private fun openPitchDetailFragment(stadiumId: String) {
+    private fun openPitchDetailFragment(stadiumId: String, isFavourite: Boolean) {
         findNavController().navigate(
             R.id.action_homeFragment_to_pitchDetailFragment,
-            bundleOf(STADIUM_ID to stadiumId)
+            bundleOf(STADIUM_ID to stadiumId, IS_FAVOURITE_STADIUM to isFavourite)
         )
     }
 
@@ -663,9 +665,9 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
 
     private fun findMultipleLocation(stadiumLocationList: ArrayList<StadiumLocationName>) {
         for (i in stadiumLocationList) {
-//            mMap.addMarker(MarkerOptions().position(LatLng(i.latitude, i.longitude)).title(i.name))
-//            mMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
-//            mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(i.latitude, i.longitude)))
+            mMap.addMarker(MarkerOptions().position(LatLng(i.latitude, i.longitude)).title(i.name))
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(i.latitude, i.longitude)))
         }
     }
 }

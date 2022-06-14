@@ -48,7 +48,7 @@ class MyPitchAdapter(
                 tvPitchPrice.text = "${data.hourlyPrice} so'm/soat"
 
                 btnManagement.setOnClickListener {
-                    onClickEvent.setOnBookClickListener(data.stadiumId)
+                    onClickEvent.setOnBookClickListener(data.stadiumId,false)
                 }
 
                 linearNavigation.setOnClickListener {

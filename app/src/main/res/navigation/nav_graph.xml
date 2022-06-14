@@ -123,7 +123,9 @@
         tools:layout="@layout/fragment_verification" >
         <action
             android:id="@+id/action_verificationFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/stadiumFragment"
