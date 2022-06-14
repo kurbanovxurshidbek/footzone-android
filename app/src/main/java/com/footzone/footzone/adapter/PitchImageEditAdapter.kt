@@ -1,8 +1,11 @@
 package com.footzone.footzone.adapter
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemAddImageBinding
@@ -10,11 +13,12 @@ import com.footzone.footzone.databinding.ItemStadiumImageEditBinding
 import com.footzone.footzone.helper.OnClickEditEvent
 import com.footzone.footzone.model.EditPhoto
 import com.footzone.footzone.model.StadiumPhoto
+import com.footzone.footzone.model.TimeManager
 import com.footzone.footzone.utils.KeyValues
 
 class PitchImageEditAdapter(var pitchImages : ArrayList<EditPhoto>,   private var onClickEditEvent: OnClickEditEvent) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
-
+   // RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
+    ListAdapter<EditPhoto, RecyclerView.ViewHolder>(DiffUtil()){
     private val TYPE_ITEM_DEFAULT_IMAGE = 1
     private val TYPE_ITEM_EDIT_IMAGE = 2
 
@@ -29,50 +33,62 @@ class PitchImageEditAdapter(var pitchImages : ArrayList<EditPhoto>,   private va
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == TYPE_ITEM_DEFAULT_IMAGE){
             val view = ItemAddImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return AddImageViewHolder(view)
+            return ViewHolder.AddImageViewHolder(view)
         }
 
         val view = ItemStadiumImageEditBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return EditImageViewHolder(view)
+        return ViewHolder.EditImageViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = pitchImages[position]
-        if (holder is AddImageViewHolder){
-            holder.view.apply {
-                ivAddImage.setOnClickListener {
-                    onClickEditEvent.setOnAddClickListener()
+        when(holder) {
+           is ViewHolder.AddImageViewHolder -> {
+                holder.view.apply {
+                    ivAddImage.setOnClickListener {
+                        onClickEditEvent.setOnAddClickListener()
+                    }
                 }
             }
-        }
 
-        if (holder is EditImageViewHolder){
-            Glide.with(holder.view.ivPitch)
-                .load(pitchImages[position])
-                .into(holder.view.ivPitch)
+            is ViewHolder.EditImageViewHolder -> {
 
-            val uri = "${KeyValues.STADIUM_IMAGE_BASE_URL}${pitchImages[position].name}"
-            Glide.with(holder.view.ivPitch.context)
-                .load(uri)
-                .placeholder(R.drawable.stadim2)
-                .into(holder.view.ivPitch)
-
-            holder.view.apply {
-                llConvert.setOnClickListener {
-                    onClickEditEvent.setOnEditClickListener(position, item.id!!)
+                if (pitchImages[position].name is String) {
+                    val uri = "${KeyValues.STADIUM_IMAGE_BASE_URL}${pitchImages[position].name}"
+                    Glide.with(holder.view.ivPitch.context)
+                        .load(uri)
+                        .into(holder.view.ivPitch)
+                } else if (pitchImages[position].name is Uri) {
+                    holder.view.ivPitch.setImageURI(pitchImages[position].name as Uri)
                 }
+                holder.view.apply {
+                    llConvert.setOnClickListener {
+                        onClickEditEvent.setOnEditClickListener(position, item.id!!)
+                    }
 
-                llDelete.setOnClickListener {
-                    onClickEditEvent.setOnDeleteClickListener(position, item.id!!)
+                    llDelete.setOnClickListener {
+                        onClickEditEvent.setOnDeleteClickListener(position, item.id!!)
+                    }
                 }
             }
         }
     }
 
     override fun getItemCount(): Int = pitchImages.size
+
+    class DiffUtil : androidx.recyclerview.widget.DiffUtil.ItemCallback<EditPhoto>() {
+        override fun areItemsTheSame(oldItem: EditPhoto, newItem: EditPhoto): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: EditPhoto, newItem: EditPhoto): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    sealed class ViewHolder(binding: ViewBinding): RecyclerView.ViewHolder(binding.root){
+        class AddImageViewHolder(val view: ItemAddImageBinding) : ViewHolder(view)
+
+        class EditImageViewHolder(val view: ItemStadiumImageEditBinding) : ViewHolder(view)
+    }
 }
-
-
-class AddImageViewHolder(val view: ItemAddImageBinding) : RecyclerView.ViewHolder(view.root)
-
-class EditImageViewHolder(val view: ItemStadiumImageEditBinding) : RecyclerView.ViewHolder(view.root)
