@@ -4,10 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.footzone.footzone.R
@@ -16,15 +13,13 @@ import com.footzone.footzone.adapter.CustomAdapter
 import com.footzone.footzone.databinding.FragmentPitchDetailBinding
 import com.footzone.footzone.model.*
 import com.footzone.footzone.ui.fragments.BaseFragment
-import com.footzone.footzone.ui.fragments.ChooseTimeBottomSheetDialog
+import com.footzone.footzone.ui.fragments.bookBottomSheet.ChooseTimeBottomSheetDialog
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues.IS_FAVOURITE_STADIUM
 import com.footzone.footzone.utils.KeyValues.STADIUM_ID
 import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
-import com.footzone.footzone.utils.commonfunction.Functions.setFavouriteBackground
-import com.footzone.footzone.utils.commonfunction.Functions.setUnFavouriteBackground
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -69,8 +64,8 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                     }
 
                     is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "setupObservers: ${it.data}")
-                        showPitchComments(it.data.data)
+//                        Log.d("TAG", "setupObservers: ${it.data}")
+//                        showPitchComments(it.data.data)
                     }
                     is UiStateObject.ERROR -> {
                         Log.d("TAG", "setupUI: ${it.message}")
@@ -152,14 +147,12 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                 )
         }
 
-        binding.linearFavourite
-
         binding.ivBack.setOnClickListener {
             requireActivity().onBackPressed()
         }
 
         binding.btnOpenBottomSheet.setOnClickListener {
-            val chooseTimeBottomSheetDialog = ChooseTimeBottomSheetDialog()
+            val chooseTimeBottomSheetDialog = ChooseTimeBottomSheetDialog(stadiumId)
             chooseTimeBottomSheetDialog.show(childFragmentManager, chooseTimeBottomSheetDialog.tag)
         }
 

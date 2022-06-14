@@ -96,15 +96,18 @@ interface ApiService {
     @GET("comment/{stadiumId}")
     suspend fun getCommentAllByStadiumId(@Path("stadiumId") stadiumId: String): Response
 
+    //user booking pitch
     @POST("session")
-    fun sendBookingRequest(): Response
+    suspend fun sendBookingRequest(@Body bookingRequest: BookingRequest): Response
 
     @PUT("session/{sessionId}")
-    fun editSession(@Path("sessionId") sessionId: String)
+    suspend fun editSession(@Path("sessionId") sessionId: String)
 
+    //stadium owner response to request
     @POST("session/acceptOrDecline")
-    fun acceptOrDeclineBookingRequest(acceptDeclineRequest: AcceptDeclineRequest): Response
+    suspend fun acceptOrDeclineBookingRequest(acceptDeclineRequest: AcceptDeclineRequest): Response
 
+    //requests sent to stadium owner PENDING PLAYED NOTIFICATIONS
     @GET("session/requests/{status}")
-    fun getSentBookingRequests(@Path("status") status: String): Response
+    suspend fun getSentBookingRequests(@Path("status") status: String): StadiumBookSentResponse
 }

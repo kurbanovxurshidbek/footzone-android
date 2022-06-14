@@ -33,8 +33,8 @@ class AcceptDeclineDialog(
         val tvNo = layoutResID.findViewById<TextView>(R.id.tvNo)
 
         tvYes.setOnClickListener {
-            onClickEventAcceptDecline.accept(true)
-            onClickEventAcceptDecline.decline(true)
+//            onClickEventAcceptDecline.accept(true)
+//            onClickEventAcceptDecline.decline(true)
         }
 
         tvNo.setOnClickListener {

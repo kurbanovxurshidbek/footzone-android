@@ -1,4 +1,4 @@
-package com.footzone.footzone.ui.fragments
+package com.footzone.footzone.ui.fragments.bookBottomSheet
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -9,15 +9,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.CalendarDIalog
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentChooseTimeBottomSheetDialogBinding
+import com.footzone.footzone.model.BookingRequest
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.UiStateObject
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
+import java.time.LocalTime
 
-class ChooseTimeBottomSheetDialog : BottomSheetDialogFragment() {
+@AndroidEntryPoint
+class ChooseTimeBottomSheetDialog(private val stadiumId: String) : BottomSheetDialogFragment() {
+
     lateinit var binding: FragmentChooseTimeBottomSheetDialogBinding
+    private val viewModel by viewModels<BookDialogViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +45,7 @@ class ChooseTimeBottomSheetDialog : BottomSheetDialogFragment() {
     private fun initView() {
 
         binding.llDate.setOnClickListener {
-            val dialog = CalendarDIalog{ date ->
+            val dialog = CalendarDIalog { date ->
                 binding.tvDate.text = date
 
             }
@@ -48,18 +58,41 @@ class ChooseTimeBottomSheetDialog : BottomSheetDialogFragment() {
             dismiss()
         }
 
-        binding.tvOccupancy.setOnClickListener {
-            val inflater = layoutInflater
-            val view: View = inflater.inflate(R.layout.toast_choose_time, requireActivity().findViewById(R.id.mylayout) as ViewGroup?)
-
-            val custToast = Toast(requireContext())
-            custToast.setView(view)
-            custToast.show()
-           dismiss()
+        binding.tvBook.setOnClickListener {
+            viewModel.sendBookingRequest(
+                BookingRequest(
+                    stadiumId,
+                   "2022-06-14",
+                    "20:00:00",
+                    "22:00:00"
+                )
+            )
+            observeSendBooking()
         }
 
         binding.rlTimeInterval.setOnClickListener {
             findNavController().navigate(R.id.action_pitchDetailFragment_to_timeIntervalFragment)
+        }
+    }
+
+    private fun observeSendBooking() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.bookRequest.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
+
+                    is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "observeSendBooking: ${it.data}")
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {
+                    }
+                }
+            }
         }
     }
 
