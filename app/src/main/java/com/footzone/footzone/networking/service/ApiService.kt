@@ -105,7 +105,7 @@ interface ApiService {
 
     //stadium owner response to request
     @POST("session/acceptOrDecline")
-    suspend fun acceptOrDeclineBookingRequest(acceptDeclineRequest: AcceptDeclineRequest): Response
+    suspend fun acceptOrDeclineBookingRequest(@Body acceptDeclineRequest: AcceptDeclineRequest): Response
 
     //requests sent to stadium owner PENDING PLAYED NOTIFICATIONS
     @GET("session/requests/{status}")

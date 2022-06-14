@@ -1,6 +1,6 @@
 package com.footzone.footzone.helper
 
 interface OnClickEventAcceptDecline {
-    fun onAccept()
-    fun onDecline()
+    fun onAccept(stadiumId:String)
+    fun onDecline(stadiumId:String)
 }

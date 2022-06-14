@@ -2,15 +2,21 @@ package com.footzone.footzone.ui.fragments.bookpitchsent
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.PitchBookSentAdapter
 import com.footzone.footzone.databinding.FragmentBookPitchSentBinding
+import com.footzone.footzone.databinding.LayoutAcceptBinding
+import com.footzone.footzone.databinding.LayoutDeclineBinding
 import com.footzone.footzone.helper.OnClickEventAcceptDecline
+import com.footzone.footzone.model.AcceptDeclineRequest
 import com.footzone.footzone.model.StadiumBookSentResponseData
 import com.footzone.footzone.ui.fragments.BaseFragment
+import com.footzone.footzone.utils.AcceptDialog
+import com.footzone.footzone.utils.DeclineDialog
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -85,63 +91,47 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
         }
     }
 
-    private fun refreshAdapter(requests: ArrayList<StadiumBookSentResponseData>) {
+    private fun refreshAdapter(requests: List<StadiumBookSentResponseData>) {
         Log.d("TAG", "refreshAdapter: $requests")
         playingPitchAdapter = PitchBookSentAdapter(requests, object : OnClickEventAcceptDecline {
-            override fun onAccept() {
-
+            override fun onAccept(stadiumId: String) {
+                val acceptDialog =
+                    AcceptDialog(requireContext()) {
+                        //send accepted ok
+                        viewModel.acceptOrDeclineBookingRequest(
+                            AcceptDeclineRequest(
+                                true,
+                                stadiumId
+                            )
+                        )
+                        observeAcceptDeclineResponse()
+                    }.instance(
+                        LayoutAcceptBinding.inflate(
+                            LayoutInflater.from(requireContext())
+                        ).root
+                    )
+                acceptDialog.show()
             }
 
-            override fun onDecline() {
-
+            override fun onDecline(stadiumId: String) {
+                val declineDialog =
+                    DeclineDialog(requireContext()) {
+                        viewModel.acceptOrDeclineBookingRequest(
+                            AcceptDeclineRequest(
+                                false,
+                                stadiumId
+                            )
+                        )
+                        observeAcceptDeclineResponse()
+                    }.instance(
+                        LayoutDeclineBinding.inflate(
+                            LayoutInflater.from(requireContext())
+                        ).root
+                    )
+                declineDialog.show()
             }
         })
 
         binding.rvPlayingPitches.adapter = playingPitchAdapter
     }
-
-    //    private fun manageAcceptDeclineClick(toAccept: Boolean, stadiumId: String) {
-//        if (toAccept) {
-//            val acceptDeclineDialog =
-//                AcceptDeclineDialog(requireContext(), object : OnClickEventAcceptDecline {
-//                    override fun accept(isAccepted: Boolean) {
-//                        viewModel.acceptOrDeclineBookingRequest(
-//                            AcceptDeclineRequest(
-//                                true,
-//                                stadiumId
-//                            )
-//                        )
-//                    }
-//
-//                    override fun decline(isAccepted: Boolean) {}
-//
-//                }).instance(
-//                    LayoutAcceptBinding.inflate(
-//                        LayoutInflater.from(requireContext())
-//                    ).root
-//                )
-//            acceptDeclineDialog.show()
-//        } else {
-//            val acceptDeclineDialog =
-//                AcceptDeclineDialog(requireContext(), object : OnClickEventAcceptDecline {
-//                    override fun accept(isAccepted: Boolean) {}
-//
-//                    override fun decline(isAccepted: Boolean) {
-//                        viewModel.acceptOrDeclineBookingRequest(
-//                            AcceptDeclineRequest(
-//                                false,
-//                                stadiumId
-//                            )
-//                        )
-//                    }
-//                }).instance(
-//                    LayoutDeclineBinding.inflate(
-//                        LayoutInflater.from(requireContext())
-//                    ).root
-//                )
-//            acceptDeclineDialog.show()
-//        }
-//        observeAcceptDeclineResponse()
-//    }
-
 }
