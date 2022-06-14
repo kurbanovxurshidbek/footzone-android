@@ -3,24 +3,20 @@ package com.footzone.footzone.adapter
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
-import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemAddImageBinding
 import com.footzone.footzone.databinding.ItemStadiumImageEditBinding
 import com.footzone.footzone.helper.OnClickEditEvent
 import com.footzone.footzone.model.EditPhoto
-import com.footzone.footzone.model.StadiumPhoto
-import com.footzone.footzone.model.TimeManager
 import com.footzone.footzone.utils.KeyValues
+import java.util.*
 
-class PitchImageEditAdapter(var pitchImages : ArrayList<EditPhoto>,   private var onClickEditEvent: OnClickEditEvent) :
-   // RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
-    ListAdapter<EditPhoto, RecyclerView.ViewHolder>(DiffUtil()){
-    private val TYPE_ITEM_DEFAULT_IMAGE = 1
-    private val TYPE_ITEM_EDIT_IMAGE = 2
+class PitchImageEditAdapterTest(var pitchImages: LinkedList<EditPhoto>, private var onClickEditEvent: OnClickEditEvent) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+
+    private val TYPE_ITEM_DEFAULT_IMAGE = 1001
+    private val TYPE_ITEM_EDIT_IMAGE = 1002
 
     override fun getItemViewType(position: Int): Int {
         return if (position == 0) {
@@ -33,17 +29,17 @@ class PitchImageEditAdapter(var pitchImages : ArrayList<EditPhoto>,   private va
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == TYPE_ITEM_DEFAULT_IMAGE){
             val view = ItemAddImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return ViewHolder.AddImageViewHolder(view)
+            return AddImageViewHolder(view)
         }
 
         val view = ItemStadiumImageEditBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder.EditImageViewHolder(view)
+        return EditImageViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = pitchImages[position]
         when(holder) {
-           is ViewHolder.AddImageViewHolder -> {
+            is AddImageViewHolder -> {
                 holder.view.apply {
                     ivAddImage.setOnClickListener {
                         onClickEditEvent.setOnAddClickListener()
@@ -51,8 +47,7 @@ class PitchImageEditAdapter(var pitchImages : ArrayList<EditPhoto>,   private va
                 }
             }
 
-            is ViewHolder.EditImageViewHolder -> {
-
+            is EditImageViewHolder -> {
                 if (pitchImages[position].name is String) {
                     val uri = "${KeyValues.STADIUM_IMAGE_BASE_URL}${pitchImages[position].name}"
                     Glide.with(holder.view.ivPitch.context)
@@ -76,19 +71,8 @@ class PitchImageEditAdapter(var pitchImages : ArrayList<EditPhoto>,   private va
 
     override fun getItemCount(): Int = pitchImages.size
 
-    class DiffUtil : androidx.recyclerview.widget.DiffUtil.ItemCallback<EditPhoto>() {
-        override fun areItemsTheSame(oldItem: EditPhoto, newItem: EditPhoto): Boolean {
-            return oldItem.id == newItem.id
-        }
+    class AddImageViewHolder(val view: ItemAddImageBinding) : RecyclerView.ViewHolder(view.root)
 
-        override fun areContentsTheSame(oldItem: EditPhoto, newItem: EditPhoto): Boolean {
-            return oldItem == newItem
-        }
-    }
+    class EditImageViewHolder(val view: ItemStadiumImageEditBinding) : RecyclerView.ViewHolder(view.root)
 
-    sealed class ViewHolder(binding: ViewBinding): RecyclerView.ViewHolder(binding.root){
-        class AddImageViewHolder(val view: ItemAddImageBinding) : ViewHolder(view)
-
-        class EditImageViewHolder(val view: ItemStadiumImageEditBinding) : ViewHolder(view)
-    }
 }

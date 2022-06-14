@@ -1,9 +1,7 @@
 package com.footzone.footzone.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +10,6 @@ import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemChooseTimeViewGreyBinding
 import com.footzone.footzone.databinding.ItemChooseTimeViewWhiteBinding
 import com.footzone.footzone.model.TimeManager
-import java.time.LocalTime
 
 class TimeManagerAdapter(private var onItemSelected: ((Int, ItemChooseTimeViewWhiteBinding) -> Unit)) :
     ListAdapter<TimeManager, RecyclerView.ViewHolder>(DiffUtil()) {

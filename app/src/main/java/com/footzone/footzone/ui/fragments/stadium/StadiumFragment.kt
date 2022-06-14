@@ -101,9 +101,7 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
             }
         }
 
-        refreshAdapter(data.photos as ArrayList<StadiumPhoto>)
-//        refreshCommentAdapter(data.comments as ArrayList<Comment>)
-//        resultRate(data.comments)
+        refreshAdapter(data.photos)
 
         binding.etStadium.setOnClickListener {
             openEditStadium(data.stadiumId)

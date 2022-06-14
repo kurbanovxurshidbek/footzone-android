@@ -235,11 +235,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:layout_weight="1"
-                android:background="@drawable/view_rounded_corners_grey"
+                android:background="@drawable/view_rounded_corners_blue"
                 android:gravity="center"
                 android:paddingVertical="10dp"
                 android:text="Saqlash"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="14sp"
                 app:backgroundTint="@null" />
         </LinearLayout>

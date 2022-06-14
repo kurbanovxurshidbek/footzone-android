@@ -2,6 +2,7 @@ package com.footzone.footzone.networking.service
 
 import com.footzone.footzone.model.*
 import com.footzone.footzone.model.profile.UserData
+import com.footzone.footzone.model.sessionsday.SessionsDayResponse
 import okhttp3.MultipartBody
 import retrofit2.http.*
 
@@ -109,5 +110,8 @@ interface ApiService {
 
     //requests sent to stadium owner PENDING PLAYED NOTIFICATIONS
     @GET("session/requests/{status}")
-    suspend fun getSentBookingRequests(@Path("status") status: String): StadiumBookSentResponse
+    fun getSentBookingRequests(@Path("status") status: String): StadiumBookSentResponse
+
+    @GET("session/day/{stadiumId}/{date}")
+    suspend fun getSessionsForSpecificDay(@Path ("stadiumId") stadiumId: String, @Path("date") date: String): SessionsDayResponse
 }
