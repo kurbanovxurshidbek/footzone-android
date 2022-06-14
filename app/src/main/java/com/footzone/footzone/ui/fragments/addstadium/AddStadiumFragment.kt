@@ -40,7 +40,9 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 import java.io.FileOutputStream
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
@@ -56,6 +58,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     private val viewModel by viewModels<AddStadiumViewModel>()
     lateinit var stadiumId: String
     var files = ArrayList<MultipartBody.Part>()
+    var selectedImageUri: Uri? = null
     var photos: ArrayList<EditPhoto> = ArrayList()
     var uris = ArrayList<Uri>()
     val filesPhoto = ArrayList<EditStadiumPhotoRequest>()
@@ -89,7 +92,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        photos.add(EditPhoto())
+        photos.add(EditPhoto("emferf", "rnfwernfwe"))
         return inflater.inflate(R.layout.fragment_add_stadium, container, false)
     }
 
@@ -128,18 +131,35 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     private fun refreshAdapter() {
         adapterEdit = PitchImageEditAdapter(photos, object : OnClickEditEvent{
             override fun setOnAddClickListener() {
-                //  filesPhoto.add(EditStadiumPhotoRequest(id, , true))
+                selectImage(PICK_FROM_FILE_EDIT)
+                if (selectedImageUri != null) {
+                    val body = convertUriMultipart(selectedImageUri!!)
+                    filesPhoto.add(EditStadiumPhotoRequest(UUID.randomUUID().toString(),
+                        body,
+                        true))
+                    photos.add(EditPhoto(UUID.randomUUID().toString(), selectedImageUri))
+                    adapterEdit.submitList(photos)
+                    Log.d("TAG", "setOnAddClickListener: ${photos}")
+                }
             }
 
             override fun setOnEditClickListener(position: Int, id: String) {
                 selectImage(PICK_FROM_FILE_EDIT)
+                if (selectedImageUri != null) {
+                    val body = convertUriMultipart(selectedImageUri!!)
+                    filesPhoto.add(EditStadiumPhotoRequest(id, body, true))
+                    photos[position].name = selectedImageUri
+                    adapterEdit.submitList(photos)
+                    Log.d("TAG", "setOnAddClickListener: ${photos}")
+                }
             }
 
             override fun setOnDeleteClickListener(position: Int, id: String) {
                 Toast.makeText(requireContext(), "Delete Image", Toast.LENGTH_SHORT).show()
                 filesPhoto.add(EditStadiumPhotoRequest(id, null, false))
                 photos.removeAt(position)
-                adapterEdit.notifyDataSetChanged()
+                adapterEdit.submitList(photos)
+                Log.d("TAG", "setOnAddClickListener: ${photos}")
             }
 
 
@@ -478,13 +498,29 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
 
         if (requestCode == PICK_FROM_FILE_EDIT && resultCode == RESULT_OK) {
             try {
-                val selectedImageUri: Uri = data?.data!!
-               //  images!![position] = selectedImageUri.toString()
-                adapterEdit.notifyDataSetChanged()
+                selectedImageUri = data!!.data!!
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
+    }
+
+    private fun convertUriMultipart(selectedImageUri: Uri): MultipartBody.Part{
+        val ins = requireActivity().contentResolver.openInputStream(selectedImageUri!!)
+        val image = File.createTempFile(
+            "file", ".jpg",
+            requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        )
+        val fileOutputStream = FileOutputStream(image)
+        ins?.copyTo(fileOutputStream)
+        ins?.close()
+        fileOutputStream.close()
+        val reqFile: RequestBody =
+            RequestBody.create("image/jpg".toMediaTypeOrNull(), image)
+        val body: MultipartBody.Part =
+            MultipartBody.Part.createFormData("files", image.name, reqFile)
+
+        return body
     }
 
     private fun openStadiumLocation() {
