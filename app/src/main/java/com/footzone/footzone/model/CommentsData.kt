@@ -7,21 +7,21 @@ data class CommentsData (
 )
 
 data class Data (
-    val countAllComments: List<CountAllComment>,
-    val commentInfo: List<CommentInfo>
+    val commentInfo: List<CommentInfo>,
+    val allComments: List<AllComment>
 )
 
-data class CommentInfo (
+data class AllComment (
     val text: String,
-    val stadiumID: String,
     val rate: Long,
+    val stadiumID: String,
     val createdAt: String,
-    val userAttachmentName: String,
     val commentID: String,
+    val userAttachmentName: String,
     val userFullName: String
 )
 
-data class CountAllComment (
-    val number: Long,
-    val rate: String
+data class CommentInfo (
+    val rate: String,
+    val number: Long
 )

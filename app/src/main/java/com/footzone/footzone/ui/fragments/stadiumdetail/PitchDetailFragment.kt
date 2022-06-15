@@ -79,7 +79,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
 
     private fun showPitchComments(data: Data) {
         Log.d("@@comments", data.toString())
-
+        refreshCommentAdapter(data)
     }
 
     private fun setupObservers() {
@@ -125,7 +125,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
     }
 
     private fun initViews() {
-        refreshCommentAdapter()
+
         binding.rbRate.setIsIndicator(true)
 
         if (isFavouriteStadium) {
@@ -208,12 +208,9 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
         binding.recyclerView.adapter = adapter
     }
 
-    private fun refreshCommentAdapter() {
-        adapterComment = CommentAdapter(getComments())
+    private fun refreshCommentAdapter(data: Data) {
+        adapterComment = CommentAdapter(data.allComments, requireContext())
         binding.recyclerViewComment.adapter = adapterComment
     }
 
-    private fun getComments(): ArrayList<FullComment> {
-        return ArrayList()
-    }
 }
