@@ -1,40 +1,48 @@
 package com.footzone.footzone.ui.fragments.profile
 
-import android.graphics.Bitmap
+import android.app.Dialog
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
-import android.widget.PopupMenu
-import android.widget.Toast
 import android.view.View
+import android.widget.EditText
+import android.widget.PopupMenu
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.bumptech.glide.annotation.GlideModule
+import com.footzone.footzone.ChooseLanguageDialog
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentProfileBinding
+import com.footzone.footzone.model.EditNameRequest
 import com.footzone.footzone.model.profile.Data
+import com.footzone.footzone.model.profile.UserData
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.KeyValues.LANGUAGE
 import com.footzone.footzone.utils.KeyValues.LOG_IN
 import com.footzone.footzone.utils.KeyValues.USER_ID
+import com.footzone.footzone.utils.KeyValues.USER_TOKEN
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
-import com.squareup.picasso.Picasso
-import java.io.File
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import me.shouheng.compress.Compress
 import me.shouheng.compress.concrete
 import me.shouheng.compress.strategy.config.ScaleMode
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import java.io.File
 import java.io.FileOutputStream
+import java.util.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
@@ -44,6 +52,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     @Inject
     lateinit var sharedPref: SharedPref
     lateinit var image: File
+    lateinit var userData: Data
     private val viewModel by viewModels<ProfileViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,9 +96,82 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             ivLogOut.setOnClickListener {
                 showPopup(it)
             }
+            ivEditName.setOnClickListener {
+                changeUserNameDialog()
+            }
 
         }
+
+        binding.linearLanguage.setOnClickListener {
+            val dialog = ChooseLanguageDialog { lang ->
+                val sharedPref = SharedPref(requireContext())
+                sharedPref.saveLanguage(LANGUAGE, lang)
+                setLocale(lang)
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                dialog.showChooseLanguageDialog(requireActivity())
+            }
+        }
     }
+
+    private fun changeUserNameDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.layout_edit_name_dialog)
+        dialog.window!!.setBackgroundDrawableResource(R.drawable.dialog_background)
+
+        val name = dialog.findViewById<EditText>(R.id.etName)
+        val tvYes = dialog.findViewById<TextView>(R.id.tvYes)
+        val tvNo = dialog.findViewById<TextView>(R.id.tvNo)
+
+        name.setText(binding.tvName.text)
+
+        tvNo.setOnClickListener { dialog.dismiss()}
+        tvYes.setOnClickListener {
+            if (name.text.isNotEmpty()){
+                val body = EditNameRequest(name.text.toString(),userData.phoneNumber)
+                viewModel.editUser(sharedPref.getUserID(USER_ID,""), body)
+                setupEditUsernameObservers(dialog,name.text.toString())
+            }
+        }
+        dialog.show()
+    }
+
+    private fun setupEditUsernameObservers(dialog: Dialog, name:String) {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.userChangeName.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
+
+                    is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "setupObservers: ${it.data}")
+                        binding.tvName.setText(name)
+                        dialog.dismiss()
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setLocale(language: String) {
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.locale = locale
+        requireActivity().baseContext.resources.updateConfiguration(
+            config,
+            requireActivity().baseContext.resources.displayMetrics
+        )
+        requireActivity().finish();
+        startActivity(requireActivity().intent);
+    }
+
 
     private fun setupObservers() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
@@ -101,7 +183,8 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
                     is UiStateObject.SUCCESS -> {
                         Log.d("TAG", "setupObservers: ${it.data}")
-                        showUserData(it.data.data)
+                        userData = it.data.data
+                        showUserData(userData)
                     }
                     is UiStateObject.ERROR -> {
                         Log.d("TAG", "setupUI: ${it.message}")
@@ -118,11 +201,19 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             tvName.text = userData.fullName
             tvNumber.text = userData.phoneNumber
 
-            Glide.with(requireContext())
-                .load("${KeyValues.BASE_URL}${userData.photo.name}")
-                .into(ivProfile)
+            if (!userData.photo.name.startsWith("default")) {
+                ivProfile.setPadding(0, 0, 0, 0)
+                Glide.with(requireContext())
+                    .load("${KeyValues.USER_IMAGE_BASE_URL}${userData.photo.name}")
+                    .into(ivProfile)
+                ivAdd.setImageResource(R.drawable.ic_edit_button)
+            } else {
+                ivProfile.setPadding(90, 90, 90, 90)
+                ivProfile.setImageResource(R.drawable.ic_person)
+            }
         }
     }
+
 
     private fun showPopup(v: View) {
         PopupMenu(requireContext(), v).apply {
@@ -131,8 +222,9 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
                     R.id.logOut -> {
                         sharedPref.saveLogIn(LOG_IN, false)
+                        sharedPref.saveUserId(USER_ID, "")
+                        sharedPref.saveUserToken(USER_TOKEN, "")
                         findNavController().popBackStack()
-                        Toast.makeText(requireContext(), "log out", Toast.LENGTH_SHORT).show()
                         true
                     }
                     else -> false
@@ -167,6 +259,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             ins?.close()
             fileOutputStream.close()
             if (image.length() == 0L) return@registerForActivityResult
+            binding.ivProfile.setPadding(0, 0, 0, 0)
             Glide.with(requireActivity()).load(image).into(binding.ivProfile)
 
 
@@ -181,17 +274,13 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                     }
                     .get(Dispatchers.IO)
                 withContext(Dispatchers.Main) {
-                    val reqFile: RequestBody = RequestBody.create("image/jpg".toMediaTypeOrNull(), result)
+                    val reqFile: RequestBody =
+                        RequestBody.create("image/jpg".toMediaTypeOrNull(), result)
                     val body: MultipartBody.Part =
                         MultipartBody.Part.createFormData("file", result.name, reqFile)
                     sendRequestToLoadImage(body)
                 }
             }
-
-
-
-
-
         }
 
     private fun sendRequestToLoadImage(body: MultipartBody.Part) {

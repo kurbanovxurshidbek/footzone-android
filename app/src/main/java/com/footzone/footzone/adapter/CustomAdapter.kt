@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.footzone.footzone.databinding.ItemRvBinding
-import com.footzone.footzone.model.holders.Comment
-import com.footzone.footzone.model.holders.Photo
+import com.footzone.footzone.model.StadiumPhoto
+import com.footzone.footzone.utils.KeyValues
 
-class CustomAdapter(var items: ArrayList<Photo>) :
+class CustomAdapter(var items: ArrayList<StadiumPhoto>) :
     RecyclerView.Adapter<CustomAdapter.VH>() {
 
 
@@ -25,12 +25,11 @@ class CustomAdapter(var items: ArrayList<Photo>) :
 
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        val item = items[position]
-//        holder.view.apply {
-//            Glide.with(itemImageView.context)
-//                .load(item[position])
-//                .into(itemImageView)
-//        }
+        holder.view.apply {
+            Glide.with(itemImageView.context)
+                .load("${KeyValues.STADIUM_IMAGE_BASE_URL}${items[position].name}")
+                .into(itemImageView)
+        }
     }
 
     override fun getItemCount(): Int {

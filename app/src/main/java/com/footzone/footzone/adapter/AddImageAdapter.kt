@@ -66,5 +66,4 @@ class AddImageAdapter(
 
     class DefualtImageViewHolder(val view: ItemAddImageBinding) : RecyclerView.ViewHolder(view.root)
 
-    class NewImageViewHolder(val view: ItemStadiumImageBinding) : RecyclerView.ViewHolder(view.root) {
-}
+    class NewImageViewHolder(val view: ItemStadiumImageBinding) : RecyclerView.ViewHolder(view.root)

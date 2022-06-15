@@ -17,29 +17,33 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(private val mainRepository: MainRepository) :
     ViewModel() {
 
+    private val _allStadiums =
+        MutableStateFlow<UiStateObject<AllStadiumResponse>>(UiStateObject.EMPTY)
+    val allStadiums = _allStadiums
+
+    private val _searchedStadiums =
+        MutableStateFlow<UiStateObject<ShortStadiumDetailResponse>>(UiStateObject.EMPTY)
+    val searchedStadiums = _searchedStadiums
+
     private val _nearByStadiums =
-        MutableStateFlow<UiStateObject<StadiumResponse>>(UiStateObject.EMPTY)
+        MutableStateFlow<UiStateObject<ShortStadiumDetailResponse>>(UiStateObject.EMPTY)
     val nearByStadiums = _nearByStadiums
 
     private val _favouriteStadiums =
-        MutableStateFlow<UiStateObject<StadiumResponse>>(UiStateObject.EMPTY)
+        MutableStateFlow<UiStateObject<ShortStadiumDetailResponse>>(UiStateObject.EMPTY)
     val favouriteStadiums = _favouriteStadiums
 
+    private val _favouriteStadiumsList =
+        MutableStateFlow<UiStateObject<FavouriteStadiumResponse>>(UiStateObject.EMPTY)
+    val favouriteStadiumsList = _favouriteStadiumsList
+
     private val _previouslyBookedStadiums =
-        MutableStateFlow<UiStateObject<PlayHistoryResponse>>(UiStateObject.EMPTY)
+        MutableStateFlow<UiStateObject<ShortStadiumDetailResponse>>(UiStateObject.EMPTY)
     val previouslyBookedStadiums = _previouslyBookedStadiums
 
     private val _addToFavouriteStadiums =
         MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
     val addToFavouriteStadiums = _addToFavouriteStadiums
-
-    private val _addToFavouriteStadiumsDB =
-        MutableStateFlow<UiStateObject<Unit>>(UiStateObject.EMPTY)
-    val addToFavouriteStadiumsDB = _addToFavouriteStadiumsDB
-
-    private val _getFavouriteStadiumsDB =
-        MutableStateFlow<UiStateList<FavouriteStadium>>(UiStateList.EMPTY)
-    val getFavouriteStadiumsDB = _getFavouriteStadiumsDB
 
     fun getNearByStadiums(location: Location) = viewModelScope.launch {
         _nearByStadiums.value = UiStateObject.LOADING
@@ -63,6 +67,19 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
 
         } catch (e: Exception) {
             _favouriteStadiums.value =
+                UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
+        }
+    }
+
+    fun getFavouriteStadiumsList(userId: String) = viewModelScope.launch {
+        _favouriteStadiumsList.value = UiStateObject.LOADING
+
+        try {
+            val response = mainRepository.getFavouriteStadiumsList(userId)
+            _favouriteStadiumsList.value = UiStateObject.SUCCESS(response)
+
+        } catch (e: Exception) {
+            _favouriteStadiumsList.value =
                 UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
         }
     }
@@ -94,30 +111,29 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
             }
         }
 
-    fun getFavouriteStadiumsDB() = viewModelScope.launch {
-        _getFavouriteStadiumsDB.value = UiStateList.LOADING
+    fun getAllStadiums() = viewModelScope.launch {
+        _allStadiums.value = UiStateObject.LOADING
 
         try {
-            val response = mainRepository.getFavouriteStadiumsDB()
-            _getFavouriteStadiumsDB.value = UiStateList.SUCCESS(response)
+            val response = mainRepository.getAllStadiums()
+            _allStadiums.value = UiStateObject.SUCCESS(response)
 
         } catch (e: Exception) {
-            _getFavouriteStadiumsDB.value =
-                UiStateList.ERROR(e.localizedMessage ?: "No connection", false)
-        }
-    }
-
-    fun addToFavouriteStadiumsDB(favouriteStadium: FavouriteStadium) = viewModelScope.launch {
-        _addToFavouriteStadiumsDB.value = UiStateObject.LOADING
-
-        try {
-            val response = mainRepository.addToFavouriteStadiumsDB(favouriteStadium)
-            _addToFavouriteStadiumsDB.value = UiStateObject.SUCCESS(response)
-
-        } catch (e: Exception) {
-            _addToFavouriteStadiumsDB.value =
+            _allStadiums.value =
                 UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
         }
     }
 
+    fun getSearchedStadiums(search: String) = viewModelScope.launch {
+        _searchedStadiums.value = UiStateObject.LOADING
+
+        try {
+            val response = mainRepository.getSearchedStadiums(search)
+            _searchedStadiums.value = UiStateObject.SUCCESS(response)
+
+        } catch (e: Exception) {
+            _searchedStadiums.value =
+                UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
+        }
+    }
 }

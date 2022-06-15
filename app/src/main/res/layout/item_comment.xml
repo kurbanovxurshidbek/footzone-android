@@ -20,11 +20,13 @@
             android:background="@drawable/linear_circular_filled"
             android:gravity="center">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivUserPhoto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_avatar" />
+                android:layout_width="32dp"
+                android:background="@drawable/ic_avatar"
+                android:layout_height="32dp"
+                android:scaleType="centerCrop"
+                android:theme="@style/circle" />
         </LinearLayout>
 
         <TextView

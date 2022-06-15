@@ -71,7 +71,8 @@
                             android:fontFamily="@font/poppins_bold"
                             android:text="Akmal Bunyodov"
                             android:textColor="@color/black"
-                            android:textSize="28sp" />
+                            android:textSize="28sp"
+                            android:singleLine="true" />
 
                         <ImageView
                             android:id="@+id/ivEditName"
@@ -129,12 +130,6 @@
                         android:scaleType="centerCrop"
                         android:theme="@style/circle" />
 
-                    <ImageView
-                        android:id="@+id/ivDefaultPerson"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_person" />
 
                     <ImageView
                         android:id="@+id/ivAdd"
@@ -218,7 +213,7 @@ safihangizga kiring"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins_bold"
-                android:text="Sozlamalar"
+                android:text="@string/str_setings"
                 android:textColor="#424242"
                 android:textSize="16sp" />
 
@@ -292,10 +287,11 @@ safihangizga kiring"
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/tvLanguage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="O'zbekcha"
+                        android:text="@string/str_lang"
                         android:textColor="#424242"
                         android:textSize="14sp" />
 

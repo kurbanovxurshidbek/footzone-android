@@ -5,11 +5,11 @@
 
     <string name="for_back_button">for back button</string>
     <string name="item_recyclerview">item recyclerView</string>
-    <string name="acme_futbol_maydoni">Acme futbol maydoni</string>
-    <string name="amir_temur_ko_chasi_14_uy">Amir Temur ko\'chasi, 14-uy</string>
+    <string name="acme_futbol_maydoni">Acme football field</string>
+    <string name="amir_temur_ko_chasi_14_uy">Amir Temur street, 14</string>
     <string name="_998_99_777_66_55">+998 99 777 66 55</string>
 
-    <string name="str_busy">Band qilish</string>
+    <string name="str_busy">Busy</string>
     <string name="str_date">Sana</string>
     <string name="str_cancel">Bekor qilish</string>
     <string name="str_occupancy">Band qilish</string>
@@ -28,6 +28,19 @@
     <string name="str_edit_stadium">Maydonni tahrirlash</string>
     <string name="str_time_interval">Vaqt oralig’i</string>
     <string name="str_stadium_address">Stadion address</string>
+    <string name="str_united_kingdom">United Kingdom</string>
+    <string name="str_russian">Russian</string>
+    <string name="str_uzbekistan">Uzbekistan</string>
+    <string name="str_select_language">Tilni tanlang</string>
+    <string name="str_setings">Settings</string>
+    <string name="str_lang">English</string>
+    <string name="str_00_00_da_yopiladi">00:00 da yopiladi</string>
+    <string name="str_so_m_soat">so\'m/soat</string>
+    <string name="str_marshrut">Marshrut</string>
+    <string name="str_send">Ulashish</string>
+    <string name="str_ratings_and_reviews">Ratings and reviews</string>
+    <string name="str_votes">votes</string>
+    <string name="str_open">Open</string>
 
     <string-array name="timelist">
         <item>00:00</item>

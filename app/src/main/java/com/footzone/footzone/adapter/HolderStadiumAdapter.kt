@@ -1,14 +1,16 @@
 package com.footzone.footzone.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemRvBinding
-import com.footzone.footzone.model.holderstadium.Photo
+import com.footzone.footzone.model.StadiumPhoto
+import com.footzone.footzone.utils.KeyValues
 
-class HolderStadiumAdapter(var items: ArrayList<Photo>) :
+class HolderStadiumAdapter(var items: ArrayList<StadiumPhoto>) :
     RecyclerView.Adapter<HolderStadiumAdapter.VH>() {
 
 
@@ -27,7 +29,8 @@ class HolderStadiumAdapter(var items: ArrayList<Photo>) :
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = items[position]
         holder.view.apply {
-            val uri = "https://footzone-server.herokuapp.com/images/user/${item.name}"
+            //val uri = "${KeyValues.STADIUM_IMAGE_BASE_URL}${item.name}"
+            val uri = "http://192.168.43.32:8081/images/stadium/${item.name}"
             Glide.with(itemImageView.context)
                 .load(uri)
                 .placeholder(R.drawable.stadim2)

@@ -1,17 +1,9 @@
 package com.footzone.footzone.networking.service
 
 import com.footzone.footzone.model.*
-import com.footzone.footzone.model.addstadium.Stadium
-import com.footzone.footzone.model.holders.HolderStadiumResponse
-import com.footzone.footzone.model.holderstadium.HolderStadium
-import com.footzone.footzone.model.playhistory.PlayHistoryResponse
 import com.footzone.footzone.model.profile.UserData
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import com.footzone.footzone.model.sessionsday.SessionsDayResponse
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface ApiService {
@@ -26,25 +18,28 @@ interface ApiService {
     suspend fun checkValidation(@Body smsVerification: SmsVerification): SmsVerificationResponse
 
     @POST("auth/login")
-    suspend fun signInVerification(@Body signInVerification: SignInVerification): Response
+    suspend fun signInVerification(@Body signInVerification: SignInVerification): LogInResponse
 
     @POST("auth/register")
     suspend fun registerUser(@Body user: User): RegisterResponse
 
     @POST("stadium/viewNearStadiums")
-    suspend fun getNearByStadiums(@Body location: Location): StadiumResponse
+    suspend fun getNearByStadiums(@Body location: Location): ShortStadiumDetailResponse
 
     @GET("favorites/{userId}")
-    suspend fun getFavouriteStadiums(@Path("userId") userId: String): StadiumResponse
+    suspend fun getFavouriteStadiums(@Path("userId") userId: String): ShortStadiumDetailResponse
 
     @POST("favorites")
     suspend fun addToFavouriteStadiums(@Body favouriteStadiumRequest: FavouriteStadiumRequest): Response
+
+    @GET("favorites/list/{userId}")
+    suspend fun getFavouriteStadiumsList(@Path("userId") userId: String): FavouriteStadiumResponse
 
     @GET("user/{userId}")
     suspend fun getUserData(@Path("userId") userId: String): UserData
 
     @GET("stadium/history/{userId}")
-    suspend fun getUserPlayHistory(@Path("userId") userId: String): PlayHistoryResponse
+    suspend fun getUserPlayHistory(@Path("userId") userId: String): ShortStadiumDetailResponse
 
     @Multipart
     @POST("user/changeProfilePicture/{userId}")
@@ -56,19 +51,67 @@ interface ApiService {
 
     //not yet fully connected
     @GET("stadium/{stadiumId}")
-    suspend fun getPitchData(@Path("stadiumId") stadiumId: String): Response
+    suspend fun getPitchData(@Path("stadiumId") stadiumId: String): FullStadiumDetailResponse
 
     @GET("stadium/holder/{userId}")
-    suspend fun getHolderStadiums(@Path("userId") userId: String): HolderStadiumResponse
+    suspend fun getHolderStadiums(@Path("userId") userId: String): ShortStadiumDetailResponse
 
     //the stadium owner adds the stadium
     @Multipart
     @POST("stadium")
     suspend fun postHolderStadium(
-        @Part("stadium") stadium: Stadium,
+        @Part("stadium") stadium: AddStadiumRequest,
         @Part files: List<MultipartBody.Part>,
-    ): String
+    ): Response
 
     @GET("stadium/{stadiumId}")
-    suspend fun getHolderStadium(@Path("stadiumId") stadiumId: String): HolderStadium
+    suspend fun getHolderStadium(@Path("stadiumId") stadiumId: String): FullStadiumDetailResponse
+
+    @GET("stadium/all")
+    suspend fun getAllStadiums(): AllStadiumResponse
+
+    @GET("stadium/search?")
+    suspend fun getSearchedStadiums(
+        @Query("search") search: String
+    ): ShortStadiumDetailResponse
+
+    @PUT("stadium/edit/content/{stadiumId}")
+    suspend fun editHolderStadium(
+        @Path("stadiumId") stadiumId: String,
+        @Body stadium: AddStadiumRequest
+    ): Response
+
+    @Multipart
+    @PUT("stadium/edit/photo/{stadiumId}")
+    suspend fun editHolderStadiumPhoto(
+        @Path("stadiumId") stadiumId: String,
+        @Part("files") files: List<EditStadiumPhotoRequest>
+    ): Response
+
+    @PUT("user/edit/{userId}")
+    suspend fun editUser(
+        @Path("userId") userId: String,
+        @Body body: EditNameRequest
+    ): Response
+
+    @GET("comment/{stadiumId}")
+    suspend fun getCommentAllByStadiumId(@Path("stadiumId") stadiumId: String): CommentsData
+
+    //user booking pitch
+    @POST("session")
+    fun sendBookingRequest(@Body bookingRequest: BookingRequest): Response
+
+    @PUT("session/{sessionId}")
+    suspend fun editSession(@Path("sessionId") sessionId: String)
+
+    //stadium owner response to request
+    @POST("session/acceptOrDecline")
+    fun acceptOrDeclineBookingRequest(@Body acceptDeclineRequest: AcceptDeclineRequest): Response
+
+    //requests sent to stadium owner PENDING PLAYED NOTIFICATIONS
+    @GET("session/requests/{status}")
+    fun getSentBookingRequests(@Path("status") status: String): StadiumBookSentResponse
+
+    @GET("session/day/{stadiumId}/{date}")
+    suspend fun getSessionsForSpecificDay(@Path ("stadiumId") stadiumId: String, @Path("date") date: String): SessionsDayResponse
 }

@@ -38,7 +38,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Acme futbol maydoni"
+                    android:text="@string/acme_futbol_maydoni"
                     android:textColor="#1C1B1F"
                     android:textSize="22sp" />
 
@@ -158,7 +158,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:fontFamily="@font/roboto"
-                        android:text="Ochiq"
+                        android:text="@string/str_open"
                         android:textColor="#177B4C"
                         android:textSize="16sp" />
 
@@ -176,15 +176,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="00:00 da yopiladi"
+                        android:text="@string/str_00_00_da_yopiladi"
                         android:textColor="#424242"
                         android:textSize="16sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:src="@drawable/ic_bottom" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -215,7 +209,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="so'm/soat"
+                        android:text="@string/str_so_m_soat"
                         android:textColor="#424242"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -224,7 +218,6 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="8dp"
                 android:overScrollMode="never">
@@ -236,11 +229,12 @@
                     android:scrollbars="none">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:layout_marginStart="16dp"
                             android:id="@+id/linearNavigation"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
@@ -261,7 +255,7 @@
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/poppins_bold"
                                 android:maxLines="1"
-                                android:text="Marshrut"
+                                android:text="@string/str_marshrut"
                                 android:textColor="#0C64E6"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -288,7 +282,7 @@
                                 android:layout_marginStart="10dp"
                                 android:fontFamily="@font/poppins_bold"
                                 android:maxLines="1"
-                                android:text="Ulashish"
+                                android:text="@string/str_send"
                                 android:textColor="#0C64E6"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -310,7 +304,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/poppins_bold"
-                android:text="Baholar va sharhlar"
+                android:text="@string/str_ratings_and_reviews"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -369,7 +363,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="ta ovoz"
+                            android:text="@string/str_votes"
                             android:textColor="#616161"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -535,6 +529,4 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

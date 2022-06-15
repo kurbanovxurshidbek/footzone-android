@@ -24,7 +24,7 @@ class VerificationViewModel @Inject constructor(private val authRepository: Auth
     val registerUser = _registerUser
 
     private val _signInVerification =
-        MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
+        MutableStateFlow<UiStateObject<LogInResponse>>(UiStateObject.EMPTY)
     val signInVerification = _signInVerification
 
     fun signUp(smsVerification: SmsVerification) = viewModelScope.launch {

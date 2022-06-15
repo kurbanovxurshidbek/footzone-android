@@ -6,8 +6,8 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:paddingHorizontal="20dp"
-    android:paddingBottom="18dp"
     android:paddingTop="16dp"
+    android:paddingBottom="18dp"
     app:behavior_hideable="false"
     app:layout_behavior="@string/top_sheet_auto_close_behavior">
 
@@ -24,9 +24,9 @@
             android:src="@drawable/ic_icon" />
 
         <TextView
-            android:fontFamily="@font/poppins_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
             android:text="Yaqin atrofdagi maydonlar"
             android:textColor="#1C1B1F"
             android:textSize="22sp" />
@@ -39,10 +39,11 @@
         android:layout_marginTop="12dp">
 
         <TextView
-            android:fontFamily="@font/poppins_bold"
+            android:id="@+id/tvCurrentlyOpen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/textview_rounded_background"
+            android:fontFamily="@font/poppins_bold"
             android:paddingHorizontal="12dp"
             android:paddingVertical="4dp"
             android:text="Hozir ochiq"
@@ -50,11 +51,12 @@
             android:textSize="14sp" />
 
         <TextView
-            android:fontFamily="@font/poppins_bold"
+            android:id="@+id/tvWellCommented"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:background="@drawable/textview_rounded_background"
+            android:fontFamily="@font/poppins_bold"
             android:paddingHorizontal="12dp"
             android:paddingVertical="4dp"
             android:text="Yaxshi baholangan"

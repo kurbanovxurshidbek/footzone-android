@@ -6,9 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemCommentBinding
-import com.footzone.footzone.model.holderstadium.Comment
+import com.footzone.footzone.model.FullComment
+import com.footzone.footzone.utils.KeyValues.USER_IMAGE_BASE_URL
 
-class HolderCommentAdapter(var items: ArrayList<Comment>) :
+class HolderCommentAdapter(var items: ArrayList<FullComment>) :
     RecyclerView.Adapter<HolderCommentAdapter.CommentViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder =
@@ -24,12 +25,12 @@ class HolderCommentAdapter(var items: ArrayList<Comment>) :
         val item = items[position]
         holder.view.apply {
             commentOwnerName.text = item.userFullName
-            ratingBarComment.rating = item.rate.toFloat()
+            ratingBarComment.rating = item.rate
             ratingBarComment.setIsIndicator(true)
             bodyComment.text = item.text
             dateComment.text = item.createdAt
 
-            val uri = "https://footzone-server.herokuapp.com/images/user/${item.userAttachmentName}"
+            val uri = "${USER_IMAGE_BASE_URL}${item.userAttachmentName}"
             Glide.with(ivUserPhoto.context)
                 .load(uri)
                 .placeholder(R.drawable.ic_avatar)

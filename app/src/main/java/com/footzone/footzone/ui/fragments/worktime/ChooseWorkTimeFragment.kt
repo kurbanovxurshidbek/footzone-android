@@ -13,15 +13,17 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentChooseWorkTimeBinding
-import com.footzone.footzone.model.addstadium.WorkingDay
+import com.footzone.footzone.model.WorkingDay
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.KeyValues.WORK_TIME
+import com.footzone.footzone.utils.KeyValues.WORK_TIMES
 import java.time.LocalTime
 import java.util.*
 
 class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) {
     lateinit var binding: FragmentChooseWorkTimeBinding
-    val workTimes = ArrayList<WorkingDay>()
+    private val workTimes = ArrayList<WorkingDay>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,7 +37,8 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
             icClose.setOnClickListener { requireActivity().onBackPressed() }
             tvCancel.setOnClickListener { requireActivity().onBackPressed() }
             tvSelection.setOnClickListener {
-                setFragmentResult(KeyValues.TYPE_WORK_TIME, bundleOf("workTimes" to workTimes, "wortTime" to wortTime()))
+                setFragmentResult(KeyValues.TYPE_WORK_TIME,
+                    bundleOf(WORK_TIMES to workTimes, WORK_TIME to wortTime()))
                 requireActivity().onBackPressed()
             }
         }
@@ -90,10 +93,10 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
     fun numberPicker(startTime: NumberPicker, finishTime: NumberPicker) {
         val timeList = resources.getStringArray(R.array.timelist)
         startTime.minValue = 1
-        startTime.maxValue = 47
+        startTime.maxValue = 48
         startTime.displayedValues = timeList
         finishTime.minValue = 1
-        finishTime.maxValue = 47
+        finishTime.maxValue = 48
         finishTime.displayedValues = timeList
 
         startTime.setOnScrollListener { numberPicker, i ->
@@ -146,11 +149,11 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
         return string
     }
 
-    private fun addTime(startTime: NumberPicker, finishTime: NumberPicker, day: String){
+    private fun addTime(startTime: NumberPicker, finishTime: NumberPicker, day: String) {
         val timeList = resources.getStringArray(R.array.timelist)
-        val startTime = timeList[startTime.value].toString()
-        val finishTime = timeList[finishTime.value].toString()
-        workTimes.add(WorkingDay(day, startTime, finishTime))
+        val startTime = timeList[startTime.value - 1].toString()
+        val finishTime = timeList[finishTime.value - 1].toString()
+        workTimes.add(WorkingDay(day, finishTime, startTime))
     }
 
     /**
@@ -174,9 +177,9 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
             val t = Timer()
             t.schedule(object : TimerTask() {
                 override fun run() {
-                    handler.post(Runnable {
+                    handler.post {
                         mMediaPlayer.stop()
-                    })
+                    }
                 }
             }, 500)
         }

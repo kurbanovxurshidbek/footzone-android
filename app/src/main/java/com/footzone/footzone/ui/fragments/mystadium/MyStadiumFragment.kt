@@ -1,8 +1,8 @@
 package com.footzone.footzone.ui.fragments.mystadium
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -10,14 +10,16 @@ import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.MyPitchAdapter
 import com.footzone.footzone.databinding.FragmentMyStadiumBinding
-import com.footzone.footzone.model.holders.Comment
-import com.footzone.footzone.model.holders.Data
+import com.footzone.footzone.helper.OnClickEvent
+import com.footzone.footzone.model.ShortStadiumDetail
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.KeyValues.USER_ID
+import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
@@ -25,10 +27,14 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
     lateinit var binding: FragmentMyStadiumBinding
     private val viewModel by viewModels<MyStadiumViewModel>()
 
+    @Inject
+    lateinit var sharedPref: SharedPref
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMyStadiumBinding.bind(view)
-        viewModel.getHolderStadiums("f202e46a-eef4-4ad0-b04c-3c62e5505fe1")
+        val userId = sharedPref.getUserID(USER_ID, "")
+        viewModel.getHolderStadiums(userId)
         setupObservers()
         initViews()
     }
@@ -42,16 +48,14 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
                     }
 
                     is UiStateObject.SUCCESS -> {
-                        val holderStadiumsList = it.data.data as ArrayList<Data>
+                        val holderStadiumsList = it.data.data as ArrayList<ShortStadiumDetail>
                         controlVisibility(holderStadiumsList.isEmpty())
-
-                        Log.d("TAG", "setupObservers: ${holderStadiumsList}")
                         if (holderStadiumsList.isNotEmpty()) {
                             refreshAdapter(holderStadiumsList)
                         }
                     }
                     is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupObservers:${it}")
+
                     }
                     else -> {
                     }
@@ -83,29 +87,32 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
         }
     }
 
-    private fun refreshAdapter(stadiums: ArrayList<Data>) {
-        val adapter = MyPitchAdapter(this, stadiums) { stadiumId ->
-            openEditStadium(stadiumId)
-        }
+    private fun refreshAdapter(stadiums: ArrayList<ShortStadiumDetail>) {
+        val adapter = MyPitchAdapter(stadiums, object : OnClickEvent {
+            override fun setOnBookClickListener(stadiumId: String, isFavourite: Boolean) {
+                openEditStadium(stadiumId)
+            }
+
+            override fun setOnNavigateClickListener(latitude: Double, longitude: Double) {
+                requireActivity().shareLocationToGoogleMap(latitude, longitude)
+            }
+
+            override fun setOnBookMarkClickListener(
+                stadiumId: String,
+                ivBookmark: ImageView
+            ) {
+                //no action
+            }
+
+        })
         binding.recyclerView.adapter = adapter
     }
 
-    fun resRating(comments: ArrayList<Comment>): Float {
-        return try {
-            (comments.sumOf { it.number * it.rate } / comments.sumOf { it.number }).toFloat()
-        } catch (e: Exception) {
-            2.5f
-        }
-    }
-
-
-    fun openMap() {
-        requireActivity().shareLocationToGoogleMap(41.33324, 69.21896)
-    }
-
     private fun openAddStadium() {
-        findNavController().navigate(R.id.action_myStadiumFragment_to_addStadiumFragment,
-            bundleOf(KeyValues.TYPE_DETAIL to false))
+        findNavController().navigate(
+            R.id.action_myStadiumFragment_to_addStadiumFragment,
+            bundleOf(KeyValues.TYPE_DETAIL to false)
+        )
     }
 
     private fun openEditStadium(stadiumId: String) {

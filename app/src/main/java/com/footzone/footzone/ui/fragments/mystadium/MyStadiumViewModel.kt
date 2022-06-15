@@ -2,8 +2,7 @@ package com.footzone.footzone.ui.fragments.mystadium
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.footzone.footzone.model.holders.HolderStadiumResponse
-import com.footzone.footzone.model.playhistory.PlayHistoryResponse
+import com.footzone.footzone.model.ShortStadiumDetailResponse
 import com.footzone.footzone.repository.main.MainRepository
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +15,7 @@ import javax.inject.Inject
 class MyStadiumViewModel  @Inject constructor(private val mainRepository: MainRepository) :
     ViewModel() {
 
-    private val _holderStadiums = MutableStateFlow<UiStateObject<HolderStadiumResponse>>(UiStateObject.EMPTY)
+    private val _holderStadiums = MutableStateFlow<UiStateObject<ShortStadiumDetailResponse>>(UiStateObject.EMPTY)
     val holderStadiums = _holderStadiums
 
     fun getHolderStadiums(userId: String) = viewModelScope.launch {

@@ -1,43 +1,56 @@
 package com.footzone.footzone.adapter
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.footzone.footzone.databinding.ItemPitchBookSentBinding
-import com.footzone.footzone.model.PitchHistory
+import com.footzone.footzone.helper.OnClickEventAcceptDecline
+import com.footzone.footzone.model.StadiumBookSentResponse
+import com.footzone.footzone.model.StadiumBookSentResponseData
+import java.time.Duration
+import java.time.LocalTime
 
-class PitchBookSentAdapter(val onRespondClick: (Boolean) -> Unit) :
+class PitchBookSentAdapter(
+    private val playedPitchList: List<StadiumBookSentResponseData>,
+    private val onClickEventAcceptDecline: OnClickEventAcceptDecline
+) :
     RecyclerView.Adapter<PitchBookSentAdapter.VH>() {
-
-    private val playedPitchList = ArrayList<PitchHistory>()
 
     inner class VH(val view: ItemPitchBookSentBinding) : RecyclerView.ViewHolder(view.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH =
         VH(ItemPitchBookSentBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: VH, position: Int) {
-        val pitch = playedPitchList[position]
+        val stadium = playedPitchList[position]
         holder.view.apply {
-            tvPitchName.text = "${pitch.name} futbol maydoni"
-            tvDate.text = pitch.date
-            tvHours.text = "${pitch.hour.start}-${pitch.hour.end}, 2 soat"
-            tvPrice.text = "${pitch.price} so'm"
+            tvPitchName.text = "${stadium.stadiumName} futbol maydoni"
+            tvDate.text = stadium.date.toString()
+            tvHours.text = "${stadium.startTime.subSequence(0,5)}-${stadium.endTime.substring(0,5)}, ${
+                calculateInHours(
+                    LocalTime.parse(stadium.startTime),
+                    LocalTime.parse(stadium.endTime)
+                )
+            } soat"
+            tvPrice.text = "${stadium.hourlyPrice.toInt()} so'm"
 
             btnAccept.setOnClickListener {
-                onRespondClick.invoke(true)
+                onClickEventAcceptDecline.onAccept(stadium.sessionId)
             }
 
             btnDecline.setOnClickListener {
-                onRespondClick.invoke(false)
+                onClickEventAcceptDecline.onDecline(stadium.sessionId)
             }
         }
     }
 
-    override fun getItemCount(): Int = playedPitchList.size
-
-    fun submitData(list: ArrayList<PitchHistory>) {
-        this.playedPitchList.addAll(list)
-        notifyDataSetChanged()
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun calculateInHours(startTime: LocalTime, endTime: LocalTime): String {
+        return Duration.between(startTime, endTime).toHours().toString()
     }
+
+    override fun getItemCount(): Int = playedPitchList.size
 }

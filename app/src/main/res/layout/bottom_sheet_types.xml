@@ -31,13 +31,13 @@
             android:background="@drawable/edittext_backround"
             android:drawableLeft="@drawable/ic_leading_icon"
             android:drawablePadding="16dp"
+            android:fontFamily="@font/poppins_bold"
             android:gravity="center_vertical"
             android:hint="Maydon nomi"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:paddingHorizontal="10dp"
             android:singleLine="true"
-            android:fontFamily="@font/poppins_bold"
             android:textColor="@color/black"
             android:textColorHint="#616161"
             android:textSize="16sp" />
@@ -64,10 +64,10 @@
                     android:src="@drawable/ic_near_me" />
 
                 <TextView
-                    android:fontFamily="@font/poppins_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Yaqin atrofdagi maydonlar"
                     android:textColor="#0A0A0A"
                     android:textSize="14sp" />
@@ -90,10 +90,10 @@
                     android:src="@drawable/ic_bookmark_border" />
 
                 <TextView
-                    android:fontFamily="@font/poppins_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Tanlangan\nmaydonlar"
                     android:textColor="#0A0A0A"
                     android:textSize="14sp" />
@@ -125,10 +125,10 @@
                     android:src="@drawable/ic_history" />
 
                 <TextView
-                    android:fontFamily="@font/poppins_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="Avval band qilingan maydonlar"
                     android:textColor="#0A0A0A"
                     android:textSize="14sp" />
@@ -136,28 +136,35 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linearMyStadium"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:background="#E7F1FF"
-                android:orientation="vertical"
-                android:padding="15dp">
+                android:layout_marginEnd="10dp">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_maydon" />
+                <LinearLayout
+                    android:id="@+id/linearMyStadium"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#E7F1FF"
+                    android:orientation="vertical"
+                    android:padding="15dp"
+                    android:visibility="gone">
 
-                <TextView
-                    android:fontFamily="@font/poppins_bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Mening maydonlarim"
-                    android:textColor="#0A0A0A"
-                    android:textSize="14sp" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_maydon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="Mening maydonlarim"
+                        android:textColor="#0A0A0A"
+                        android:textSize="14sp" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
