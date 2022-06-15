@@ -2,7 +2,6 @@ package com.footzone.footzone.ui.fragments.timeinterval
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.footzone.footzone.model.Response
 import com.footzone.footzone.model.sessionsday.SessionsDayResponse
 import com.footzone.footzone.repository.main.MainRepository
 import com.footzone.footzone.utils.UiStateObject

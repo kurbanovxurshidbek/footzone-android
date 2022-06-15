@@ -172,9 +172,9 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                             workTimes
                         )
 
-                    viewModel.editHolderStadium(stadiumId, stadium)
+                   // viewModel.editHolderStadium(stadiumId, stadium)
                     viewModel.editHolderStadiumPhoto(stadiumId, filesPhoto)
-                    observeViewModelEdit()
+                    //observeViewModelEdit()
                     observeViewModelEditPhoto()
                 } catch (e: Exception) {
                     Toast.makeText(
@@ -284,7 +284,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         custToast.setView(binding.root)
                         custToast.show()
                         requireActivity().onBackPressed()
-                        Log.d("TAG", "observeViewModelEditPhoto: error")
+                        Log.d("TAG", "observeViewModelEditPhoto: error ${it}")
                     }
                     else -> {
                     }
