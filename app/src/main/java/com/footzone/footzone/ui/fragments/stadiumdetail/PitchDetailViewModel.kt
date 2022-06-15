@@ -2,6 +2,7 @@ package com.footzone.footzone.ui.fragments.stadiumdetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.footzone.footzone.model.CommentsData
 import com.footzone.footzone.model.FavouriteStadiumRequest
 import com.footzone.footzone.model.FullStadiumDetailResponse
 import com.footzone.footzone.model.Response
@@ -22,7 +23,7 @@ class PitchDetailViewModel @Inject constructor(private val mainRepository: MainR
         MutableStateFlow<UiStateObject<FullStadiumDetailResponse>>(UiStateObject.EMPTY)
     val pitchData = _pitchData
 
-    private val _pitchComment = MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
+    private val _pitchComment = MutableStateFlow<UiStateObject<CommentsData>>(UiStateObject.EMPTY)
     val pitchComment = _pitchComment
 
     private val _addToFavouriteStadiums =

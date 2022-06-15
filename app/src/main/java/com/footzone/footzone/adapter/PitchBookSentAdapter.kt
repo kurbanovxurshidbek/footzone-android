@@ -13,7 +13,7 @@ import java.time.Duration
 import java.time.LocalTime
 
 class PitchBookSentAdapter(
-    private val playedPitchList: ArrayList<StadiumBookSentResponseData>,
+    private val playedPitchList: List<StadiumBookSentResponseData>,
     private val onClickEventAcceptDecline: OnClickEventAcceptDecline
 ) :
     RecyclerView.Adapter<PitchBookSentAdapter.VH>() {
@@ -29,20 +29,20 @@ class PitchBookSentAdapter(
         holder.view.apply {
             tvPitchName.text = "${stadium.stadiumName} futbol maydoni"
             tvDate.text = stadium.date.toString()
-            tvHours.text = "${stadium.startTime}-${stadium.endTime}, ${
+            tvHours.text = "${stadium.startTime.subSequence(0,5)}-${stadium.endTime.substring(0,5)}, ${
                 calculateInHours(
-                    stadium.startTime,
-                    stadium.endTime
+                    LocalTime.parse(stadium.startTime),
+                    LocalTime.parse(stadium.endTime)
                 )
-            }"
+            } soat"
             tvPrice.text = "${stadium.hourlyPrice.toInt()} so'm"
 
             btnAccept.setOnClickListener {
-                onClickEventAcceptDecline.onAccept()
+                onClickEventAcceptDecline.onAccept(stadium.sessionId)
             }
 
             btnDecline.setOnClickListener {
-                onClickEventAcceptDecline.onDecline()
+                onClickEventAcceptDecline.onDecline(stadium.sessionId)
             }
         }
     }
