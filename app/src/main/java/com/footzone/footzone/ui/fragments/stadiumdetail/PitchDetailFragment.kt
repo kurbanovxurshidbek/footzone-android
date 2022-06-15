@@ -64,8 +64,8 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                     }
 
                     is UiStateObject.SUCCESS -> {
-//                        Log.d("TAG", "setupObservers: ${it.data}")
-//                        showPitchComments(it.data.data)
+                        Log.d("TAG", "setupObservers: ${it.data}")
+                        showPitchComments(it.data.data)
                     }
                     is UiStateObject.ERROR -> {
                         Log.d("TAG", "setupUI: ${it.message}")
@@ -77,8 +77,9 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
         }
     }
 
-    private fun showPitchComments(data: Any) {
-     //   Log.d("@@comments", data.toString())
+    private fun showPitchComments(data: Data) {
+        Log.d("@@comments", data.toString())
+
     }
 
     private fun setupObservers() {

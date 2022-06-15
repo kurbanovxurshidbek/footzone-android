@@ -95,7 +95,7 @@ interface ApiService {
     ): Response
 
     @GET("comment/{stadiumId}")
-    suspend fun getCommentAllByStadiumId(@Path("stadiumId") stadiumId: String): Response
+    suspend fun getCommentAllByStadiumId(@Path("stadiumId") stadiumId: String): CommentsData
 
     //user booking pitch
     @POST("session")
