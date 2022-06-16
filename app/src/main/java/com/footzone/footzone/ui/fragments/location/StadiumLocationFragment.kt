@@ -1,10 +1,14 @@
 package com.footzone.footzone.ui.fragments.location
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
@@ -15,6 +19,7 @@ import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.LocationHelper
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -36,6 +41,15 @@ class StadiumLocationFragment : BaseFragment(R.layout.fragment_stadium_location)
     private lateinit var mMap: GoogleMap
     private val myLocationZoom = 16.0f
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initFusedLocationClient()
+    }
+
+    private fun initFusedLocationClient() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentStadiumLocationBinding.bind(view)
@@ -44,15 +58,17 @@ class StadiumLocationFragment : BaseFragment(R.layout.fragment_stadium_location)
 
 
     private fun initViews() {
+        val locationCur=setUpMap()
         binding.apply {
             icClose.setOnClickListener { requireActivity().onBackPressed() }
             tvCancel.setOnClickListener { requireActivity().onBackPressed() }
             tvSelection.setOnClickListener {
                 val latitude = 41.3248628798667
                 val longitude = 69.23367757896234
+                Log.d("TAG", "initViews: ${locationCur.latitude} ${locationCur.longitude} ")
                 setFragmentResult(
                     KeyValues.TYPE_LOCATION,
-                    bundleOf("latitude" to latitude, "longitude" to longitude)
+                    bundleOf("latitude" to locationCur.latitude, "longitude" to locationCur.longitude)
                 )
                 findNavController().popBackStack()
             }
@@ -64,6 +80,7 @@ class StadiumLocationFragment : BaseFragment(R.layout.fragment_stadium_location)
     }
 
     override fun onMapReady(p0: GoogleMap) {
+        setUpMap()
         mMap = p0
         mMap.moveCamera(
             CameraUpdateFactory.newLatLngZoom(
@@ -87,6 +104,29 @@ class StadiumLocationFragment : BaseFragment(R.layout.fragment_stadium_location)
             binding.mapIcon.animate().translationY(0f).setDuration(300).start()
 
         }
+    }
+
+    private fun setUpMap():LatLng {
+        var currentLatLng:LatLng?=null
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+
+        }
+        fusedLocationClient.lastLocation.addOnSuccessListener(requireActivity()) { location ->
+            if (location!=null){
+                lastLocation=location
+                 currentLatLng=LatLng(location.latitude,location.longitude)
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng!!,myLocationZoom))
+            }
+       }
+        return currentLatLng!!
+
     }
 
     override fun onCancel() {

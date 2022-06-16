@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.footzone.footzone.R
@@ -15,8 +16,11 @@ import com.footzone.footzone.model.*
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.ui.fragments.bookBottomSheet.ChooseTimeBottomSheetDialog
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
+import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.KeyValues.FINISHTIME
 import com.footzone.footzone.utils.KeyValues.IS_FAVOURITE_STADIUM
 import com.footzone.footzone.utils.KeyValues.STADIUM_ID
+import com.footzone.footzone.utils.KeyValues.STARTTIME
 import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
@@ -33,6 +37,8 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
     private lateinit var stadiumId: String
     private var isFavouriteStadium: Boolean = false
     var times: ArrayList<TimeManager> = ArrayList()
+    private var startTime: String? = null
+    private var endTime: String? = null
 
     @Inject
     lateinit var sharedPref: SharedPref
@@ -41,9 +47,14 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
         super.onCreate(savedInstanceState)
         stadiumId = arguments?.get(STADIUM_ID).toString()
         isFavouriteStadium = arguments?.get(IS_FAVOURITE_STADIUM).toString().toBoolean()
-        Log.d("TAG", "onCreate: $isFavouriteStadium")
         viewModel.getPitchData(stadiumId)
         viewModel.getCommentAllByStadiumId(stadiumId)
+
+        val startTime = arguments?.get(STARTTIME).toString()
+        val finishTime = arguments?.get(FINISHTIME).toString()
+
+        Log.d("TAG", "onCreate ds: ${startTime}")
+        Log.d("TAG", "onCreate ds: ${finishTime}")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,6 +64,14 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
         setupObservers()
         setupCommentObservers()
         initViews()
+
+        setFragmentResultListener(KeyValues.TYPE_CHOOSE_TIME) { r, bundle ->
+            startTime = bundle.getString(STARTTIME)!!
+            endTime = bundle.getString(FINISHTIME)!!
+
+            Log.d("TAG", "onCreate dsp: ${startTime}")
+            Log.d("TAG", "onCreate dsp: ${endTime}")
+        }
     }
 
     private fun setupCommentObservers() {
@@ -64,8 +83,8 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                     }
 
                     is UiStateObject.SUCCESS -> {
-//                        Log.d("TAG", "setupObservers: ${it.data}")
-//                        showPitchComments(it.data.data)
+                        Log.d("TAG", "setupObservers: ${it.data}")
+                        showPitchComments(it.data.data)
                     }
                     is UiStateObject.ERROR -> {
                         Log.d("TAG", "setupUI: ${it.message}")
@@ -77,8 +96,9 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
         }
     }
 
-    private fun showPitchComments(data: Any) {
-     //   Log.d("@@comments", data.toString())
+    private fun showPitchComments(data: Data) {
+        Log.d("@@comments", data.toString())
+        refreshCommentAdapter(data)
     }
 
     private fun setupObservers() {
@@ -124,7 +144,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
     }
 
     private fun initViews() {
-        refreshCommentAdapter()
+
         binding.rbRate.setIsIndicator(true)
 
         if (isFavouriteStadium) {
@@ -207,12 +227,9 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
         binding.recyclerView.adapter = adapter
     }
 
-    private fun refreshCommentAdapter() {
-        adapterComment = CommentAdapter(getComments())
+    private fun refreshCommentAdapter(data: Data) {
+        adapterComment = CommentAdapter(data.allComments, requireContext())
         binding.recyclerViewComment.adapter = adapterComment
     }
 
-    private fun getComments(): ArrayList<FullComment> {
-        return ArrayList()
-    }
 }

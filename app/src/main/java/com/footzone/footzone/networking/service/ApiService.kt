@@ -85,7 +85,8 @@ interface ApiService {
     @PUT("stadium/edit/photo/{stadiumId}")
     suspend fun editHolderStadiumPhoto(
         @Path("stadiumId") stadiumId: String,
-        @Part("files") files: ArrayList<EditStadiumPhotoRequest>
+        @Part("photoIds") photoIds: List<String>,
+        @Part files: List<MultipartBody.Part>,
     ): Response
 
     @PUT("user/edit/{userId}")
@@ -95,18 +96,18 @@ interface ApiService {
     ): Response
 
     @GET("comment/{stadiumId}")
-    suspend fun getCommentAllByStadiumId(@Path("stadiumId") stadiumId: String): Response
+    suspend fun getCommentAllByStadiumId(@Path("stadiumId") stadiumId: String): CommentsData
 
     //user booking pitch
     @POST("session")
-    suspend fun sendBookingRequest(@Body bookingRequest: BookingRequest): Response
+    fun sendBookingRequest(@Body bookingRequest: BookingRequest): Response
 
     @PUT("session/{sessionId}")
     suspend fun editSession(@Path("sessionId") sessionId: String)
 
     //stadium owner response to request
     @POST("session/acceptOrDecline")
-    suspend fun acceptOrDeclineBookingRequest(@Body acceptDeclineRequest: AcceptDeclineRequest): Response
+    fun acceptOrDeclineBookingRequest(@Body acceptDeclineRequest: AcceptDeclineRequest): Response
 
     //requests sent to stadium owner PENDING PLAYED NOTIFICATIONS
     @GET("session/requests/{status}")

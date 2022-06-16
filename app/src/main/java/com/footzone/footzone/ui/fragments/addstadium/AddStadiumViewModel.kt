@@ -67,11 +67,11 @@ class AddStadiumViewModel  @Inject constructor(private val mainRepository: MainR
         }
     }
 
-    fun editHolderStadiumPhoto(stadiumId: String, files: ArrayList<EditStadiumPhotoRequest>) = viewModelScope.launch {
+    fun editHolderStadiumPhoto(stadiumId: String, files: ArrayList<MultipartBody.Part>, photoIds: ArrayList<String>) = viewModelScope.launch {
         _editHolderStadiumPhoto.value = UiStateObject.LOADING
 
         try {
-            val response = mainRepository.editHolderStadiumPhoto(stadiumId, files)
+            val response = mainRepository.editHolderStadiumPhoto(stadiumId, photoIds, files)
             _editHolderStadiumPhoto.value = UiStateObject.SUCCESS(response)
 
         } catch (e: Exception) {

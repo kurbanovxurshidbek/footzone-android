@@ -50,6 +50,7 @@ class PitchImageEditAdapterTest(var pitchImages: LinkedList<EditPhoto>, private 
             is EditImageViewHolder -> {
                 if (pitchImages[position].name is String) {
                     val uri = "${KeyValues.STADIUM_IMAGE_BASE_URL}${pitchImages[position].name}"
+                    //val uri = "http://192.168.43.32:8081/images/stadium/${pitchImages[position].name}"
                     Glide.with(holder.view.ivPitch.context)
                         .load(uri)
                         .into(holder.view.ivPitch)

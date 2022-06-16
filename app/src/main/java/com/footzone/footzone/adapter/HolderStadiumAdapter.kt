@@ -30,7 +30,7 @@ class HolderStadiumAdapter(var items: ArrayList<StadiumPhoto>) :
         val item = items[position]
         holder.view.apply {
             val uri = "${KeyValues.STADIUM_IMAGE_BASE_URL}${item.name}"
-
+            //val uri = "http://192.168.43.32:8081/images/stadium/${item.name}"
             Glide.with(itemImageView.context)
                 .load(uri)
                 .placeholder(R.drawable.stadim2)
