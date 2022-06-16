@@ -16,6 +16,7 @@ import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.ui.fragments.bookpitchsent.BookPitchSentFragment
 import com.footzone.footzone.ui.fragments.played.PlayedPitchFragment
 import com.footzone.footzone.ui.fragments.playing.PlayingPitchFragment
+import com.footzone.footzone.ui.fragments.stadiumhistory.StadiumGameHistoryFragment
 import com.footzone.footzone.utils.KeyValues.IS_OWNER
 import com.footzone.footzone.utils.KeyValues.LOG_IN
 import com.footzone.footzone.utils.SharedPref
@@ -82,7 +83,7 @@ class TableFragment : BaseFragment(R.layout.fragment_table) {
 
     private fun addFragmentsToVPOwner() {
         tableViewPagerAdapter.addFragment(BookPitchSentFragment())
-        tableViewPagerAdapter.addFragment(PlayedPitchFragment())
+        tableViewPagerAdapter.addFragment(StadiumGameHistoryFragment())
     }
 
     private fun addFragmentsToVPUser() {

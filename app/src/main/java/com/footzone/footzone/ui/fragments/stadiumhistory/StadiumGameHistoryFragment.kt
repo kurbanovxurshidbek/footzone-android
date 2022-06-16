@@ -1,4 +1,4 @@
-package com.footzone.footzone.ui.fragments.played
+package com.footzone.footzone.ui.fragments.stadiumhistory
 
 import android.os.Bundle
 import android.util.Log
@@ -6,22 +6,22 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.footzone.footzone.R
-import com.footzone.footzone.adapter.PlayedPitchAdapter
+import com.footzone.footzone.adapter.StadiumPlayedHistoryAdapter
 import com.footzone.footzone.databinding.FragmentPlayedPitchBinding
-import com.footzone.footzone.model.PlayedHistoryResponseData
+import com.footzone.footzone.model.StadiumBookSentResponseData
 import com.footzone.footzone.ui.fragments.BaseFragment
-import com.footzone.footzone.utils.KeyValues.USER_ID
+import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PlayedPitchFragment : BaseFragment(R.layout.fragment_played_pitch) {
+class StadiumGameHistoryFragment : BaseFragment(R.layout.fragment_stadium_game_history) {
 
     private lateinit var binding: FragmentPlayedPitchBinding
-    private lateinit var playedPitchAdapter: PlayedPitchAdapter
-    private val viewModel by viewModels<PlayedPitchViewModel>()
+    private lateinit var playedPitchAdapter: StadiumPlayedHistoryAdapter
+    private val viewModel by viewModels<StadiumHistoryViewModel>()
 
     @Inject
     lateinit var sharedPref: SharedPref
@@ -30,20 +30,20 @@ class PlayedPitchFragment : BaseFragment(R.layout.fragment_played_pitch) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentPlayedPitchBinding.bind(view)
-        if (sharedPref.getUserID(USER_ID, "").isNotEmpty())
-            viewModel.getPlayedHistory(sharedPref.getUserID(USER_ID, ""))
+        if (sharedPref.getUserID(KeyValues.USER_ID, "").isNotEmpty())
+            viewModel.getStadiumPlayedHistory("PLAYED")
         initViews()
     }
 
     private fun initViews() {
-        playedPitchAdapter = PlayedPitchAdapter()
+        playedPitchAdapter = StadiumPlayedHistoryAdapter()
 
         observePlayedStadium()
     }
 
     private fun observePlayedStadium() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.playedStadiums.collect {
+            viewModel.stadiumPlayedHistory.collect {
                 when (it) {
                     UiStateObject.LOADING -> {
                         //show progress
@@ -63,7 +63,7 @@ class PlayedPitchFragment : BaseFragment(R.layout.fragment_played_pitch) {
         }
     }
 
-    private fun refreshAdapter(data: List<PlayedHistoryResponseData>) {
+    private fun refreshAdapter(data: List<StadiumBookSentResponseData>) {
         playedPitchAdapter.submitData(data)
         binding.rvPlayedPitches.adapter = playedPitchAdapter
     }

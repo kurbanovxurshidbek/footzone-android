@@ -31,11 +31,10 @@ import com.google.android.gms.maps.model.Marker
 
 class StadiumLocationFragment : BaseFragment(R.layout.fragment_stadium_location),
     OnMapReadyCallback,
-    GoogleMap.CancelableCallback {
+    GoogleMap.CancelableCallback, GoogleMap.OnMarkerDragListener {
 
     lateinit var binding: FragmentStadiumLocationBinding
     private var lastLocation: Location? = null
-    private var markerList = ArrayList<Marker>()
     private var cameraCurrentLatLng: LatLng? = null
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var mMap: GoogleMap
@@ -58,29 +57,30 @@ class StadiumLocationFragment : BaseFragment(R.layout.fragment_stadium_location)
 
 
     private fun initViews() {
-        val locationCur=setUpMap()
+        val locationCur = setUpMap()
         binding.apply {
             icClose.setOnClickListener { requireActivity().onBackPressed() }
             tvCancel.setOnClickListener { requireActivity().onBackPressed() }
             tvSelection.setOnClickListener {
-                val latitude = 41.3248628798667
-                val longitude = 69.23367757896234
-               // Log.d("TAG", "initViews: ${locationCur.latitude} ${locationCur.longitude} ")
+                Log.d("TAG", "initViews: ${locationCur.latitude} ${locationCur.longitude} ")
                 setFragmentResult(
                     KeyValues.TYPE_LOCATION,
-                    bundleOf("latitude" to latitude, "longitude" to longitude)
+                    bundleOf(
+                        "latitude" to locationCur.latitude,
+                        "longitude" to locationCur.longitude
+                    )
                 )
                 findNavController().popBackStack()
             }
         }
 
-//        val supportMapFragment =
-//            childFragmentManager.findFragmentById(R.id.map_view) as SupportMapFragment
-//        supportMapFragment.getMapAsync(this)
+        val supportMapFragment =
+            childFragmentManager.findFragmentById(R.id.map_view) as SupportMapFragment
+        supportMapFragment.getMapAsync(this)
     }
 
     override fun onMapReady(p0: GoogleMap) {
-       // setUpMap()
+        setUpMap()
         mMap = p0
         mMap.moveCamera(
             CameraUpdateFactory.newLatLngZoom(
@@ -106,8 +106,8 @@ class StadiumLocationFragment : BaseFragment(R.layout.fragment_stadium_location)
         }
     }
 
-    private fun setUpMap():LatLng {
-        var currentLatLng:LatLng?=null
+    private fun setUpMap(): LatLng {
+        var currentLatLng: LatLng? = null
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -119,23 +119,39 @@ class StadiumLocationFragment : BaseFragment(R.layout.fragment_stadium_location)
 
         }
         fusedLocationClient.lastLocation.addOnSuccessListener(requireActivity()) { location ->
-            if (location!=null){
-                lastLocation=location
-                 currentLatLng=LatLng(location.latitude,location.longitude)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng!!,myLocationZoom))
+            if (location != null) {
+                lastLocation = location
+                currentLatLng = LatLng(location.latitude, location.longitude)
+                mMap.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        currentLatLng!!,
+                        myLocationZoom
+                    )
+                )
             }
-       }
+        }
         return currentLatLng!!
 
     }
 
+
     override fun onCancel() {
-        TODO("Not yet implemented")
+
     }
 
     override fun onFinish() {
-        TODO("Not yet implemented")
+
     }
 
+    override fun onMarkerDrag(p0: Marker) {
 
+    }
+
+    override fun onMarkerDragEnd(p0: Marker) {
+        Log.d("TAG", "onMarkerDragEnd: ${p0.position.latitude} ${p0.position.longitude}")
+    }
+
+    override fun onMarkerDragStart(p0: Marker) {
+
+    }
 }
