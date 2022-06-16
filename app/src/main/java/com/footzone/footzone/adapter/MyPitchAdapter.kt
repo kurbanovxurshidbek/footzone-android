@@ -9,6 +9,8 @@ import com.footzone.footzone.databinding.ItemMyPitchLayoutBinding
 import com.footzone.footzone.helper.OnClickEvent
 import com.footzone.footzone.model.Comment
 import com.footzone.footzone.model.ShortStadiumDetail
+import com.footzone.footzone.utils.commonfunction.Functions
+import com.footzone.footzone.utils.commonfunction.Functions.showStadiumOpenOrClose
 import java.lang.Exception
 
 class MyPitchAdapter(
@@ -26,21 +28,9 @@ class MyPitchAdapter(
         val data = items[position]
         if (holder is MyPitchViewHolder) {
             holder.view.apply {
-                refreshImagesAdapter(data.photos as ArrayList<String>, rvPithPhotos)
+                refreshImagesAdapter(data.photos, rvPithPhotos)
                 tvPitchName.text = data.name
-
-                if (data.isOpen.open) {
-                    tvOpenClose.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
-                    tvOpenCloseHour.text = " · ${data.isOpen.time.substring(0, 5)} da yopiladi"
-                } else {
-                    if (data.isOpen.time != null) {
-                        tvOpenClose.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
-                        tvOpenCloseHour.text = " · ${data.isOpen.time.substring(0, 5)} da ochiladi"
-                    } else {
-                        tvOpenCloseHour.text = "Stadion bugun ishlamaydi."
-                        tvOpenClose.visibility = View.GONE
-                    }
-                }
+                showStadiumOpenOrClose(tvOpenClose, tvOpenCloseHour, data.isOpen)
                 setStrokeColorToRatingBar(rbPitch)
                 rbPitch.rating = resRating(data.comments)
                 rbPitch.setIsIndicator(true)

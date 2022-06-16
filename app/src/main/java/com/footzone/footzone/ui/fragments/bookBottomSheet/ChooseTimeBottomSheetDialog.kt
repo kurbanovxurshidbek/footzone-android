@@ -66,6 +66,7 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
             val sourceFormat = SimpleDateFormat("yyyy-MM-dd")
             val destFormat = SimpleDateFormat("dd MMM yyy")
             val convertedDate = sourceFormat.parse(bookData)
+            Log.d("TAG", "initView: ${convertedDate}")
 
             binding.tvDate.text = destFormat.format(convertedDate)
         }
@@ -85,13 +86,13 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
         }
 
         binding.tvBook.setOnClickListener {
-            Log.d("TAG", "observeSendBooking: ")
+
             viewModel.sendBookingRequest(
                 BookingRequest(
-                    stadiumData.stadiumId,
-                    bookData!!,
-                    startTime!!,
-                    endTime!!
+                    stadiumData.stadiumId.toString(),
+                    bookData!!.toString(),
+                    startTime!!.toString(),
+                    endTime!!.toString()
                 )
             )
             observeSendBooking()
@@ -123,10 +124,12 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
 
                     is UiStateObject.SUCCESS -> {
                         Log.d("TAG", "observeSendBooking: ${it.data}")
-                        Toast.makeText(requireContext(), "Sizning so'rovingiz yuborildi\n, tez orada javob qaytadi!!", Toast.LENGTH_SHORT).show()
+                        dismiss()
+                        Toast.makeText(requireContext(), "Sizning so'rovingiz yuborildi\n, tez orada javob qaytadi", Toast.LENGTH_SHORT).show()
                     }
                     is UiStateObject.ERROR -> {
                         Log.d("TAG", "setupUI: ${it.message}")
+                        Toast.makeText(requireContext(), "Sizning so'rovingiz yuborilmadi\n, qayta urining", Toast.LENGTH_SHORT).show()
                     }
                     else -> {
                     }

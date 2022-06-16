@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -18,6 +19,7 @@ import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 import com.footzone.footzone.utils.UiStateObject
+import com.footzone.footzone.utils.commonfunction.Functions.showStadiumOpenOrClose
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -109,27 +111,13 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
             textViewAddress.text = data.address
             textViewNumber.text = data.number
 
-           // textViewRateCount.text = data.comments.size.toString()
-
-            if (data.isOpen.open) {
-                tvOpenClose.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
-                tvOpenCloseHour.text = " · ${data.isOpen.time.substring(0, 5)} da yopiladi"
-            } else {
-                if (data.isOpen.time != null){
-                    tvOpenClose.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
-                    tvOpenCloseHour.text = " · ${data.isOpen.time.substring(0, 5)} da ochiladi"
-                }else{
-                    tvOpenCloseHour.text = "Stadion bugun ishlamaydi."
-                    tvOpenClose.visibility = View.GONE
-                }
-            }
+            showStadiumOpenOrClose(tvOpenClose, tvOpenCloseHour, data.isOpen)
 
             textViewPrice.text = data.hourlyPrice.toString()
 
             linearNavigation.setOnClickListener {
                 requireActivity().shareLocationToGoogleMap(data.latitude, data.longitude)
             }
-            rbRate.setIsIndicator(true)
 
             ivBack.setOnClickListener {
                 requireActivity().onBackPressed()
@@ -155,39 +143,9 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
         binding.recyclerView.adapter = adapter
     }
 
+
 //    private fun refreshCommentAdapter(comments: ArrayList<Comment>) {
 //        val adapterComment = HolderCommentAdapter(comments)
 //        binding.recyclerViewComment.adapter = adapterComment
-//    }
-//
-//    private fun resultRate(comments: ArrayList<Comment>){
-//        var rate5 = 0
-//        var rate4 = 0
-//        var rate3 = 0
-//        var rate2 = 0
-//        var rate1 = 0
-//        var result = 0
-//        for (comment in comments){
-//            if (comment.rate == 5){
-//                rate5++
-//            }else if (comment.rate == 4){
-//                rate4++
-//            }else if (comment.rate == 3){
-//                rate3++
-//            }else if (comment.rate == 2){
-//                rate2++
-//            }else{
-//                rate1++
-//            }
-//            result = result + comment.rate
-//        }
-//        binding.apply {
-//            tvResultRate.text = (result.toFloat() / comments.size).toString()
-//            lpRate5.progress = ((result.toFloat() / rate5) * 100).toInt()
-//            lpRate4.progress = ((result.toFloat() / rate4) * 100).toInt()
-//            lpRate3.progress = ((result.toFloat() / rate3) * 100).toInt()
-//            lpRate2.progress = ((result.toFloat() / rate2) * 100).toInt()
-//            lpRate1.progress = ((result.toFloat() / rate1) * 100).toInt()
-//        }
 //    }
 }

@@ -20,6 +20,8 @@ import com.footzone.footzone.utils.KeyValues.STADIUM_ID
 import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
+import com.footzone.footzone.utils.commonfunction.Functions
+import com.footzone.footzone.utils.commonfunction.Functions.showStadiumOpenOrClose
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -120,13 +122,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
             tvStadiumName.text = data.stadiumName
             tvAddress.text = data.address
             tvNumber.text = data.number
-            if (data.isOpen.open) {
-                tvStatus.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
-                tvTime.text = "${data.isOpen.time.substring(0, 5)} da yopiladi"
-            } else {
-                tvStatus.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
-                tvTime.text = "${data.isOpen.time.substring(0, 5)} da ochiladi"
-            }
+            showStadiumOpenOrClose(tvStatus, tvTime, data.isOpen)
             tvPrice.text = data.hourlyPrice.toString()
         }
     }
