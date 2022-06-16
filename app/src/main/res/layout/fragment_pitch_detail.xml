@@ -371,6 +371,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvAverageRate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -437,6 +438,7 @@
                             android:textSize="12sp" />
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
+                            android:id="@+id/ratingFive"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -464,6 +466,7 @@
                             android:textSize="12sp" />
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
+                           android:id="@+id/ratingFour"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -491,6 +494,7 @@
                             android:textSize="12sp" />
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
+                            android:id="@+id/ratingThree"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -518,6 +522,7 @@
                             android:textSize="12sp" />
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
+                            android:id="@+id/ratingTwo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -545,6 +550,7 @@
                             android:textSize="12sp" />
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
+                            android:id="@+id/ratingOne"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"

@@ -20,6 +20,7 @@ import com.footzone.footzone.utils.KeyValues.STADIUM_ID
 import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
+import com.footzone.footzone.utils.commonfunction.Functions
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -79,7 +80,22 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
 
     private fun showPitchComments(data: Data) {
         Log.d("@@comments", data.toString())
+        showRatingBarInfo(data)
         refreshCommentAdapter(data)
+    }
+
+    private fun showRatingBarInfo(data: Data) {
+        val averageRate = Functions.resRating(data.commentInfo as ArrayList<Comment>)
+        val rateNumberPercentage = Functions.rateNumbers(data.commentInfo)
+        Log.d("@@@", rateNumberPercentage.toString())
+        binding.apply {
+            tvAverageRate.setText(averageRate.toString())
+            ratingOne.setProgress(rateNumberPercentage.one)
+            ratingTwo.setProgress(rateNumberPercentage.two)
+            ratingThree.setProgress(rateNumberPercentage.three)
+            ratingFour.setProgress(rateNumberPercentage.four)
+            ratingFive.setProgress(rateNumberPercentage.five)
+        }
     }
 
     private fun setupObservers() {
