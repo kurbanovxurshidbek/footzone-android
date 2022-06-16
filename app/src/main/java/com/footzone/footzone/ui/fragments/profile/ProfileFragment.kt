@@ -24,6 +24,7 @@ import com.footzone.footzone.model.profile.Data
 import com.footzone.footzone.model.profile.UserData
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.KeyValues.IS_OWNER
 import com.footzone.footzone.utils.KeyValues.LANGUAGE
 import com.footzone.footzone.utils.KeyValues.LOG_IN
 import com.footzone.footzone.utils.KeyValues.USER_ID
@@ -125,18 +126,18 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
         name.setText(binding.tvName.text)
 
-        tvNo.setOnClickListener { dialog.dismiss()}
+        tvNo.setOnClickListener { dialog.dismiss() }
         tvYes.setOnClickListener {
-            if (name.text.isNotEmpty()){
-                val body = EditNameRequest(name.text.toString(),userData.phoneNumber)
-                viewModel.editUser(sharedPref.getUserID(USER_ID,""), body)
-                setupEditUsernameObservers(dialog,name.text.toString())
+            if (name.text.isNotEmpty()) {
+                val body = EditNameRequest(name.text.toString(), userData.phoneNumber)
+                viewModel.editUser(sharedPref.getUserID(USER_ID, ""), body)
+                setupEditUsernameObservers(dialog, name.text.toString())
             }
         }
         dialog.show()
     }
 
-    private fun setupEditUsernameObservers(dialog: Dialog, name:String) {
+    private fun setupEditUsernameObservers(dialog: Dialog, name: String) {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             viewModel.userChangeName.collect {
                 when (it) {
@@ -222,6 +223,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
                     R.id.logOut -> {
                         sharedPref.saveLogIn(LOG_IN, false)
+                        sharedPref.saveIsOwner(IS_OWNER, false)
                         sharedPref.saveUserId(USER_ID, "")
                         sharedPref.saveUserToken(USER_TOKEN, "")
                         findNavController().popBackStack()
