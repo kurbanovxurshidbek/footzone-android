@@ -40,6 +40,7 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
     private var startTime: String? = null
     private var endTime: String? = null
     private var bookData: String? = null
+    var isCheck = false
 
 
     override fun onCreateView(
@@ -66,8 +67,9 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
                 binding.tvBook.setBackgroundResource(R.drawable.view_rounded_corners_blue)
                 binding.tvDate.isClickable = true
                 binding.tvDate.setTextColor(Color.WHITE)
+                isCheck = true
             }else{
-                binding.tvChooseTime.text = "$startTime - $endTime"
+                isCheck = false
                 binding.tvBook.setBackgroundResource(R.drawable.view_rounded_corners_grey)
                 binding.tvDate.isClickable = false
                 binding.tvDate.setTextColor(Color.BLACK)
@@ -94,16 +96,19 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
         }
 
         binding.tvBook.setOnClickListener {
-
-            viewModel.sendBookingRequest(
-                BookingRequest(
-                    stadiumData.stadiumId,
-                    bookData!!.toString(),
-                    startTime!!.toString(),
-                    endTime!!.toString()
+            if (isCheck) {
+                viewModel.sendBookingRequest(
+                    BookingRequest(
+                        stadiumData.stadiumId,
+                        bookData!!.toString(),
+                        startTime!!.toString(),
+                        endTime!!.toString()
+                    )
                 )
-            )
-            observeSendBooking()
+                observeSendBooking()
+            }else{
+                Toast.makeText(requireContext(), "Malumotlar to'liq to'ldirilmagan", Toast.LENGTH_SHORT).show()
+            }
         }
 
         binding.rlTimeInterval.setOnClickListener {
