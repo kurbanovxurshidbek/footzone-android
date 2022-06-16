@@ -2,6 +2,7 @@ package com.footzone.footzone.ui.fragments.stadium
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.footzone.footzone.model.CommentsData
 import com.footzone.footzone.model.FullStadiumDetailResponse
 import com.footzone.footzone.model.ShortStadiumDetailResponse
 import com.footzone.footzone.repository.main.MainRepository
@@ -20,6 +21,9 @@ class StadiumViewModel  @Inject constructor(private val mainRepository: MainRepo
         UiStateObject.EMPTY)
     val getHolderStadium = _getHolderStadium
 
+    private val _pitchComment = MutableStateFlow<UiStateObject<CommentsData>>(UiStateObject.EMPTY)
+    val pitchComment = _pitchComment
+
     fun getHolderStadiums(stadiumId: String) = viewModelScope.launch {
         _getHolderStadium.value = UiStateObject.LOADING
 
@@ -33,5 +37,18 @@ class StadiumViewModel  @Inject constructor(private val mainRepository: MainRepo
         }
     }
 
+    fun getCommentAllByStadiumId(stadiumId: String) = viewModelScope.launch {
+        _pitchComment.value = UiStateObject.LOADING
+
+        try {
+            val response = mainRepository.getCommentAllByStadiumId(stadiumId)
+            _pitchComment.value = UiStateObject.SUCCESS(response)
+
+        } catch (e: Exception) {
+            _pitchComment.value =
+                UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
+        }
+
+    }
 
 }

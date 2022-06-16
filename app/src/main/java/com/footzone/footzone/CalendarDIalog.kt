@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.Window
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.footzone.footzone.databinding.CalendarDialogBinding
 import java.text.DateFormatSymbols
@@ -20,6 +21,7 @@ import java.util.*
 
 class CalendarDIalog(private var onEnterClick: ((String) -> Unit)) {
     lateinit var dateChoose: String
+    var isCheck = false
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun showCalendarDialog(activity: Activity?) {
@@ -42,13 +44,17 @@ class CalendarDIalog(private var onEnterClick: ((String) -> Unit)) {
         binding.calendarView.setOnDateChangeListener { _, year, month, date ->
             val monthad: String = DateFormatSymbols().months[month]
             dateChoose = "$date ${monthad.lowercase()} $year"
+            isCheck = true
         }
 
         binding.tvSelection.setOnClickListener {
+            if (isCheck) {
+                onEnterClick.invoke(dateChoose)
 
-            onEnterClick.invoke(dateChoose)
-
-            dialog.dismiss()
+                dialog.dismiss()
+            }else{
+                Toast.makeText(activity, "O'yin kunini tanlang", Toast.LENGTH_SHORT).show()
+            }
         }
 
         mCalendar.set(year, month.value - 1, day)

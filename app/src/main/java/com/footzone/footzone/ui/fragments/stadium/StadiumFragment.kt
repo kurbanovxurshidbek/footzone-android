@@ -9,8 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
+import com.footzone.footzone.adapter.CommentAdapter
 import com.footzone.footzone.adapter.CustomAdapter
-import com.footzone.footzone.adapter.HolderStadiumAdapter
 import com.footzone.footzone.databinding.FragmentStadiumBinding
 import com.footzone.footzone.model.*
 import com.footzone.footzone.ui.fragments.BaseFragment
@@ -27,6 +27,7 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
     lateinit var adapter: CustomAdapter
     lateinit var stadiumId: String
     private val viewModel by viewModels<StadiumViewModel>()
+    lateinit var adapterComment: CommentAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +43,9 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
 
     private fun initViews() {
         viewModel.getHolderStadiums(stadiumId)
+        viewModel.getCommentAllByStadiumId(stadiumId)
         setupObservers()
+        setupCommentObservers()
     }
 
     private fun setupObservers() {
@@ -65,6 +68,38 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
                 }
             }
         }
+    }
+
+    private fun setupCommentObservers() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.pitchComment.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
+
+                    is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "setupObservers: ${it.data}")
+                        showPitchComments(it.data.data)
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showPitchComments(data: Data) {
+        Log.d("@@comments", data.toString())
+        refreshCommentAdapter(data)
+    }
+
+    private fun refreshCommentAdapter(data: Data) {
+        adapterComment = CommentAdapter(data.allComments, requireContext())
+        binding.recyclerViewComment.adapter = adapterComment
     }
 
     private fun refreshData(data: StadiumData) {
@@ -116,7 +151,7 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
     }
 
     private fun refreshAdapter(items: ArrayList<StadiumPhoto>) {
-        val adapter = HolderStadiumAdapter(items)
+        val adapter = CustomAdapter(items)
         binding.recyclerView.adapter = adapter
     }
 

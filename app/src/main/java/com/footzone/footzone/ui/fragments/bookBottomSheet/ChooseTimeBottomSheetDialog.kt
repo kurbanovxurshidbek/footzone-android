@@ -62,6 +62,11 @@ class ChooseTimeBottomSheetDialog(private val stadiumId: String) : BottomSheetDi
             if (startTime != null && endTime != null){
                 binding.tvChooseTime.text = "${startTime} - ${endTime}"
             }
+            val sourceFormat = SimpleDateFormat("yyyy-MM-dd")
+            val destFormat = SimpleDateFormat("dd MMM yyy")
+            val convertedDate = sourceFormat.parse(bookData)
+
+            binding.tvDate.text = destFormat.format(convertedDate)
         }
 
         binding.llDate.setOnClickListener {

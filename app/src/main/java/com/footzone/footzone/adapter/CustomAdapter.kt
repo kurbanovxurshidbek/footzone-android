@@ -1,9 +1,11 @@
 package com.footzone.footzone.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemRvBinding
 import com.footzone.footzone.model.StadiumPhoto
 import com.footzone.footzone.utils.KeyValues
@@ -25,9 +27,12 @@ class CustomAdapter(var items: ArrayList<StadiumPhoto>) :
 
 
     override fun onBindViewHolder(holder: VH, position: Int) {
+        val item = items[position]
         holder.view.apply {
+            val uri = "${KeyValues.STADIUM_IMAGE_BASE_URL}${item.name}"
             Glide.with(itemImageView.context)
-                .load("${KeyValues.STADIUM_IMAGE_BASE_URL}${items[position].name}")
+                .load(uri)
+                .placeholder(R.drawable.stadim2)
                 .into(itemImageView)
         }
     }
