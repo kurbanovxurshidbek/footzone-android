@@ -9,6 +9,8 @@ import com.footzone.footzone.databinding.ItemPitchBookSentBinding
 import com.footzone.footzone.helper.OnClickEventAcceptDecline
 import com.footzone.footzone.model.StadiumBookSentResponse
 import com.footzone.footzone.model.StadiumBookSentResponseData
+import com.footzone.footzone.utils.commonfunction.Functions
+import com.footzone.footzone.utils.commonfunction.Functions.calculateInHours
 import java.time.Duration
 import java.time.LocalTime
 
@@ -26,16 +28,16 @@ class PitchBookSentAdapter(
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: VH, position: Int) {
         val stadium = playedPitchList[position]
+        val duration = calculateInHours(
+            LocalTime.parse(stadium.startTime),
+            LocalTime.parse(stadium.endTime)
+        )
         holder.view.apply {
             tvPitchName.text = "${stadium.stadiumName} futbol maydoni"
-            tvDate.text = stadium.date.toString()
-            tvHours.text = "${stadium.startTime.subSequence(0,5)}-${stadium.endTime.substring(0,5)}, ${
-                calculateInHours(
-                    LocalTime.parse(stadium.startTime),
-                    LocalTime.parse(stadium.endTime)
-                )
-            } soat"
-            tvPrice.text = "${stadium.hourlyPrice.toInt()} so'm"
+            tvDate.text = stadium.date
+            tvHours.text =
+                "${stadium.startTime.subSequence(0, 5)}-${stadium.endTime.substring(0, 5)}, $duration soat"
+            tvPrice.text = "${stadium.hourlyPrice.toInt()*duration} so'm"
 
             btnAccept.setOnClickListener {
                 onClickEventAcceptDecline.onAccept(stadium.sessionId)
@@ -45,11 +47,6 @@ class PitchBookSentAdapter(
                 onClickEventAcceptDecline.onDecline(stadium.sessionId)
             }
         }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun calculateInHours(startTime: LocalTime, endTime: LocalTime): String {
-        return Duration.between(startTime, endTime).toHours().toString()
     }
 
     override fun getItemCount(): Int = playedPitchList.size

@@ -110,8 +110,17 @@ interface ApiService {
 
     //requests sent to stadium owner PENDING PLAYED NOTIFICATIONS
     @GET("session/requests/{status}")
-    fun getSentBookingRequests(@Path("status") status: String): StadiumBookSentResponse
+    suspend fun getSentBookingRequests(@Path("status") status: String): StadiumBookSentResponse
 
     @GET("session/day/{stadiumId}/{date}")
-    suspend fun getSessionsForSpecificDay(@Path ("stadiumId") stadiumId: String, @Path("date") date: String): SessionsDayResponse
+    suspend fun getSessionsForSpecificDay(
+        @Path("stadiumId") stadiumId: String,
+        @Path("date") date: String
+    ): SessionsDayResponse
+
+    @GET("session/history/{userId}")
+    suspend fun getPlayedHistory(@Path("userId") userId: String): PlayedHistoryResponse
+
+    @GET("session/playing/soon")
+    suspend fun getPlayingSoonStadium(): PlayedHistoryResponse
 }

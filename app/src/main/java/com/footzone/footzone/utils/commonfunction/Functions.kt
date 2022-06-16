@@ -1,9 +1,13 @@
 package com.footzone.footzone.utils.commonfunction
 
+import android.os.Build
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import com.footzone.footzone.R
 import com.footzone.footzone.model.Comment
 import java.lang.Exception
+import java.time.Duration
+import java.time.LocalTime
 
 object Functions {
     fun resRating(comments: ArrayList<Comment>): Float {
@@ -12,6 +16,11 @@ object Functions {
         } catch (e: Exception) {
             2.5f
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun calculateInHours(startTime: LocalTime, endTime: LocalTime): Double {
+        return Duration.between(startTime, endTime).toMillis() / 60.0
     }
 
     fun ImageView.setFavouriteBackground() {

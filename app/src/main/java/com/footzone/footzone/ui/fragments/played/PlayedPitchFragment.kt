@@ -1,46 +1,70 @@
 package com.footzone.footzone.ui.fragments.played
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.PlayedPitchAdapter
 import com.footzone.footzone.databinding.FragmentPlayedPitchBinding
-import com.footzone.footzone.model.Hour
-import com.footzone.footzone.model.PitchHistory
+import com.footzone.footzone.model.PlayedHistoryResponseData
 import com.footzone.footzone.ui.fragments.BaseFragment
-import java.util.ArrayList
+import com.footzone.footzone.utils.KeyValues.USER_ID
+import com.footzone.footzone.utils.SharedPref
+import com.footzone.footzone.utils.UiStateObject
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class PlayedPitchFragment : BaseFragment(R.layout.fragment_played_pitch) {
 
     private lateinit var binding: FragmentPlayedPitchBinding
     private lateinit var playedPitchAdapter: PlayedPitchAdapter
+    private val viewModel by viewModels<PlayedPitchViewModel>()
+
+    @Inject
+    lateinit var sharedPref: SharedPref
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentPlayedPitchBinding.bind(view)
 
+        viewModel.getPlayedHistory(sharedPref.getUserID(USER_ID, ""))
         initViews()
     }
 
     private fun initViews() {
         playedPitchAdapter = PlayedPitchAdapter()
-        playedPitchAdapter.submitData(getPlayedPitchHistory())
-        refreshAdapter()
+
+        observePlayedStadium()
     }
 
-    private fun refreshAdapter() {
-        binding.rvPlayedPitches.adapter = playedPitchAdapter
-    }
+    private fun observePlayedStadium() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.playedStadiums.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
 
-    private fun getPlayedPitchHistory(): ArrayList<PitchHistory> {
-        return ArrayList<PitchHistory>().apply {
-            for (i in 0..5) {
-                this.add(PitchHistory("Acme", "29-may, chorshanba", Hour("16:00", "18:00"), 100000))
+                    is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "observePlayedStadium: ${it.data}")
+                        refreshAdapter(it.data.data)
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {
+                    }
+                }
             }
         }
+    }
+
+    private fun refreshAdapter(data: List<PlayedHistoryResponseData>) {
+         playedPitchAdapter.submitData(data)
+        binding.rvPlayedPitches.adapter = playedPitchAdapter
     }
 }
