@@ -19,7 +19,7 @@ object Functions {
         return try {
             (comments.sumOf { it.number * it.rate } / comments.sumOf { it.number }).toFloat()
         } catch (e: Exception) {
-            2.5f
+            0f
         }
     }
 
