@@ -16,7 +16,8 @@ data class StadiumData(
     val isOpen: IsOpen,
     val stadiumName: String,
     val address: String,
-    val number: String
+    val number: String,
+    val workingDays: List<WorkingDay>
 )
 
 data class StadiumPhoto(
