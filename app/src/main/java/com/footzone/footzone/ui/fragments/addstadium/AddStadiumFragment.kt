@@ -21,7 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.AddImageAdapter
-import com.footzone.footzone.adapter.PitchImageEditAdapterTest
+import com.footzone.footzone.adapter.PitchImageEditAdapter
 import com.footzone.footzone.databinding.FragmentAddStadiumBinding
 import com.footzone.footzone.databinding.ToastChooseTimeBinding
 import com.footzone.footzone.helper.OnClickEditEvent
@@ -49,7 +49,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     lateinit var binding: FragmentAddStadiumBinding
     var items = ArrayList<Image>()
     lateinit var adapterAdd: AddImageAdapter
-    lateinit var adapterEdit: PitchImageEditAdapterTest
+    lateinit var adapterEdit: PitchImageEditAdapter
     var isEdit: Boolean = false
     var position = 0
     var positionImage = 0
@@ -193,7 +193,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     }
 
     private fun refreshAdapter() {
-        adapterEdit = PitchImageEditAdapterTest(photos, object : OnClickEditEvent{
+        adapterEdit = PitchImageEditAdapter(photos, object : OnClickEditEvent{
             override fun setOnAddClickListener() {
                 positionImage = 0
                 selectImage(PICK_FROM_FILE_EDIT)

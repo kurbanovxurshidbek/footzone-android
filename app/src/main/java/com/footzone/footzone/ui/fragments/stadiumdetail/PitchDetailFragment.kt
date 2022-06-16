@@ -2,7 +2,6 @@ package com.footzone.footzone.ui.fragments.stadiumdetail
 
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Html
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -20,6 +19,8 @@ import com.footzone.footzone.utils.KeyValues.STADIUM_ID
 import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
+import com.footzone.footzone.utils.commonfunction.Functions
+import com.footzone.footzone.utils.commonfunction.Functions.showStadiumOpenOrClose
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -79,7 +80,22 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
 
     private fun showPitchComments(data: Data) {
         Log.d("@@comments", data.toString())
+        showRatingBarInfo(data)
         refreshCommentAdapter(data)
+    }
+
+    private fun showRatingBarInfo(data: Data) {
+        val averageRate = Functions.resRating(data.commentInfo as ArrayList<Comment>)
+        val rateNumberPercentage = Functions.rateNumbers(data.commentInfo)
+        Log.d("@@@", rateNumberPercentage.toString())
+        binding.apply {
+            tvAverageRate.setText(averageRate.toString())
+            ratingOne.setProgress(rateNumberPercentage.one)
+            ratingTwo.setProgress(rateNumberPercentage.two)
+            ratingThree.setProgress(rateNumberPercentage.three)
+            ratingFour.setProgress(rateNumberPercentage.four)
+            ratingFive.setProgress(rateNumberPercentage.five)
+        }
     }
 
     private fun setupObservers() {
@@ -120,13 +136,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
             tvStadiumName.text = data.stadiumName
             tvAddress.text = data.address
             tvNumber.text = data.number
-            if (data.isOpen.open) {
-                tvStatus.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
-                tvTime.text = "${data.isOpen.time.substring(0, 5)} da yopiladi"
-            } else {
-                tvStatus.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
-                tvTime.text = "${data.isOpen.time.substring(0, 5)} da ochiladi"
-            }
+            showStadiumOpenOrClose(tvStatus, tvTime, data.isOpen)
             tvPrice.text = data.hourlyPrice.toString()
         }
     }

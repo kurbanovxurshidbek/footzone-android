@@ -6,6 +6,7 @@
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/view_rounded_corners_light_blue_4dp.xml" value="0.206" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable/ic_avatar.xml" value="0.184" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable/view_rounded_corners_grey_4dp.xml" value="0.184" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/activity_splash.xml" value="0.2" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/bottom_sheet_types.xml" value="0.152" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/calendar_dialog.xml" value="0.14583333333333334" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/choose_language_dialog.xml" value="0.27447916666666666" />
@@ -14,6 +15,7 @@
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_choose_work_time.xml" value="0.14583333333333334" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_home.xml" value="0.14583333333333334" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_my_stadium.xml" value="0.14583333333333334" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_pitch_detail.xml" value="0.1503623188405797" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_profile.xml" value="0.16576086956521738" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_sign_up.xml" value="0.14583333333333334" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_stadium.xml" value="0.264" />
@@ -64,9 +66,12 @@
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/layout/bottom_sheet_pitch_types.xml" value="0.17916666666666667" />
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/layout/bottom_sheet_types.xml" value="0.17916666666666667" />
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/layout/bottomsheet_pitch_zone_list.xml" value="0.17916666666666667" />
+        <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/layout/fragment_choose_work_time.xml" value="0.1" />
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/layout/fragment_home.xml" value="0.17916666666666667" />
+        <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/layout/fragment_pitch_detail.xml" value="0.1" />
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/layout/fragment_table.xml" value="0.16510416666666666" />
+        <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/layout/fragment_time_interval.xml" value="0.17916666666666667" />
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/layout/item_comment.xml" value="0.17916666666666667" />
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/layout/item_pitch_layout.xml" value="0.17916666666666667" />
         <entry key="..\:/Android Unicorn development/FootZone/app/src/main/res/layout/item_rv.xml" value="0.17916666666666667" />
@@ -90,8 +95,6 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_played_pitch.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_profile.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_stadium.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_stadium_game_history.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_table.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_pitch_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_played_pitch.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/toast_choose_time.xml" value="0.20416666666666666" />
@@ -99,6 +102,7 @@
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/drawable-v24/button_register_filled_rounded_corner1.xml" value="0.2115" />
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/drawable-v24/button_register_filled_rounded_corner2.xml" value="0.1945" />
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/drawable/checked_item_user_notification_background.xml" value="0.1945" />
+        <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/drawable/ic_avatar.xml" value="0.2075" />
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/drawable/item_bottom_nav_pitch.xml" value="0.1945" />
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/drawable/unchecked_item_user_notification_background.xml" value="0.2115" />
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/layout/activity_main.xml" value="0.4584795321637427" />
@@ -116,6 +120,7 @@
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/layout/fragment_sign_up.xml" value="0.33" />
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/layout/fragment_user_notification.xml" value="0.25" />
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/layout/fragment_verification.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/layout/item_comment.xml" value="0.75" />
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/layout/item_pitch_image_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/layout/item_played_pitch.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/layout/item_user_notification.xml" value="0.5" />
