@@ -88,13 +88,16 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
         val averageRate = Functions.resRating(data.commentInfo as ArrayList<Comment>)
         val rateNumberPercentage = Functions.rateNumbers(data.commentInfo)
         Log.d("@@@", rateNumberPercentage.toString())
+        var viewRateCount: Int = (data.commentInfo.sumOf { it.number })
         binding.apply {
-            tvAverageRate.setText(averageRate.toString())
-            ratingOne.setProgress(rateNumberPercentage.one)
-            ratingTwo.setProgress(rateNumberPercentage.two)
-            ratingThree.setProgress(rateNumberPercentage.three)
-            ratingFour.setProgress(rateNumberPercentage.four)
-            ratingFive.setProgress(rateNumberPercentage.five)
+            textViewRateCount.text = viewRateCount.toString()
+            tvAverageRate.text = averageRate.toString()
+            rbRate.rating = averageRate
+            ratingOne.progress = rateNumberPercentage.one
+            ratingTwo.progress = rateNumberPercentage.two
+            ratingThree.progress = rateNumberPercentage.three
+            ratingFour.progress = rateNumberPercentage.four
+            ratingFive.progress = rateNumberPercentage.five
         }
     }
 
