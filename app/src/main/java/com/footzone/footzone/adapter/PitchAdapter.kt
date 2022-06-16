@@ -14,6 +14,7 @@ import com.footzone.footzone.helper.OnClickEvent
 import com.footzone.footzone.model.ShortStadiumDetail
 import com.footzone.footzone.utils.commonfunction.Functions
 import com.footzone.footzone.utils.commonfunction.Functions.setFavouriteBackground
+import com.footzone.footzone.utils.commonfunction.Functions.showStadiumOpenOrClose
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 
 class PitchAdapter(
@@ -34,13 +35,7 @@ class PitchAdapter(
         holder.view.apply {
             refreshImagesAdapter(pitch.photos, rvPithPhotos)
             tvPitchName.text = pitch.name
-            if (pitch.isOpen.open) {
-                tvOpenClose.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
-                tvOpenCloseHour.text = " · ${pitch.isOpen.time.substring(0, 5)} da yopiladi"
-            } else {
-                tvOpenClose.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
-                tvOpenCloseHour.text = " · ${pitch.isOpen.time.substring(0, 5)} da ochiladi"
-            }
+            showStadiumOpenOrClose(tvOpenClose, tvOpenCloseHour, pitch.isOpen)
             setStrokeColorToRatingBar(rbPitch)
             rbPitch.rating = Functions.resRating(pitch.comments)
             rbPitch.setIsIndicator(true)

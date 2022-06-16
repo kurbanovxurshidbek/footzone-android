@@ -1,11 +1,15 @@
 package com.footzone.footzone.utils.commonfunction
 
 import android.os.Build
+import android.text.Html
+import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.footzone.footzone.R
 import com.footzone.footzone.model.Comment
 import com.footzone.footzone.model.RateNumberPercentage
+import com.footzone.footzone.model.IsOpen
 import java.lang.Exception
 import java.time.Duration
 import java.time.LocalTime
@@ -48,4 +52,20 @@ object Functions {
         this.setBackgroundResource(R.drawable.imageview_circle)
         this.setImageResource(R.drawable.ic_bookmark)
     }
+
+    fun showStadiumOpenOrClose(tvOpenClose: TextView, tvOpenCloseHour: TextView, isOpen: IsOpen){
+        if (isOpen.open) {
+            tvOpenClose.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
+            tvOpenCloseHour.text = " · ${isOpen.time.substring(0, 5)} da yopiladi"
+        } else {
+            if (isOpen.time != null){
+                tvOpenClose.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
+                tvOpenCloseHour.text = " · ${isOpen.time.substring(0, 5)} da ochiladi"
+            }else{
+                tvOpenCloseHour.text = "Stadion bugun ishlamaydi."
+                tvOpenClose.visibility = View.GONE
+            }
+        }
+    }
+
 }

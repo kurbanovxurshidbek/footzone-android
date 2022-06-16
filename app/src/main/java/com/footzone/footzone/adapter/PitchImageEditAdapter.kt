@@ -12,7 +12,7 @@ import com.footzone.footzone.model.EditPhoto
 import com.footzone.footzone.utils.KeyValues
 import java.util.*
 
-class PitchImageEditAdapterTest(var pitchImages: LinkedList<EditPhoto>, private var onClickEditEvent: OnClickEditEvent) :
+class PitchImageEditAdapter(var pitchImages: LinkedList<EditPhoto>, private var onClickEditEvent: OnClickEditEvent) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     private val TYPE_ITEM_DEFAULT_IMAGE = 1001
