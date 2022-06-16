@@ -2,7 +2,6 @@ package com.footzone.footzone.ui.fragments.stadiumdetail
 
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Html
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -20,7 +19,6 @@ import com.footzone.footzone.utils.KeyValues.STADIUM_ID
 import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
-import com.footzone.footzone.utils.commonfunction.Functions
 import com.footzone.footzone.utils.commonfunction.Functions
 import com.footzone.footzone.utils.commonfunction.Functions.showStadiumOpenOrClose
 import dagger.hilt.android.AndroidEntryPoint

@@ -19,6 +19,7 @@ import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.PITCH_DETAIL
 import com.footzone.footzone.utils.UiStateObject
+import com.footzone.footzone.utils.commonfunction.Functions
 import com.footzone.footzone.utils.commonfunction.Functions.showStadiumOpenOrClose
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -96,8 +97,23 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
 
     private fun showPitchComments(data: Data) {
         Log.d("@@comments", data.toString())
+        showRatingBarInfo(data)
         refreshCommentAdapter(data)
     }
+    private fun showRatingBarInfo(data: Data) {
+        val averageRate = Functions.resRating(data.commentInfo as ArrayList<Comment>)
+        val rateNumberPercentage = Functions.rateNumbers(data.commentInfo)
+        Log.d("@@@", rateNumberPercentage.toString())
+        binding.apply {
+            tvAverageRate.setText(averageRate.toString())
+            ratingOne.setProgress(rateNumberPercentage.one)
+            ratingTwo.setProgress(rateNumberPercentage.two)
+            ratingThree.setProgress(rateNumberPercentage.three)
+            ratingFour.setProgress(rateNumberPercentage.four)
+            ratingFive.setProgress(rateNumberPercentage.five)
+        }
+    }
+
 
     private fun refreshCommentAdapter(data: Data) {
         adapterComment = CommentAdapter(data.allComments, requireContext())
@@ -142,10 +158,4 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
         val adapter = CustomAdapter(items)
         binding.recyclerView.adapter = adapter
     }
-
-
-//    private fun refreshCommentAdapter(comments: ArrayList<Comment>) {
-//        val adapterComment = HolderCommentAdapter(comments)
-//        binding.recyclerViewComment.adapter = adapterComment
-//    }
 }

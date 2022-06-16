@@ -324,11 +324,11 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tvResultRate"
+                        android:id="@+id/tvAverageRate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:fontFamily="@font/poppins_bold"
+                        android:fontFamily="@font/roboto"
                         android:text="4,2"
                         android:textColor="@color/black"
                         android:textSize="45dp" />
@@ -353,7 +353,7 @@
                             android:id="@+id/textViewRateCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_bold"
+                            android:fontFamily="@font/roboto"
                             android:text="24"
                             android:textColor="#616161"
                             android:textSize="12sp" />
@@ -362,8 +362,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
-                            android:fontFamily="@font/poppins_bold"
-                            android:text="@string/str_votes"
+                            android:fontFamily="@font/roboto"
+                            android:text="ta ovoz"
                             android:textColor="#616161"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -385,13 +385,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_bold"
+                            android:fontFamily="@font/roboto"
                             android:text="5"
                             android:textColor="#616161"
                             android:textSize="12sp" />
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
-                            android:id="@+id/lpRate5"
+                            android:id="@+id/ratingFive"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -413,13 +413,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_bold"
+                            android:fontFamily="@font/roboto"
                             android:text="4"
                             android:textColor="#616161"
                             android:textSize="12sp" />
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
-                            android:id="@+id/lpRate4"
+                            android:id="@+id/ratingFour"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -441,13 +441,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_bold"
+                            android:fontFamily="@font/roboto"
                             android:text="3"
                             android:textColor="#616161"
                             android:textSize="12sp" />
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
-                            android:id="@+id/lpRate3"
+                            android:id="@+id/ratingThree"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -469,13 +469,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_bold"
+                            android:fontFamily="@font/roboto"
                             android:text="2"
                             android:textColor="#616161"
                             android:textSize="12sp" />
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
-                            android:id="@+id/lpRate2"
+                            android:id="@+id/ratingTwo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -497,13 +497,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_bold"
+                            android:fontFamily="@font/roboto"
                             android:text="1"
                             android:textColor="#616161"
                             android:textSize="12sp" />
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
-                            android:id="@+id/lpRate1"
+                            android:id="@+id/ratingOne"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"

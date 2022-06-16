@@ -15,6 +15,7 @@
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_choose_work_time.xml" value="0.14583333333333334" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_home.xml" value="0.14583333333333334" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_my_stadium.xml" value="0.14583333333333334" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_pitch_detail.xml" value="0.1503623188405797" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_profile.xml" value="0.16576086956521738" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_sign_up.xml" value="0.14583333333333334" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/fragment_stadium.xml" value="0.264" />
@@ -112,7 +113,7 @@
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/layout/fragment_sign_up.xml" value="0.33" />
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/layout/fragment_user_notification.xml" value="0.25" />
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/layout/fragment_verification.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/layout/item_comment.xml" value="0.9" />
+        <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/layout/item_comment.xml" value="0.75" />
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/layout/item_pitch_image_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/layout/item_played_pitch.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/layout/item_user_notification.xml" value="0.5" />
