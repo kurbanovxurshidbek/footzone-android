@@ -61,9 +61,10 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     var files = ArrayList<MultipartBody.Part>()
     var photos: LinkedList<EditPhoto> = LinkedList();
     var uris = ArrayList<Uri>()
-    val filesPhoto = ArrayList<EditStadiumPhotoRequest>()
+    val filesPhoto = ArrayList<MultipartBody.Part>()
     var jonibek = false
     var stadiumNumber: String? = null
+    var photoIds: ArrayList<String> = ArrayList();
 
     @Inject
     lateinit var sharedPref: SharedPref
@@ -146,17 +147,18 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
 //                }
 
             Log.d("TAG", "refreshData: ${photos}")
-            for (pos in 1..photos.size-1){
+            for (pos in 1 until photos.size){
                 if (photos[pos].isExist == true && photos[pos].name is Uri){
-                    Log.d("TAG", "refreshData: ${photos[pos].name}")
                     val body = convertUriMultipart(photos[pos].name as Uri)
-                    filesPhoto.add(EditStadiumPhotoRequest(photos[pos].id!!, body, true))
+                    filesPhoto.add(body)
+                    photoIds.add(photos[pos].id!!)
                 }else if (photos[pos].name is Uri){
                     val body = convertUriMultipart(photos[pos].name as Uri)
-                    filesPhoto.add(EditStadiumPhotoRequest(photos[pos].id!!, body, true))
+                    filesPhoto.add(body)
                 }
             }
             Log.d("TAG", "refreshData: ${filesPhoto}")
+            Log.d("TAG", "refreshData: ${photoIds}")
 
             if (stadiumNumber!!.length == 13) {
                 try {
@@ -172,8 +174,9 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                             workTimes
                         )
 
-                   // viewModel.editHolderStadium(stadiumId, stadium)
-                    viewModel.editHolderStadiumPhoto(stadiumId, filesPhoto)
+                    //viewModel.editHolderStadium(stadiumId, stadium)
+                    viewModel.editHolderStadiumPhoto(stadiumId, filesPhoto, photoIds)
+                    Log.d("TAG", "initViewsEdit: ${stadiumId}, ${filesPhoto}, ${photoIds}")
                     //observeViewModelEdit()
                     observeViewModelEditPhoto()
                 } catch (e: Exception) {
@@ -207,7 +210,9 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
 
             override fun setOnDeleteClickListener(position: Int, id: String) {
                 Toast.makeText(requireContext(), "Delete Image", Toast.LENGTH_SHORT).show()
-                filesPhoto.add(EditStadiumPhotoRequest(id, null, false))
+                if (id != null) {
+                    photoIds.add(id)
+                }
                 photos.removeAt(position)
                 positionImage = 0
                 adapterEdit.notifyDataSetChanged()
@@ -507,7 +512,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                     photos[positionImage].name = selectedImageUri
                     positionImage = 0
                 }else {
-                    photos.add(EditPhoto(UUID.randomUUID().toString(),selectedImageUri, false))
+                    photos.add(EditPhoto(null,selectedImageUri, false))
                     positionImage = 0
                 }
                 adapterEdit.notifyDataSetChanged()

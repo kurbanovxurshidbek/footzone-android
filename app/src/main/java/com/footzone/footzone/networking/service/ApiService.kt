@@ -85,7 +85,8 @@ interface ApiService {
     @PUT("stadium/edit/photo/{stadiumId}")
     suspend fun editHolderStadiumPhoto(
         @Path("stadiumId") stadiumId: String,
-        @Part("files") files: List<EditStadiumPhotoRequest>
+        @Part("photoIds") photoIds: List<String>,
+        @Part files: List<MultipartBody.Part>,
     ): Response
 
     @PUT("user/edit/{userId}")

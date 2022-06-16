@@ -19,8 +19,8 @@ class PitchImagesAdapter() :
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = stadiumImages[position]
-       // val uri = "https://footzone-server.herokuapp.com/images/stadium/${item}"
-        val uri = "http://192.168.43.32:8081/images/stadium/${item}"
+        val uri = "https://footzone-server.herokuapp.com/images/stadium/${item}"
+       // val uri = "http://192.168.43.32:8081/images/stadium/${item}"
         Glide.with(holder.binding.ivPitch.context)
             .load(uri)
             .placeholder(R.drawable.stadim2)

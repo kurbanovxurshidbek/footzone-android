@@ -1,7 +1,6 @@
 package com.footzone.footzone.repository.main
 
 import com.footzone.footzone.model.AddStadiumRequest
-import com.footzone.footzone.model.EditStadiumPhotoRequest
 import com.footzone.footzone.model.FavouriteStadiumRequest
 import com.footzone.footzone.model.Location
 import com.footzone.footzone.model.*
@@ -63,8 +62,9 @@ class MainRepository @Inject constructor(
 
     suspend fun editHolderStadiumPhoto(
         stadiumId: String,
-        files: ArrayList<EditStadiumPhotoRequest>
-    ) = apiService.editHolderStadiumPhoto(stadiumId, files)
+        photoIds: ArrayList<String>,
+        files: ArrayList<MultipartBody.Part>
+    ) = apiService.editHolderStadiumPhoto(stadiumId, photoIds, files)
 
 
     suspend fun acceptOrDeclineBookingRequest(acceptDeclineRequest: AcceptDeclineRequest) = apiService.acceptOrDeclineBookingRequest(acceptDeclineRequest)
