@@ -1,6 +1,7 @@
 package com.footzone.footzone.ui.fragments.bookBottomSheet
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -62,11 +63,18 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
             bookData = it?.day
             if (startTime != null && endTime != null){
                 binding.tvChooseTime.text = "$startTime - $endTime"
+                binding.tvBook.setBackgroundResource(R.drawable.view_rounded_corners_blue)
+                binding.tvDate.isClickable = true
+                binding.tvDate.setTextColor(Color.WHITE)
+            }else{
+                binding.tvChooseTime.text = "$startTime - $endTime"
+                binding.tvBook.setBackgroundResource(R.drawable.view_rounded_corners_grey)
+                binding.tvDate.isClickable = false
+                binding.tvDate.setTextColor(Color.BLACK)
             }
             val sourceFormat = SimpleDateFormat("yyyy-MM-dd")
             val destFormat = SimpleDateFormat("dd MMM yyy")
             val convertedDate = sourceFormat.parse(bookData)
-            Log.d("TAG", "initView: ${convertedDate}")
 
             binding.tvDate.text = destFormat.format(convertedDate)
         }
@@ -89,7 +97,7 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
 
             viewModel.sendBookingRequest(
                 BookingRequest(
-                    stadiumData.stadiumId.toString(),
+                    stadiumData.stadiumId,
                     bookData!!.toString(),
                     startTime!!.toString(),
                     endTime!!.toString()

@@ -136,13 +136,11 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
         if (checkData()) {
             binding.apply {
                 registerButton.setBackgroundResource(R.drawable.button_register_filled_rounded_corner2)
-                registerButton.isClickable = true
                 registerButton.setTextColor(Color.WHITE)
             }
         } else {
             binding.apply {
                 registerButton.setBackgroundResource(R.drawable.button_register_filled_rounded_corner1)
-                registerButton.isClickable = false
                 registerButton.setTextColor(R.color.buttonDisabledTextColor)
 
             }

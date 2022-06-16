@@ -65,22 +65,22 @@ class StadiumLocationFragment : BaseFragment(R.layout.fragment_stadium_location)
             tvSelection.setOnClickListener {
                 val latitude = 41.3248628798667
                 val longitude = 69.23367757896234
-                Log.d("TAG", "initViews: ${locationCur.latitude} ${locationCur.longitude} ")
+               // Log.d("TAG", "initViews: ${locationCur.latitude} ${locationCur.longitude} ")
                 setFragmentResult(
                     KeyValues.TYPE_LOCATION,
-                    bundleOf("latitude" to locationCur.latitude, "longitude" to locationCur.longitude)
+                    bundleOf("latitude" to latitude, "longitude" to longitude)
                 )
                 findNavController().popBackStack()
             }
         }
 
-        val supportMapFragment =
-            childFragmentManager.findFragmentById(R.id.map_view) as SupportMapFragment
-        supportMapFragment.getMapAsync(this)
+//        val supportMapFragment =
+//            childFragmentManager.findFragmentById(R.id.map_view) as SupportMapFragment
+//        supportMapFragment.getMapAsync(this)
     }
 
     override fun onMapReady(p0: GoogleMap) {
-        setUpMap()
+       // setUpMap()
         mMap = p0
         mMap.moveCamera(
             CameraUpdateFactory.newLatLngZoom(
