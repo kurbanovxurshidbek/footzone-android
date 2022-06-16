@@ -4,14 +4,12 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -20,12 +18,9 @@ import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentChooseTimeBottomSheetDialogBinding
 import com.footzone.footzone.model.BookingRequest
 import com.footzone.footzone.model.StadiumDataToBottomSheetDialog
-import com.footzone.footzone.ui.fragments.timeinterval.TimeSharedViewModel
-import com.footzone.footzone.utils.KeyValues
-import com.footzone.footzone.utils.KeyValues.FINISHTIME
+import com.footzone.footzone.helper.TimeSharedViewModel
 import com.footzone.footzone.utils.KeyValues.STADIUM_DATA
 import com.footzone.footzone.utils.KeyValues.STADIUM_ID
-import com.footzone.footzone.utils.KeyValues.STARTTIME
 import com.footzone.footzone.utils.UiStateObject
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -107,7 +102,7 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
                 )
                 observeSendBooking()
             }else{
-                Toast.makeText(requireContext(), "Malumotlar to'liq to'ldirilmagan", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.str_date_incomplete), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -121,7 +116,7 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
                 findNavController().navigate(R.id.action_pitchDetailFragment_to_timeIntervalFragment,
                     bundleOf(STADIUM_ID to stadiumData.stadiumId, STADIUM_DATA to bookDate))
             } else {
-                Toast.makeText(requireContext(), "O'yin kunini tanlang!!!", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), getString(R.string.str_select_dat_game), Toast.LENGTH_SHORT)
                     .show()
             }
         }
@@ -136,13 +131,11 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
                     }
 
                     is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "observeSendBooking: ${it.data}")
                         dismiss()
-                        Toast.makeText(requireContext(), "Sizning so'rovingiz yuborildi\n, tez orada javob qaytadi", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getText(R.string.str_send_request), Toast.LENGTH_SHORT).show()
                     }
                     is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
-                        Toast.makeText(requireContext(), "Sizning so'rovingiz yuborilmadi\n, qayta urining", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getText(R.string.str_not_send_request), Toast.LENGTH_SHORT).show()
                     }
                     else -> {
                     }

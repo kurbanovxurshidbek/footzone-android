@@ -25,24 +25,39 @@
     <string name="str_location">Manzil</string>
     <string name="str_phone_number">Telefon raqam</string>
     <string name="str_work_time">Ish vaqtlari</string>
-    <string name="str_prise">Narxi (so’m/soat)</string>
-    <string name="str_save">Saqlash</string>
-    <string name="str_edit_stadium">Maydonni tahrirlash</string>
-    <string name="str_time_interval">Vaqt oralig’i</string>
-    <string name="str_stadium_address">Stadion address</string>
+    <string name="str_prise">Цена (сум/час)</string>
+    <string name="str_save">Сохранять</string>
+    <string name="str_edit_stadium">Изменить поле</string>
+    <string name="str_time_interval">Временной интервал</string>
+    <string name="str_stadium_address">Адрес стадиона</string>
     <string name="str_united_kingdom">United Kingdom</string>
     <string name="str_russian">Russian</string>
     <string name="str_uzbekistan">Uzbekistan</string>
-    <string name="str_select_language">Tilni tanlang</string>
+    <string name="str_select_language">Выберите язык</string>
     <string name="str_setings">Настройки</string>
     <string name="str_lang">Русский</string>
     <string name="str_00_00_da_yopiladi">00:00 da yopiladi</string>
-    <string name="str_so_m_soat">so\'m/soat</string>
+    <string name="str_so_m_soat">сум/час</string>
     <string name="str_marshrut">Marshrut</string>
-    <string name="str_send">Ulashish</string>
+    <string name="str_send">Делиться</string>
     <string name="str_ratings_and_reviews">Ratings and reviews</string>
     <string name="str_votes">votes</string>
     <string name="str_open">Open</string>
+    <string name="str_changing_game_days">Изменение игровых дней</string>
+    <string name="str_delete_image">Изображение было удалено</string>
+    <string name="str_error_phone_number">Ошибка при вводе номера телефона</string>
+    <string name="str_error_entering_price">Ошибка при вводе цены</string>
+    <string name="str_successfully_edited">Поле успешно изменено</string>
+    <string name="str_error_edited">Поле не было изменено, попробуйте еще раз</string>
+    <string name="str_successfully_edded">Поле успешно добавлено.</string>
+    <string name="str_not_succesfull">The field did not join successfully, hit again</string>
+    <string name="str_date_incomplete">Malumotlar to\'liq to\'ldirilmagan</string>
+    <string name="str_select_dat_game">O\'yin kunini tanlang</string>
+    <string name="str_send_request">Sizning so\'rovingiz yuborildi,\tez orada javob qaytadi</string>
+    <string name="str_not_send_request">Sizning so\'rovingiz yuborilmadi,\qayta urining</string>
+    <string name="str_holder_not_stadium">Hozir sizda maydonlar mavjud emas.\nMaydon qo’shish uchun yuqoridagi\n“+” tugmasini bosing</string>
+    <string name="str_select_game_time">O\'yin vaqtlarini tanlang</string>
+
 
     <string-array name="timelist">
         <item>00:00</item>

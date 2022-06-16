@@ -9,15 +9,18 @@ import com.footzone.footzone.databinding.ItemStadiumImageBinding
 import com.footzone.footzone.model.Image
 import com.footzone.footzone.ui.fragments.addstadium.AddStadiumFragment
 
-
+/**
+ * This adapter, the user to add images to stadiums
+ * and can replace
+ */
 class AddImageAdapter(
     val context: AddStadiumFragment,
     val items: ArrayList<Image>,
     private var onItemClicked: ((Int) -> Unit),
 ):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val TYPE_ITEM_DEFAULT_IMAGE = 1
-    private val TYPE_ITEM_NEW_IMAGE = 2
+    private val TYPE_ITEM_DEFAULT_IMAGE = 1001
+    private val TYPE_ITEM_NEW_IMAGE = 1002
 
     override fun getItemViewType(position: Int): Int {
         return if (position == 0) {
@@ -62,8 +65,8 @@ class AddImageAdapter(
     override fun getItemCount(): Int {
         return items.size
     }
-    }
-
     class DefualtImageViewHolder(val view: ItemAddImageBinding) : RecyclerView.ViewHolder(view.root)
 
     class NewImageViewHolder(val view: ItemStadiumImageBinding) : RecyclerView.ViewHolder(view.root)
+    }
+

@@ -12,6 +12,9 @@ import com.footzone.footzone.model.EditPhoto
 import com.footzone.footzone.utils.KeyValues
 import java.util.*
 
+/**
+ * This adapter, user can edit stadium images
+ */
 class PitchImageEditAdapter(var pitchImages: LinkedList<EditPhoto>, private var onClickEditEvent: OnClickEditEvent) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 

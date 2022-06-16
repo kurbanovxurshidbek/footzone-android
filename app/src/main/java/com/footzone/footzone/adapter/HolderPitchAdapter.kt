@@ -1,19 +1,19 @@
 package com.footzone.footzone.adapter
 
-import android.text.Html
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.footzone.footzone.databinding.ItemMyPitchLayoutBinding
 import com.footzone.footzone.helper.OnClickEvent
-import com.footzone.footzone.model.Comment
 import com.footzone.footzone.model.ShortStadiumDetail
-import com.footzone.footzone.utils.commonfunction.Functions
+import com.footzone.footzone.utils.commonfunction.Functions.resRating
 import com.footzone.footzone.utils.commonfunction.Functions.showStadiumOpenOrClose
-import java.lang.Exception
 
-class MyPitchAdapter(
+/**
+ * This is adapter, the user to see a list of stadiums
+ */
+
+class HolderPitchAdapter(
     var items: ArrayList<ShortStadiumDetail>,
     var onClickEvent: OnClickEvent
 ) :
@@ -26,6 +26,7 @@ class MyPitchAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val data = items[position]
+
         if (holder is MyPitchViewHolder) {
             holder.view.apply {
                 refreshImagesAdapter(data.photos, rvPithPhotos)
@@ -61,10 +62,3 @@ class MyPitchAdapter(
     class MyPitchViewHolder(val view: ItemMyPitchLayoutBinding) : RecyclerView.ViewHolder(view.root)
 }
 
-fun resRating(comments: ArrayList<Comment>): Float {
-    return try {
-        (comments.sumOf { it.number * it.rate } / comments.sumOf { it.number }).toFloat()
-    } catch (e: Exception) {
-        2.5f
-    }
-}

@@ -28,6 +28,8 @@ import com.footzone.footzone.helper.OnClickEditEvent
 import com.footzone.footzone.model.*
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.KeyValues.LATITUDE
+import com.footzone.footzone.utils.KeyValues.LONGITUDE
 import com.footzone.footzone.utils.KeyValues.PICK_FROM_FILE_ADD
 import com.footzone.footzone.utils.KeyValues.PICK_FROM_FILE_EDIT
 import com.footzone.footzone.utils.KeyValues.WORK_TIME
@@ -78,10 +80,8 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         }
 
         setFragmentResultListener(KeyValues.TYPE_LOCATION) { _, bundle ->
-            latitude = bundle.get("latitude").toString().toDouble()
-            longitude = bundle.get("longitude").toString().toDouble()
-            Log.d("TAG", "onCreate: $latitude")
-            Log.d("TAG", "onCreate: $longitude")
+            latitude = bundle.get(LATITUDE).toString().toDouble()
+            longitude = bundle.get(LONGITUDE).toString().toDouble()
         }
 
         setFragmentResultListener(KeyValues.TYPE_WORK_TIME) { requestKey, bundle ->
@@ -94,7 +94,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        photos.add(EditPhoto("emferf", "rnfwernfwe"))
+        photos.add(EditPhoto("id", "name"))
         return inflater.inflate(R.layout.fragment_add_stadium, container, false)
     }
 
@@ -139,14 +139,13 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                 stadiumNumber =   "+998${binding.etPitchPhoneNumber.text.toString().replace("\\s".toRegex(), "")}"
             }
 
-//            val workDat =
-//                if (workTimes.isNotEmpty()){
-//                    workTimes
-//                }else{
-//
-//                }
+            val workDat =
+                if (workTimes.isNotEmpty()){
+                    workTimes
+                }else{
 
-            Log.d("TAG", "refreshData: ${photos}")
+                }
+
             for (pos in 1 until photos.size){
                 if (photos[pos].isExist == true && photos[pos].name is Uri){
                     val body = convertUriMultipart(photos[pos].name as Uri)
@@ -157,8 +156,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                     filesPhoto.add(body)
                 }
             }
-            Log.d("TAG", "refreshData: ${filesPhoto}")
-            Log.d("TAG", "refreshData: ${photoIds}")
 
             if (stadiumNumber!!.length == 13) {
                 try {
@@ -182,12 +179,12 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                 } catch (e: Exception) {
                     Toast.makeText(
                         requireContext(),
-                        "Narxni kiritishda xatolik",
+                        getString(R.string.str_error_entering_price),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             }else{
-                toast("Telefon nomer kiritishda xatolik bor.")
+                toast(getText(R.string.str_error_phone_number) as String)
             }
         }
     }
@@ -209,7 +206,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             }
 
             override fun setOnDeleteClickListener(position: Int, id: String) {
-                Toast.makeText(requireContext(), "Delete Image", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getText(R.string.str_delete_image), Toast.LENGTH_SHORT).show()
                 if (id != null) {
                     photoIds.add(id)
                 }
@@ -232,15 +229,12 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                     }
 
                     is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "setupObservers: ${it}")
                         refreshData(it.data.data)
                         it.data.data.photos.forEach { it->
                             photos.add(EditPhoto(it.id, it.name, true))
-                            Log.d("TAG", "setOnAddClickListener: ${photos}")
                         }
                     }
                     is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupObservers:${it}")
                     }
                     else -> {
                     }
@@ -254,7 +248,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             tvTitle.text = getText(R.string.str_edit_stadium)
             etPitchName.setText(data.stadiumName);
             etPitchAddress.setText(data.address)
-            tvPitchWorkTime.text = "O'yin kunlarini o'zgartirish"
+            tvPitchWorkTime.text = getText(R.string.str_changing_game_days)
             etPitchPrice.setText(data.hourlyPrice.toString())
             recyclerView.adapter = adapterEdit
             stadiumNumber = data.number
@@ -269,26 +263,10 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         //show progress
                     }
                     is UiStateObject.SUCCESS -> {
-                        val binding =
-                            ToastChooseTimeBinding.inflate(LayoutInflater.from(requireActivity()))
-
-                        binding.tvToast.text = "Maydon muvofaqiyatli qo'shildi."
-                        val custToast = Toast(requireContext())
-                        custToast.setView(binding.root)
-                        custToast.show()
-                        requireActivity().onBackPressed()
                         Log.d("TAG", "observeViewModelEditPhoto: ")
 
                     }
                     is UiStateObject.ERROR -> {
-                        val binding =
-                            ToastChooseTimeBinding.inflate(LayoutInflater.from(requireActivity()))
-
-                        binding.tvToast.text = "Maydon muvofaqiyatli qo'shildi."
-                        val custToast = Toast(requireContext())
-                        custToast.setView(binding.root)
-                        custToast.show()
-                        requireActivity().onBackPressed()
                         Log.d("TAG", "observeViewModelEditPhoto: error ${it}")
                     }
                     else -> {
@@ -309,7 +287,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         val binding =
                             ToastChooseTimeBinding.inflate(LayoutInflater.from(requireActivity()))
 
-                        binding.tvToast.text = "Maydon muvofaqiyatli tahrirlandi."
+                        binding.tvToast.text = getString(R.string.str_successfully_edited)
                         val custToast = Toast(requireContext())
                         custToast.setView(binding.root)
                         custToast.show()
@@ -321,7 +299,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         val binding =
                             ToastChooseTimeBinding.inflate(LayoutInflater.from(requireActivity()))
 
-                        binding.tvToast.text = "Maydon muvofaqiyatli tahrirlanmadi, qayta urinib ko'ring."
+                        binding.tvToast.text = getString(R.string.str_error_edited)
                         val custToast = Toast(requireContext())
                         custToast.setView(binding.root)
                         custToast.show()
@@ -368,7 +346,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                 } catch (e: Exception) {
                     Toast.makeText(
                         requireContext(),
-                        "Narxni kiritishda xatolik",
+                        getText(R.string.str_error_entering_price),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -431,10 +409,8 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         val etPitchAddress = binding.etPitchAddress.text.toString()
         val etPitchPhoneNumber = binding.etPitchPhoneNumber.text.toString()
         val etPitchPrice = binding.etPitchPrice.text.toString()
-
-
         return etPitchName.isNotEmpty() && etPitchAddress.isNotEmpty() && etPitchPhoneNumber.length == 12 &&
-                etPitchPrice.isNotEmpty()
+                etPitchPrice.isNotEmpty() && latitude != 0.0 && longitude != 0.0 && workTimes.isNotEmpty()
     }
 
     private fun observeViewModel() {
@@ -448,7 +424,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         val binding =
                             ToastChooseTimeBinding.inflate(LayoutInflater.from(requireActivity()))
 
-                        binding.tvToast.text = "Maydon muvofaqiyatli qo'shildi."
+                        binding.tvToast.text = getString(R.string.str_successfully_edded)
                         val custToast = Toast(requireContext())
                         custToast.setView(binding.root)
                         custToast.show()
@@ -459,7 +435,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         val binding =
                             ToastChooseTimeBinding.inflate(LayoutInflater.from(requireActivity()))
 
-                        binding.tvToast.text = "Maydon muvofaqiyatli qo'shildi."
+                        binding.tvToast.text = getString(R.string.str_not_succesfull)
                         val custToast = Toast(requireContext())
                         custToast.setView(binding.root)
                         custToast.show()
@@ -522,6 +498,9 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         }
     }
 
+    /**
+     * This is function, to upgrade from Uri to MultipartBody.Part
+     */
     private fun convertUriMultipart(selectedImageUri: Uri): MultipartBody.Part{
         val ins = requireActivity().contentResolver.openInputStream(selectedImageUri!!)
         val image = File.createTempFile(

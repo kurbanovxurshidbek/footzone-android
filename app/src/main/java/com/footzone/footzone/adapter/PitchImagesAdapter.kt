@@ -6,7 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemPitchImageLayoutBinding
+import com.footzone.footzone.utils.KeyValues.STADIUM_IMAGE_BASE_URL
 
+/**
+ * This adapter , user to view stadium images
+ */
 class PitchImagesAdapter() :
     RecyclerView.Adapter<PitchImagesAdapter.VH>() {
 
@@ -19,7 +23,7 @@ class PitchImagesAdapter() :
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = stadiumImages[position]
-        val uri = "https://footzone-server.herokuapp.com/images/stadium/${item}"
+        val uri = "${STADIUM_IMAGE_BASE_URL}${item}"
        // val uri = "http://192.168.43.32:8081/images/stadium/${item}"
         Glide.with(holder.binding.ivPitch.context)
             .load(uri)

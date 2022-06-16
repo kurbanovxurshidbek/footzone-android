@@ -1,4 +1,4 @@
-package com.footzone.footzone.ui.fragments.timeinterval
+package com.footzone.footzone.helper
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

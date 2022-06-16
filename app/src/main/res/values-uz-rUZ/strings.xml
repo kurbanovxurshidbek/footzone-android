@@ -42,6 +42,21 @@
     <string name="str_ratings_and_reviews">Ratings and reviews</string>
     <string name="str_votes">votes</string>
     <string name="str_open">Open</string>
+    <string name="str_changing_game_days">O\'yin kunlarini o\'zgartirish</string>
+    <string name="str_delete_image">Rasm o\'chirildi</string>
+    <string name="str_error_phone_number">Telefon nomer kiritishda xatolik bor</string>
+    <string name="str_error_entering_price">Narxni kiritishda xatolik</string>
+    <string name="str_successfully_edited">Maydon muvofaqiyatli tahrirlandi</string>
+    <string name="str_error_edited">Maydon muvofaqiyatli tahrirlanmadi, qayta urinib ko\'ring</string>
+    <string name="str_successfully_edded">Maydon muvofaqiyatli qo\'shildi.</string>
+    <string name="str_not_succesfull">The field did not join successfully, hit again</string>
+    <string name="str_date_incomplete">Malumotlar to\'liq to\'ldirilmagan</string>
+    <string name="str_select_dat_game">O\'yin kunini tanlang</string>
+    <string name="str_send_request">Sizning so\'rovingiz yuborildi,\tez orada javob qaytadi</string>
+    <string name="str_not_send_request">Sizning so\'rovingiz yuborilmadi,\qayta urining</string>
+    <string name="str_holder_not_stadium">Hozir sizda maydonlar mavjud emas.\nMaydon qo’shish uchun yuqoridagi\n“+” tugmasini bosing</string>
+    <string name="str_select_game_time">O\'yin vaqtlarini tanlang</string>
+
 
     <string-array name="timelist">
         <item>00:00</item>

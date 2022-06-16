@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
-import com.footzone.footzone.adapter.MyPitchAdapter
+import com.footzone.footzone.adapter.HolderPitchAdapter
 import com.footzone.footzone.databinding.FragmentMyStadiumBinding
 import com.footzone.footzone.helper.OnClickEvent
 import com.footzone.footzone.model.ShortStadiumDetail
@@ -48,7 +48,7 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
                     }
 
                     is UiStateObject.SUCCESS -> {
-                        val holderStadiumsList = it.data.data as ArrayList<ShortStadiumDetail>
+                        val holderStadiumsList = it.data.data
                         controlVisibility(holderStadiumsList.isEmpty())
                         if (holderStadiumsList.isNotEmpty()) {
                             refreshAdapter(holderStadiumsList)
@@ -82,13 +82,13 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
             binding.recyclerView.visibility = View.GONE
             binding.llView.visibility = View.VISIBLE
             binding.tvJustText.text =
-                "Hozir sizda maydonlar mavjud emas.\nMaydon qo’shish uchun yuqoridagi\n“+” tugmasini bosing"
+                getText(R.string.str_holder_not_stadium)
 
         }
     }
 
     private fun refreshAdapter(stadiums: ArrayList<ShortStadiumDetail>) {
-        val adapter = MyPitchAdapter(stadiums, object : OnClickEvent {
+        val adapter = HolderPitchAdapter(stadiums, object : OnClickEvent {
             override fun setOnBookClickListener(stadiumId: String, isFavourite: Boolean) {
                 openEditStadium(stadiumId)
             }

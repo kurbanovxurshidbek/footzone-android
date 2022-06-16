@@ -60,11 +60,9 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
                     }
 
                     is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "setupObservers: ${it}")
                         refreshData(it.data.data)
                     }
                     is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupObservers:${it}")
                     }
                     else -> {
                     }
@@ -82,11 +80,9 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
                     }
 
                     is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "setupObservers: ${it.data}")
                         showPitchComments(it.data.data)
                     }
                     is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
                     }
                     else -> {
                     }
@@ -96,14 +92,12 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
     }
 
     private fun showPitchComments(data: Data) {
-        Log.d("@@comments", data.toString())
         showRatingBarInfo(data)
         refreshCommentAdapter(data)
     }
     private fun showRatingBarInfo(data: Data) {
         val averageRate = Functions.resRating(data.commentInfo as ArrayList<Comment>)
         val rateNumberPercentage = Functions.rateNumbers(data.commentInfo)
-        Log.d("@@@", rateNumberPercentage.toString())
         binding.apply {
             tvAverageRate.setText(averageRate.toString())
             ratingOne.setProgress(rateNumberPercentage.one)

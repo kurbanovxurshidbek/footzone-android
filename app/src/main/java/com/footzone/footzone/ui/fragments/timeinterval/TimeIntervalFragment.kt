@@ -18,6 +18,7 @@ import com.footzone.footzone.R
 import com.footzone.footzone.adapter.TimeManagerAdapter
 import com.footzone.footzone.databinding.FragmentTimeIntervalBinding
 import com.footzone.footzone.databinding.ItemChooseTimeViewWhiteBinding
+import com.footzone.footzone.helper.TimeSharedViewModel
 import com.footzone.footzone.model.LiveDataModel
 import com.footzone.footzone.model.TimeManager
 import com.footzone.footzone.model.sessionsday.SessionsData
@@ -114,7 +115,7 @@ class TimeIntervalFragment : Fragment() {
                 timeSharedViewModel.setTime(LiveDataModel(startTime, finishTime, bookDate))
                 requireActivity().onBackPressed()
             }else{
-                Toast.makeText(requireContext(), "O'yin vaqtlarini tanlang", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.str_select_game_time), Toast.LENGTH_SHORT).show()
             }
         }
 

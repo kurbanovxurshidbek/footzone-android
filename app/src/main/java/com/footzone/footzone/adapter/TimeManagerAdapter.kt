@@ -11,6 +11,9 @@ import com.footzone.footzone.databinding.ItemChooseTimeViewGreyBinding
 import com.footzone.footzone.databinding.ItemChooseTimeViewWhiteBinding
 import com.footzone.footzone.model.TimeManager
 
+/**
+ * This adapter , user can  view the stadium run times
+ */
 class TimeManagerAdapter(private var onItemSelected: ((Int, ItemChooseTimeViewWhiteBinding) -> Unit)) :
     ListAdapter<TimeManager, RecyclerView.ViewHolder>(DiffUtil()) {
     private val TYPE_ITEM_WHITE = 1001
@@ -18,7 +21,7 @@ class TimeManagerAdapter(private var onItemSelected: ((Int, ItemChooseTimeViewWh
 
     override fun getItemViewType(position: Int): Int {
         val item = getItem(position)
-        return if (item.status == "ACCEPTED" || item.status == "PENDING") {
+        return if (item.status == "ACCEPTED") {
             TYPE_ITEM_GREY
         } else {
             TYPE_ITEM_WHITE
