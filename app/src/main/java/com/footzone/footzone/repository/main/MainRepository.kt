@@ -60,12 +60,6 @@ class MainRepository @Inject constructor(
     ) =
         apiService.editHolderStadium(stadiumId, stadium)
 
-    suspend fun editHolderStadiumPhoto(
-        stadiumId: String,
-        photoIds: ArrayList<String>,
-        files: ArrayList<MultipartBody.Part>
-    ) = apiService.editHolderStadiumPhoto(stadiumId, photoIds, files)
-
 
     suspend fun acceptOrDeclineBookingRequest(acceptDeclineRequest: AcceptDeclineRequest) =
         apiService.acceptOrDeclineBookingRequest(acceptDeclineRequest)
@@ -81,4 +75,8 @@ class MainRepository @Inject constructor(
     suspend fun getPlayedHistory(userId: String) = apiService.getPlayedHistory(userId)
 
     suspend fun getPlayingSoonStadium() = apiService.getPlayingSoonStadium()
+
+    suspend fun deleteStadiumPhoto(stadiumId: String, photoId: String) = apiService.deleteStadiumPhoto(stadiumId, photoId)
+
+    suspend fun addPhotoToStadium(stadiumId: String, file: MultipartBody.Part) = apiService.addPhotoToStadium(stadiumId, file)
 }

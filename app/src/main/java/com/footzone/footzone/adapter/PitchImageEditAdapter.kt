@@ -1,6 +1,7 @@
 package com.footzone.footzone.adapter
 
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -61,12 +62,9 @@ class PitchImageEditAdapter(var pitchImages: LinkedList<EditPhoto>, private var 
                     holder.view.ivPitch.setImageURI(pitchImages[position].name as Uri)
                 }
                 holder.view.apply {
-                    llConvert.setOnClickListener {
-                        onClickEditEvent.setOnEditClickListener(position, item.id!!)
-                    }
 
                     llDelete.setOnClickListener {
-                        onClickEditEvent.setOnDeleteClickListener(position, item.id!!)
+                        onClickEditEvent.setOnDeleteClickListener(position, item.id)
                     }
                 }
             }

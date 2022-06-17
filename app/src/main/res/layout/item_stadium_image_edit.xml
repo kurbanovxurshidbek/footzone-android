@@ -38,20 +38,4 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/llConvert"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_margin="8dp"
-        android:background="@drawable/circle_view"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/llDelete">
-
-        <ImageView
-            android:layout_width="13.33dp"
-            android:layout_height="13.33dp"
-            android:src="@drawable/ic_conversation" />
-    </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

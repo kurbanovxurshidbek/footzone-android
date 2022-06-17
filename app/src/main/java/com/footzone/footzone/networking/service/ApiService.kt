@@ -81,14 +81,6 @@ interface ApiService {
         @Body stadium: AddStadiumRequest
     ): Response
 
-    @Multipart
-    @PUT("stadium/edit/photo/{stadiumId}")
-    suspend fun editHolderStadiumPhoto(
-        @Path("stadiumId") stadiumId: String,
-        @Part("photoIds") photoIds: List<String>,
-        @Part files: List<MultipartBody.Part>,
-    ): Response
-
     @PUT("user/edit/{userId}")
     suspend fun editUser(
         @Path("userId") userId: String,
@@ -124,4 +116,16 @@ interface ApiService {
 
     @GET("session/playing/soon")
     suspend fun getPlayingSoonStadium(): PlayedHistoryResponse
+
+    @DELETE("stadium/edit/photo/delete/{stadiumId}/{photoId}")
+    suspend fun deleteStadiumPhoto(
+        @Path ("stadiumId") stadiumId: String,
+        @Path("photoId") photoId: String): Response
+
+    @Multipart
+    @POST("stadium/edit/photo/add/{stadiumId}")
+    suspend fun addPhotoToStadium(
+        @Path ("stadiumId") stadiumId: String,
+        @Part file: MultipartBody.Part
+    ): Response
 }

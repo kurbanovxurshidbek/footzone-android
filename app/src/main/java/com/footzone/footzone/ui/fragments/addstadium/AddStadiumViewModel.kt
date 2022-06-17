@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
+import org.json.JSONArray
 import javax.inject.Inject
 
 
@@ -25,8 +26,11 @@ class AddStadiumViewModel  @Inject constructor(private val mainRepository: MainR
     private val _editHolderStadium = MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
     val editHolderStadium = _editHolderStadium
 
-    private val _editHolderStadiumPhoto = MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
-    val editHolderStadiumPhoto = _editHolderStadiumPhoto
+    private val _deleteStadiumPhoto = MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
+    val deleteStadiumPhoto = _deleteStadiumPhoto
+
+    private val _addPhotoToStadium = MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
+    val addPhotoToStadium = _addPhotoToStadium
 
     fun postHolderStadium(stadium: AddStadiumRequest, files: ArrayList<MultipartBody.Part>) = viewModelScope.launch {
         _postStadium.value = UiStateObject.LOADING
@@ -67,15 +71,28 @@ class AddStadiumViewModel  @Inject constructor(private val mainRepository: MainR
         }
     }
 
-    fun editHolderStadiumPhoto(stadiumId: String, files: ArrayList<MultipartBody.Part>, photoIds: ArrayList<String>) = viewModelScope.launch {
-        _editHolderStadiumPhoto.value = UiStateObject.LOADING
+    fun deleteStadiumPhoto(stadiumId: String, photoId: String) = viewModelScope.launch {
+        _deleteStadiumPhoto.value = UiStateObject.LOADING
 
         try {
-            val response = mainRepository.editHolderStadiumPhoto(stadiumId, photoIds, files)
-            _editHolderStadiumPhoto.value = UiStateObject.SUCCESS(response)
+            val response = mainRepository.deleteStadiumPhoto(stadiumId, photoId)
+            _deleteStadiumPhoto.value = UiStateObject.SUCCESS(response)
 
         } catch (e: Exception) {
-            _editHolderStadiumPhoto.value =
+            _deleteStadiumPhoto.value =
+                UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
+        }
+    }
+
+    fun addPhotoToStadium(stadiumId: String, file: MultipartBody.Part) = viewModelScope.launch {
+        _addPhotoToStadium.value = UiStateObject.LOADING
+
+        try {
+            val response = mainRepository.addPhotoToStadium(stadiumId, file)
+            _addPhotoToStadium.value = UiStateObject.SUCCESS(response)
+
+        } catch (e: Exception) {
+            _addPhotoToStadium.value =
                 UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
         }
     }
