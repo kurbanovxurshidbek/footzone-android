@@ -61,11 +61,11 @@ object Functions {
     fun showStadiumOpenOrClose(tvOpenClose: TextView, tvOpenCloseHour: TextView, isOpen: IsOpen){
         if (isOpen.open) {
             tvOpenClose.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
-            tvOpenCloseHour.text = " · ${isOpen.time.substring(0, 5)} da yopiladi"
+            tvOpenCloseHour.text = " ${isOpen.time.substring(0, 5)} da yopiladi"
         } else {
             if (isOpen.time != null){
                 tvOpenClose.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
-                tvOpenCloseHour.text = " · ${isOpen.time.substring(0, 5)} da ochiladi"
+                tvOpenCloseHour.text = " ${isOpen.time.substring(0, 5)} da ochiladi"
             }else{
                 tvOpenCloseHour.text = "Stadion bugun ishlamaydi."
                 tvOpenClose.visibility = View.GONE

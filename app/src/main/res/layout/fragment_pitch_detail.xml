@@ -151,8 +151,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="6dp"
                         android:text="•"
                         android:textSize="16sp" />
 
@@ -169,8 +168,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
-                        android:src="@drawable/ic_bottom"
-                        android:visibility="gone" />
+                        android:src="@drawable/ic_bottom" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -376,7 +374,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:fontFamily="@font/roboto"
-                        android:text="4,2"
+                        android:text="0"
                         android:textColor="@color/black"
                         android:textSize="45dp" />
 
@@ -385,7 +383,7 @@
                         style="@style/Widget.MaterialRatingBar.RatingBar"
                         android:layout_width="wrap_content"
                         android:layout_height="16dp"
-                        android:rating="4.2"
+                        android:rating="0"
                         android:stepSize="0.01"
                         app:mrb_progressBackgroundTint="#E8B006"
                         app:mrb_progressTint="#E8B006"
@@ -401,7 +399,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto"
-                            android:text="24"
+                            android:text="0"
                             android:textColor="#616161"
                             android:textSize="12sp" />
 
@@ -410,7 +408,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:fontFamily="@font/roboto"
-                            android:text="ta ovoz"
+                            android:text="@string/str_vote"
                             android:textColor="#616161"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -443,7 +441,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="8dp"
-                            android:progress="90"
+                            android:progress="0"
                             app:indicatorColor="#E8B006"
                             app:trackColor="#FFF9E6"
                             app:trackCornerRadius="4dp"
@@ -471,7 +469,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="8dp"
-                            android:progress="10"
+                            android:progress="0"
                             app:indicatorColor="#E8B006"
                             app:trackColor="#FFF9E6"
                             app:trackCornerRadius="4dp"
@@ -499,7 +497,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="8dp"
-                            android:progress="30"
+                            android:progress="0"
                             app:indicatorColor="#E8B006"
                             app:trackColor="#FFF9E6"
                             app:trackCornerRadius="4dp"
@@ -527,7 +525,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="8dp"
-                            android:progress="80"
+                            android:progress="0"
                             app:indicatorColor="#E8B006"
                             app:trackColor="#FFF9E6"
                             app:trackCornerRadius="4dp"
@@ -555,7 +553,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="8dp"
-                            android:progress="70"
+                            android:progress="0"
                             app:indicatorColor="#E8B006"
                             app:trackColor="#FFF9E6"
                             app:trackCornerRadius="4dp"

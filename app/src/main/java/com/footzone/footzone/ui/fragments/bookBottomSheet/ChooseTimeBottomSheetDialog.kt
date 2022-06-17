@@ -52,6 +52,7 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
         initView()
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun initView() {
 
         timeSharedViewModel.getTime().observe(viewLifecycleOwner){
@@ -74,11 +75,12 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
             val destFormat = SimpleDateFormat("dd MMM yyy")
             val convertedDate = sourceFormat.parse(bookData)
 
-            Log.d("TAG", "initView: ${destFormat.format(convertedDate).toString()}")
             binding.tvDate.setText(destFormat.format(convertedDate).toString())
         }
 
         binding.llDate.setOnClickListener {
+           binding.tvChooseTime.text = ""
+            isCheck = false
             val dialog = CalendarDIalog { date ->
                 binding.tvDate.text = date
 

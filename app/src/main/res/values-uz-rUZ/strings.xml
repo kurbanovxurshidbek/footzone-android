@@ -56,6 +56,7 @@
     <string name="str_not_send_request">Sizning so\'rovingiz yuborilmadi,\qayta urining</string>
     <string name="str_holder_not_stadium">Hozir sizda maydonlar mavjud emas.\nMaydon qo’shish uchun yuqoridagi\n“+” tugmasini bosing</string>
     <string name="str_select_game_time">O\'yin vaqtlarini tanlang</string>
+    <string name="str_vote">ta ovoz</string>
 
 
     <string-array name="timelist">
