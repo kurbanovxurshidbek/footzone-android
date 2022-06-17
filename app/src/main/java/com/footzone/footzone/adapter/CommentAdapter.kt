@@ -11,6 +11,7 @@ import com.footzone.footzone.model.CommentsData
 import com.footzone.footzone.model.Data
 import com.footzone.footzone.model.FullComment
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.commonfunction.Functions.loadImageUrl
 
 class CommentAdapter(var items: List<AllComment>, val context: Context) :
     RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() {
@@ -34,9 +35,8 @@ class CommentAdapter(var items: List<AllComment>, val context: Context) :
             dateComment.text = item.createdAt.subSequence(0,10)
 
             if(!item.userAttachmentName.equals("default-profile-pic.jpg")){
-                Glide.with(context)
-                    .load("${KeyValues.USER_IMAGE_BASE_URL}${item.userAttachmentName}")
-                    .into(ivUserPhoto)
+                val uri = "${KeyValues.USER_IMAGE_BASE_URL}${item.userAttachmentName}"
+                ivUserPhoto.loadImageUrl(uri)
             }
 
         }

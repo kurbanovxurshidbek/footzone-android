@@ -3,10 +3,9 @@ package com.footzone.footzone.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemPitchImageLayoutBinding
 import com.footzone.footzone.utils.KeyValues.STADIUM_IMAGE_BASE_URL
+import com.footzone.footzone.utils.commonfunction.Functions.loadImageUrl
 
 /**
  * This adapter , user to view stadium images
@@ -25,11 +24,9 @@ class PitchImagesAdapter() :
         val item = stadiumImages[position]
         val uri = "${STADIUM_IMAGE_BASE_URL}${item}"
         //val uri = "http://192.168.43.32:8081/images/stadium/${item}"
-        Glide.with(holder.binding.ivPitch.context)
-            .load(uri)
-            .placeholder(R.drawable.loading_load)
-            .into(holder.binding.ivPitch)
+        holder.binding.ivPitch.loadImageUrl(uri)
     }
+
 
     override fun getItemCount(): Int = stadiumImages.size
 

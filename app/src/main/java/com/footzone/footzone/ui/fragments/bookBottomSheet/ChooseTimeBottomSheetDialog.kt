@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,20 +61,21 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
             if (startTime != null && endTime != null){
                 binding.tvChooseTime.text = "$startTime - $endTime"
                 binding.tvBook.setBackgroundResource(R.drawable.view_rounded_corners_blue)
-                binding.tvDate.isClickable = true
-                binding.tvDate.setTextColor(Color.WHITE)
+                binding.tvBook.isClickable = true
+                binding.tvBook.setTextColor(Color.WHITE)
                 isCheck = true
             }else{
                 isCheck = false
                 binding.tvBook.setBackgroundResource(R.drawable.view_rounded_corners_grey)
-                binding.tvDate.isClickable = false
-                binding.tvDate.setTextColor(Color.BLACK)
+                binding.tvBook.isClickable = false
+                binding.tvBook.setTextColor(Color.BLACK)
             }
             val sourceFormat = SimpleDateFormat("yyyy-MM-dd")
             val destFormat = SimpleDateFormat("dd MMM yyy")
             val convertedDate = sourceFormat.parse(bookData)
 
-            binding.tvDate.text = destFormat.format(convertedDate)
+            Log.d("TAG", "initView: ${destFormat.format(convertedDate).toString()}")
+            binding.tvDate.setText(destFormat.format(convertedDate).toString())
         }
 
         binding.llDate.setOnClickListener {

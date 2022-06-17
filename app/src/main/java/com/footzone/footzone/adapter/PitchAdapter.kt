@@ -3,12 +3,9 @@ package com.footzone.footzone.adapter
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.LayerDrawable
-import android.text.Html
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemPitchLayoutBinding
 import com.footzone.footzone.helper.OnClickEvent
 import com.footzone.footzone.model.ShortStadiumDetail
@@ -30,7 +27,6 @@ class PitchAdapter(
         VH(ItemPitchLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        Log.d("TAG", "refreshAdapter: $favouriteStadiums $pitches")
         val pitch = pitches[position]
         holder.view.apply {
             refreshImagesAdapter(pitch.photos, rvPithPhotos)

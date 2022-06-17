@@ -11,6 +11,7 @@ import com.footzone.footzone.databinding.ItemStadiumImageEditBinding
 import com.footzone.footzone.helper.OnClickEditEvent
 import com.footzone.footzone.model.EditPhoto
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.commonfunction.Functions.loadImageUrl
 import java.util.*
 
 /**
@@ -54,10 +55,7 @@ class PitchImageEditAdapter(var pitchImages: LinkedList<EditPhoto>, private var 
             is EditImageViewHolder -> {
                 if (pitchImages[position].name is String) {
                     val uri = "${KeyValues.STADIUM_IMAGE_BASE_URL}${pitchImages[position].name}"
-                    //val uri = "http://192.168.43.32:8081/images/stadium/${pitchImages[position].name}"
-                    Glide.with(holder.view.ivPitch.context)
-                        .load(uri)
-                        .into(holder.view.ivPitch)
+                    holder.view.ivPitch.loadImageUrl(uri)
                 } else if (pitchImages[position].name is Uri) {
                     holder.view.ivPitch.setImageURI(pitchImages[position].name as Uri)
                 }

@@ -1,14 +1,12 @@
 package com.footzone.footzone.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemRvBinding
 import com.footzone.footzone.model.StadiumPhoto
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.commonfunction.Functions.loadImageUrl
 
 class CustomAdapter(var items: ArrayList<StadiumPhoto>) :
     RecyclerView.Adapter<CustomAdapter.VH>() {
@@ -31,10 +29,7 @@ class CustomAdapter(var items: ArrayList<StadiumPhoto>) :
         holder.view.apply {
             //val uri = "http://192.168.43.32:8081/images/stadium/${item.name}"
             val uri = "${KeyValues.STADIUM_IMAGE_BASE_URL}${item.name}"
-            Glide.with(itemImageView.context)
-                .load(uri)
-                .placeholder(R.drawable.stadim2)
-                .into(itemImageView)
+           itemImageView.loadImageUrl(uri)
         }
     }
 

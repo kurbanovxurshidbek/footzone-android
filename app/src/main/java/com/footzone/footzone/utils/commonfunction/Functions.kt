@@ -1,11 +1,16 @@
 package com.footzone.footzone.utils.commonfunction
 
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.os.Build
 import android.text.Html
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.core.content.res.ResourcesCompat
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.bumptech.glide.Glide
 import com.footzone.footzone.R
 import com.footzone.footzone.model.Comment
 import com.footzone.footzone.model.RateNumberPercentage
@@ -68,4 +73,19 @@ object Functions {
         }
     }
 
+    fun ImageView.loadImageUrl(url: String?) {
+        Glide.with(this).load(url).placeholder(getCircularProgressDrawable())
+            .error(R.drawable.stadim2).into(this)
+    }
+
+    private fun ImageView.getCircularProgressDrawable() =
+        CircularProgressDrawable(this.context).apply {
+            strokeWidth = 5f
+            centerRadius = 30f
+            colorFilter = PorterDuffColorFilter(
+                ResourcesCompat.getColor(resources, R.color.colorBlue600, null),
+                PorterDuff.Mode.ADD
+            )
+            start()
+        }
 }
