@@ -21,16 +21,21 @@ import java.time.LocalTime
 
 object Functions {
     fun resRating(comments: ArrayList<Comment>): Float {
-        return try {
-            (comments.sumOf { it.number * it.rate } / comments.sumOf { it.number }).toFloat()
+        var averageRate = 0f
+        try {
+            val sumRates: Float = comments.sumOf { it.number * it.rate }.toFloat()
+            val sumRateNumber: Float = comments.sumOf { it.number }.toFloat()
+            averageRate = sumRates / sumRateNumber
+
         } catch (e: Exception) {
-            0f
+            averageRate = 0f
         }
+        return averageRate
     }
 
     fun rateNumbers(comments: ArrayList<Comment>): RateNumberPercentage {
         val sumOfAllRates = comments.sumOf { it.number * it.rate }
-       return RateNumberPercentage(0, 0, 0, 0, 0).apply {
+        return RateNumberPercentage(0, 0, 0, 0, 0).apply {
             comments.forEach {
                 when (it.rate) {
                     1 -> this.one = it.number * it.rate * 100 / sumOfAllRates
@@ -58,15 +63,15 @@ object Functions {
         this.setImageResource(R.drawable.ic_bookmark)
     }
 
-    fun showStadiumOpenOrClose(tvOpenClose: TextView, tvOpenCloseHour: TextView, isOpen: IsOpen){
+    fun showStadiumOpenOrClose(tvOpenClose: TextView, tvOpenCloseHour: TextView, isOpen: IsOpen) {
         if (isOpen.open) {
             tvOpenClose.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
             tvOpenCloseHour.text = " ${isOpen.time.substring(0, 5)} da yopiladi"
         } else {
-            if (isOpen.time != null){
+            if (isOpen.time != null) {
                 tvOpenClose.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
                 tvOpenCloseHour.text = " ${isOpen.time.substring(0, 5)} da ochiladi"
-            }else{
+            } else {
                 tvOpenCloseHour.text = "Stadion bugun ishlamaydi."
                 tvOpenClose.visibility = View.GONE
             }
