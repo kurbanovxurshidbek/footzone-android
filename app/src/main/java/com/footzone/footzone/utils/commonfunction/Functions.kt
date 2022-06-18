@@ -48,7 +48,7 @@ object Functions {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun calculateInHours(startTime: LocalTime, endTime: LocalTime): Double {
-        return Duration.between(startTime, endTime).toMillis() / 60.0
+        return Duration.between(startTime, endTime).toMinutes() / 60.0
     }
 
     fun ImageView.setFavouriteBackground() {

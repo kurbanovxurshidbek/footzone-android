@@ -130,7 +130,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                         val stadiumData = it.data.data
                         stadiumDataToBottomSheetDialog = StadiumDataToBottomSheetDialog(
                             stadiumData.stadiumId,
-                            stadiumData.hourlyPrice,
+                            stadiumData.hourlyPrice.toInt(),
                             stadiumData.workingDays
                         )
 
