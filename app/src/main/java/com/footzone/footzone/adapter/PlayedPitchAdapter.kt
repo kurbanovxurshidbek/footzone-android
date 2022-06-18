@@ -8,9 +8,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemPlayedPitchBinding
-import com.footzone.footzone.model.PitchHistory
 import com.footzone.footzone.model.PlayedHistoryResponseData
-import com.footzone.footzone.utils.commonfunction.Functions
 import com.footzone.footzone.utils.commonfunction.Functions.calculateInHours
 import java.time.LocalTime
 
