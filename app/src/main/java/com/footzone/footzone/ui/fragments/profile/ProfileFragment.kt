@@ -147,7 +147,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
                     is UiStateObject.SUCCESS -> {
                         Log.d("TAG", "setupObservers: ${it.data}")
-                        binding.tvName.setText(name)
+                        binding.tvName.text = name
                         dialog.dismiss()
                     }
                     is UiStateObject.ERROR -> {
@@ -263,6 +263,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             if (image.length() == 0L) return@registerForActivityResult
             binding.ivProfile.setPadding(0, 0, 0, 0)
             Glide.with(requireActivity()).load(image).into(binding.ivProfile)
+            binding.ivAdd.setImageResource(R.drawable.ic_edit_button)
 
 
             GlobalScope.launch {

@@ -1,6 +1,7 @@
 package com.footzone.footzone.ui.fragments.stadiumdetail
 
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -85,7 +86,8 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
     }
 
     private fun showRatingBarInfo(data: Data) {
-        val averageRate = Functions.resRating(data.commentInfo as ArrayList<Comment>)
+        val averageRate : Float= Functions.resRating(data.commentInfo as ArrayList<Comment>)
+        Log.d("@av", averageRate.toString())
         val rateNumberPercentage = Functions.rateNumbers(comments = data.commentInfo)
         Log.d("@@@", rateNumberPercentage.toString())
         val viewRateCount: Int = (data.commentInfo.sumOf { it.number })
@@ -98,11 +100,20 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
             }
 
             rbRate.rating = averageRate
-            ratingOne.progress = rateNumberPercentage.one
-            ratingTwo.progress = rateNumberPercentage.two
-            ratingThree.progress = rateNumberPercentage.three
-            ratingFour.progress = rateNumberPercentage.four
-            ratingFive.progress = rateNumberPercentage.five
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                ratingOne.setProgress(rateNumberPercentage.one,true)
+                ratingTwo.setProgress(rateNumberPercentage.two,true)
+                ratingThree.setProgress(rateNumberPercentage.three,true)
+                ratingFour.setProgress(rateNumberPercentage.four,true)
+                ratingFive.setProgress(rateNumberPercentage.five,true)
+            } else {
+                ratingOne.progress = rateNumberPercentage.one
+                ratingTwo.progress = rateNumberPercentage.two
+                ratingThree.progress = rateNumberPercentage.three
+                ratingFour.progress = rateNumberPercentage.four
+                ratingFive.progress = rateNumberPercentage.five
+            }
+
         }
     }
 

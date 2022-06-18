@@ -24,6 +24,4 @@ object KeyValues {
     const val WORK_TIME  = "workTime"
     const val PICK_FROM_FILE_ADD = 1001
     const val PICK_FROM_FILE_EDIT = 1002
-    const val STARTTIME = "starttime"
-    const val FINISHTIME = "finishtime"
 }
