@@ -63,8 +63,18 @@ class PlayedPitchFragment : BaseFragment(R.layout.fragment_played_pitch) {
         }
     }
 
-    private fun refreshAdapter(data: List<PlayedHistoryResponseData>) {
-        playedPitchAdapter.submitData(data)
-        binding.rvPlayedPitches.adapter = playedPitchAdapter
+    private fun refreshAdapter(playedStadiums: List<PlayedHistoryResponseData>) {
+
+        if (playedStadiums.isEmpty()) {
+            binding.tvEmptyListAlert.visibility = View.VISIBLE
+            binding.rvPlayedStadiums.visibility = View.GONE
+            return
+        } else {
+            binding.tvEmptyListAlert.visibility = View.GONE
+            binding.rvPlayedStadiums.visibility = View.VISIBLE
+        }
+
+        playedPitchAdapter.submitData(playedStadiums)
+        binding.rvPlayedStadiums.adapter = playedPitchAdapter
     }
 }

@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.StadiumPlayedHistoryAdapter
 import com.footzone.footzone.databinding.FragmentPlayedPitchBinding
+import com.footzone.footzone.databinding.FragmentStadiumGameHistoryBinding
 import com.footzone.footzone.model.StadiumBookSentResponseData
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
@@ -19,7 +20,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class StadiumGameHistoryFragment : BaseFragment(R.layout.fragment_stadium_game_history) {
 
-    private lateinit var binding: FragmentPlayedPitchBinding
+    private lateinit var binding: FragmentStadiumGameHistoryBinding
     private lateinit var playedPitchAdapter: StadiumPlayedHistoryAdapter
     private val viewModel by viewModels<StadiumHistoryViewModel>()
 
@@ -29,7 +30,7 @@ class StadiumGameHistoryFragment : BaseFragment(R.layout.fragment_stadium_game_h
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentPlayedPitchBinding.bind(view)
+        binding = FragmentStadiumGameHistoryBinding.bind(view)
         if (sharedPref.getUserID(KeyValues.USER_ID, "").isNotEmpty())
             viewModel.getStadiumPlayedHistory("PLAYED")
         initViews()
@@ -63,8 +64,17 @@ class StadiumGameHistoryFragment : BaseFragment(R.layout.fragment_stadium_game_h
         }
     }
 
-    private fun refreshAdapter(data: List<StadiumBookSentResponseData>) {
-        playedPitchAdapter.submitData(data)
-        binding.rvPlayedPitches.adapter = playedPitchAdapter
+    private fun refreshAdapter(history: List<StadiumBookSentResponseData>) {
+        if (history.isEmpty()) {
+            binding.tvEmptyListAlert.visibility = View.VISIBLE
+            binding.rvStadiumGameHistory.visibility = View.GONE
+            return
+        } else {
+            binding.tvEmptyListAlert.visibility = View.GONE
+            binding.rvStadiumGameHistory.visibility = View.VISIBLE
+        }
+
+        playedPitchAdapter.submitData(history)
+        binding.rvStadiumGameHistory.adapter = playedPitchAdapter
     }
 }

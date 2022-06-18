@@ -1,10 +1,7 @@
 package com.footzone.footzone.ui.fragments.stadium
 
 import android.os.Bundle
-import android.text.Html
-import android.util.Log
 import android.view.View
-import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope

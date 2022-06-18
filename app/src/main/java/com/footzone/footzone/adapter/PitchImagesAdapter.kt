@@ -23,7 +23,6 @@ class PitchImagesAdapter() :
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = stadiumImages[position]
         val uri = "${STADIUM_IMAGE_BASE_URL}${item}"
-        //val uri = "http://192.168.43.32:8081/images/stadium/${item}"
         holder.binding.ivPitch.loadImageUrl(uri)
     }
 

@@ -35,7 +35,7 @@ class PitchAdapter(
             setStrokeColorToRatingBar(rbPitch)
             rbPitch.rating = Functions.resRating(pitch.comments)
             rbPitch.setIsIndicator(true)
-            tvRatingNums.text = "(${pitch.comments.sumBy { it.number }})"
+            tvRatingNums.text = "(${pitch.comments.sumOf { it.number }})"
             tvPitchPrice.text = "${pitch.hourlyPrice} so'm/soat"
 
             if (favouriteStadiums.contains(pitch.stadiumId)) {

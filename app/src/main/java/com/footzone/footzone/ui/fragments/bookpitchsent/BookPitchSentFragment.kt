@@ -92,7 +92,14 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
     }
 
     private fun refreshAdapter(requests: List<StadiumBookSentResponseData>) {
-        Log.d("TAG", "refreshAdapter: $requests")
+        if (requests.isEmpty()) {
+            binding.tvEmptyListAlert.visibility = View.VISIBLE
+            binding.rvBookSent.visibility = View.GONE
+            return
+        } else {
+            binding.tvEmptyListAlert.visibility = View.GONE
+            binding.rvBookSent.visibility = View.VISIBLE
+        }
         playingPitchAdapter = PitchBookSentAdapter(requests, object : OnClickEventAcceptDecline {
             override fun onAccept(stadiumId: String) {
                 val acceptDialog =
@@ -132,6 +139,6 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
             }
         })
 
-        binding.rvPlayingPitches.adapter = playingPitchAdapter
+        binding.rvBookSent.adapter = playingPitchAdapter
     }
 }

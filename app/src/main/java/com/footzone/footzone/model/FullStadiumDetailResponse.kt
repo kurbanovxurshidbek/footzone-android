@@ -26,6 +26,6 @@ data class StadiumPhoto(
 )
 
 data class IsOpen(
-    val time: String,
+    val time: String?,
     val open: Boolean
 )

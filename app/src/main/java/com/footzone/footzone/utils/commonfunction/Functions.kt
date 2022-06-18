@@ -21,14 +21,13 @@ import java.time.LocalTime
 
 object Functions {
     fun resRating(comments: ArrayList<Comment>): Float {
-        var averageRate = 0f
-        try {
+        val averageRate: Float = try {
             val sumRates: Float = comments.sumOf { it.number * it.rate }.toFloat()
             val sumRateNumber: Float = comments.sumOf { it.number }.toFloat()
-            averageRate = sumRates / sumRateNumber
+            sumRates / sumRateNumber
 
         } catch (e: Exception) {
-            averageRate = 0f
+            0f
         }
         return averageRate
     }
@@ -64,16 +63,18 @@ object Functions {
     }
 
     fun showStadiumOpenOrClose(tvOpenClose: TextView, tvOpenCloseHour: TextView, isOpen: IsOpen) {
-        if (isOpen.open) {
-            tvOpenClose.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
-            tvOpenCloseHour.text = " ${isOpen.time.substring(0, 5)} da yopiladi"
-        } else {
-            if (isOpen.time != null) {
+        when {
+            isOpen.time == null -> {
+                tvOpenClose.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
+                tvOpenCloseHour.text = "Stadion bugun ishlamaydi."
+            }
+            isOpen.open -> {
+                tvOpenClose.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")
+                tvOpenCloseHour.text = " ${isOpen.time.substring(0, 5)} da yopiladi"
+            }
+            else -> {
                 tvOpenClose.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
                 tvOpenCloseHour.text = " ${isOpen.time.substring(0, 5)} da ochiladi"
-            } else {
-                tvOpenCloseHour.text = "Stadion bugun ishlamaydi."
-                tvOpenClose.visibility = View.GONE
             }
         }
     }

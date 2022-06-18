@@ -58,7 +58,17 @@ class PlayingPitchFragment : BaseFragment(R.layout.fragment_playing_pitch) {
     }
 
     private fun refreshAdapter(playingSoonList: List<PlayedHistoryResponseData>) {
+
+        if (playingSoonList.isEmpty()) {
+            binding.tvEmptyListAlert.visibility = View.VISIBLE
+            binding.rvPlayingSoon.visibility = View.GONE
+            return
+        } else {
+            binding.tvEmptyListAlert.visibility = View.GONE
+            binding.rvPlayingSoon.visibility = View.VISIBLE
+        }
+
         playingPitchAdapter.submitData(playingSoonList)
-        binding.rvPlayingPitches.adapter = playingPitchAdapter
+        binding.rvPlayingSoon.adapter = playingPitchAdapter
     }
 }

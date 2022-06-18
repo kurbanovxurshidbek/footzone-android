@@ -92,11 +92,21 @@
 
         <TextView
             android:fontFamily="@font/poppins_bold"
+            android:layout_width="wrap_content"
+            android:id="@+id/tvDot"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text=" ·"
+            android:textColor="#616161"
+            android:textSize="12sp" />
+
+        <TextView
+            android:fontFamily="@font/poppins_bold"
             android:id="@+id/tvOpenCloseHour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text=" · 00:00 da yopiladi"
+            android:text="00:00 da yopiladi"
             android:textColor="#616161"
             android:textSize="12sp" />
 
