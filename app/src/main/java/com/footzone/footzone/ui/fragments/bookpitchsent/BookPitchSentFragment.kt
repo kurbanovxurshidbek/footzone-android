@@ -1,9 +1,12 @@
 package com.footzone.footzone.ui.fragments.bookpitchsent
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.footzone.footzone.R
@@ -23,6 +26,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
 
+    private lateinit var acceptDialog: AcceptDialog
+    private lateinit var declineDialog: DeclineDialog
     private lateinit var binding: FragmentBookPitchSentBinding
     private lateinit var playingPitchAdapter: PitchBookSentAdapter
     private val viewModel by viewModels<BookPitchSentViewModel>()
@@ -69,7 +74,11 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
         }
     }
 
-    private fun observeAcceptDeclineResponse() {
+    private fun observeAcceptDeclineResponse(
+        isToAccept: Boolean,
+        tvStatus: TextView,
+        linearAcceptDecline: LinearLayout
+    ) {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             viewModel.acceptDecline.collect {
                 when (it) {
@@ -78,7 +87,21 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
                     }
 
                     is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "observeNearByStadiums: $it.data")
+                        if (isToAccept) {
+                            if (it.data.success) {
+                                acceptDialog.dismiss()
+                                tvStatus.visibility = View.VISIBLE
+                                linearAcceptDecline.visibility = View.GONE
+                            }
+                        } else {
+                            if (it.data.success) {
+                                declineDialog.dismiss()
+                                tvStatus.setTextColor(Color.parseColor("#C8303F"))
+                                tvStatus.text = "Rad etildi!"
+                                tvStatus.visibility = View.VISIBLE
+                                linearAcceptDecline.visibility = View.GONE
+                            }
+                        }
                     }
 
                     is UiStateObject.ERROR -> {
@@ -101,8 +124,12 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
             binding.rvBookSent.visibility = View.VISIBLE
         }
         playingPitchAdapter = PitchBookSentAdapter(requests, object : OnClickEventAcceptDecline {
-            override fun onAccept(stadiumId: String) {
-                val acceptDialog =
+            override fun onAccept(
+                stadiumId: String,
+                tvStatus: TextView,
+                linearAcceptDecline: LinearLayout
+            ) {
+                acceptDialog =
                     AcceptDialog(requireContext()) {
                         //send accepted ok
                         viewModel.acceptOrDeclineBookingRequest(
@@ -111,7 +138,7 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
                                 stadiumId
                             )
                         )
-                        observeAcceptDeclineResponse()
+                        observeAcceptDeclineResponse(true, tvStatus, linearAcceptDecline)
                     }.instance(
                         LayoutAcceptBinding.inflate(
                             LayoutInflater.from(requireContext())
@@ -120,8 +147,12 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
                 acceptDialog.show()
             }
 
-            override fun onDecline(stadiumId: String) {
-                val declineDialog =
+            override fun onDecline(
+                stadiumId: String,
+                tvStatus: TextView,
+                linearAcceptDecline: LinearLayout
+            ) {
+                declineDialog =
                     DeclineDialog(requireContext()) {
                         viewModel.acceptOrDeclineBookingRequest(
                             AcceptDeclineRequest(
@@ -129,7 +160,7 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
                                 stadiumId
                             )
                         )
-                        observeAcceptDeclineResponse()
+                        observeAcceptDeclineResponse(false, tvStatus, linearAcceptDecline)
                     }.instance(
                         LayoutDeclineBinding.inflate(
                             LayoutInflater.from(requireContext())

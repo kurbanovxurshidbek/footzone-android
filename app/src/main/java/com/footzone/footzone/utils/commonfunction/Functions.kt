@@ -65,7 +65,7 @@ object Functions {
         when {
             isOpen.time == null -> {
                 tvOpenClose.text = Html.fromHtml("<font color=#C8303F>" + "Yopiq")
-                tvOpenCloseHour.text = "Stadion bugun ishlamaydi."
+                tvOpenCloseHour.text = " Stadion bugun ishlamaydi."
             }
             isOpen.open -> {
                 tvOpenClose.text = Html.fromHtml("<font color=#177B4C>" + "Ochiq")

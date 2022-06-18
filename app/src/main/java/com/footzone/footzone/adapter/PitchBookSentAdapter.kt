@@ -9,11 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemPitchBookSentBinding
 import com.footzone.footzone.helper.OnClickEventAcceptDecline
-import com.footzone.footzone.model.StadiumBookSentResponse
 import com.footzone.footzone.model.StadiumBookSentResponseData
-import com.footzone.footzone.utils.commonfunction.Functions
 import com.footzone.footzone.utils.commonfunction.Functions.calculateInHours
-import java.time.Duration
 import java.time.LocalTime
 
 class PitchBookSentAdapter(
@@ -36,18 +33,24 @@ class PitchBookSentAdapter(
             LocalTime.parse(stadium.endTime)
         )
         holder.view.apply {
-            tvPitchName.text = "${stadium.stadiumName} ${tvPitchName.context.getText(R.string.str_football_stadium)}"
+            tvPitchName.text =
+                "${stadium.stadiumName} ${tvPitchName.context.getText(R.string.str_football_stadium)}"
             tvDate.text = stadium.date
             tvHours.text =
-                "${stadium.startTime.subSequence(0, 5)}-${stadium.endTime.substring(0, 5)}, $duration soat"
-            tvPrice.text = "${stadium.hourlyPrice.toInt()*duration} so'm"
+                "${stadium.startTime.subSequence(0, 5)}-${
+                    stadium.endTime.substring(
+                        0,
+                        5
+                    )
+                }, $duration soat"
+            tvPrice.text = "${stadium.hourlyPrice.toInt() * duration} so'm"
 
             btnAccept.setOnClickListener {
-                onClickEventAcceptDecline.onAccept(stadium.sessionId)
+                onClickEventAcceptDecline.onAccept(stadium.sessionId,tvStatus,linearAcceptDecline)
             }
 
             btnDecline.setOnClickListener {
-                onClickEventAcceptDecline.onDecline(stadium.sessionId)
+                onClickEventAcceptDecline.onDecline(stadium.sessionId,tvStatus,linearAcceptDecline)
             }
         }
     }
