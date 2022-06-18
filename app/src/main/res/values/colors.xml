@@ -29,6 +29,7 @@
     <color name="buttonDisabledTextColor">#E0E0E0</color>
     <color name="darkTextColor">#0A0A0A</color>
     <color name="lightTextColor">#424242</color>
+    <color name="green_accepted">#177B4C</color>
 
 
 </resources>

@@ -10,10 +10,10 @@
     android:padding="16dp">
 
     <TextView
-        android:fontFamily="@font/poppins_bold"
         android:id="@+id/tvPitchName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
         android:text="Acme futbol maydoni"
         android:textColor="#0A0A0A"
         android:textSize="16sp"
@@ -32,12 +32,12 @@
             app:tint="#616161" />
 
         <TextView
-            android:fontFamily="@font/poppins_bold"
             android:id="@+id/tvDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
+            android:fontFamily="@font/poppins_bold"
             android:text="29-may, chorshanba"
             android:textColor="#424242" />
 
@@ -56,12 +56,12 @@
             app:tint="#616161" />
 
         <TextView
-            android:fontFamily="@font/poppins_bold"
             android:id="@+id/tvHours"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
+            android:fontFamily="@font/poppins_bold"
             android:text="16:00-18:00, 2 soat"
             android:textColor="#424242" />
 
@@ -80,62 +80,85 @@
             app:tint="#616161" />
 
         <TextView
-            android:fontFamily="@font/poppins_bold"
             android:id="@+id/tvPrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
+            android:fontFamily="@font/poppins_bold"
             android:text="100 000 so'm"
             android:textColor="#424242" />
 
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp">
 
         <LinearLayout
-            android:id="@+id/btnAccept"
-            android:layout_width="0dp"
+            android:id="@+id/linearAcceptDecline"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="6dp"
-            android:layout_weight="1"
-            android:background="@drawable/linear_rounded_background"
-            android:gravity="center"
-            android:paddingVertical="10dp">
-
-            <TextView
-                android:fontFamily="@font/poppins_bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Qabul qilish"
-                android:textColor="#ffffff"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btnDecline"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_weight="1"
-            android:background="@drawable/linear_rounded_background_2"
-            android:gravity="center"
-            android:paddingVertical="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvPitchPrice">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:fontFamily="@font/poppins_bold"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/btnAccept"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Rad etish"
-                android:textColor="#0C64E6"
-                android:textSize="14sp" />
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/linear_rounded_background"
+                android:gravity="center"
+                android:paddingVertical="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Qabul qilish"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btnDecline"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/linear_rounded_background_2"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPitchPrice">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Rad etish"
+                    android:textColor="#0C64E6"
+                    android:textSize="14sp" />
+            </LinearLayout>
         </LinearLayout>
 
-
-    </LinearLayout>
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="Qabul qilindi!"
+            android:textColor="@color/green_accepted"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
