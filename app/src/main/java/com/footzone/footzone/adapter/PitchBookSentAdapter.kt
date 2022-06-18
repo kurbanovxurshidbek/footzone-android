@@ -1,10 +1,12 @@
 package com.footzone.footzone.adapter
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemPitchBookSentBinding
 import com.footzone.footzone.helper.OnClickEventAcceptDecline
 import com.footzone.footzone.model.StadiumBookSentResponse
@@ -25,6 +27,7 @@ class PitchBookSentAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH =
         VH(ItemPitchBookSentBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: VH, position: Int) {
         val stadium = playedPitchList[position]
@@ -33,7 +36,7 @@ class PitchBookSentAdapter(
             LocalTime.parse(stadium.endTime)
         )
         holder.view.apply {
-            tvPitchName.text = "${stadium.stadiumName} futbol maydoni"
+            tvPitchName.text = "${stadium.stadiumName} ${tvPitchName.context.getText(R.string.str_football_stadium)}"
             tvDate.text = stadium.date
             tvHours.text =
                 "${stadium.startTime.subSequence(0, 5)}-${stadium.endTime.substring(0, 5)}, $duration soat"

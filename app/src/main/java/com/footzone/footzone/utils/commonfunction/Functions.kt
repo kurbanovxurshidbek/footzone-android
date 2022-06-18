@@ -13,9 +13,8 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.footzone.footzone.R
 import com.footzone.footzone.model.Comment
-import com.footzone.footzone.model.RateNumberPercentage
 import com.footzone.footzone.model.IsOpen
-import java.lang.Exception
+import com.footzone.footzone.model.RateNumberPercentage
 import java.time.Duration
 import java.time.LocalTime
 

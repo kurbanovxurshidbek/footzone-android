@@ -72,19 +72,19 @@ interface ApiService {
 
     @GET("stadium/search?")
     suspend fun getSearchedStadiums(
-        @Query("search") search: String
+        @Query("search") search: String,
     ): ShortStadiumDetailResponse
 
     @PUT("stadium/edit/content/{stadiumId}")
     suspend fun editHolderStadium(
         @Path("stadiumId") stadiumId: String,
-        @Body stadium: AddStadiumRequest
+        @Body stadium: AddStadiumRequest,
     ): Response
 
     @PUT("user/edit/{userId}")
     suspend fun editUser(
         @Path("userId") userId: String,
-        @Body body: EditNameRequest
+        @Body body: EditNameRequest,
     ): Response
 
     @GET("comment/{stadiumId}")
@@ -108,7 +108,7 @@ interface ApiService {
     @GET("session/day/{stadiumId}/{date}")
     suspend fun getSessionsForSpecificDay(
         @Path("stadiumId") stadiumId: String,
-        @Path("date") date: String
+        @Path("date") date: String,
     ): SessionsDayResponse
 
     @GET("session/history/{userId}")
@@ -119,13 +119,14 @@ interface ApiService {
 
     @DELETE("stadium/edit/photo/delete/{stadiumId}/{photoId}")
     suspend fun deleteStadiumPhoto(
-        @Path ("stadiumId") stadiumId: String,
-        @Path("photoId") photoId: String): Response
+        @Path("stadiumId") stadiumId: String,
+        @Path("photoId") photoId: String,
+    ): Response
 
     @Multipart
     @POST("stadium/edit/photo/add/{stadiumId}")
     suspend fun addPhotoToStadium(
-        @Path ("stadiumId") stadiumId: String,
-        @Part file: MultipartBody.Part
+        @Path("stadiumId") stadiumId: String,
+        @Part file: MultipartBody.Part,
     ): Response
 }

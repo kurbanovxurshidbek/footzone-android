@@ -4,12 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.footzone.footzone.databinding.ItemCommentBinding
 import com.footzone.footzone.model.AllComment
-import com.footzone.footzone.model.CommentsData
-import com.footzone.footzone.model.Data
-import com.footzone.footzone.model.FullComment
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.commonfunction.Functions.loadImageUrl
 
@@ -32,9 +28,9 @@ class CommentAdapter(var items: List<AllComment>, val context: Context) :
             ratingBarComment.rating = item.rate.toFloat()
             ratingBarComment.setIsIndicator(true)
             bodyComment.text = item.text
-            dateComment.text = item.createdAt.subSequence(0,10)
+            dateComment.text = item.createdAt.subSequence(0, 10)
 
-            if(!item.userAttachmentName.equals("default-profile-pic.jpg")){
+            if (!item.userAttachmentName.equals("default-profile-pic.jpg")) {
                 val uri = "${KeyValues.USER_IMAGE_BASE_URL}${item.userAttachmentName}"
                 ivUserPhoto.loadImageUrl(uri)
             }

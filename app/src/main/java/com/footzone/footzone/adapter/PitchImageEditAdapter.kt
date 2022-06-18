@@ -17,8 +17,11 @@ import java.util.*
 /**
  * This adapter, user can edit stadium images
  */
-class PitchImageEditAdapter(var pitchImages: LinkedList<EditPhoto>, private var onClickEditEvent: OnClickEditEvent) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class PitchImageEditAdapter(
+    var pitchImages: LinkedList<EditPhoto>,
+    private var onClickEditEvent: OnClickEditEvent,
+) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_ITEM_DEFAULT_IMAGE = 1001
     private val TYPE_ITEM_EDIT_IMAGE = 1002
@@ -26,24 +29,26 @@ class PitchImageEditAdapter(var pitchImages: LinkedList<EditPhoto>, private var 
     override fun getItemViewType(position: Int): Int {
         return if (position == 0) {
             TYPE_ITEM_DEFAULT_IMAGE
-        }else {
+        } else {
             TYPE_ITEM_EDIT_IMAGE
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == TYPE_ITEM_DEFAULT_IMAGE){
-            val view = ItemAddImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        if (viewType == TYPE_ITEM_DEFAULT_IMAGE) {
+            val view =
+                ItemAddImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return AddImageViewHolder(view)
         }
 
-        val view = ItemStadiumImageEditBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val view =
+            ItemStadiumImageEditBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return EditImageViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = pitchImages[position]
-        when(holder) {
+        when (holder) {
             is AddImageViewHolder -> {
                 holder.view.apply {
                     ivAddImage.setOnClickListener {
@@ -73,6 +78,7 @@ class PitchImageEditAdapter(var pitchImages: LinkedList<EditPhoto>, private var 
 
     class AddImageViewHolder(val view: ItemAddImageBinding) : RecyclerView.ViewHolder(view.root)
 
-    class EditImageViewHolder(val view: ItemStadiumImageEditBinding) : RecyclerView.ViewHolder(view.root)
+    class EditImageViewHolder(val view: ItemStadiumImageEditBinding) :
+        RecyclerView.ViewHolder(view.root)
 
 }

@@ -1,11 +1,13 @@
 package com.footzone.footzone.adapter
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.LayerDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemPitchLayoutBinding
 import com.footzone.footzone.helper.OnClickEvent
 import com.footzone.footzone.model.ShortStadiumDetail
@@ -17,7 +19,7 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar
 class PitchAdapter(
     private val favouriteStadiums: List<String>,
     private val pitches: ArrayList<ShortStadiumDetail>,
-    private var onClickEvent: OnClickEvent
+    private var onClickEvent: OnClickEvent,
 ) :
     RecyclerView.Adapter<PitchAdapter.VH>() {
 
@@ -26,6 +28,7 @@ class PitchAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH =
         VH(ItemPitchLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: VH, position: Int) {
         val pitch = pitches[position]
         holder.view.apply {
@@ -36,7 +39,8 @@ class PitchAdapter(
             rbPitch.rating = Functions.resRating(pitch.comments)
             rbPitch.setIsIndicator(true)
             tvRatingNums.text = "(${pitch.comments.sumBy { it.number }})"
-            tvPitchPrice.text = "${pitch.hourlyPrice} so'm/soat"
+            tvPitchPrice.text =
+                "${pitch.hourlyPrice} ${tvPitchPrice.context.getText(R.string.str_so_m_soat)}"
 
             if (favouriteStadiums.contains(pitch.stadiumId)) {
                 ivBookmark.setFavouriteBackground()

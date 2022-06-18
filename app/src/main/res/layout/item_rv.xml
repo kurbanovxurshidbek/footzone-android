@@ -5,16 +5,16 @@
     android:layout_height="180dp">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:cardCornerRadius="4dp"
         android:elevation="4dp"
         app:cardElevation="4dp"
         app:cardMaxElevation="4dp"
-        app:cardUseCompatPadding="true"
-        android:layout_height="match_parent">
+        app:cardUseCompatPadding="true">
         <ImageView
             android:id="@+id/itemImageView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/image1" />

@@ -1,8 +1,5 @@
 package com.footzone.footzone.model
 
-import java.time.LocalDate
-import java.time.LocalTime
-
 data class StadiumBookSentResponse(
     val message: String,
     val success: Boolean,

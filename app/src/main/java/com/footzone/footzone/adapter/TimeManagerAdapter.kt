@@ -54,7 +54,7 @@ class TimeManagerAdapter(private var onItemSelected: ((Int, ItemChooseTimeViewWh
                     linearFreeToBook.setOnClickListener {
                         onItemSelected.invoke(position, holder.view)
                     }
-                    if (item.between == true){
+                    if (item.between == true) {
                         linearFreeToBook.setBackgroundResource(R.drawable.view_rounded_corners_light_blue_4dp)
                         tvLine.setTextColor(R.color.blue)
                         tvStartTime.setTextColor(R.color.blue)

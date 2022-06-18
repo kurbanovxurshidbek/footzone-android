@@ -9,7 +9,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +43,6 @@ import java.io.File
 import java.io.FileOutputStream
 import java.util.*
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
@@ -83,8 +81,12 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         }
 
         setFragmentResultListener(KeyValues.TYPE_WORK_TIME) { requestKey, bundle ->
-            workTimes.addAll(bundle.get(WORK_TIMES) as ArrayList<WorkingDay>)
-            binding.tvPitchWorkTime.text = bundle.get(WORK_TIME).toString()
+            val works = bundle.get(WORK_TIMES) as ArrayList<WorkingDay>
+            if (works.isNotEmpty()) {
+                workTimes.clear()
+                workTimes.addAll(works)
+                binding.tvPitchWorkTime.text = bundle.get(WORK_TIME).toString()
+            }
         }
     }
 
@@ -101,7 +103,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         binding = FragmentAddStadiumBinding.bind(view)
         if (isEdit) {
             initViewsEdit()
-        }else{
+        } else {
             initViewsAdd()
         }
     }
@@ -133,16 +135,10 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             val stadiumPrice = binding.etPitchPrice.text.toString()
             val userId = sharedPref.getUserID(KeyValues.USER_ID, "")
 
-            if (binding.etPitchPhoneNumber.text!!.length > 5){
-                stadiumNumber =   "+998${binding.etPitchPhoneNumber.text.toString().replace("\\s".toRegex(), "")}"
+            if (binding.etPitchPhoneNumber.text!!.length > 5) {
+                stadiumNumber =
+                    "+998${binding.etPitchPhoneNumber.text.toString().replace("\\s".toRegex(), "")}"
             }
-//
-//            val workDat =
-//                if (workTimes.isNotEmpty()){
-//                    workTimes
-//                }else{
-//
-//                }
 
             if (stadiumNumber!!.length == 13) {
                 try {
@@ -158,9 +154,10 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                             workTimes
                         )
 
-                    for (phot in photos){
-                        if (phot.id == null){
-                            viewModel.addPhotoToStadium(stadiumId, convertUriMultipart(phot.name as Uri, "file"))
+                    for (phot in photos) {
+                        if (phot.id == null) {
+                            viewModel.addPhotoToStadium(stadiumId,
+                                convertUriMultipart(phot.name as Uri, "file"))
                             observeViewModelAdd()
                         }
                     }
@@ -174,31 +171,30 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-            }else{
+            } else {
                 toast(getText(R.string.str_error_phone_number) as String)
             }
         }
     }
 
     private fun refreshAdapter() {
-        adapterEdit = PitchImageEditAdapter(photos, object : OnClickEditEvent{
+        adapterEdit = PitchImageEditAdapter(photos, object : OnClickEditEvent {
             override fun setOnAddClickListener() {
                 positionImage = 0
                 selectImage(PICK_FROM_FILE_EDIT)
             }
 
             override fun setOnDeleteClickListener(position: Int, id: String?) {
-                Toast.makeText(requireContext(), getText(R.string.str_delete_image), Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getText(R.string.str_delete_image),
+                    Toast.LENGTH_SHORT).show()
                 photos.removeAt(position)
                 positionImage = 0
                 adapterEdit.notifyDataSetChanged()
-                if (id != null){
-                    Log.d("TAG", "setOnDeleteClickListener: ${stadiumId}, ${id}")
+                if (id != null) {
                     viewModel.deleteStadiumPhoto(stadiumId, id)
                     setupObserversPhoto()
                 }
-
-                Log.d("TAG", "setOnDeleteClickListener set: ${photos}")
             }
         })
         binding.recyclerView.itemAnimator = null
@@ -215,7 +211,8 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
 
                     is UiStateObject.SUCCESS -> {
                         refreshData(it.data.data)
-                        it.data.data.photos.forEach { it->
+                        workTimes.addAll(it.data.data.workingDays)
+                        it.data.data.photos.forEach { it ->
                             photos.add(EditPhoto(it.id, it.name))
                         }
                     }
@@ -237,10 +234,10 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                     }
 
                     is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "setupObserversPhoto: ")
+
                     }
                     is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupObserversPhoto: ${it}")
+
                     }
                     else -> {
                     }
@@ -277,19 +274,16 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         custToast.setView(binding.root)
                         custToast.show()
                         requireActivity().onBackPressed()
-                        Log.d("TAG", "observeViewModelEdit: ${it}")
 
                     }
                     is UiStateObject.ERROR -> {
                         val binding =
                             ToastChooseTimeBinding.inflate(LayoutInflater.from(requireActivity()))
-
                         binding.tvToast.text = getString(R.string.str_error_edited)
                         val custToast = Toast(requireContext())
                         custToast.setView(binding.root)
                         custToast.show()
                         requireActivity().onBackPressed()
-                        Log.d("TAG", "observeViewModelEdit error: ${it}")
                     }
                     else -> {
                     }
@@ -307,7 +301,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             uris.forEach { selectedImageUri ->
                 files.add(convertUriMultipart(selectedImageUri, "files"))
             }
-
             if (checkData()) {
                 val stadiumAddress = binding.etPitchAddress.text.toString()
                 val stadiumName = binding.etPitchName.text.toString()
@@ -327,7 +320,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                             userId,
                             workTimes
                         )
-                    Log.d("TAG", "initViewsAdd: ${files}")
                     viewModel.postHolderStadium(stadium, files)
                 } catch (e: Exception) {
                     Toast.makeText(
@@ -396,7 +388,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         val etPitchPhoneNumber = binding.etPitchPhoneNumber.text.toString()
         val etPitchPrice = binding.etPitchPrice.text.toString()
         return etPitchName.isNotEmpty() && etPitchAddress.isNotEmpty() && etPitchPhoneNumber.length == 12 &&
-                etPitchPrice.isNotEmpty()  && workTimes.isNotEmpty()
+                etPitchPrice.isNotEmpty() && workTimes.isNotEmpty()
     }
 
     private fun observeViewModel() {
@@ -471,7 +463,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             try {
                 val selectedImageUri = data!!.data!!
 
-                photos.add(EditPhoto(null,selectedImageUri))
+                photos.add(EditPhoto(null, selectedImageUri))
 
                 adapterEdit.notifyDataSetChanged()
             } catch (e: Exception) {
@@ -488,13 +480,8 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         //show progress
                     }
                     is UiStateObject.SUCCESS -> {
-
-                        Log.d("TAG", "observeViewModelEditPhot: ${it}")
-
                     }
                     is UiStateObject.ERROR -> {
-
-                        Log.d("TAG", "observeViewModelEditcsidn error: ${it}")
                     }
                     else -> {
                     }
@@ -506,8 +493,8 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     /**
      * This is function, to upgrade from Uri to MultipartBody.Part
      */
-    private fun convertUriMultipart(selectedImageUri: Uri, name: String): MultipartBody.Part{
-        val ins = requireActivity().contentResolver.openInputStream(selectedImageUri!!)
+    private fun convertUriMultipart(selectedImageUri: Uri, name: String): MultipartBody.Part {
+        val ins = requireActivity().contentResolver.openInputStream(selectedImageUri)
         val image = File.createTempFile(
             "file", ".jpg",
             requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)

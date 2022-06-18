@@ -9,7 +9,6 @@ class TableViewPagerAdapter(requireActivity: FragmentActivity) : FragmentStateAd
 
     override fun getItemCount(): Int = fragments.size
 
-
     override fun createFragment(position: Int): Fragment = fragments[position]
 
     fun addFragment(fragment: Fragment) {

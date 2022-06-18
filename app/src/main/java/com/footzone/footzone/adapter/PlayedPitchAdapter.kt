@@ -1,10 +1,12 @@
 package com.footzone.footzone.adapter
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemPlayedPitchBinding
 import com.footzone.footzone.model.PitchHistory
 import com.footzone.footzone.model.PlayedHistoryResponseData
@@ -22,6 +24,7 @@ class PlayedPitchAdapter :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH =
         VH(ItemPlayedPitchBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: VH, position: Int) {
         val stadium = playedPitchList[position]
@@ -30,7 +33,7 @@ class PlayedPitchAdapter :
             LocalTime.parse(stadium.endTime)
         )
         holder.view.apply {
-            tvPitchName.text = "${stadium.stadiumName} futbol maydoni"
+            tvPitchName.text = "${stadium.stadiumName} ${tvPitchName.context.getString(R.string.str_football_stadium)}"
             tvDate.text = stadium.startDate
             tvHours.text =
                 "${stadium.startTime.subSequence(0, 5)}-${stadium.endTime.substring(0, 5)}, $duration soat"
@@ -40,6 +43,7 @@ class PlayedPitchAdapter :
 
     override fun getItemCount(): Int = playedPitchList.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun submitData(list: List<PlayedHistoryResponseData>) {
         this.playedPitchList.addAll(list)
         notifyDataSetChanged()

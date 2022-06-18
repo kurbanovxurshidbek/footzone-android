@@ -1,8 +1,10 @@
 package com.footzone.footzone.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemMyPitchLayoutBinding
 import com.footzone.footzone.helper.OnClickEvent
 import com.footzone.footzone.model.ShortStadiumDetail
@@ -15,7 +17,7 @@ import com.footzone.footzone.utils.commonfunction.Functions.showStadiumOpenOrClo
 
 class HolderPitchAdapter(
     var items: ArrayList<ShortStadiumDetail>,
-    var onClickEvent: OnClickEvent
+    var onClickEvent: OnClickEvent,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -24,6 +26,7 @@ class HolderPitchAdapter(
         return MyPitchViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val data = items[position]
 
@@ -36,10 +39,10 @@ class HolderPitchAdapter(
                 rbPitch.rating = resRating(data.comments)
                 rbPitch.setIsIndicator(true)
                 tvRatingNums.text = "(${data.comments.size})"
-                tvPitchPrice.text = "${data.hourlyPrice} so'm/soat"
+                tvPitchPrice.text = "${data.hourlyPrice} ${tvPitchPrice.context.getText(R.string.str_so_m_soat)}"
 
                 btnManagement.setOnClickListener {
-                    onClickEvent.setOnBookClickListener(data.stadiumId,false)
+                    onClickEvent.setOnBookClickListener(data.stadiumId, false)
                 }
 
                 linearNavigation.setOnClickListener {

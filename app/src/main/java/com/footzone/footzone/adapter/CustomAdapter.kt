@@ -11,7 +11,6 @@ import com.footzone.footzone.utils.commonfunction.Functions.loadImageUrl
 class CustomAdapter(var items: ArrayList<StadiumPhoto>) :
     RecyclerView.Adapter<CustomAdapter.VH>() {
 
-
     inner class VH(val view: ItemRvBinding) : RecyclerView.ViewHolder(view.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH =
@@ -23,17 +22,13 @@ class CustomAdapter(var items: ArrayList<StadiumPhoto>) :
             )
         )
 
-
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = items[position]
         holder.view.apply {
-            //val uri = "http://192.168.43.32:8081/images/stadium/${item.name}"
             val uri = "${KeyValues.STADIUM_IMAGE_BASE_URL}${item.name}"
-           itemImageView.loadImageUrl(uri)
+            itemImageView.loadImageUrl(uri)
         }
     }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount(): Int = items.size
 }

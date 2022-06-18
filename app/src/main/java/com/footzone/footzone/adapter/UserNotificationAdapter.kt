@@ -27,7 +27,7 @@ class UserNotificationAdapter(var items: ArrayList<UserNotification>) :
         holder.view.apply {
             messageBody.setText(item.body)
             messageDate.setText(item.date)
-            if (item.isChecked){
+            if (item.isChecked) {
                 itemUserNotificationRoot.setBackgroundResource(R.drawable.checked_item_user_notification_background)
                 messageBody.setTextColor(Color.parseColor("#424242"))
                 messageDate.setTextColor(Color.parseColor("#424242"))
