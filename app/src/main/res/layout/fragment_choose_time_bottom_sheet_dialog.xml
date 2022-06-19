@@ -180,8 +180,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
-                android:text="2 soat"
                 android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:textColor="@color/black"
+                android:text="@string/str_hour"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -201,8 +208,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
-                android:text="100 00 so'm"
                 android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:textColor="@color/black"
+                android:text="so'm"
                 android:textSize="16sp" />
         </LinearLayout>
 
