@@ -105,4 +105,7 @@ dependencies {
     //interceptor
     debugImplementation "com.github.chuckerteam.chucker:library:3.4.0"
     releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.4.0"
+
+    //map routing
+    implementation 'com.github.jd-alexander:library:1.1.0'
 }
