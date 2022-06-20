@@ -1,62 +1,61 @@
 package com.footzone.footzone.ui.fragments.home
 
-import android.app.Activity
-import android.content.IntentSender
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
-import androidx.activity.result.IntentSenderRequest
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.androidbolts.topsheet.TopSheetBehavior
+import com.directions.route.*
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.PitchAdapter
 import com.footzone.footzone.databinding.FragmentHomeBinding
 import com.footzone.footzone.helper.OnClickEvent
 import com.footzone.footzone.model.*
 import com.footzone.footzone.ui.fragments.BaseFragment
-import com.footzone.footzone.utils.*
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues.IS_FAVOURITE_STADIUM
 import com.footzone.footzone.utils.KeyValues.IS_OWNER
 import com.footzone.footzone.utils.KeyValues.STADIUM_ID
 import com.footzone.footzone.utils.KeyValues.USER_ID
+import com.footzone.footzone.utils.SharedPref
+import com.footzone.footzone.utils.UiStateObject
 import com.footzone.footzone.utils.commonfunction.Functions.resRating
 import com.footzone.footzone.utils.commonfunction.Functions.setFavouriteBackground
 import com.footzone.footzone.utils.commonfunction.Functions.setUnFavouriteBackground
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
-    GoogleMap.CancelableCallback {
+class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
+    GoogleMap.OnMarkerClickListener {
 
     private val viewModel by viewModels<HomeViewModel>()
 
     @Inject
     lateinit var sharedPref: SharedPref
 
-    private lateinit var mMap: GoogleMap
     private lateinit var binding: FragmentHomeBinding
-    private var isFirstTime = true
     private lateinit var bottomSheet: View
     private lateinit var topSheet: View
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
@@ -66,82 +65,187 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
     private var stadiumsFilteredList = ArrayList<ShortStadiumDetail>()
     private var favouriteStadiums = ArrayList<String>()
 
+    private lateinit var map: GoogleMap
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var lastLocation: Location? = null
-    private val myLocationZoom = 10.0f
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val myLocationZoom = 10f
+    private var markerList = ArrayList<Marker>()
+    private var cameraCurrentLatLng: LatLng? = null
+    private var polyLines: MutableList<Polyline>? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
 
         initViews(view)
+        installLocation()
         sendRequestToGetFavouriteStadiumsList()
     }
 
-    override fun onMapReady(p0: GoogleMap) {
-        sendRequestToGetAllStadiums()
-        observeAllStadiums()
+    private val callback = OnMapReadyCallback { googleMap ->
+        //  googleMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
+        googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+        googleMap.uiSettings.isZoomControlsEnabled = false
+        googleMap.isMyLocationEnabled = true
+        googleMap.uiSettings.isMyLocationButtonEnabled = false
+        map = googleMap
+        cameraMoveStartedListener(googleMap)
+        map.setOnMarkerClickListener(this)
+        setUpMap()
+    }
 
-        mMap = p0
-        mMap.moveCamera(
-            CameraUpdateFactory.newLatLngZoom(
-                LatLng(41.2795325, 69.2143852),
-                myLocationZoom
-            )
-        )
+    override fun onRoutingFailure(p0: RouteException?) {
 
-        mMap.setPadding(0, 0, 0, 500)
+    }
 
-        mMap.setOnCameraMoveStartedListener {
-            //todo start animate marker
-            binding.mapIcon.animate().setDuration(300).translationY(-binding.mapIcon.height / 2.0f)
-                .start()
-            hideBottomSheet(bottomSheetBehaviorType)
-            hideBottomSheet(bottomSheetBehavior)
+    override fun onRoutingStart() {
+
+    }
+
+    override fun onRoutingSuccess(route: java.util.ArrayList<Route>?, shortestRouteIndex: Int) {
+        if (polyLines != null) {
+            polyLines?.clear()
         }
-
-        mMap.setOnCameraIdleListener {
-            binding.mapIcon.animate().translationY(0f).setDuration(300).start()
-
-            val target = mMap.cameraPosition.target
-            showBottomSheet(bottomSheetBehaviorType)
-            bottomSheetBehaviorType.isHideable = false
-            //todo send request for nearby stadions
-        }
-
-        fun updateMyCurrentLocation() {
-            try {
-                mMap.animateCamera(
-                    CameraUpdateFactory.newLatLngZoom(
-                        LatLng(
-                            lastLocation!!.latitude,
-                            lastLocation!!.longitude
-                        ), myLocationZoom
+        val polyOptions = PolylineOptions()
+        var polylineStartLatLng: LatLng? = null
+        var polylineEndLatLng: LatLng? = null
+        polyLines = ArrayList()
+        for (i in route!!.indices) {
+            if (i == shortestRouteIndex) {
+                polyOptions.color(
+                    Color.rgb(
+                        (0..255).random(),
+                        (0..255).random(),
+                        (0..255).random()
                     )
                 )
-            } catch (e: Exception) {
+                polyOptions.width(10f)
+                polyOptions.addAll(route[shortestRouteIndex].points)
+                val polyline = map.addPolyline(polyOptions)
+                polylineStartLatLng = polyline.points[0]
+                val k = polyline.points.size
+                polylineEndLatLng = polyline.points[k - 1]
+                (polyLines as ArrayList<Polyline>).add(polyline)
             }
         }
+    }
 
-        binding.findMyLocation.setOnClickListener {
-            showLocationOn()
-            updateMyCurrentLocation()
+    override fun onRoutingCancelled() {
+
+    }
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        routeClear()
+        if (cameraCurrentLatLng != null)
+            findRoutes(
+                LatLng(cameraCurrentLatLng!!.latitude, cameraCurrentLatLng!!.longitude),
+                marker.position
+            ) else
+            findRoutes(LatLng(lastLocation!!.latitude, lastLocation!!.longitude), marker.position)
+        return true
+    }
+
+    private fun routeClear() {
+        if (polyLines != null)
+            polyLines!![0].remove()
+    }
+
+    private fun findRoutes(start: LatLng?, end: LatLng?) {
+        if (start == null || end == null) {
+            toast("Unable to get location")
+            updateLastLocation()
+        } else {
+            val routing = Routing.Builder()
+                .travelMode(AbstractRouting.TravelMode.DRIVING)
+                .withListener(this)
+                .alternativeRoutes(true)
+                .waypoints(start, end)
+                .key("AIzaSyCVwdU3slouglv7TBDh3juGegafJVnKx8U")
+                .build()
+            routing.execute()
+            if (cameraCurrentLatLng != null)
+                16f.animateCamera(
+                    LatLng(
+                        cameraCurrentLatLng!!.latitude,
+                        cameraCurrentLatLng!!.longitude
+                    )
+                ) else
+                16f.animateCamera(LatLng(lastLocation!!.latitude, lastLocation!!.longitude))
         }
     }
 
-    override fun onCancel() {
-        TODO("Not yet implemented")
+    private fun Float.animateCamera(toLatLong: LatLng) {
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(toLatLong, this))
     }
 
-    override fun onFinish() {
-        TODO("Not yet implemented")
+    private fun cameraMoveStartedListener(googleMap: GoogleMap) {
+        googleMap.setOnCameraMoveStartedListener {
+            binding.mapIcon.animate()
+            hideBottomSheet(bottomSheetBehaviorType)
+        }
+        googleMap.setOnCameraIdleListener {
+            cameraCurrentLatLng = googleMap.cameraPosition.target
+            showBottomSheet(bottomSheetBehaviorType)
+        }
+    }
+
+    private fun installLocation() {
+        val mapFragment =
+            childFragmentManager.findFragmentById(R.id.map_view) as SupportMapFragment?
+        mapFragment?.getMapAsync(callback)
+    }
+
+    private fun setUpMap() {
+        setupMe()
+        btnMyLocationClickManager()
+    }
+
+    private fun btnMyLocationClickManager() {
+        binding.findMyLocation.setOnClickListener {
+            updateLastLocation()
+        }
+    }
+
+    private fun updateLastLocation() {
+        map.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(
+                LatLng(
+                    lastLocation!!.latitude,
+                    lastLocation!!.longitude
+                ), myLocationZoom
+            )
+        )
+    }
+
+    private fun setupMe() {
+        fusedLocationClient =
+            LocationServices.getFusedLocationProviderClient(requireContext())
+
+        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+            if (location != null) {
+                lastLocation = location
+                val currentLatLng = LatLng(location.latitude, location.longitude)
+                map.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        currentLatLng,
+                        myLocationZoom
+                    )
+                )
+                sendRequestToGetAllStadiums()
+            } else {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    fusedLocationClient =
+                        LocationServices.getFusedLocationProviderClient(requireContext())
+                    toast("ERROR loading location")
+                }, 400)
+            }
+        }
+        fusedLocationClient.lastLocation.addOnFailureListener {
+            toast("$it")
+        }
     }
 
     private fun initViews(view: View) {
-        showLocationOn()
         controlOwnerOption()
         val bottomSheetTypes = view.findViewById<View>(R.id.bottomSheetTypes)
         bottomSheet = view.findViewById(R.id.bottomSheetPitchList)
@@ -152,10 +256,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
         bottomSheetBehaviorType = BottomSheetBehavior.from(bottomSheetTypes)
 
         showBottomSheet(bottomSheetBehaviorType)
-
-        val supportMapFragment =
-            childFragmentManager.findFragmentById(R.id.map_view) as SupportMapFragment
-        supportMapFragment.getMapAsync(this)
 
         binding.bottomSheetTypes.apply {
             linearMyStadium.setOnClickListener {
@@ -231,7 +331,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
     }
 
     private fun sendRequestToGetAllStadiums() {
-        viewModel.getAllStadiums();
+        viewModel.getAllStadiums()
+        observeAllStadiums()
     }
 
     private fun sendRequestToGetFavouriteStadiumsList() {
@@ -591,83 +692,32 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback,
         }
     }
 
-    private fun setUpCamera() {
-        val locationHelper = LocationHelper()
-        locationHelper.startLocationUpdates(requireContext())
-        locationHelper.addLocationlistener(object : LocationHelper.LocationListener {
-            override fun onLocationChanged(location: Location) {
-                if (isFirstTime) {
-                    val target = LatLng(location.latitude, location.longitude)
-                    val cameraUpdate = CameraPosition.Builder().target(target).zoom(16f).build()
-                    mMap.moveCamera(
-                        CameraUpdateFactory.newCameraPosition(cameraUpdate)
-                    )
-                    lastLocation = location
-                    isFirstTime = false
-                }
-
-
-//                if (userLocationMarker == null) {
-////                    val bitmap = BitmapFactory.decodeResource(resources,R.drawable.ic_location_svgrepo_com)
-////                    val icon = BitmapDescriptorFactory.fromBitmap(bitmap)
-//                    userLocationMarker = mMap.addMarker(
-//                        MarkerOptions()
-//                            .position(target)
-//                    )
-//                } else {
-//                    userLocationMarker?.position = target
-//                }
-
-
-            }
-        })
-    }
-
-    private fun showLocationOn() {
-        val locationRequest = LocationRequest.create()
-        locationRequest.apply {
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            interval = 30 * 1000.toLong()
-            fastestInterval = 5 * 1000.toLong()
-        }
-        val builder = LocationSettingsRequest.Builder()
-            .addLocationRequest(locationRequest)
-        builder.setAlwaysShow(true)
-        val result =
-            LocationServices.getSettingsClient(requireActivity())
-                .checkLocationSettings(builder.build())
-        result.addOnCompleteListener {
-            try {
-                val response: LocationSettingsResponse = it.getResult(ApiException::class.java)
-                if (response.locationSettingsStates!!.isGpsPresent)
-                    Log.d("@@@", "ERROR")
-            } catch (e: ApiException) {
-                when (e.statusCode) {
-                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
-                        val intentSenderRequest =
-                            IntentSenderRequest.Builder(e.status.resolution!!).build()
-                        launcher.launch(intentSenderRequest)
-                    } catch (e: IntentSender.SendIntentException) {
-                    }
-                }
-            }
-        }
-    }
-
-    private var launcher =
-        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                setUpCamera()
-            } else {
-                showLocationOn()
-            }
-        }
-
     private fun findMultipleLocation(stadiumLocationList: ArrayList<StadiumLocationName>) {
         for (i in stadiumLocationList) {
-            mMap.addMarker(MarkerOptions().position(LatLng(i.latitude, i.longitude)).title(i.name))
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(i.latitude, i.longitude)))
+            val myMarker = map.addMarker(
+                MarkerOptions().position(LatLng(i.latitude, i.longitude))
+                    .title(i.name)
+                    .icon(bitmapFromVector(R.drawable.ic_locate_stadium))
+            )
+            markerList.add(myMarker!!)
         }
     }
+
+    private fun bitmapFromVector(vectorResId: Int): BitmapDescriptor {
+        val vectorDrawable = ContextCompat.getDrawable(requireContext(), vectorResId)
+        vectorDrawable!!.setBounds(
+            0, 0,
+            vectorDrawable.intrinsicWidth,
+            vectorDrawable.intrinsicHeight
+        )
+        val bitmap = Bitmap.createBitmap(
+            vectorDrawable.intrinsicWidth,
+            vectorDrawable.intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        vectorDrawable.draw(canvas)
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
+
 }

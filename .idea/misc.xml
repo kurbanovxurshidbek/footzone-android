@@ -80,6 +80,7 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_bookmark.xml" value="0.143" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_edit.xml" value="0.143" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_edit_button.xml" value="0.143" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_location.xml" value="0.143" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_person.xml" value="0.143" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_person_active.xml" value="0.143" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/drawable/ic_pitch_default.xml" value="0.143" />
@@ -96,6 +97,8 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_profile.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_stadium.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_stadium_game_history.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_stadium_location.xml" value="0.67" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_my_pitch_layout.xml" value="0.7207207207207207" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_pitch_book_sent.xml" value="0.22" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_pitch_layout.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/toast_choose_time.xml" value="0.20416666666666666" />

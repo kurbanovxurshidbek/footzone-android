@@ -15,10 +15,10 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Footzone">
+        android:theme="@style/Theme.Footzone"
+        android:usesCleartextTraffic="true">
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -35,20 +35,21 @@
             android:value="AIzaSyDIQLTyvAVuV9DSy0h0cIF6_vDja5ayKYU" />
 
         <activity
-            android:configChanges="locale"
             android:name=".ui.activity.MainActivity"
+            android:configChanges="locale"
             android:exported="true"
-            android:windowSoftInputMode="adjustNothing">
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".ui.activity.SplashActivity"
+            android:configChanges="locale"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:configChanges="locale"
-            android:name=".ui.activity.SplashActivity" />
     </application>
 
 </manifest>
