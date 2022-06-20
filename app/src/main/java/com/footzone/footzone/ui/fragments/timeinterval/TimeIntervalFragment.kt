@@ -74,7 +74,7 @@ class TimeIntervalFragment : Fragment() {
                     }
 
                     is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "setupObservers sfdd: ${it.data}")
+                        Log.d("TAG", "setupObserversffff: ${it.data}")
                         sessionsData = it.data.data
                         val array = resources.getStringArray(R.array.timelist)
                         sessionsData.sessionTimes.forEach { data ->
@@ -84,11 +84,10 @@ class TimeIntervalFragment : Fragment() {
                                     5)) - 1]),
                                 status = "ACCEPTED"))
                         }
-                        Log.d("TAG", "setupObservers: ${sessionTimes}")
                         initViews()
                     }
                     is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
+                        Log.d("TAG", "setupObserversffff: ${it.message}")
                     }
                     else -> {
                     }

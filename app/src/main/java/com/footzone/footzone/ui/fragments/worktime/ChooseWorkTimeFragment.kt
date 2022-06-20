@@ -110,40 +110,41 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
     }
 
     fun wortTime(): String {
+        val array = resources.getStringArray(R.array.daysWeek)
         var string = ""
         if (binding.switchMo.isOn) {
             string += "Du, "
-            addTime(binding.startTimeMo, binding.finishTimeMo, "MONDAY")
+            addTime(binding.startTimeMo, binding.finishTimeMo, array[0])
         }
 
         if (binding.switchTu.isOn) {
             string += "Se, "
-            addTime(binding.startTimeTu, binding.finishTimeTu, "TUESDAY")
+            addTime(binding.startTimeTu, binding.finishTimeTu, array[1])
         }
 
         if (binding.switchWe.isOn) {
             string += "Cho, "
-            addTime(binding.startTimeWe, binding.finishTimeWe, "WEDNESDAY")
+            addTime(binding.startTimeWe, binding.finishTimeWe, array[2])
         }
 
         if (binding.switchTh.isOn) {
             string += "Pa, "
-            addTime(binding.startTimeTh, binding.finishTimeTh, "THURSDAY")
+            addTime(binding.startTimeTh, binding.finishTimeTh, array[3])
         }
 
         if (binding.switchFr.isOn) {
             string += "Ju, "
-            addTime(binding.startTimeFr, binding.finishTimeFr, "FRIDAY")
+            addTime(binding.startTimeFr, binding.finishTimeFr, array[4])
         }
 
         if (binding.switchSa.isOn) {
             string += "Sha, "
-            addTime(binding.startTimeSa, binding.finishTimeSa, "SATURDAY")
+            addTime(binding.startTimeSa, binding.finishTimeSa, array[5])
         }
 
         if (binding.switchSu.isOn) {
             string += "Ya"
-            addTime(binding.startTimeSu, binding.finishTimeSu, "SUNDAY")
+            addTime(binding.startTimeSu, binding.finishTimeSu, array[6])
         }
 
         return string

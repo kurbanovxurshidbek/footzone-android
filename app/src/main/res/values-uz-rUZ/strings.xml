@@ -49,7 +49,7 @@
     <string name="str_successfully_edited">Maydon muvofaqiyatli tahrirlandi</string>
     <string name="str_error_edited">Maydon muvofaqiyatli tahrirlanmadi, qayta urinib ko\'ring</string>
     <string name="str_successfully_edded">Maydon muvofaqiyatli qo\'shildi.</string>
-    <string name="str_not_succesfull">The field did not join successfully, hit again</string>
+    <string name="str_not_succesfull">Maydon muvaffaqiyatli qo\'shilmadi, qayta urinib koring</string>
     <string name="str_date_incomplete">Malumotlar to\'liq to\'ldirilmagan</string>
     <string name="str_select_dat_game">O\'yin kunini tanlang</string>
     <string name="str_send_request">Sizning so\'rovingiz yuborildi,\tez orada javob qaytadi</string>
