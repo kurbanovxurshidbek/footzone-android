@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "536162118533",
+    "project_id": "footzone-b4d84",
+    "storage_bucket": "footzone-b4d84.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536162118533:android:338cc6a42355214c2532ec",
+        "android_client_info": {
+          "package_name": "com.footzone.footzone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "536162118533-i44p69ekvjchroglgf4jmaigne97be6j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.footzone.footzone",
+            "certificate_hash": "cf4ab629d728b05dce3bb5445e56f3134fb90dcb"
+          }
+        },
+        {
+          "client_id": "536162118533-5bs0f5mkeq4lce5hu5vfm458egb4sc54.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmXQDbbKDjI-Kh3YEBkZNHrl4HHgwUCO4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "536162118533-5bs0f5mkeq4lce5hu5vfm458egb4sc54.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -11,22 +11,30 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.PermissionChecker
+import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.SharedPref
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.*
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.PermissionListener
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 open class BaseActivity : AppCompatActivity() {
+    @Inject
+    lateinit var sharedPref: SharedPref
     var context: Context? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         context = this
+        loadFCMToken()
     }
 
     fun permissionRequest() {
@@ -99,6 +107,21 @@ open class BaseActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+
+    private fun loadFCMToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.d("@@@Error firebase", "Fetching FCM registration token failed")
+                return@OnCompleteListener
+            }
+            // Get new FCM registration token
+            // Save it in locally to use later
+            val token = task.result
+            Log.d("@@@firebase token", token.toString())
+            sharedPref.saveFirebaseToken(KeyValues.FIREBASE_TOKEN,token.toString())
+        })
     }
 
     private var launcher =

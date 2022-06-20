@@ -22,6 +22,7 @@ object KeyValues {
     const val LANGUAGE = "language"
     const val WORK_TIMES  = "workTimes"
     const val WORK_TIME  = "workTime"
+    const val FIREBASE_TOKEN  = "Firebase Token"
     const val PICK_FROM_FILE_ADD = 1001
     const val PICK_FROM_FILE_EDIT = 1002
 }

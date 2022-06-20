@@ -5,7 +5,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
 }
-
+apply plugin: 'com.google.gms.google-services'
 android {
     compileSdk 32
 
@@ -108,4 +108,10 @@ dependencies {
 
     //map routing
     implementation 'com.github.jd-alexander:library:1.1.0'
+
+    //firebase
+    implementation platform('com.google.firebase:firebase-bom:30.1.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.0.5'
+    implementation 'com.google.firebase:firebase-messaging:23.0.5'
 }

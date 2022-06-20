@@ -46,4 +46,11 @@ class SharedPref @Inject constructor(@ApplicationContext val context: Context) {
     fun getLanguage(key: String, language: String): String {
         return sharedPref.getString(key, language)!!
     }
+
+    fun saveFirebaseToken(tokenKey: String, firebaseToken: String) {
+        sharedPref.edit().putString(tokenKey, firebaseToken).apply()
+    }
+    fun getFirebaseToken(keyToken: String): String {
+        return sharedPref.getString(keyToken, "")!!
+    }
 }
