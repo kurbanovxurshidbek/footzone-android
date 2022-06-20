@@ -72,6 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_bold"
+                    android:imeOptions="actionDone"
                     android:inputType="phone"
                     app:mask="## ### ## ##" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -92,7 +93,6 @@
                     android:layout_gravity="end"
                     android:layout_margin="2dp"
                     android:background="@drawable/button_register_filled_rounded_corner1"
-                    android:clickable="false"
                     android:maxLines="1"
                     android:text="Kirish"
                     android:textAllCaps="false"

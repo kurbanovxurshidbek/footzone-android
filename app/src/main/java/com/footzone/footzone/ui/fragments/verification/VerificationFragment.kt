@@ -55,15 +55,13 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
         sharedPref = SharedPref(requireContext())
         verificationCodeErrorControl()
         binding.backButton.setOnClickListener {
-            closeSignInFragment()
+            closeVerificationFragment()
         }
         binding.confirmationButton.setOnClickListener {
             if (isToSignUp) {
                 sendRequestToSignUp()
-                setupObserversSignUp()
             } else {
                 sendRequestToSignIn()
-                setupObserversSignIn()
             }
         }
     }
@@ -72,12 +70,13 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
         viewModel.signIn(
             SignInVerification(
                 binding.editTextVerificationCode.text.toString().toInt(),
-                "Android",
+                getDeviceName()!!,
                 System.currentTimeMillis().toString(),
                 "Mobile",
                 phoneNumber!!
             )
         )
+        setupObserversSignIn()
     }
 
     private fun sendRequestToSignUp() {
@@ -87,6 +86,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
                 user?.phoneNumber.toString()
             )
         )
+        setupObserversSignUp()
     }
 
     private fun setupObserversSignIn() {
@@ -105,7 +105,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
                         }
                     }
                     is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
+                        toastLong("Kod xato kiritildi.")
                     }
                     else -> {
                     }
@@ -131,7 +131,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
                         }
                     }
                     is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
+                        toastLong("Kod xato kiritildi.")
                     }
                     else -> {
                     }
@@ -191,8 +191,8 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
         }
     }
 
-    private fun closeSignInFragment() {
-        findNavController().popBackStack()
+    private fun closeVerificationFragment() {
+        requireActivity().onBackPressed()
     }
 
     @SuppressLint("ResourceAsColor")
