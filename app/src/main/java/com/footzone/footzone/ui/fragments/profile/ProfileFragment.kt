@@ -31,6 +31,7 @@ import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.KeyValues.USER_TOKEN
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
+import com.footzone.footzone.utils.commonfunction.Functions.loadImageUrl
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import me.shouheng.compress.Compress
@@ -204,9 +205,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
             if (!userData.photo.name.startsWith("default")) {
                 ivProfile.setPadding(0, 0, 0, 0)
-                Glide.with(requireContext())
-                    .load("${KeyValues.USER_IMAGE_BASE_URL}${userData.photo.name}")
-                    .into(ivProfile)
+                ivProfile.loadImageUrl("${KeyValues.USER_IMAGE_BASE_URL}${userData.photo.name}")
                 ivAdd.setImageResource(R.drawable.ic_edit_button)
             } else {
                 ivProfile.setPadding(90, 90, 90, 90)

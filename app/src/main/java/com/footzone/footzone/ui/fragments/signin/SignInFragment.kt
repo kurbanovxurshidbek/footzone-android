@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
@@ -43,14 +44,27 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
         checkAllFields()
 
         binding.enterButton.setOnClickListener {
+            sendLogInRequest()
+        }
 
+        binding.editTextNumber.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                sendLogInRequest()
+                true
+            } else false
+        }
+    }
+
+    private fun sendLogInRequest() {
+        if (binding.editTextNumber.text!!.isEmpty() && binding.editTextNumber.text.toString().length != 12) {
+            toast("Raqam noto'g'ri kiritildi!")
+        } else {
             phoneNumber =
                 "+998${binding.editTextNumber.text.toString().replace("\\s".toRegex(), "")}"
 
             viewModel.signIn(phoneNumber!!)
-
-            setupObservers()
         }
+        setupObservers()
     }
 
     private fun setupObservers() {
@@ -67,9 +81,10 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
                         openVerificationFragment()
                     }
                     is UiStateObject.ERROR -> {
-                        Toast.makeText(requireContext(), "Bu raqam orqali ro'yxatdan o'tilmagan. Iltimos ro'yxatdan o'ting.", Toast.LENGTH_LONG).show()
+                        toastLong(
+                            "Bu raqam orqali ro'yxatdan o'tilmagan. Iltimos ro'yxatdan o'ting."
+                        )
                         openSignUpFragment()
-                        Log.d("TAG", "setupUI: ${it.message}")
                     }
                     else -> {}
                 }
@@ -95,13 +110,11 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
         if (checkData()) {
             binding.apply {
                 enterButton.setBackgroundResource(R.drawable.button_register_filled_rounded_corner2)
-                enterButton.isClickable = true
                 enterButton.setTextColor(Color.WHITE)
             }
         } else {
             binding.apply {
                 enterButton.setBackgroundResource(R.drawable.button_register_filled_rounded_corner1)
-                enterButton.isClickable = false
                 enterButton.setTextColor(R.color.buttonDisabledTextColor)
             }
         }

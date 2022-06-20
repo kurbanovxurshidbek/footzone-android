@@ -27,25 +27,21 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     lateinit var binding: FragmentSignUpBinding
     private val viewModel by viewModels<SignUpViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    private fun sendRequest() {
-        viewModel.signUp(
-            "+998${
-                binding.editTextNumber.text.toString().replace("\\s".toRegex(), "")
-            }"
-        )
-        setupObservers()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentSignUpBinding.bind(view)
 
         initViews()
+    }
+
+    private fun sendRequestToSendSms() {
+        viewModel.signUp(
+            "+998${
+                binding.editTextNumber.text.toString().replace("\\s".toRegex(), "")
+            }"
+        )
+        setupObservers()
     }
 
     private fun setupObservers() {
@@ -57,6 +53,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                     }
 
                     is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "setupObserversdddd: okkk")
                         toastLong(it.data.data.toString())
                         val fullname =
                             "${
@@ -70,7 +67,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                         val user = User(
                             getDeviceName(),
                             System.currentTimeMillis().toString(),
-                            "mobile",
+                            "Mobile",
                             fullname,
                             "UZ",
                             phoneNumber,
@@ -78,18 +75,23 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                             isStadiumHolder
                         )
 
-                        findNavController().navigate(
-                            R.id.action_signUpFragment_to_verificationFragment,
-                            bundleOf(USER_DETAIL to user)
-                        )
+                        openVerificationFragment(user)
                     }
                     is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
+                        toastLong("Siz avval ro'yxatdan o'tgansiz.\nIltimos kirish uchun raqamingizni kiriting.")
+                        findNavController().popBackStack()
                     }
                     else -> {}
                 }
             }
         }
+    }
+
+    private fun openVerificationFragment(user: User) {
+        findNavController().navigate(
+            R.id.action_signUpFragment_to_verificationFragment,
+            bundleOf(USER_DETAIL to user)
+        )
     }
 
     private fun initViews() {
@@ -101,18 +103,11 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
         checkAllFields()
         binding.registerButton.setOnClickListener {
             if (checkData()) {
-                openVerificationFragment()
+                sendRequestToSendSms()
+            } else {
+                toast("Ma'lumotlar to'liq kiritilmadi!")
             }
         }
-
-        binding.registerButton.setOnClickListener {
-            //don't open
-            sendRequest()
-        }
-    }
-
-    private fun openVerificationFragment() {
-        findNavController().navigate(R.id.verificationFragment)
     }
 
     private fun checkAllFields() {
@@ -159,7 +154,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     }
 
     private fun openSignInFragment() {
-        findNavController().navigate(R.id.signInFragment)
+        findNavController().popBackStack()
     }
 
     //this function for get role exp: Stadium owner or User
@@ -170,13 +165,5 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
         val editTextFilledExposedDropdown = binding.filledExposedDropdown
 
         editTextFilledExposedDropdown.setAdapter(adapter)
-    }
-
-    fun getDeviceName(): String? {
-        val manufacturer = Build.MANUFACTURER
-        val model = Build.MODEL
-        return if (model.startsWith(manufacturer)) {
-            model
-        } else "$manufacturer $model"
     }
 }

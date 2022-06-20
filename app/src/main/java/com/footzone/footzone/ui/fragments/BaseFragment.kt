@@ -1,6 +1,7 @@
 package com.footzone.footzone.ui.fragments
 
 import android.app.Activity
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,11 +32,19 @@ open class BaseFragment(private val layoutResID: Int) : Fragment() {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    open fun toast(msg:String){
+    open fun getDeviceName(): String? {
+        val manufacturer = Build.MANUFACTURER
+        val model = Build.MODEL
+        return if (model.startsWith(manufacturer)) {
+            model
+        } else "$manufacturer $model"
+    }
+
+    open fun toast(msg: String) {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
 
-    open fun toastLong(msg:String){
+    open fun toastLong(msg: String) {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
     }
 }
