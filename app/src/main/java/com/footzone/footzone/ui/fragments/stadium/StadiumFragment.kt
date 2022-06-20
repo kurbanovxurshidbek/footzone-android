@@ -1,6 +1,8 @@
 package com.footzone.footzone.ui.fragments.stadium
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
@@ -93,15 +95,32 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
         refreshCommentAdapter(data)
     }
     private fun showRatingBarInfo(data: Data) {
-        val averageRate = Functions.resRating(data.commentInfo as ArrayList<Comment>)
-        val rateNumberPercentage = Functions.rateNumbers(data.commentInfo)
+        val averageRate : Float= Functions.resRating(data.commentInfo as ArrayList<Comment>)
+        val rateNumberPercentage = Functions.rateNumbers(comments = data.commentInfo)
+        val viewRateCount: Int = (data.commentInfo.sumOf { it.number })
         binding.apply {
-            tvAverageRate.setText(averageRate.toString())
-            ratingOne.setProgress(rateNumberPercentage.one)
-            ratingTwo.setProgress(rateNumberPercentage.two)
-            ratingThree.setProgress(rateNumberPercentage.three)
-            ratingFour.setProgress(rateNumberPercentage.four)
-            ratingFive.setProgress(rateNumberPercentage.five)
+            textViewRateCount.text = viewRateCount.toString()
+            if(averageRate>0){
+                tvAverageRate.text = averageRate.toString()
+            } else {
+                tvAverageRate.text = "0"
+            }
+
+            rbRate.rating = averageRate
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                ratingOne.setProgress(rateNumberPercentage.one,true)
+                ratingTwo.setProgress(rateNumberPercentage.two,true)
+                ratingThree.setProgress(rateNumberPercentage.three,true)
+                ratingFour.setProgress(rateNumberPercentage.four,true)
+                ratingFive.setProgress(rateNumberPercentage.five,true)
+            } else {
+                ratingOne.progress = rateNumberPercentage.one
+                ratingTwo.progress = rateNumberPercentage.two
+                ratingThree.progress = rateNumberPercentage.three
+                ratingFour.progress = rateNumberPercentage.four
+                ratingFive.progress = rateNumberPercentage.five
+            }
+
         }
     }
 
