@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Window
 import android.widget.Toast
@@ -35,15 +36,17 @@ class CalendarDIalog(private var onEnterClick: ((String) -> Unit)) {
         val binding = CalendarDialogBinding.inflate(LayoutInflater.from(activity))
         val dialog = Dialog(activity!!)
 
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(binding.root)
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setCancelable(true)
+        dialog.apply {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setCancelable(false)
+            setContentView(binding.root)
+            window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            setCancelable(true)
+        }
 
-        binding.calendarView.setOnDateChangeListener { _, year, month, date ->
+        binding.calendarView.setOnDateChangeListener { _, year, month, day ->
             val monthad: String = DateFormatSymbols().months[month]
-            dateChoose = "$date ${monthad.lowercase()} $year"
+            dateChoose = "$day ${monthad.lowercase()} $year"
             isCheck = true
         }
 
@@ -52,7 +55,7 @@ class CalendarDIalog(private var onEnterClick: ((String) -> Unit)) {
                 onEnterClick.invoke(dateChoose)
 
                 dialog.dismiss()
-            }else{
+            } else {
                 Toast.makeText(activity, "O'yin kunini tanlang", Toast.LENGTH_SHORT).show()
             }
         }
@@ -68,5 +71,4 @@ class CalendarDIalog(private var onEnterClick: ((String) -> Unit)) {
         binding.tvCancel.setOnClickListener { dialog.dismiss() }
         dialog.show()
     }
-
 }

@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable-v24/view_rounded_corners_light_blue_4dp.xml" value="0.206" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable/button_filled_rounded_corner.xml" value="0.2" />
+        <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable/button_round_corner_grey.xml" value="0.2" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable/ic_avatar.xml" value="0.184" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/drawable/view_rounded_corners_grey_4dp.xml" value="0.184" />
         <entry key="..\:/Android Loyihalar/FoodZone/footzone-android/app/src/main/res/layout/bottom_sheet_types.xml" value="0.152" />

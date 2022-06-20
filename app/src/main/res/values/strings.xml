@@ -51,7 +51,7 @@
     <string name="str_not_succesfull">The field did not join successfully, hit again</string>
     <string name="str_date_incomplete">Malumotlar to\'liq to\'ldirilmagan</string>
     <string name="str_select_dat_game">O\'yin kunini tanlang</string>
-    <string name="str_send_request">Sizning so\'rovingiz yuborildi,\tez orada javob qaytadi</string>
+    <string name="str_send_request">Sizning so\'rovingiz yuborildi,\n tez orada javob qaytadi</string>
     <string name="str_not_send_request">Sizning so\'rovingiz yuborilmadi,\qayta urining</string>
     <string name="str_holder_not_stadium">Hozir sizda maydonlar mavjud emas.\nMaydon qo’shish uchun yuqoridagi\n“+” tugmasini bosing</string>
     <string name="str_select_game_time">O\'yin vaqtlarini tanlang</string>
@@ -108,5 +108,15 @@
         <item>22:30</item>
         <item>23:00</item>
         <item>23:30</item>
+    </string-array>
+
+    <string-array name="daysWeek">
+        <item>MONDAY</item>
+        <item>TUESDAY</item>
+        <item>WEDNESDAY</item>
+        <item>THURSDAY</item>
+        <item>FRIDAY</item>
+        <item>SATURDAY</item>
+        <item>SUNDAY</item>
     </string-array>
 </resources>

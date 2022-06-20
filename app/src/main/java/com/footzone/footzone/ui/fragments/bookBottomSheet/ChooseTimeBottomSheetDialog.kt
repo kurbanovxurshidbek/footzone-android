@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,9 +28,7 @@ import com.footzone.footzone.utils.commonfunction.Functions.calculateInHours
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.time.LocalTime
-import java.util.*
 
 @AndroidEntryPoint
 class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSheetDialog) : BottomSheetDialogFragment() {
@@ -50,6 +49,7 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
         return inflater.inflate(R.layout.fragment_choose_time_bottom_sheet_dialog, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentChooseTimeBottomSheetDialogBinding.bind(view)
@@ -66,16 +66,16 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
             bookData = it?.day
             if (startTime != null && endTime != null){
                 binding.tvChooseTime.text = "$startTime - $endTime"
-                binding.tvBook.setBackgroundResource(R.drawable.view_rounded_corners_blue)
+                binding.tvBook.setBackgroundResource(R.drawable.button_filled_rounded_corner)
                 binding.tvBook.isClickable = true
                 binding.tvBook.setTextColor(Color.WHITE)
                 val playTime = calculateInHours(LocalTime.parse(startTime), LocalTime.parse(endTime))
-                binding.tvGameTime.text = "${playTime} "
-                binding.tvTotalPrice.text = "${playTime * stadiumData.hourlyPrice} "
+                binding.tvGameTime.text = "${playTime.toInt()} "
+                binding.tvTotalPrice.text = "${(playTime * stadiumData.hourlyPrice).toInt()} "
                 isCheck = true
             }else{
                 isCheck = false
-                binding.tvBook.setBackgroundResource(R.drawable.view_rounded_corners_grey)
+                binding.tvBook.setBackgroundResource(R.drawable.button_round_corner_grey)
                 binding.tvBook.isClickable = false
                 binding.tvBook.setTextColor(Color.BLACK)
             }
@@ -90,6 +90,7 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
             binding.tvChooseTime.text = ""
             binding.tvGameTime.text = ""
             binding.tvTotalPrice.text = ""
+            binding.tvBook.setBackgroundResource(R.drawable.button_round_corner_grey)
             isCheck = false
             val dialog = CalendarDIalog { date ->
                 binding.tvDate.text = date
@@ -121,27 +122,29 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
         }
 
         binding.rlTimeInterval.setOnClickListener {
+            if (binding.tvDate.text.toString().length > 4) {
 
-            val sdf = SimpleDateFormat("EEEE")
-            val d = LocalDate.parse(binding.tvDate.text.toString())
-            val dayOfTheWeek = sdf.format(d)
+                val array = resources.getStringArray(R.array.daysWeek)
 
-            for (workDay in stadiumData.workingDays){
-                if (workDay.dayName == dayOfTheWeek.toString().uppercase()){
-                    if (binding.tvDate.text.toString().length > 4) {
-                        val sourceFormat = SimpleDateFormat("dd MMM yyy")
-                        val destFormat = SimpleDateFormat("yyyy-MM-dd")
-                        val convertedDate = sourceFormat.parse(binding.tvDate.text.toString())
+                val sourceFormat = SimpleDateFormat("dd MMM yyy")
+                val destFormat = SimpleDateFormat("yyyy-MM-dd")
+                val convertedDate = sourceFormat.parse(binding.tvDate.text.toString())
 
+                val weekNum = SimpleDateFormat("F").format(convertedDate).toString().toInt()
+
+                for (pos in 0..stadiumData.workingDays.size - 1){
+                    Log.d("TAG", "initView  jdsjc: ${stadiumData.workingDays[pos].dayName}")
+                    Log.d("TAG", "initView: ${array[weekNum - 1]}")
+                    if (stadiumData.workingDays[pos].dayName.equals(array[weekNum - 1])) {
+                        Log.d("TAG", "initView: ")
                         val bookDate: String = destFormat.format(convertedDate)
                         findNavController().navigate(R.id.action_pitchDetailFragment_to_timeIntervalFragment,
                             bundleOf(STADIUM_ID to stadiumData.stadiumId, STADIUM_DATA to bookDate))
-                    } else {
-                        Toast.makeText(requireContext(), getString(R.string.str_select_dat_game), Toast.LENGTH_SHORT)
-                            .show()
                     }
-                    break
                 }
+            } else {
+                Toast.makeText(requireContext(), getString(R.string.str_select_dat_game), Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }

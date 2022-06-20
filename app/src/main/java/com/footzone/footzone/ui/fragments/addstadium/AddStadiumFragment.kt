@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -155,7 +156,9 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         )
 
                     for (phot in photos) {
+                        Log.d("TAG", "setupObserversPhoto  photo: ${phot.id} ${phot.name}")
                         if (phot.id == null) {
+                            Log.d("TAG", "setupObserversPhoto  photo: ${phot.id} ${phot.name}")
                             viewModel.addPhotoToStadium(stadiumId,
                                 convertUriMultipart(phot.name as Uri, "file"))
                             observeViewModelAdd()
@@ -177,6 +180,26 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         }
     }
 
+    private fun observeViewModelAdd() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.addPhotoToStadium.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
+                    is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "setupObserversPhoto  dd: ${it}")
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupObserversPhoto  dd: ${it}")
+                    }
+                    else -> {
+                    }
+                }
+            }
+        }
+    }
+
     private fun refreshAdapter() {
         adapterEdit = PitchImageEditAdapter(photos, object : OnClickEditEvent {
             override fun setOnAddClickListener() {
@@ -192,6 +215,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                 positionImage = 0
                 adapterEdit.notifyDataSetChanged()
                 if (id != null) {
+                    Log.d("TAG", "setOnDeleteClickListener: id ${id}")
                     viewModel.deleteStadiumPhoto(stadiumId, id)
                     setupObserversPhoto()
                 }
@@ -234,10 +258,10 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                     }
 
                     is UiStateObject.SUCCESS -> {
-
+                        Log.d("TAG", "setupObserversPhoto: ${it}")
                     }
                     is UiStateObject.ERROR -> {
-
+                        Log.d("TAG", "setupObserversPhoto: ${it}")
                     }
                     else -> {
                     }
@@ -314,13 +338,15 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                             stadiumAddress,
                             stadiumNumber,
                             stadiumPrice.toInt(),
-                            latitude,
-                            longitude,
+                            41.323399179684934,
+                            69.18039275458806,
                             stadiumName,
                             userId,
                             workTimes
                         )
                     viewModel.postHolderStadium(stadium, files)
+
+                    observeViewModel()
                 } catch (e: Exception) {
                     Toast.makeText(
                         requireContext(),
@@ -328,8 +354,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-
-                observeViewModel()
             }
         }
 
@@ -413,7 +437,8 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         val binding =
                             ToastChooseTimeBinding.inflate(LayoutInflater.from(requireActivity()))
 
-                        binding.tvToast.text = getString(R.string.str_not_succesfull)
+                        Log.d("TAG", "observeViewModel: ${it.message}")
+                        binding.tvToast.text = getString(R.string.str_successfully_edded)
                         val custToast = Toast(requireContext())
                         custToast.setView(binding.root)
                         custToast.show()
@@ -468,24 +493,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                 adapterEdit.notifyDataSetChanged()
             } catch (e: Exception) {
                 e.printStackTrace()
-            }
-        }
-    }
-
-    private fun observeViewModelAdd() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.addPhotoToStadium.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
-                    is UiStateObject.SUCCESS -> {
-                    }
-                    is UiStateObject.ERROR -> {
-                    }
-                    else -> {
-                    }
-                }
             }
         }
     }
