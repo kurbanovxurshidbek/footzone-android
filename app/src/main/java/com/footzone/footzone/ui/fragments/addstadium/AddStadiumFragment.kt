@@ -338,8 +338,8 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                             stadiumAddress,
                             stadiumNumber,
                             stadiumPrice.toInt(),
-                            41.323399179684934,
-                            69.18039275458806,
+                            latitude,
+                            longitude,
                             stadiumName,
                             userId,
                             workTimes

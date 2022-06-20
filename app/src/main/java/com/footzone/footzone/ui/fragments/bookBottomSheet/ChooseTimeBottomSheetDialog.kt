@@ -40,6 +40,7 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
     private var endTime: String? = null
     private var bookData: String? = null
     var isCheck = false
+    var dayOfWeek = 0
 
 
     override fun onCreateView(
@@ -92,8 +93,9 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
             binding.tvTotalPrice.text = ""
             binding.tvBook.setBackgroundResource(R.drawable.button_round_corner_grey)
             isCheck = false
-            val dialog = CalendarDIalog { date ->
+            val dialog = CalendarDIalog { date, week ->
                 binding.tvDate.text = date
+                dayOfWeek = week
 
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -125,18 +127,12 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
             if (binding.tvDate.text.toString().length > 4) {
 
                 val array = resources.getStringArray(R.array.daysWeek)
-
                 val sourceFormat = SimpleDateFormat("dd MMM yyy")
                 val destFormat = SimpleDateFormat("yyyy-MM-dd")
                 val convertedDate = sourceFormat.parse(binding.tvDate.text.toString())
 
-                val weekNum = SimpleDateFormat("F").format(convertedDate).toString().toInt()
-
                 for (pos in 0..stadiumData.workingDays.size - 1){
-                    Log.d("TAG", "initView  jdsjc: ${stadiumData.workingDays[pos].dayName}")
-                    Log.d("TAG", "initView: ${array[weekNum - 1]}")
-                    if (stadiumData.workingDays[pos].dayName.equals(array[weekNum - 1])) {
-                        Log.d("TAG", "initView: ")
+                    if (stadiumData.workingDays[pos].dayName.equals(array[dayOfWeek - 2])) {
                         val bookDate: String = destFormat.format(convertedDate)
                         findNavController().navigate(R.id.action_pitchDetailFragment_to_timeIntervalFragment,
                             bundleOf(STADIUM_ID to stadiumData.stadiumId, STADIUM_DATA to bookDate))
