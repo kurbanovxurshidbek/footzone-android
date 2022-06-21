@@ -311,7 +311,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
         }
 
         binding.notificationButton.setOnClickListener {
-            findNavController().navigate(R.id.userNotificationFragment)
+            openNotificationFragment()
         }
 
         binding.bottomSheetTypes.edtPitchSearch.setOnEditorActionListener { _, actionId, _ ->
@@ -325,6 +325,14 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                 }
                 true
             } else false
+        }
+    }
+
+    private fun openNotificationFragment() {
+        if (sharedPref.getIsOwner(IS_OWNER)) {
+            findNavController().navigate(R.id.action_homeFragment_to_adminNotificationFragment)
+        } else {
+            findNavController().navigate(R.id.action_homeFragment_to_userNotificationFragment)
         }
     }
 

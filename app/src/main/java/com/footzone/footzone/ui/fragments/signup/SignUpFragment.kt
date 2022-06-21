@@ -16,9 +16,12 @@ import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentSignUpBinding
 import com.footzone.footzone.model.User
 import com.footzone.footzone.ui.fragments.BaseFragment
+import com.footzone.footzone.utils.KeyValues.FIREBASE_TOKEN
 import com.footzone.footzone.utils.KeyValues.USER_DETAIL
+import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -26,6 +29,9 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
 
     lateinit var binding: FragmentSignUpBinding
     private val viewModel by viewModels<SignUpViewModel>()
+
+    @Inject
+    lateinit var sharedPref: SharedPref
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -66,7 +72,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                             binding.filledExposedDropdown.text.toString() == "Maydon egasi"
                         val user = User(
                             getDeviceName(),
-                            System.currentTimeMillis().toString(),
+                            sharedPref.getFirebaseToken(FIREBASE_TOKEN),
                             "Mobile",
                             fullname,
                             "UZ",

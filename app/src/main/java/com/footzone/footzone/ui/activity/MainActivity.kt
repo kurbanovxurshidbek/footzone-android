@@ -29,6 +29,7 @@ class MainActivity : BaseActivity() {
         binding.bottomNavigationView.itemIconTintList = null
         binding.bottomNavigationView.itemRippleColor =
             ColorStateList.valueOf(Color.parseColor("#FFFFFF"))
+        loadFCMToken()
     }
 
     private fun showContentBehindStatusBar() {
