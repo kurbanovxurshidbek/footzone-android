@@ -6,13 +6,13 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.footzone.footzone.R
 
-class AcceptDialog(
+class EnterAccountDialog(
     private val context1: Context,
-    private val onAcceptClick: (() -> Unit)
+    private val onEnterClick: (() -> Unit)
 ) : Dialog(context1) {
-    private var _instance: AcceptDialog? = null
+    private var _instance: EnterAccountDialog? = null
 
-    fun instance(layoutResID: ConstraintLayout): AcceptDialog {
+    fun instance(layoutResID: ConstraintLayout): EnterAccountDialog {
         if (_instance == null) {
             _instance = this
         }
@@ -24,19 +24,14 @@ class AcceptDialog(
         _instance!!.setContentView(layoutResID)
         _instance!!.window!!.setBackgroundDrawableResource(R.drawable.rounded_view)
         _instance!!.window!!.setLayout(
-            pxFromDp(context1, 320).toInt(),
+            pxFromDp(context1, 312).toInt(),
             pxFromDp(context1, 200).toInt()
         )
 
-        val tvYes = layoutResID.findViewById<TextView>(R.id.tvYes)
-        val tvNo = layoutResID.findViewById<TextView>(R.id.tvNo)
+        val tvYes = layoutResID.findViewById<TextView>(R.id.tvEnter)
 
         tvYes.setOnClickListener {
-            onAcceptClick.invoke()
-        }
-
-        tvNo.setOnClickListener {
-            _instance!!.dismiss()
+            onEnterClick.invoke()
         }
     }
 

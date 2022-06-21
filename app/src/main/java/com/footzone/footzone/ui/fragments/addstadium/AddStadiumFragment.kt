@@ -53,7 +53,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     lateinit var adapterEdit: PitchImageEditAdapter
     var isEdit: Boolean = false
     var position = 0
-    var positionImage = 0
     var latitude = 0.0
     var longitude = 0.0
     var workTimes = ArrayList<WorkingDay>()
@@ -203,7 +202,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     private fun refreshAdapter() {
         adapterEdit = PitchImageEditAdapter(photos, object : OnClickEditEvent {
             override fun setOnAddClickListener() {
-                positionImage = 0
                 selectImage(PICK_FROM_FILE_EDIT)
             }
 
@@ -212,7 +210,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                     getText(R.string.str_delete_image),
                     Toast.LENGTH_SHORT).show()
                 photos.removeAt(position)
-                positionImage = 0
                 adapterEdit.notifyDataSetChanged()
                 if (id != null) {
                     Log.d("TAG", "setOnDeleteClickListener: id ${id}")
@@ -279,6 +276,8 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             etPitchPrice.setText(data.hourlyPrice.toString())
             recyclerView.adapter = adapterEdit
             stadiumNumber = data.number
+            longitude = data.longitude
+            latitude = data.latitude
         }
     }
 

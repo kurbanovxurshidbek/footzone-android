@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
@@ -22,10 +23,14 @@ import com.directions.route.*
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.PitchAdapter
 import com.footzone.footzone.databinding.FragmentHomeBinding
+import com.footzone.footzone.databinding.LayoutAcceptBinding
+import com.footzone.footzone.databinding.LayoutEnterDialogBinding
 import com.footzone.footzone.helper.OnClickEvent
 import com.footzone.footzone.model.*
 import com.footzone.footzone.ui.fragments.BaseFragment
+import com.footzone.footzone.utils.EnterAccountDialog
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
+import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.IS_FAVOURITE_STADIUM
 import com.footzone.footzone.utils.KeyValues.IS_OWNER
 import com.footzone.footzone.utils.KeyValues.STADIUM_ID
@@ -64,6 +69,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
     private var stadiumsList = ArrayList<ShortStadiumDetail>()
     private var stadiumsFilteredList = ArrayList<ShortStadiumDetail>()
     private var favouriteStadiums = ArrayList<String>()
+    private lateinit var enterAccountDialog: EnterAccountDialog
 
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -349,9 +355,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
     }
 
     private fun sendRequestToGetPreviouslyBookedStadiums() {
-        val userId = sharedPref.getUserID(USER_ID, "")
-        if (userId.isNotEmpty()) {
-            viewModel.getPreviouslyBookedStadiums(userId)
+        if (sharedPref.getUserID(USER_ID, "").isNotEmpty()) {
+            viewModel.getPreviouslyBookedStadiums()
             observePreviouslyBookedStadiums()
         } else {
             toast(
@@ -392,8 +397,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
     private fun sendRequestToGetNearbyStadiums() {
         viewModel.getNearByStadiums(
             Location(
-                41.4577,
-                69.3477
+                lastLocation!!.latitude,
+                lastLocation!!.longitude
             )
         )
         observeNearByStadiums()
@@ -408,7 +413,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                     }
 
                     is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "observeNearByStadiums: $it.data")
                         stadiumsList = it.data.data
                         refreshAdapter(favouriteStadiums, stadiumsList)
                     }
@@ -431,8 +435,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                     }
 
                     is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "observeNearByStadiums: $it.data")
-
                         findMultipleLocation(it.data.data)
                     }
                     is UiStateObject.ERROR -> {
@@ -582,7 +584,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
 
         val adapter = PitchAdapter(favouriteStadiums, stadiums, object : OnClickEvent {
             override fun setOnBookClickListener(stadiumId: String, isFavourite: Boolean) {
-                openPitchDetailFragment(stadiumId, isFavourite)
+                if (sharedPref.getLogIn(KeyValues.LOG_IN, false)) {
+                    openPitchDetailFragment(stadiumId, isFavourite)
+                } else {
+                    showSignUpDialog()
+                }
             }
 
             override fun setOnNavigateClickListener(latitude: Double, longitude: Double) {
@@ -599,6 +605,22 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
         })
         binding.bottomSheetPitchList.rvPitch.adapter = adapter
         showStadiumList()
+    }
+
+    private fun showSignUpDialog() {
+        enterAccountDialog = EnterAccountDialog(requireContext()) {
+            openSignInFragment()
+            enterAccountDialog.dismiss()
+        }.instance(
+            LayoutEnterDialogBinding.inflate(
+                LayoutInflater.from(requireContext())
+            ).root
+        )
+        enterAccountDialog.show()
+    }
+
+    private fun openSignInFragment() {
+        findNavController().navigate(R.id.action_homeFragment_to_signInFragment)
     }
 
     private fun openPitchDetailFragment(stadiumId: String, isFavourite: Boolean) {

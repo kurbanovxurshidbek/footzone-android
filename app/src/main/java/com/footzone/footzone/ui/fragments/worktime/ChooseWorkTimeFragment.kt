@@ -18,7 +18,6 @@ import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.WORK_TIME
 import com.footzone.footzone.utils.KeyValues.WORK_TIMES
-import java.time.LocalTime
 import java.util.*
 
 class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) {
@@ -32,7 +31,6 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
     }
 
     private fun initViews() {
-
         binding.apply {
             icClose.setOnClickListener { requireActivity().onBackPressed() }
             tvCancel.setOnClickListener { requireActivity().onBackPressed() }
@@ -42,13 +40,9 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
                 requireActivity().onBackPressed()
             }
         }
-
-
-
         binding.switchMo.setOnToggledListener { toggleableView, isOn ->
             openTime(binding.inputLayoutMo, isOn)
         }
-
         binding.switchTu.setOnToggledListener { toggleableView, isOn ->
             openTime(binding.inputLayoutTu, isOn)
         }

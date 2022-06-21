@@ -63,7 +63,7 @@
 
 
     <string-array name="timelist">
-        <item>00:00</item>
+        <item>23:59</item>
         <item>00:30</item>
         <item>01:00</item>
         <item>01:30</item>

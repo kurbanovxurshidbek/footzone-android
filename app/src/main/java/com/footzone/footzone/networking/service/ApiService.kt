@@ -38,8 +38,8 @@ interface ApiService {
     @GET("user/{userId}")
     suspend fun getUserData(@Path("userId") userId: String): UserData
 
-    @GET("stadium/history/{userId}")
-    suspend fun getUserPlayHistory(@Path("userId") userId: String): ShortStadiumDetailResponse
+    @GET("stadium/history")
+    suspend fun getUserPlayHistory(): ShortStadiumDetailResponse
 
     @Multipart
     @POST("user/changeProfilePicture/{userId}")
@@ -115,7 +115,7 @@ interface ApiService {
     suspend fun getPlayedHistory(@Path("userId") userId: String): PlayedHistoryResponse
 
     @GET("session/playing/soon")
-    suspend fun getPlayingSoonStadium(): PlayedHistoryResponse
+    suspend fun getPlayingSoonStadium(): PlayingSoonHistoryResponse
 
     @DELETE("stadium/edit/photo/delete/{stadiumId}/{photoId}")
     suspend fun deleteStadiumPhoto(
