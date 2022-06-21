@@ -20,9 +20,10 @@ import java.util.*
  * In the CalendarDIalog class, the stadium reservation calendar opens
  */
 
-class CalendarDIalog(private var onEnterClick: ((String) -> Unit)) {
+class CalendarDIalog(private var onEnterClick: ((String, Int) -> Unit)) {
     lateinit var dateChoose: String
     var isCheck = false
+    var dayOfWeek = 0
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun showCalendarDialog(activity: Activity?) {
@@ -44,15 +45,18 @@ class CalendarDIalog(private var onEnterClick: ((String) -> Unit)) {
             setCancelable(true)
         }
 
-        binding.calendarView.setOnDateChangeListener { _, year, month, day ->
+        binding.calendarView.setOnDateChangeListener { view, year, month, day ->
             val monthad: String = DateFormatSymbols().months[month]
             dateChoose = "$day ${monthad.lowercase()} $year"
+            val calendar = Calendar.getInstance()
+            calendar[year, month] = day
+            dayOfWeek = calendar[Calendar.DAY_OF_WEEK]
             isCheck = true
         }
 
         binding.tvSelection.setOnClickListener {
             if (isCheck) {
-                onEnterClick.invoke(dateChoose)
+                onEnterClick.invoke(dateChoose, dayOfWeek)
 
                 dialog.dismiss()
             } else {
