@@ -83,7 +83,8 @@
                        android:fontFamily="@font/roboto"
                        android:inputType="textCapWords"
                        android:textColor="#0A0A0A"
-                       android:textSize="16sp" />
+                       android:textSize="16sp"
+                       android:nextFocusDown="@id/etPitchAddress"/>
                </com.google.android.material.textfield.TextInputLayout>
 
                <com.google.android.material.textfield.TextInputLayout
@@ -101,9 +102,10 @@
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
                        android:fontFamily="@font/roboto"
-                       android:inputType="textCapWords"
+                       android:inputType="textPostalAddress"
                        android:textColor="#0A0A0A"
-                       android:textSize="16sp" />
+                       android:textSize="16sp"
+                       android:nextFocusDown="@+id/etPitchPhoneNumber"/>
                </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -154,7 +156,8 @@
                        android:layout_height="wrap_content"
                        android:fontFamily="@font/roboto"
                        android:inputType="phone"
-                       app:mask="## ### ## ##" />
+                       app:mask="## ### ## ##"
+                       android:nextFocusDown="@+id/etPitchPrice"/>
                </com.google.android.material.textfield.TextInputLayout>
 
                <androidx.constraintlayout.widget.ConstraintLayout
@@ -207,6 +210,19 @@
                        android:textColor="#0A0A0A"
                        android:textSize="16sp" />
                </com.google.android.material.textfield.TextInputLayout>
+
+               <EditText
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"/>
+
+               <EditText
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"/>
+
+               <EditText
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"/>
+
            </LinearLayout>
        </androidx.core.widget.NestedScrollView>
 
