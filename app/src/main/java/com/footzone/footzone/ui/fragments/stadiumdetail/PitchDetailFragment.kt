@@ -197,6 +197,13 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
         binding.linearNavigation.setOnClickListener {
             requireActivity().shareLocationToGoogleMap(41.33324, 69.21896)
         }
+        binding.icTimetable.setOnClickListener {
+            openTimeTableDialog()
+        }
+    }
+
+    private fun openTimeTableDialog() {
+
     }
 
     private fun changeLinearAddFavourite() {
