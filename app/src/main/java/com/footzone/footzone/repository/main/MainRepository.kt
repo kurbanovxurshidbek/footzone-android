@@ -14,7 +14,7 @@ class MainRepository @Inject constructor(
 
     suspend fun getUserData(userId: String) = apiService.getUserData(userId)
 
-    suspend fun getUserPlayHistory(userId: String) = apiService.getUserPlayHistory(userId)
+    suspend fun getUserPlayHistory() = apiService.getUserPlayHistory()
 
     suspend fun updateUserProfilePhoto(userId: String, file: MultipartBody.Part) =
         apiService.updateUserProfilePhoto(userId, file)

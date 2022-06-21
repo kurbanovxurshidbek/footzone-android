@@ -3,6 +3,7 @@ package com.footzone.footzone.ui.fragments.playing
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.footzone.footzone.model.PlayedHistoryResponse
+import com.footzone.footzone.model.PlayingSoonHistoryResponse
 import com.footzone.footzone.repository.main.MainRepository
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,7 @@ class PlayingPitchViewModel @Inject constructor(private val mainRepository: Main
     ViewModel() {
 
     private val _playingSoonStadiums =
-        MutableStateFlow<UiStateObject<PlayedHistoryResponse>>(UiStateObject.EMPTY)
+        MutableStateFlow<UiStateObject<PlayingSoonHistoryResponse>>(UiStateObject.EMPTY)
     val playingSoonStadiums = _playingSoonStadiums
 
     fun getPlayingSoonStadium() = viewModelScope.launch {

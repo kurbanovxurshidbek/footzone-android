@@ -84,11 +84,11 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
         }
     }
 
-    fun getPreviouslyBookedStadiums(userId: String) = viewModelScope.launch {
+    fun getPreviouslyBookedStadiums() = viewModelScope.launch {
         _previouslyBookedStadiums.value = UiStateObject.LOADING
 
         try {
-            val response = mainRepository.getUserPlayHistory(userId)
+            val response = mainRepository.getUserPlayHistory()
             _previouslyBookedStadiums.value = UiStateObject.SUCCESS(response)
 
         } catch (e: Exception) {
