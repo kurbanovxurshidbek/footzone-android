@@ -10,7 +10,9 @@ import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentSignUpBinding
@@ -21,6 +23,7 @@ import com.footzone.footzone.utils.KeyValues.USER_DETAIL
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -51,43 +54,45 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     }
 
     private fun setupObservers() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.userPhoneNumber.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.userPhoneNumber.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            //show progress
+                        }
 
-                    is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "setupObserversdddd: okkk")
-                        toastLong(it.data.data.toString())
-                        val fullname =
-                            "${
-                                binding.editTextSurname.text.toString().trim()
-                            } ${binding.editTextName.text.toString().trim()}"
-                        var number = "+998${binding.editTextNumber.text.toString()}"
-                        number = number.replace("\\s".toRegex(), "")
-                        val phoneNumber = number
-                        val isStadiumHolder =
-                            binding.filledExposedDropdown.text.toString() == "Maydon egasi"
-                        val user = User(
-                            getDeviceName(),
-                            sharedPref.getFirebaseToken(FIREBASE_TOKEN),
-                            "Mobile",
-                            fullname,
-                            "UZ",
-                            phoneNumber,
-                            null,
-                            isStadiumHolder
-                        )
+                        is UiStateObject.SUCCESS -> {
+                            Log.d("TAG", "setupObserversdddd: okkk")
+                            toastLong(it.data.data.toString())
+                            val fullname =
+                                "${
+                                    binding.editTextSurname.text.toString().trim()
+                                } ${binding.editTextName.text.toString().trim()}"
+                            var number = "+998${binding.editTextNumber.text.toString()}"
+                            number = number.replace("\\s".toRegex(), "")
+                            val phoneNumber = number
+                            val isStadiumHolder =
+                                binding.filledExposedDropdown.text.toString() == "Maydon egasi"
+                            val user = User(
+                                getDeviceName(),
+                                sharedPref.getFirebaseToken(FIREBASE_TOKEN),
+                                "Mobile",
+                                fullname,
+                                "UZ",
+                                phoneNumber,
+                                null,
+                                isStadiumHolder
+                            )
 
-                        openVerificationFragment(user)
+                            openVerificationFragment(user)
+                        }
+                        is UiStateObject.ERROR -> {
+                            toastLong("Siz avval ro'yxatdan o'tgansiz.\nIltimos kirish uchun raqamingizni kiriting.")
+                            findNavController().popBackStack()
+                        }
+                        else -> {}
                     }
-                    is UiStateObject.ERROR -> {
-                        toastLong("Siz avval ro'yxatdan o'tgansiz.\nIltimos kirish uchun raqamingizni kiriting.")
-                        findNavController().popBackStack()
-                    }
-                    else -> {}
                 }
             }
         }
@@ -160,7 +165,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     }
 
     private fun openSignInFragment() {
-        findNavController().popBackStack()
+        requireActivity().onBackPressed()
     }
 
     //this function for get role exp: Stadium owner or User
