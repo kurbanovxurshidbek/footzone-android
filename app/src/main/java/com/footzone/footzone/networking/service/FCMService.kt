@@ -1,8 +1,8 @@
 package com.footzone.footzone.networking.service
 
 import android.content.Intent
-import android.net.Uri
 import android.util.Log
+import com.footzone.footzone.ui.activity.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -18,10 +18,9 @@ class FCMService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
         Log.i(TAG, "Message: ${message.notification}")
-        val type = message.data["type"]
-        Log.i(TAG, "Type: $type")
-        lateinit var intent: Intent
 
-
+        startActivity(Intent(this, MainActivity::class.java).apply {
+            this.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        })
     }
 }

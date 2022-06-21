@@ -35,6 +35,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
     private lateinit var stadiumId: String
     private lateinit var stadiumDataToBottomSheetDialog: StadiumDataToBottomSheetDialog
     private var isFavouriteStadium: Boolean = false
+    private lateinit var stadiumData: StadiumData
     var times: ArrayList<TimeManager> = ArrayList()
 
     @Inject
@@ -80,20 +81,17 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
     }
 
     private fun showPitchComments(data: Data) {
-        Log.d("@@comments", data.toString())
         showRatingBarInfo(data)
         refreshCommentAdapter(data)
     }
 
     private fun showRatingBarInfo(data: Data) {
-        val averageRate : Float= Functions.resRating(data.commentInfo as ArrayList<Comment>)
-        Log.d("@av", averageRate.toString())
+        val averageRate: Float = Functions.resRating(data.commentInfo as ArrayList<Comment>)
         val rateNumberPercentage = Functions.rateNumbers(comments = data.commentInfo)
-        Log.d("@@@", rateNumberPercentage.toString())
         val viewRateCount: Int = (data.commentInfo.sumOf { it.number })
         binding.apply {
             textViewRateCount.text = viewRateCount.toString()
-            if(averageRate>0){
+            if (averageRate > 0) {
                 tvAverageRate.text = averageRate.toString()
             } else {
                 tvAverageRate.text = "0"
@@ -101,11 +99,11 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
 
             rbRate.rating = averageRate
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                ratingOne.setProgress(rateNumberPercentage.one,true)
-                ratingTwo.setProgress(rateNumberPercentage.two,true)
-                ratingThree.setProgress(rateNumberPercentage.three,true)
-                ratingFour.setProgress(rateNumberPercentage.four,true)
-                ratingFive.setProgress(rateNumberPercentage.five,true)
+                ratingOne.setProgress(rateNumberPercentage.one, true)
+                ratingTwo.setProgress(rateNumberPercentage.two, true)
+                ratingThree.setProgress(rateNumberPercentage.three, true)
+                ratingFour.setProgress(rateNumberPercentage.four, true)
+                ratingFive.setProgress(rateNumberPercentage.five, true)
             } else {
                 ratingOne.progress = rateNumberPercentage.one
                 ratingTwo.progress = rateNumberPercentage.two
@@ -126,8 +124,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                     }
 
                     is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "setupObservers: ${it.data}")
-                        val stadiumData = it.data.data
+                        stadiumData = it.data.data
                         stadiumDataToBottomSheetDialog = StadiumDataToBottomSheetDialog(
                             stadiumData.stadiumId,
                             stadiumData.hourlyPrice.toInt(),
@@ -195,7 +192,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
         }
 
         binding.linearNavigation.setOnClickListener {
-            requireActivity().shareLocationToGoogleMap(41.33324, 69.21896)
+            requireActivity().shareLocationToGoogleMap(stadiumData.latitude, stadiumData.longitude)
         }
         binding.icTimetable.setOnClickListener {
             openTimeTableDialog()
