@@ -1,16 +1,23 @@
 package com.footzone.footzone.ui.fragments.stadiumdetail
 
+import android.app.Dialog
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.View.*
+import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.CommentAdapter
 import com.footzone.footzone.adapter.CustomAdapter
 import com.footzone.footzone.databinding.FragmentPitchDetailBinding
+import com.footzone.footzone.databinding.LayoutAcceptBinding
+import com.footzone.footzone.databinding.LayoutTimetableDialogBinding
 import com.footzone.footzone.model.*
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.ui.fragments.bookBottomSheet.ChooseTimeBottomSheetDialog
@@ -33,6 +40,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
     lateinit var adapterComment: CommentAdapter
     private val viewModel by viewModels<PitchDetailViewModel>()
     private lateinit var stadiumId: String
+    lateinit var workingDays: List<WorkingDay>
     private lateinit var stadiumDataToBottomSheetDialog: StadiumDataToBottomSheetDialog
     private var isFavouriteStadium: Boolean = false
     var times: ArrayList<TimeManager> = ArrayList()
@@ -86,14 +94,14 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
     }
 
     private fun showRatingBarInfo(data: Data) {
-        val averageRate : Float= Functions.resRating(data.commentInfo as ArrayList<Comment>)
+        val averageRate: Float = Functions.resRating(data.commentInfo as ArrayList<Comment>)
         Log.d("@av", averageRate.toString())
         val rateNumberPercentage = Functions.rateNumbers(comments = data.commentInfo)
         Log.d("@@@", rateNumberPercentage.toString())
         val viewRateCount: Int = (data.commentInfo.sumOf { it.number })
         binding.apply {
             textViewRateCount.text = viewRateCount.toString()
-            if(averageRate>0){
+            if (averageRate > 0) {
                 tvAverageRate.text = averageRate.toString()
             } else {
                 tvAverageRate.text = "0"
@@ -101,11 +109,11 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
 
             rbRate.rating = averageRate
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                ratingOne.setProgress(rateNumberPercentage.one,true)
-                ratingTwo.setProgress(rateNumberPercentage.two,true)
-                ratingThree.setProgress(rateNumberPercentage.three,true)
-                ratingFour.setProgress(rateNumberPercentage.four,true)
-                ratingFive.setProgress(rateNumberPercentage.five,true)
+                ratingOne.setProgress(rateNumberPercentage.one, true)
+                ratingTwo.setProgress(rateNumberPercentage.two, true)
+                ratingThree.setProgress(rateNumberPercentage.three, true)
+                ratingFour.setProgress(rateNumberPercentage.four, true)
+                ratingFive.setProgress(rateNumberPercentage.five, true)
             } else {
                 ratingOne.progress = rateNumberPercentage.one
                 ratingTwo.progress = rateNumberPercentage.two
@@ -128,6 +136,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                     is UiStateObject.SUCCESS -> {
                         Log.d("TAG", "setupObservers: ${it.data}")
                         val stadiumData = it.data.data
+                        workingDays = it.data.data.workingDays
                         stadiumDataToBottomSheetDialog = StadiumDataToBottomSheetDialog(
                             stadiumData.stadiumId,
                             stadiumData.hourlyPrice.toInt(),
@@ -198,12 +207,66 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
             requireActivity().shareLocationToGoogleMap(41.33324, 69.21896)
         }
         binding.icTimetable.setOnClickListener {
-            openTimeTableDialog()
+            if (workingDays.isNotEmpty()) {
+                openTimeTableDialog()
+            }
         }
     }
 
     private fun openTimeTableDialog() {
+        val dialog = Dialog(requireContext())
+        val dialogLayout =
+            LayoutTimetableDialogBinding.inflate(LayoutInflater.from(requireContext()))
+        dialog.setContentView(dialogLayout.root)
+        dialog.window!!.setBackgroundDrawableResource(R.drawable.dialog_background)
 
+        val layoutParams = dialogLayout.root.layoutParams
+        layoutParams.width = (312 * requireContext().resources.displayMetrics.density).toInt()
+        dialogLayout.apply {
+            val daysWeek = requireContext().resources.getStringArray(R.array.daysWeek)
+            tvClose.setOnClickListener { dialog.dismiss() }
+            workingDays.forEach {
+                when (it.dayName) {
+                    daysWeek[0] -> {
+                        mondayLayout.visibility = VISIBLE
+                        tvMondayOpenTime.text = it.startTime.subSequence(0,5)
+                        tvMondayCloseTime.text = it.endTime.subSequence(0,5)
+                    }
+                    daysWeek[1] -> {
+                        tuesdayLayout.visibility = VISIBLE
+                        tvTuesdayOpenTime.text = it.startTime.subSequence(0,5)
+                        tvTuesdayCloseTime.text = it.endTime.subSequence(0,5)
+                    }
+                    daysWeek[2] -> {
+                        wednesdayLayout.visibility = VISIBLE
+                        tvWednesdayOpenTime.text = it.startTime.subSequence(0,5)
+                        tvWednesdayCloseTime.text = it.endTime.subSequence(0,5)
+                    }
+                    daysWeek[3] -> {
+                        thursdayLayout.visibility = VISIBLE
+                        tvThursdayOpenTime.text = it.startTime.subSequence(0,5)
+                        tvThursdayCloseTime.text = it.endTime.subSequence(0,5)
+                    }
+                    daysWeek[4] -> {
+                        fridayLayout.visibility = VISIBLE
+                        tvFridayOpenTime.text = it.startTime.subSequence(0,5)
+                        tvFridayCloseTime.text = it.endTime.subSequence(0,5)
+                    }
+                    daysWeek[5] -> {
+                        saturdayLayout.visibility = VISIBLE
+                        tvSaturdayOpenTime.text = it.startTime.subSequence(0,5)
+                        tvSaturdayCloseTime.text = it.endTime.subSequence(0,5)
+                    }
+                    daysWeek[6] -> {
+                        sundayLayout.visibility = VISIBLE
+                        tvSundayOpenTime.text = it.startTime.subSequence(0,5)
+                        tvSundayCloseTime.text = it.endTime.subSequence(0,5)
+                    }
+                }
+            }
+        }
+
+        dialog.show()
     }
 
     private fun changeLinearAddFavourite() {
