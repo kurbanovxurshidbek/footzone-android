@@ -34,7 +34,6 @@ open class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         context = this
-        loadFCMToken()
     }
 
     fun permissionRequest() {
@@ -110,7 +109,7 @@ open class BaseActivity : AppCompatActivity() {
     }
 
 
-    private fun loadFCMToken() {
+    open fun loadFCMToken() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.d("@@@Error firebase", "Fetching FCM registration token failed")

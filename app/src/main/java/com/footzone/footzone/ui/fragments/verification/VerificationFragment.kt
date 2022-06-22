@@ -15,6 +15,7 @@ import com.footzone.footzone.model.SignInVerification
 import com.footzone.footzone.model.SmsVerification
 import com.footzone.footzone.model.User
 import com.footzone.footzone.ui.fragments.BaseFragment
+import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.IS_OWNER
 import com.footzone.footzone.utils.KeyValues.LOG_IN
 import com.footzone.footzone.utils.KeyValues.PHONE_NUMBER
@@ -24,10 +25,12 @@ import com.footzone.footzone.utils.KeyValues.USER_TOKEN
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
 
+    @Inject
     lateinit var sharedPref: SharedPref
     lateinit var binding: FragmentVerificationBinding
     private val viewModel by viewModels<VerificationViewModel>()
@@ -52,7 +55,6 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
     }
 
     private fun initViews() {
-        sharedPref = SharedPref(requireContext())
         verificationCodeErrorControl()
         binding.backButton.setOnClickListener {
             closeVerificationFragment()
@@ -71,7 +73,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
             SignInVerification(
                 binding.editTextVerificationCode.text.toString().toInt(),
                 getDeviceName()!!,
-                System.currentTimeMillis().toString(),
+                sharedPref.getFirebaseToken(KeyValues.FIREBASE_TOKEN),
                 "Mobile",
                 phoneNumber!!
             )
@@ -145,7 +147,6 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
         sharedPref.saveUserId(USER_ID, userID)
         sharedPref.saveUserToken(USER_TOKEN, userToken)
         sharedPref.saveIsOwner(IS_OWNER, stadiumHolder!!)
-
     }
 
     private fun setupObserversRegister() {
@@ -163,7 +164,6 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
                             userPriority.token,
                             user!!.stadiumHolder
                         )
-                        findNavController().popBackStack()
                     }
                     is UiStateObject.ERROR -> {
                         Log.d("TAG", "setupUI: ${it.message} error")

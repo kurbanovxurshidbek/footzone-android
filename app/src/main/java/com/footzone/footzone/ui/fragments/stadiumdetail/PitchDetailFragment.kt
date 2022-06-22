@@ -7,9 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.*
-import android.widget.EditText
-import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.footzone.footzone.R
@@ -43,6 +40,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
     lateinit var workingDays: List<WorkingDay>
     private lateinit var stadiumDataToBottomSheetDialog: StadiumDataToBottomSheetDialog
     private var isFavouriteStadium: Boolean = false
+    private lateinit var stadiumData: StadiumData
     var times: ArrayList<TimeManager> = ArrayList()
 
     @Inject
@@ -95,9 +93,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
 
     private fun showRatingBarInfo(data: Data) {
         val averageRate: Float = Functions.resRating(data.commentInfo as ArrayList<Comment>)
-        Log.d("@av", averageRate.toString())
         val rateNumberPercentage = Functions.rateNumbers(comments = data.commentInfo)
-        Log.d("@@@", rateNumberPercentage.toString())
         val viewRateCount: Int = (data.commentInfo.sumOf { it.number })
         binding.apply {
             textViewRateCount.text = viewRateCount.toString()
@@ -134,9 +130,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                     }
 
                     is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "setupObservers: ${it.data}")
-                        val stadiumData = it.data.data
-                        workingDays = it.data.data.workingDays
+                        stadiumData = it.data.data
                         stadiumDataToBottomSheetDialog = StadiumDataToBottomSheetDialog(
                             stadiumData.stadiumId,
                             stadiumData.hourlyPrice.toInt(),
@@ -204,7 +198,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
         }
 
         binding.linearNavigation.setOnClickListener {
-            requireActivity().shareLocationToGoogleMap(41.33324, 69.21896)
+            requireActivity().shareLocationToGoogleMap(stadiumData.latitude, stadiumData.longitude)
         }
         binding.icTimetable.setOnClickListener {
             if (workingDays.isNotEmpty()) {

@@ -130,6 +130,6 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
     }
 
     private fun openSignUpFragment() {
-        findNavController().navigate(R.id.signUpFragment)
+        findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
     }
 }
