@@ -1,4 +1,4 @@
-package com.footzone.footzone
+package com.footzone.footzone.utils
 
 import android.app.Activity
 import android.app.Dialog
