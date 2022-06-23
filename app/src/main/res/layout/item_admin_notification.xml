@@ -3,21 +3,59 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginTop="16dp"
-    android:background="#FAFAFA"
+    android:layout_marginBottom="16dp"
+    android:background="@drawable/item_admin_notification_background"
     android:orientation="vertical"
     android:padding="16dp">
 
     <TextView
-        android:fontFamily="@font/poppins_bold"
-        android:id="@+id/tvPitchName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="“Acme futbol maydoni”"
+        android:textColor="@color/lightTextColor"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="nomli maydoningizga band qilish uchun so’rov tushdi."
+        android:textColor="@color/lightTextColor"
+        android:textSize="14sp" />
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Acme futbol maydoni"
-        android:textColor="#0A0A0A"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="17.04.2022"
+            android:textColor="@color/lightTextColor"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" • "
+            android:textColor="@color/lightTextColor"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="16:04"
+            android:textColor="@color/lightTextColor"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="#E0E0E0" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +70,6 @@
             app:tint="#616161" />
 
         <TextView
-            android:fontFamily="@font/poppins_bold"
             android:id="@+id/tvDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -56,7 +93,6 @@
             app:tint="#616161" />
 
         <TextView
-            android:fontFamily="@font/poppins_bold"
             android:id="@+id/tvHours"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -80,7 +116,6 @@
             app:tint="#616161" />
 
         <TextView
-            android:fontFamily="@font/poppins_bold"
             android:id="@+id/tvPrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -91,29 +126,17 @@
 
     </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/btnNavigate"
+                android:id="@+id/btnAccept"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="6dp"
@@ -122,25 +145,18 @@
                 android:gravity="center"
                 android:paddingVertical="10dp">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_navigate"
-                    app:tint="@color/white" />
-
                 <TextView
                     android:layout_width="wrap_content"
-
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="Mashrut"
+                    android:text="Qabul qilish"
                     android:textColor="#ffffff"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/btnStadium"
+                android:id="@+id/btnDecline"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
@@ -151,23 +167,54 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvPitchPrice">
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="14dp"
-                    android:src="@drawable/ic_pitch"
-                    app:tint="#0C64E6" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="Maydon"
+                    android:text="Rad etish"
                     android:textColor="#0C64E6"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
             </LinearLayout>
+
 
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/acceptedLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Qabul qilindi"
+                android:textColor="@color/green_accepted"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/declinedLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rad etildi"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </FrameLayout>
+
 </LinearLayout>
