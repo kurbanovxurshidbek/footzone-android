@@ -142,10 +142,10 @@
                 app:tint="#0C64E6" />
 
             <TextView
-                android:fontFamily="@font/poppins_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Maydon"
                 android:textColor="#0C64E6"
                 android:textSize="14sp" />
