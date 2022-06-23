@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.footzone.footzone.CalendarDIalog
+import com.footzone.footzone.utils.CalendarDIalog
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentChooseTimeBottomSheetDialogBinding
 import com.footzone.footzone.helper.TimeSharedViewModel

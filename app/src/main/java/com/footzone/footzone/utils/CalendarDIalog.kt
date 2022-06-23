@@ -1,11 +1,10 @@
-package com.footzone.footzone
+package com.footzone.footzone.utils
 
 import android.app.Activity
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Window
 import android.widget.Toast

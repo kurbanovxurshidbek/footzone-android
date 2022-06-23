@@ -24,13 +24,13 @@
        <FrameLayout
            android:layout_gravity="end|bottom"
            android:layout_width="50dp"
-           android:layout_height="50dp">
+           android:layout_height="50dp"
+           android:layout_marginEnd="16dp">
 
            <ImageView
                android:id="@+id/notificationButton"
                android:layout_width="50dp"
                android:layout_height="50dp"
-               android:layout_marginEnd="16dp"
                android:background="@drawable/imageview_circle_without_stroke"
                android:padding="15dp"
                android:src="@drawable/ic_notification_home" />
