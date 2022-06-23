@@ -60,7 +60,7 @@
     <string name="str_vote">ta ovoz</string>
     <string name="str_football_stadium">futbol maydoni</string>
     <string name="str_hour">soat</string>
-
+    <string name="channel_id">Something</string>
 
     <string-array name="timelist">
         <item>23:59</item>

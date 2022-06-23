@@ -67,7 +67,9 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     open fun openMainActivity() {
-        startActivity(Intent(context, MainActivity::class.java))
+        val intent = Intent(context, MainActivity::class.java)
+        intent.putExtra(KeyValues.SPLASH_MESSAGE, true)
+        startActivity(intent)
     }
 
     open fun isLocationPermissionGranted(): Boolean =
@@ -92,7 +94,7 @@ open class BaseActivity : AppCompatActivity() {
         result.addOnCompleteListener {
             try {
                 val response: LocationSettingsResponse = it.getResult(ApiException::class.java)
-                if (response.locationSettingsStates!!.isGpsPresent){
+                if (response.locationSettingsStates!!.isGpsPresent) {
                     openMainActivity()
                 }
             } catch (e: ApiException) {
@@ -119,7 +121,7 @@ open class BaseActivity : AppCompatActivity() {
             // Save it in locally to use later
             val token = task.result
             Log.d("@@@firebase token", token.toString())
-            sharedPref.saveFirebaseToken(KeyValues.FIREBASE_TOKEN,token.toString())
+            sharedPref.saveFirebaseToken(KeyValues.FIREBASE_TOKEN, token.toString())
         })
     }
 
