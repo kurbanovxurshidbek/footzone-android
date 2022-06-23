@@ -36,21 +36,28 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDIQLTyvAVuV9DSy0h0cIF6_vDja5ayKYU" />
 
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/channel_id"/>
+
+
         <activity
             android:name=".ui.activity.MainActivity"
             android:configChanges="locale"
             android:exported="true"
-            android:windowSoftInputMode="adjustNothing" />
-
-        <activity
-            android:name=".ui.activity.SplashActivity"
-            android:configChanges="locale"
-            android:exported="true">
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.activity.SplashActivity"
+            android:configChanges="locale"
+            android:exported="true">
+
         </activity>
         <service
             android:name=".networking.service.FCMService"

@@ -1,6 +1,11 @@
 package com.footzone.footzone.utils
 
 object KeyValues {
+    val NOTIFICATION_TITLE: String = "NotificationTitle"
+    val SPLASH_MESSAGE: String = "SplashMessage"
+//    val STADIUM_IMAGE_BASE_URL = "https://footzone-server.herokuapp.com/images/stadium/"
+//    val USER_IMAGE_BASE_URL = "htt" +
+           // "ps://footzone-server.herokuapp.com/images/user/"
 //    val STADIUM_IMAGE_BASE_URL = "https://footzone-server.herokuapp.com/images/stadium/"
 //    val USER_IMAGE_BASE_URL = "https://footzone-server.herokuapp.com/images/user/"
     val STADIUM_IMAGE_BASE_URL = "http://192.168.1.4:8081/images/stadium/"

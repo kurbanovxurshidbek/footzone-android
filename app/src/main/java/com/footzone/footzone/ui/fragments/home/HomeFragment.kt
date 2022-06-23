@@ -16,7 +16,9 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.androidbolts.topsheet.TopSheetBehavior
 import com.directions.route.*
@@ -49,6 +51,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -74,7 +77,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var lastLocation: Location? = null
-    private val myLocationZoom = 10f
+    private val myLocationZoom = 12.4f
     private var markerList = ArrayList<Marker>()
     private var cameraCurrentLatLng: LatLng? = null
     private var polyLines: MutableList<Polyline>? = null
@@ -82,7 +85,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
-
+        observeAllStadiums()
         initViews(view)
         installLocation()
         sendRequestToGetFavouriteStadiumsList()
@@ -97,6 +100,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
         map = googleMap
         cameraMoveStartedListener(googleMap)
         map.setOnMarkerClickListener(this)
+        sendRequestToGetAllStadiums()
         setUpMap()
     }
 
@@ -237,7 +241,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                         myLocationZoom
                     )
                 )
-                sendRequestToGetAllStadiums()
             } else {
                 Handler(Looper.getMainLooper()).postDelayed({
                     fusedLocationClient =
@@ -346,7 +349,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
 
     private fun sendRequestToGetAllStadiums() {
         viewModel.getAllStadiums()
-        observeAllStadiums()
     }
 
     private fun sendRequestToGetFavouriteStadiumsList() {
@@ -435,20 +437,22 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
     }
 
     private fun observeAllStadiums() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.allStadiums.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.allStadiums.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            //show progress
+                        }
 
-                    is UiStateObject.SUCCESS -> {
-                        findMultipleLocation(it.data.data)
+                        is UiStateObject.SUCCESS -> {
+                            findMultipleLocation(it.data.data)
+                        }
+                        is UiStateObject.ERROR -> {
+                            Log.d("TAG", "setupUI: ${it.message}")
+                        }
+                        else -> {}
                     }
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
-                    }
-                    else -> {}
                 }
             }
         }

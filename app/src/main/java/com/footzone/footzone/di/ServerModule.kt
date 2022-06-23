@@ -40,7 +40,7 @@ class ServerModule {
     fun getClient(sharedPref: SharedPref): OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(100, TimeUnit.SECONDS)
         .readTimeout(60, TimeUnit.SECONDS)
-          // .addInterceptor(ChuckerInterceptor(context))
+        // .addInterceptor(ChuckerInterceptor(context))
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         })
