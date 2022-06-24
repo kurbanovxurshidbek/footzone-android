@@ -131,7 +131,7 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
                 val convertedDate = sourceFormat.parse(binding.tvDate.text.toString())
 
                 for (pos in 0..stadiumData.workingDays.size - 1){
-                    if (stadiumData.workingDays[pos].dayName.equals(array[dayOfWeek - 2])) {
+                    if (stadiumData.workingDays[pos].dayName.equals(array[dayOfWeek - 1])) {
                         val bookDate: String = destFormat.format(convertedDate)
                         findNavController().navigate(R.id.action_pitchDetailFragment_to_timeIntervalFragment,
                             bundleOf(STADIUM_ID to stadiumData.stadiumId, STADIUM_DATA to bookDate))

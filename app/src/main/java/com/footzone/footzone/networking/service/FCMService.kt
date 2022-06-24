@@ -17,11 +17,13 @@ import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.footzone.footzone.R
+import com.footzone.footzone.model.SessionNotificationResponse
 import com.footzone.footzone.ui.activity.MainActivity
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.SharedPref
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.google.gson.Gson
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
@@ -29,6 +31,7 @@ import javax.inject.Inject
 import kotlin.random.Random
 
 class FCMService : FirebaseMessagingService() {
+
     private val CHANNEL_ID: String = "Something"
     val TAG = FCMService::class.java.simpleName
 
@@ -45,9 +48,14 @@ class FCMService : FirebaseMessagingService() {
         val requestCode = (0..10).random()
         val pendingIntent = PendingIntent.getActivity(this, requestCode, intent, FLAG_ONE_SHOT)
 
+        val session =
+            Gson().fromJson(message.data["session"], SessionNotificationResponse::class.java)
+        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle(session.stadiumName + " · " + session.startDate)
         val notificationUser = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(message.data["title"])
             .setContentText(message.data["body"])
+            .setSmallIcon(R.drawable.ic_ball)
             .setSmallIcon(R.drawable.ic_notification_home)
 
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
@@ -56,10 +64,16 @@ class FCMService : FirebaseMessagingService() {
             .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_product_logo))
             .setStyle(
                 NotificationCompat.BigTextStyle().bigText(message.data["body"])
-                    .setBigContentTitle(message.data["title"])
+                    .setBigContentTitle(
+                        session.stadiumName + " · " + session.startDate + " · " + session.startTime.subSequence(
+                            0,
+                            5
+                        ) + "-" + session.startTime.subSequence(0, 5)
+                    )
             )
             .setAutoCancel(true)
             .build()
+        notification.color = resources.getColor(R.color.colorBlue600)
 
         val collapsedView = RemoteViews(packageName, R.layout.notification_collapsed)
         val expandedView = RemoteViews(packageName, R.layout.notification_expanded)

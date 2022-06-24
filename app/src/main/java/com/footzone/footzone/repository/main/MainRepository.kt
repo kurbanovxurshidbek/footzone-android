@@ -30,6 +30,8 @@ class MainRepository @Inject constructor(
     suspend fun getFavouriteStadiumsList(userId: String) =
         apiService.getFavouriteStadiumsList(userId)
 
+    suspend fun detectIsNotificationAvailable() = apiService.detectIsNotificationAvailable()
+
     suspend fun getHolderStadiums(userId: String) = apiService.getHolderStadiums(userId)
 
     suspend fun getPitchData(stadiumId: String) = apiService.getPitchData(stadiumId)
