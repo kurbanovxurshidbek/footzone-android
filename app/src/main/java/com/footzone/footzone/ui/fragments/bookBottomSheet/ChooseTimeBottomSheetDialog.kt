@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -95,6 +96,7 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
             val dialog = CalendarDIalog { date, week ->
                 binding.tvDate.text = date
                 dayOfWeek = week
+                Log.d("TAG", "initView: ${week}")
 
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -131,7 +133,7 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
                 val convertedDate = sourceFormat.parse(binding.tvDate.text.toString())
 
                 for (pos in 0..stadiumData.workingDays.size - 1){
-                    if (stadiumData.workingDays[pos].dayName.equals(array[dayOfWeek - 2])) {
+                    if (stadiumData.workingDays[pos].dayName.equals(array[dayOfWeek - 1])) {
                         val bookDate: String = destFormat.format(convertedDate)
                         findNavController().navigate(R.id.action_pitchDetailFragment_to_timeIntervalFragment,
                             bundleOf(STADIUM_ID to stadiumData.stadiumId, STADIUM_DATA to bookDate))

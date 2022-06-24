@@ -2,21 +2,21 @@ package com.footzone.footzone.ui.fragments.addstadium
 
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
-import android.content.Context
+import android.content.ContentResolver
 import android.content.Intent
-import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.provider.OpenableColumns
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.MimeTypeMap
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.setFragmentResultListener
@@ -41,17 +41,16 @@ import com.footzone.footzone.utils.KeyValues.WORK_TIMES
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import me.shouheng.compress.strategy.compress.Compressor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.io.*
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import java.util.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
@@ -77,6 +76,9 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         items.add(Image())
         isEdit = arguments?.get(KeyValues.TYPE_DETAIL) as Boolean
         if (isEdit) {
@@ -163,9 +165,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         )
 
                     for (phot in photos) {
-                        Log.d("TAG", "setupObserversPhoto  photo: ${phot.id} ${phot.name}")
                         if (phot.id == null) {
-                            Log.d("TAG", "setupObserversPhoto  photo: ${phot.id} ${phot.name}")
                             viewModel.addPhotoToStadium(stadiumId,
                                 convertUriMultipart(phot.name as Uri, "file"))
                             observeViewModelAdd()
@@ -173,6 +173,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                     }
 
                     viewModel.editHolderStadium(stadiumId, stadium)
+                    Log.d("TAG", "observeViewModelEdit: ${stadium}")
                     observeViewModelEdit()
                 } catch (e: Exception) {
                     Toast.makeText(
@@ -195,10 +196,8 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         //show progress
                     }
                     is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "setupObserversPhoto  dd: ${it}")
                     }
                     is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupObserversPhoto  dd: ${it}")
                     }
                     else -> {
                     }
@@ -220,7 +219,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                 photos.removeAt(position)
                 adapterEdit.notifyDataSetChanged()
                 if (id != null) {
-                    Log.d("TAG", "setOnDeleteClickListener: id ${id}")
                     viewModel.deleteStadiumPhoto(stadiumId, id)
                     setupObserversPhoto()
                 }
@@ -263,10 +261,8 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                     }
 
                     is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "setupObserversPhoto: ${it}")
                     }
                     is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupObserversPhoto: ${it}")
                     }
                     else -> {
                     }
@@ -305,6 +301,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         custToast.setView(binding.root)
                         custToast.show()
                         requireActivity().onBackPressed()
+                        Log.d("TAG", "observeViewModelEdit: ")
 
                     }
                     is UiStateObject.ERROR -> {
@@ -315,6 +312,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         custToast.setView(binding.root)
                         custToast.show()
                         requireActivity().onBackPressed()
+                        Log.d("TAG", "observeViewModelEdit: ${it.message}")
                     }
                     else -> {
                     }
@@ -443,8 +441,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                     is UiStateObject.ERROR -> {
                         val binding =
                             ToastChooseTimeBinding.inflate(LayoutInflater.from(requireActivity()))
-
-                        Log.d("TAG", "observeViewModel: ${it.message}")
                         binding.tvToast.text = getString(R.string.str_successfully_edded)
                         val custToast = Toast(requireContext())
                         custToast.setView(binding.root)
@@ -508,7 +504,9 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
      * This is function, to upgrade from Uri to MultipartBody.Part
      */
     private fun convertUriMultipart(selectedImageUri: Uri, name: String): MultipartBody.Part {
-        val ins = requireActivity().contentResolver.openInputStream(getFilePathFromUri(selectedImageUri, requireContext()))
+
+
+        val ins = requireActivity().contentResolver.openInputStream(selectedImageUri)
         val image = File.createTempFile(
             "file", ".jpg",
             requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -517,65 +515,29 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         ins?.copyTo(fileOutputStream)
         ins?.close()
         fileOutputStream.close()
+
+        val cr: ContentResolver = requireContext().getContentResolver()
+        val inputStream: InputStream? = cr.openInputStream(selectedImageUri)
+        val bitmap = BitmapFactory.decodeStream(inputStream)
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos)
+        val data = baos.toByteArray()
+
         val reqFile: RequestBody =
-            RequestBody.create("image/jpg".toMediaTypeOrNull(), image)
+            RequestBody.create("image/jpg".toMediaTypeOrNull(), compressCapture(data)!!)
         val body: MultipartBody.Part =
             MultipartBody.Part.createFormData(name, image.name, reqFile)
 
         return body
     }
 
-    @Throws(IOException::class)
-    fun getFilePathFromUri(uri: Uri, context: Context): Uri {
-        val fileName: String? = getFileName(uri, context)
-        val file = File(context?.externalCacheDir, fileName)
-        file.createNewFile()
-        FileOutputStream(file).use { outputStream ->
-            context?.contentResolver?.openInputStream(uri).use { inputStream ->
-                copyFile(inputStream, outputStream)
-                outputStream.flush()
-            }
-        }
-        return Uri.fromFile(file)
-    }
 
-    @Throws(IOException::class)
-    private fun copyFile(`in`: InputStream?, out: OutputStream) {
-        val buffer = ByteArray(1024)
-        var read: Int? = null
-        while (`in`?.read(buffer).also({ read = it!! }) != -1) {
-            read?.let { out.write(buffer, 0, it) }
-        }
-    }//copyFile ends
-
-    fun getFileName(uri: Uri, context: Context): String {
-        var fileName: String? = getFileNameFromCursor(uri, context)
-        if (fileName == null) {
-            val fileExtension: String? = getFileExtension(uri, context)
-            fileName = "temp_file" + if (fileExtension != null) ".$fileExtension" else ""
-        } else if (!fileName.contains(".")) {
-            val fileExtension: String? = getFileExtension(uri, context)
-            fileName = "$fileName.$fileExtension"
-        }
-        return fileName
-    }
-
-    fun getFileExtension(uri: Uri, context: Context?): String? {
-        val fileType: String? = context?.contentResolver?.getType(uri)
-        return MimeTypeMap.getSingleton().getExtensionFromMimeType(fileType)
-    }
-
-    fun getFileNameFromCursor(uri: Uri, context: Context?): String? {
-        val fileCursor: Cursor? = context?.contentResolver
-            ?.query(uri, arrayOf<String>(OpenableColumns.DISPLAY_NAME), null, null, null)
-        var fileName: String? = null
-        if (fileCursor != null && fileCursor.moveToFirst()) {
-            val cIndex: Int = fileCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-            if (cIndex != -1) {
-                fileName = fileCursor.getString(cIndex)
-            }
-        }
-        return fileName
+    open fun compressCapture(capture: ByteArray): ByteArray? {
+        val compression = 12
+        val bitmap = BitmapFactory.decodeByteArray(capture, 0, capture.size)
+        val outputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, compression, outputStream)
+        return outputStream.toByteArray()
     }
 
     private fun openStadiumLocation() {

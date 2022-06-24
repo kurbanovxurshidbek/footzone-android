@@ -38,7 +38,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/acme_futbol_maydoni"
                     android:textColor="#1C1B1F"
                     android:textSize="22sp" />
 
@@ -68,7 +67,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="180dp"
                 android:orientation="horizontal"
                 android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
@@ -86,7 +85,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:text="@string/acme_futbol_maydoni"
                     android:textColor="#0A0A0A"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -110,7 +108,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="@string/amir_temur_ko_chasi_14_uy"
                         android:textColor="#424242"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -134,7 +131,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="@string/_998_99_777_66_55"
                         android:textColor="#424242"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -176,7 +172,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="@string/str_00_00_da_yopiladi"
                         android:textColor="#424242"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -200,7 +195,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="50 000"
                         android:textColor="#424242"
                         android:textSize="16sp" />
 

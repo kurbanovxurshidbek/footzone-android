@@ -36,7 +36,6 @@ class MainActivity : BaseActivity() {
     }
 
     private fun navigate(intent: Intent?) {
-        Log.d("TAG", "navigate: $intent")
         if (intent != null) {
             if (sharedPref.getIsOwner(IS_OWNER)) {
                 navController.navigate(R.id.adminNotificationFragment)

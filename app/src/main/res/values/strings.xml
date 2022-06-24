@@ -61,7 +61,6 @@
     <string name="channel_id">Something</string>
 
     <string-array name="timelist">
-        <item>23:59</item>
         <item>00:30</item>
         <item>01:00</item>
         <item>01:30</item>
@@ -109,15 +108,16 @@
         <item>22:30</item>
         <item>23:00</item>
         <item>23:30</item>
+        <item>23:59</item>
     </string-array>
 
     <string-array name="daysWeek">
+        <item>SUNDAY</item>
         <item>MONDAY</item>
         <item>TUESDAY</item>
         <item>WEDNESDAY</item>
         <item>THURSDAY</item>
         <item>FRIDAY</item>
         <item>SATURDAY</item>
-        <item>SUNDAY</item>
     </string-array>
 </resources>
