@@ -3,6 +3,7 @@ package com.footzone.footzone.adapter
 import android.annotation.SuppressLint
 import android.os.Build
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
@@ -40,12 +41,20 @@ class PlayingPitchAdapter(private val onClickEventPlayingSoon: OnClickEventPlayi
                 "${stadium.startTime.subSequence(0, 5)}-${stadium.endTime.substring(0, 5)}," +
                         " $duration ${tvHours.context.getString(R.string.str_hour)}"
             tvPrice.text = "${stadium.hourlyPrice.toInt() * duration} so'm"
-            btnNavigate.setOnClickListener {
-                onClickEventPlayingSoon.onNavigateClick(stadium.latitude, stadium.longitude)
-            }
+            if (stadium.status == "PENDING") {
+                linearButtonWrapper.visibility = View.GONE
+                tvStatus.visibility = View.VISIBLE
+            } else {
+                linearButtonWrapper.visibility = View.VISIBLE
+                tvStatus.visibility = View.GONE
 
-            btnStadium.setOnClickListener {
-                onClickEventPlayingSoon.onStadiumClick(stadium.stadiumId)
+                btnNavigate.setOnClickListener {
+                    onClickEventPlayingSoon.onNavigateClick(stadium.latitude, stadium.longitude)
+                }
+
+                btnStadium.setOnClickListener {
+                    onClickEventPlayingSoon.onStadiumClick(stadium.stadiumId)
+                }
             }
         }
     }
