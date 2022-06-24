@@ -21,35 +21,36 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-       <FrameLayout
-           android:layout_gravity="end|bottom"
-           android:layout_width="50dp"
-           android:layout_height="50dp"
-           android:layout_marginEnd="16dp">
+        <FrameLayout
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="16dp">
 
-           <ImageView
-               android:id="@+id/notificationButton"
-               android:layout_width="50dp"
-               android:layout_height="50dp"
-               android:background="@drawable/imageview_circle_without_stroke"
-               android:padding="15dp"
-               android:src="@drawable/ic_notification_home" />
+            <ImageView
+                android:id="@+id/notificationButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/imageview_circle_without_stroke"
+                android:padding="15dp"
+                android:src="@drawable/ic_notification_home" />
 
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:gravity="end|top">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end|top">
 
-               <com.google.android.material.imageview.ShapeableImageView
-                   android:id="@+id/ivNewNotif"
-                   android:layout_width="6dp"
-                   android:layout_height="6dp"
-                   android:layout_margin="12dp"
-                   app:shapeAppearanceOverlay="@style/circle"
-                   android:background="#FF0000"/>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivNewNotification"
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_margin="12dp"
+                    android:background="#FF0000"
+                    android:visibility="gone"
+                    app:shapeAppearanceOverlay="@style/circle" />
 
-           </LinearLayout>
-       </FrameLayout>
+            </LinearLayout>
+        </FrameLayout>
 
 
     </LinearLayout>

@@ -1,6 +1,7 @@
 package com.footzone.footzone.ui.fragments
 
 import android.app.Activity
+import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,9 +12,19 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.footzone.footzone.model.Comment
+import com.footzone.footzone.utils.ProgressBarDialog
 import java.lang.Exception
 
 open class BaseFragment(private val layoutResID: Int) : Fragment() {
+
+    lateinit var loadingDialog: Dialog
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        loadingDialog = ProgressBarDialog(requireContext())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,5 +57,13 @@ open class BaseFragment(private val layoutResID: Int) : Fragment() {
 
     open fun toastLong(msg: String) {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
+    }
+
+    open fun showProgress() {
+        loadingDialog.show()
+    }
+
+    open fun hideProgress() {
+        loadingDialog.hide()
     }
 }

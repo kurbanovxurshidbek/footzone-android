@@ -21,6 +21,10 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
         MutableStateFlow<UiStateObject<AllStadiumResponse>>(UiStateObject.EMPTY)
     val allStadiums = _allStadiums
 
+    private val _notification =
+        MutableStateFlow<UiStateObject<NotificationAvailabilityResponse>>(UiStateObject.EMPTY)
+    val notification = _notification
+
     private val _searchedStadiums =
         MutableStateFlow<UiStateObject<ShortStadiumDetailResponse>>(UiStateObject.EMPTY)
     val searchedStadiums = _searchedStadiums
@@ -120,6 +124,19 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
 
         } catch (e: Exception) {
             _allStadiums.value =
+                UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
+        }
+    }
+
+    fun detectIsNotificationAvailable() = viewModelScope.launch {
+        _notification.value = UiStateObject.LOADING
+
+        try {
+            val response = mainRepository.detectIsNotificationAvailable()
+            _notification.value = UiStateObject.SUCCESS(response)
+
+        } catch (e: Exception) {
+            _notification.value =
                 UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
         }
     }

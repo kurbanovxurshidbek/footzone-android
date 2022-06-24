@@ -35,6 +35,7 @@ import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.IS_FAVOURITE_STADIUM
 import com.footzone.footzone.utils.KeyValues.IS_OWNER
+import com.footzone.footzone.utils.KeyValues.LOG_IN
 import com.footzone.footzone.utils.KeyValues.STADIUM_ID
 import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.SharedPref
@@ -89,6 +90,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
         initViews(view)
         installLocation()
         sendRequestToGetFavouriteStadiumsList()
+        sendRequestToDetectNotification()
     }
 
     private val callback = OnMapReadyCallback { googleMap ->
@@ -145,6 +147,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
+        marker.showInfoWindow()
         routeClear()
         if (cameraCurrentLatLng != null)
             findRoutes(
@@ -266,6 +269,12 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
 
         showBottomSheet(bottomSheetBehaviorType)
 
+        Log.d("TAG", "initViews: ${sharedPref.getLogIn(LOG_IN, false)}")
+        if (sharedPref.getLogIn(LOG_IN, false)) {
+            viewModel.detectIsNotificationAvailable()
+            observeNotificationAvailability()
+        }
+
         binding.bottomSheetTypes.apply {
             linearMyStadium.setOnClickListener {
                 openMyStadiumFragment()
@@ -345,6 +354,10 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
         } else {
             binding.bottomSheetTypes.linearMyStadium.visibility = View.GONE
         }
+    }
+
+    private fun sendRequestToDetectNotification() {
+        viewModel.detectIsNotificationAvailable()
     }
 
     private fun sendRequestToGetAllStadiums() {
@@ -483,10 +496,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
             viewModel.nearByStadiums.collect {
                 when (it) {
                     UiStateObject.LOADING -> {
-                        //show progress
+                        showProgress()
                     }
 
                     is UiStateObject.SUCCESS -> {
+                        hideProgress()
                         stadiumsList = it.data.data
                         refreshAdapter(favouriteStadiums, stadiumsList)
                     }
@@ -532,6 +546,32 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                         Log.d("TAG", "observeNearByStadiums: $it.data")
                         stadiumsList = it.data.data
                         refreshAdapter(favouriteStadiums, stadiumsList)
+                    }
+                    is UiStateObject.ERROR -> {
+                        Log.d("TAG", "setupUI: ${it.message}")
+                    }
+                    else -> {
+                    }
+                }
+            }
+        }
+    }
+
+    private fun observeNotificationAvailability() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.notification.collect {
+                when (it) {
+                    UiStateObject.LOADING -> {
+                        //show progress
+                    }
+
+                    is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "observeNotificationAvailability: ${it.data}")
+                        if (it.data.data) {
+                            binding.ivNewNotification.visibility = View.VISIBLE
+                        } else {
+                            binding.ivNewNotification.visibility = View.GONE
+                        }
                     }
                     is UiStateObject.ERROR -> {
                         Log.d("TAG", "setupUI: ${it.message}")

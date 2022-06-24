@@ -129,4 +129,8 @@ interface ApiService {
         @Path("stadiumId") stadiumId: String,
         @Part file: MultipartBody.Part,
     ): Response
+
+    @GET("notification")
+    suspend fun detectIsNotificationAvailable(): NotificationAvailabilityResponse
+
 }

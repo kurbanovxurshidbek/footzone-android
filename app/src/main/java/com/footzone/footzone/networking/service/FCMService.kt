@@ -16,10 +16,12 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.footzone.footzone.R
+import com.footzone.footzone.model.SessionNotificationResponse
 import com.footzone.footzone.ui.activity.MainActivity
 import com.footzone.footzone.utils.KeyValues
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.google.gson.Gson
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
@@ -43,20 +45,28 @@ class FCMService : FirebaseMessagingService() {
         val requestCode = (0..10).random()
         val pendingIntent = PendingIntent.getActivity(this, requestCode, intent, FLAG_ONE_SHOT)
 
+        val session =
+            Gson().fromJson(message.data["session"], SessionNotificationResponse::class.java)
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle(message.data["title"])
+            .setContentTitle(session.stadiumName + " · " + session.startDate)
             .setContentText(message.data["body"])
-            .setSmallIcon(R.drawable.ic_notification_home)
+            .setSmallIcon(R.drawable.ic_ball)
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_product_logo))
             .setStyle(
                 NotificationCompat.BigTextStyle().bigText(message.data["body"])
-                    .setBigContentTitle(message.data["title"])
+                    .setBigContentTitle(
+                        session.stadiumName + " · " + session.startDate + " · " + session.startTime.subSequence(
+                            0,
+                            5
+                        ) + "-" + session.startTime.subSequence(0, 5)
+                    )
             )
             .setAutoCancel(true)
             .build()
+        notification.color = resources.getColor(R.color.colorBlue600)
 
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
