@@ -1,16 +1,21 @@
 package com.footzone.footzone.ui.fragments.stadiumdetail
 
+import android.app.Dialog
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.CommentAdapter
 import com.footzone.footzone.adapter.CustomAdapter
 import com.footzone.footzone.databinding.FragmentPitchDetailBinding
+import com.footzone.footzone.databinding.LayoutAcceptBinding
+import com.footzone.footzone.databinding.LayoutTimetableDialogBinding
 import com.footzone.footzone.model.*
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.ui.fragments.bookBottomSheet.ChooseTimeBottomSheetDialog
@@ -33,6 +38,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
     lateinit var adapterComment: CommentAdapter
     private val viewModel by viewModels<PitchDetailViewModel>()
     private lateinit var stadiumId: String
+    lateinit var workingDays: List<WorkingDay>
     private lateinit var stadiumDataToBottomSheetDialog: StadiumDataToBottomSheetDialog
     private var isFavouriteStadium: Boolean = false
     private lateinit var stadiumData: StadiumData
@@ -81,6 +87,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
     }
 
     private fun showPitchComments(data: Data) {
+        Log.d("@@comments", data.toString())
         showRatingBarInfo(data)
         refreshCommentAdapter(data)
     }
@@ -195,12 +202,66 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
             requireActivity().shareLocationToGoogleMap(stadiumData.latitude, stadiumData.longitude)
         }
         binding.icTimetable.setOnClickListener {
-            openTimeTableDialog()
+            if (workingDays.isNotEmpty()) {
+                openTimeTableDialog()
+            }
         }
     }
 
     private fun openTimeTableDialog() {
+        val dialog = Dialog(requireContext())
+        val dialogLayout =
+            LayoutTimetableDialogBinding.inflate(LayoutInflater.from(requireContext()))
+        dialog.setContentView(dialogLayout.root)
+        dialog.window!!.setBackgroundDrawableResource(R.drawable.dialog_background)
 
+        val layoutParams = dialogLayout.root.layoutParams
+        layoutParams.width = (312 * requireContext().resources.displayMetrics.density).toInt()
+        dialogLayout.apply {
+            val daysWeek = requireContext().resources.getStringArray(R.array.daysWeek)
+            tvClose.setOnClickListener { dialog.dismiss() }
+            workingDays.forEach {
+                when (it.dayName) {
+                    daysWeek[0] -> {
+                        mondayLayout.visibility = VISIBLE
+                        tvMondayOpenTime.text = it.startTime.subSequence(0,5)
+                        tvMondayCloseTime.text = it.endTime.subSequence(0,5)
+                    }
+                    daysWeek[1] -> {
+                        tuesdayLayout.visibility = VISIBLE
+                        tvTuesdayOpenTime.text = it.startTime.subSequence(0,5)
+                        tvTuesdayCloseTime.text = it.endTime.subSequence(0,5)
+                    }
+                    daysWeek[2] -> {
+                        wednesdayLayout.visibility = VISIBLE
+                        tvWednesdayOpenTime.text = it.startTime.subSequence(0,5)
+                        tvWednesdayCloseTime.text = it.endTime.subSequence(0,5)
+                    }
+                    daysWeek[3] -> {
+                        thursdayLayout.visibility = VISIBLE
+                        tvThursdayOpenTime.text = it.startTime.subSequence(0,5)
+                        tvThursdayCloseTime.text = it.endTime.subSequence(0,5)
+                    }
+                    daysWeek[4] -> {
+                        fridayLayout.visibility = VISIBLE
+                        tvFridayOpenTime.text = it.startTime.subSequence(0,5)
+                        tvFridayCloseTime.text = it.endTime.subSequence(0,5)
+                    }
+                    daysWeek[5] -> {
+                        saturdayLayout.visibility = VISIBLE
+                        tvSaturdayOpenTime.text = it.startTime.subSequence(0,5)
+                        tvSaturdayCloseTime.text = it.endTime.subSequence(0,5)
+                    }
+                    daysWeek[6] -> {
+                        sundayLayout.visibility = VISIBLE
+                        tvSundayOpenTime.text = it.startTime.subSequence(0,5)
+                        tvSundayCloseTime.text = it.endTime.subSequence(0,5)
+                    }
+                }
+            }
+        }
+
+        dialog.show()
     }
 
     private fun changeLinearAddFavourite() {

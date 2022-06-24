@@ -4,18 +4,22 @@
     android:background="@drawable/dialog_background"
     android:paddingTop="24dp"
     android:orientation="vertical"
-    android:paddingBottom="34dp"
+    android:paddingBottom="24dp"
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/mondayLayout"
         android:layout_width="match_parent"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:paddingHorizontal="16dp"
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tvMonday"
             android:text="Dushanba"
             android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/roboto"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -39,15 +43,19 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/tuesdayLayout"
         android:layout_marginTop="4dp"
         android:layout_width="match_parent"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:paddingHorizontal="16dp"
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tvTuesday"
             android:text="Seshanba"
             android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/roboto"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -70,15 +78,19 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/wednesdayLayout"
         android:layout_width="match_parent"
         android:orientation="horizontal"
+        android:layout_marginTop="4dp"
+        android:visibility="gone"
         android:paddingHorizontal="16dp"
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tvWednesday"
-            android:text="Dushanba"
-            android:layout_marginTop="4dp"
+            android:text="Chorshanba"
             android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/roboto"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -102,15 +114,19 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/thursdayLayout"
         android:layout_marginTop="4dp"
         android:layout_width="match_parent"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:paddingHorizontal="16dp"
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tvThursday"
-            android:text="Seshanba"
+            android:text="Payshanba"
             android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/roboto"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -133,15 +149,19 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/fridayLayout"
         android:layout_width="match_parent"
         android:orientation="horizontal"
+        android:layout_marginTop="4dp"
+        android:visibility="gone"
         android:paddingHorizontal="16dp"
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tvFriday"
-            android:text="Dushanba"
-            android:layout_marginTop="4dp"
+            android:text="Juma"
             android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/roboto"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -165,15 +185,19 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/saturdayLayout"
         android:layout_marginTop="4dp"
         android:layout_width="match_parent"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:paddingHorizontal="16dp"
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tvSaturday"
-            android:text="Seshanba"
+            android:text="Shanba"
             android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/roboto"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -196,18 +220,24 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/sundayLayout"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:paddingHorizontal="16dp"
+        android:layout_marginTop="4dp"
+        android:visibility="gone"
         android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/tvSunday"
-            android:text="Dushanba"
-            android:textSize="16sp"
-            android:layout_marginTop="4dp"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Yakshanba"
+            android:textStyle="bold"
+            android:fontFamily="@font/roboto"
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/tvSundayOpenTime"
             android:text="00:00"
@@ -225,6 +255,23 @@
             android:text="00:00"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:gravity="end"
+        android:layout_height="wrap_content">
+        <TextView
+            android:paddingEnd="16dp"
+            android:id="@+id/tvClose"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yopish"
+            android:fontFamily="@font/roboto"
+            android:textColor="#0C64E6"
+            android:textSize="14sp" />
     </LinearLayout>
 
 

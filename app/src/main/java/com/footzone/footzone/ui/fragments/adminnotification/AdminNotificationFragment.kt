@@ -28,11 +28,11 @@ class AdminNotificationFragment : BaseFragment(R.layout.fragment_admin_notificat
     }
 
     private fun refreshAdapter() {
-        adapter = AdminNotificationAdapter(getAllUserNotifications())
+        adapter = AdminNotificationAdapter(getAllAdminNotifications())
         binding.rvAdminNotification.adapter = adapter
     }
 
-    private fun getAllUserNotifications(): ArrayList<AdminNotification> {
+    private fun getAllAdminNotifications(): ArrayList<AdminNotification> {
         val items = ArrayList<AdminNotification>()
         items.add(AdminNotification("Hello"))
         items.add(AdminNotification("Hello"))
