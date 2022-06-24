@@ -147,6 +147,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
         sharedPref.saveUserId(USER_ID, userID)
         sharedPref.saveUserToken(USER_TOKEN, userToken)
         sharedPref.saveIsOwner(IS_OWNER, stadiumHolder!!)
+        returnHomeFragment()
     }
 
     private fun setupObserversRegister() {
