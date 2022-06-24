@@ -196,8 +196,10 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         //show progress
                     }
                     is UiStateObject.SUCCESS -> {
+                        Log.d("TAG", "observeViewModelAdd: ")
                     }
                     is UiStateObject.ERROR -> {
+                        Log.d("TAG", "observeViewModelAdd: ${it.message}")
                     }
                     else -> {
                     }
@@ -504,8 +506,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
      * This is function, to upgrade from Uri to MultipartBody.Part
      */
     private fun convertUriMultipart(selectedImageUri: Uri, name: String): MultipartBody.Part {
-
-
         val ins = requireActivity().contentResolver.openInputStream(selectedImageUri)
         val image = File.createTempFile(
             "file", ".jpg",
@@ -533,7 +533,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
 
 
     open fun compressCapture(capture: ByteArray): ByteArray? {
-        val compression = 12
+        val compression = 2
         val bitmap = BitmapFactory.decodeByteArray(capture, 0, capture.size)
         val outputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, compression, outputStream)
