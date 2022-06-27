@@ -93,4 +93,8 @@ object Functions {
             )
             start()
         }
+
+    fun textCutter(text: String, startPosition: Int, endPosition: Int): String{
+        return text.subSequence(startPosition,endPosition).toString()
+    }
 }

@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.footzone.footzone.R
@@ -27,6 +29,8 @@ import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
 import com.footzone.footzone.utils.commonfunction.Functions
 import com.footzone.footzone.utils.commonfunction.Functions.showStadiumOpenOrClose
+import com.footzone.footzone.utils.commonfunction.Functions.textCutter
+import com.footzone.footzone.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -224,39 +228,25 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
             workingDays.forEach {
                 when (it.dayName) {
                     daysWeek[0] -> {
-                        mondayLayout.visibility = VISIBLE
-                        tvMondayOpenTime.text = it.startTime.subSequence(0,5)
-                        tvMondayCloseTime.text = it.endTime.subSequence(0,5)
+                        timeTableDayControl(mondayLayout,tvMondayOpenTime,tvMondayCloseTime,it)
                     }
                     daysWeek[1] -> {
-                        tuesdayLayout.visibility = VISIBLE
-                        tvTuesdayOpenTime.text = it.startTime.subSequence(0,5)
-                        tvTuesdayCloseTime.text = it.endTime.subSequence(0,5)
+                        timeTableDayControl(tuesdayLayout,tvTuesdayOpenTime,tvTuesdayCloseTime,it)
                     }
                     daysWeek[2] -> {
-                        wednesdayLayout.visibility = VISIBLE
-                        tvWednesdayOpenTime.text = it.startTime.subSequence(0,5)
-                        tvWednesdayCloseTime.text = it.endTime.subSequence(0,5)
+                        timeTableDayControl(wednesdayLayout,tvWednesdayOpenTime,tvWednesdayCloseTime,it)
                     }
                     daysWeek[3] -> {
-                        thursdayLayout.visibility = VISIBLE
-                        tvThursdayOpenTime.text = it.startTime.subSequence(0,5)
-                        tvThursdayCloseTime.text = it.endTime.subSequence(0,5)
+                        timeTableDayControl(thursdayLayout,tvThursdayOpenTime,tvThursdayCloseTime,it)
                     }
                     daysWeek[4] -> {
-                        fridayLayout.visibility = VISIBLE
-                        tvFridayOpenTime.text = it.startTime.subSequence(0,5)
-                        tvFridayCloseTime.text = it.endTime.subSequence(0,5)
+                        timeTableDayControl(fridayLayout,tvFridayOpenTime,tvFridayCloseTime,it)
                     }
                     daysWeek[5] -> {
-                        saturdayLayout.visibility = VISIBLE
-                        tvSaturdayOpenTime.text = it.startTime.subSequence(0,5)
-                        tvSaturdayCloseTime.text = it.endTime.subSequence(0,5)
+                        timeTableDayControl(saturdayLayout,tvSaturdayOpenTime,tvSaturdayCloseTime,it)
                     }
                     daysWeek[6] -> {
-                        sundayLayout.visibility = VISIBLE
-                        tvSundayOpenTime.text = it.startTime.subSequence(0,5)
-                        tvSundayCloseTime.text = it.endTime.subSequence(0,5)
+                        timeTableDayControl(sundayLayout,tvSundayOpenTime,tvSundayCloseTime,it)
                     }
                 }
             }
@@ -264,6 +254,13 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
 
         dialog.show()
     }
+
+    private fun timeTableDayControl(layout: LinearLayout, openTime: TextView, closeTime: TextView, workingDay: WorkingDay) {
+        layout.show()
+        openTime.text = textCutter(workingDay.startTime,0,5)
+        closeTime.text = textCutter(workingDay.endTime,0,5)
+    }
+
 
     private fun changeLinearAddFavourite() {
         binding.linearFavourite.setBackgroundResource(R.drawable.button_filled_rounded_corner)
