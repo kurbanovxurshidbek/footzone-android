@@ -43,6 +43,7 @@ import com.footzone.footzone.utils.KeyValues.WORK_TIMES
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -79,7 +80,8 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        requireActivity().getWindow()
+            .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         items.add(Image())
         isEdit = arguments?.get(KeyValues.TYPE_DETAIL) as Boolean
@@ -100,9 +102,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                 binding.tvPitchWorkTime.text = bundle.get(WORK_TIME).toString()
             }
         }
-    }
-
-    override fun onCreateView(
+    }override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
@@ -168,8 +168,10 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
 
                     for (phot in photos) {
                         if (phot.id == null) {
-                            viewModel.addPhotoToStadium(stadiumId,
-                                convertUriMultipart(phot.name as Uri, "file"))
+                            viewModel.addPhotoToStadium(
+                                stadiumId,
+                                convertUriMultipart(phot.name as Uri, "file")
+                            )
                             Log.d("TAG", "setupObserversPhoto  photo: ${phot.id} ${phot.name}")
                             viewModel.addPhotoToStadium(
                                 stadiumId,
@@ -194,7 +196,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             }
         }
     }
-
     private fun observeViewModelAdd() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -286,6 +287,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         }
                         else -> {
                         }
+                    }
                 }
             }
         }
@@ -304,7 +306,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             latitude = data.latitude
         }
     }
-
     private fun observeViewModelEdit() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -353,7 +354,9 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                 val stadiumAddress = binding.etPitchAddress.text.toString()
                 val stadiumName = binding.etPitchName.text.toString()
                 val stadiumNumber =
-                    "+998${binding.etPitchPhoneNumber.text.toString().replace("\\s".toRegex(), "")}"
+                    "+998${
+                        binding.etPitchPhoneNumber.text.toString().replace("\\s".toRegex(), "")
+                    }"
                 val stadiumPrice = binding.etPitchPrice.text.toString()
                 val userId = sharedPref.getUserID(KeyValues.USER_ID, "")
                 try {
@@ -411,7 +414,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             registerButtonControl()
         }
     }
-
     @SuppressLint("ResourceAsColor")
     private fun registerButtonControl() {
         if (checkData()) {
@@ -468,7 +470,8 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) intent.action = Intent.ACTION_GET_CONTENT
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) intent.action =
+            Intent.ACTION_GET_CONTENT
         val chooserIntent = Intent.createChooser(intent, "Complete action using")
 
         if (type == PICK_FROM_FILE_ADD) {
@@ -509,17 +512,11 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             }
         }
     }
-
     /**
      * This is function, to upgrade from Uri to MultipartBody.Part
      */
     private fun convertUriMultipart(selectedImageUri: Uri, name: String): MultipartBody.Part {
-        val ins = requireActivity().contentResolver.openInputStream(
-            getFilePathFromUri(
-                selectedImageUri,
-                requireContext()
-            )
-        )
+        val ins = requireActivity().contentResolver.openInputStream(selectedImageUri)
         val image = File.createTempFile(
             "file", ".jpg",
             requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -561,6 +558,3 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         findNavController().navigate(R.id.action_addStadiumFragment_to_chooseWorkTimeFragment)
     }
 }
-
-
-
