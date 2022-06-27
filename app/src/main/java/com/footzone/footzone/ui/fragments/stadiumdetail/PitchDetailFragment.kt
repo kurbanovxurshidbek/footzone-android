@@ -207,6 +207,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
             requireActivity().shareLocationToGoogleMap(stadiumData.latitude, stadiumData.longitude)
         }
         binding.icTimetable.setOnClickListener {
+            Log.d("TAG", "initViews: ${workingDays}")
             if (workingDays.isNotEmpty()) {
                 openTimeTableDialog()
             }

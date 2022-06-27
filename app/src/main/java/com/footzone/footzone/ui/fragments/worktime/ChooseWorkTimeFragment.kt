@@ -108,37 +108,37 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
         var string = ""
         if (binding.switchMo.isOn) {
             string += "Du, "
-            addTime(binding.startTimeMo, binding.finishTimeMo, array[0])
+            addTime(binding.startTimeMo, binding.finishTimeMo, array[1])
         }
 
         if (binding.switchTu.isOn) {
             string += "Se, "
-            addTime(binding.startTimeTu, binding.finishTimeTu, array[1])
+            addTime(binding.startTimeTu, binding.finishTimeTu, array[2])
         }
 
         if (binding.switchWe.isOn) {
             string += "Cho, "
-            addTime(binding.startTimeWe, binding.finishTimeWe, array[2])
+            addTime(binding.startTimeWe, binding.finishTimeWe, array[3])
         }
 
         if (binding.switchTh.isOn) {
             string += "Pa, "
-            addTime(binding.startTimeTh, binding.finishTimeTh, array[3])
+            addTime(binding.startTimeTh, binding.finishTimeTh, array[4])
         }
 
         if (binding.switchFr.isOn) {
             string += "Ju, "
-            addTime(binding.startTimeFr, binding.finishTimeFr, array[4])
+            addTime(binding.startTimeFr, binding.finishTimeFr, array[5])
         }
 
         if (binding.switchSa.isOn) {
             string += "Sha, "
-            addTime(binding.startTimeSa, binding.finishTimeSa, array[5])
+            addTime(binding.startTimeSa, binding.finishTimeSa, array[6])
         }
 
         if (binding.switchSu.isOn) {
             string += "Ya"
-            addTime(binding.startTimeSu, binding.finishTimeSu, array[6])
+            addTime(binding.startTimeSu, binding.finishTimeSu, array[0])
         }
 
         return string
@@ -146,8 +146,13 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
 
     private fun addTime(startTime: NumberPicker, finishTime: NumberPicker, day: String) {
         val timeList = resources.getStringArray(R.array.timelist)
-        val startTime = timeList[startTime.value - 1].toString()
-        val finishTime = timeList[finishTime.value - 1].toString()
+        val start = startTime.value
+        var finish = finishTime.value
+        if (start > finish){
+            finish = timeList.size
+        }
+        val startTime = timeList[start - 1].toString()
+        val finishTime = timeList[finish - 1].toString()
         workTimes.add(WorkingDay(day, finishTime, startTime))
     }
 
