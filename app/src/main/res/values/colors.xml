@@ -32,6 +32,7 @@
     <color name="lightTextColor">#424242</color>
     <color name="green_accepted">#177B4C</color>
     <color name="data_loading">#dddddd</color>
+    <color name="lightBlue">#B4D2FE</color>
 
 
 </resources>

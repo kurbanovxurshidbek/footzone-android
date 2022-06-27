@@ -8,7 +8,9 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.PitchBookSentAdapter
 import com.footzone.footzone.databinding.FragmentBookPitchSentBinding
@@ -22,6 +24,7 @@ import com.footzone.footzone.utils.AcceptDialog
 import com.footzone.footzone.utils.DeclineDialog
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
@@ -52,22 +55,24 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
     }
 
     private fun observeBookSentList() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.bookRequests.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.bookRequests.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
+                        }
 
-                    is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "observeBookSentList: ${it.data}")
-                        refreshAdapter(it.data.data)
-                    }
+                        is UiStateObject.SUCCESS -> {
+                            hideProgress()
+                            refreshAdapter(it.data.data)
+                        }
 
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
-                    }
-                    else -> {
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                        }
+                        else -> {
+                        }
                     }
                 }
             }
@@ -79,35 +84,38 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
         tvStatus: TextView,
         linearAcceptDecline: LinearLayout
     ) {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.acceptDecline.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.acceptDecline.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
+                        }
 
-                    is UiStateObject.SUCCESS -> {
-                        if (isToAccept) {
-                            if (it.data.success) {
-                                acceptDialog.dismiss()
-                                tvStatus.visibility = View.VISIBLE
-                                linearAcceptDecline.visibility = View.GONE
-                            }
-                        } else {
-                            if (it.data.success) {
-                                declineDialog.dismiss()
-                                tvStatus.setTextColor(Color.parseColor("#C8303F"))
-                                tvStatus.text = "Rad etildi!"
-                                tvStatus.visibility = View.VISIBLE
-                                linearAcceptDecline.visibility = View.GONE
+                        is UiStateObject.SUCCESS -> {
+                            hideProgress()
+                            if (isToAccept) {
+                                if (it.data.success) {
+                                    acceptDialog.dismiss()
+                                    tvStatus.visibility = View.VISIBLE
+                                    linearAcceptDecline.visibility = View.GONE
+                                }
+                            } else {
+                                if (it.data.success) {
+                                    declineDialog.dismiss()
+                                    tvStatus.setTextColor(Color.parseColor("#C8303F"))
+                                    tvStatus.text = "Rad etildi!"
+                                    tvStatus.visibility = View.VISIBLE
+                                    linearAcceptDecline.visibility = View.GONE
+                                }
                             }
                         }
-                    }
 
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
-                    }
-                    else -> {
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                        }
+                        else -> {
+                        }
                     }
                 }
             }

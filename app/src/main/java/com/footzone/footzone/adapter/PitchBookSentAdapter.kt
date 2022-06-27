@@ -35,7 +35,7 @@ class PitchBookSentAdapter(
         holder.view.apply {
             tvPitchName.text =
                 "${stadium.stadiumName} ${tvPitchName.context.getText(R.string.str_football_stadium)}"
-            tvDate.text = stadium.date
+            tvDate.text = stadium.startDate
             tvHours.text =
                 "${stadium.startTime.subSequence(0, 5)}-${stadium.endTime.substring(0, 5)}, " +
                         "$duration ${tvHours.context.getText(R.string.str_hour)}"
@@ -49,11 +49,11 @@ class PitchBookSentAdapter(
             tvPrice.text = "${stadium.hourlyPrice.toInt() * duration} so'm"
 
             btnAccept.setOnClickListener {
-                onClickEventAcceptDecline.onAccept(stadium.sessionId,tvStatus,linearAcceptDecline)
+                onClickEventAcceptDecline.onAccept(stadium.id,tvStatus,linearAcceptDecline)
             }
 
             btnDecline.setOnClickListener {
-                onClickEventAcceptDecline.onDecline(stadium.sessionId,tvStatus,linearAcceptDecline)
+                onClickEventAcceptDecline.onDecline(stadium.id,tvStatus,linearAcceptDecline)
             }
         }
     }

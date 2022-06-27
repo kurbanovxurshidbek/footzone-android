@@ -32,7 +32,7 @@ class StadiumPlayedHistoryAdapter :
         )
         holder.view.apply {
             tvPitchName.text = "${stadium.stadiumName} ${tvPitchName.context.getText(R.string.str_football_stadium)}"
-            tvDate.text = stadium.date
+            tvDate.text = stadium.startDate
             tvHours.text =
                 "${stadium.startTime.subSequence(0, 5)}-${
                     stadium.endTime.substring(

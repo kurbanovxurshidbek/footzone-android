@@ -59,11 +59,11 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                 viewModel.userPhoneNumber.collect {
                     when (it) {
                         UiStateObject.LOADING -> {
-                            //show progress
+                            showProgress()
                         }
 
                         is UiStateObject.SUCCESS -> {
-                            Log.d("TAG", "setupObserversdddd: okkk")
+                            hideProgress()
                             toastLong(it.data.data.toString())
                             val fullname =
                                 "${
@@ -88,6 +88,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                             openVerificationFragment(user)
                         }
                         is UiStateObject.ERROR -> {
+                            hideProgress()
                             toastLong("Siz avval ro'yxatdan o'tgansiz.\nIltimos kirish uchun raqamingizni kiriting.")
                             findNavController().popBackStack()
                         }

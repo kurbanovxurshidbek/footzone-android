@@ -64,6 +64,6 @@ open class BaseFragment(private val layoutResID: Int) : Fragment() {
     }
 
     open fun hideProgress() {
-        loadingDialog.hide()
+        loadingDialog.dismiss()
     }
 }

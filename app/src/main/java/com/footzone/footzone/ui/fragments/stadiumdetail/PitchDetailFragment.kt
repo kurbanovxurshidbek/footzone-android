@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.CommentAdapter
 import com.footzone.footzone.adapter.CustomAdapter
@@ -28,6 +30,7 @@ import com.footzone.footzone.utils.UiStateObject
 import com.footzone.footzone.utils.commonfunction.Functions
 import com.footzone.footzone.utils.commonfunction.Functions.showStadiumOpenOrClose
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -87,7 +90,6 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
     }
 
     private fun showPitchComments(data: Data) {
-        Log.d("@@comments", data.toString())
         showRatingBarInfo(data)
         refreshCommentAdapter(data)
     }
@@ -123,27 +125,30 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
     }
 
     private fun setupObservers() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.pitchData.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.pitchData.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
+                        }
 
-                    is UiStateObject.SUCCESS -> {
-                        stadiumData = it.data.data
-                        stadiumDataToBottomSheetDialog = StadiumDataToBottomSheetDialog(
-                            stadiumData.stadiumId,
-                            stadiumData.hourlyPrice.toInt(),
-                            stadiumData.workingDays
-                        )
+                        is UiStateObject.SUCCESS -> {
+                            hideProgress()
+                            stadiumData = it.data.data
+                            stadiumDataToBottomSheetDialog = StadiumDataToBottomSheetDialog(
+                                stadiumData.stadiumId,
+                                stadiumData.hourlyPrice.toInt(),
+                                stadiumData.workingDays
+                            )
 
-                        showPitchData(stadiumData)
-                    }
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
-                    }
-                    else -> {
+                            showPitchData(stadiumData)
+                        }
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                        }
+                        else -> {
+                        }
                     }
                 }
             }
@@ -224,38 +229,38 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                 when (it.dayName) {
                     daysWeek[0] -> {
                         mondayLayout.visibility = VISIBLE
-                        tvMondayOpenTime.text = it.startTime.subSequence(0,5)
-                        tvMondayCloseTime.text = it.endTime.subSequence(0,5)
+                        tvMondayOpenTime.text = it.startTime.subSequence(0, 5)
+                        tvMondayCloseTime.text = it.endTime.subSequence(0, 5)
                     }
                     daysWeek[1] -> {
                         tuesdayLayout.visibility = VISIBLE
-                        tvTuesdayOpenTime.text = it.startTime.subSequence(0,5)
-                        tvTuesdayCloseTime.text = it.endTime.subSequence(0,5)
+                        tvTuesdayOpenTime.text = it.startTime.subSequence(0, 5)
+                        tvTuesdayCloseTime.text = it.endTime.subSequence(0, 5)
                     }
                     daysWeek[2] -> {
                         wednesdayLayout.visibility = VISIBLE
-                        tvWednesdayOpenTime.text = it.startTime.subSequence(0,5)
-                        tvWednesdayCloseTime.text = it.endTime.subSequence(0,5)
+                        tvWednesdayOpenTime.text = it.startTime.subSequence(0, 5)
+                        tvWednesdayCloseTime.text = it.endTime.subSequence(0, 5)
                     }
                     daysWeek[3] -> {
                         thursdayLayout.visibility = VISIBLE
-                        tvThursdayOpenTime.text = it.startTime.subSequence(0,5)
-                        tvThursdayCloseTime.text = it.endTime.subSequence(0,5)
+                        tvThursdayOpenTime.text = it.startTime.subSequence(0, 5)
+                        tvThursdayCloseTime.text = it.endTime.subSequence(0, 5)
                     }
                     daysWeek[4] -> {
                         fridayLayout.visibility = VISIBLE
-                        tvFridayOpenTime.text = it.startTime.subSequence(0,5)
-                        tvFridayCloseTime.text = it.endTime.subSequence(0,5)
+                        tvFridayOpenTime.text = it.startTime.subSequence(0, 5)
+                        tvFridayCloseTime.text = it.endTime.subSequence(0, 5)
                     }
                     daysWeek[5] -> {
                         saturdayLayout.visibility = VISIBLE
-                        tvSaturdayOpenTime.text = it.startTime.subSequence(0,5)
-                        tvSaturdayCloseTime.text = it.endTime.subSequence(0,5)
+                        tvSaturdayOpenTime.text = it.startTime.subSequence(0, 5)
+                        tvSaturdayCloseTime.text = it.endTime.subSequence(0, 5)
                     }
                     daysWeek[6] -> {
                         sundayLayout.visibility = VISIBLE
-                        tvSundayOpenTime.text = it.startTime.subSequence(0,5)
-                        tvSundayCloseTime.text = it.endTime.subSequence(0,5)
+                        tvSundayOpenTime.text = it.startTime.subSequence(0, 5)
+                        tvSundayCloseTime.text = it.endTime.subSequence(0, 5)
                     }
                 }
             }
@@ -279,26 +284,26 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
     }
 
     private fun observeAddFavourite() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.addToFavouriteStadiums.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
-
-                    is UiStateObject.SUCCESS -> {
-                        if (it.data.message == "add success") {
-                            changeLinearAddFavourite()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.addToFavouriteStadiums.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            //show progress
                         }
 
-                        if (it.data.message == "delete success") {
-                            changeLinearRemoveFavourite()
+                        is UiStateObject.SUCCESS -> {
+                            if (it.data.message == "add success") {
+                                changeLinearAddFavourite()
+                            }
+
+                            if (it.data.message == "delete success") {
+                                changeLinearRemoveFavourite()
+                            }
                         }
-                    }
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
-                    }
-                    else -> {
+                        is UiStateObject.ERROR -> {}
+                        else -> {
+                        }
                     }
                 }
             }

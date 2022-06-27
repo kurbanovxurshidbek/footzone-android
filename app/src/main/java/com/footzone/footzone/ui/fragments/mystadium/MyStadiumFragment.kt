@@ -5,7 +5,9 @@ import android.view.View
 import android.widget.ImageView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.HolderPitchAdapter
@@ -19,6 +21,7 @@ import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -40,24 +43,27 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
     }
 
     private fun setupObservers() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.holderStadiums.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
-
-                    is UiStateObject.SUCCESS -> {
-                        val holderStadiumsList = it.data.data
-                        controlVisibility(holderStadiumsList.isEmpty())
-                        if (holderStadiumsList.isNotEmpty()) {
-                            refreshAdapter(holderStadiumsList)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.holderStadiums.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
                         }
-                    }
-                    is UiStateObject.ERROR -> {
 
-                    }
-                    else -> {
+                        is UiStateObject.SUCCESS -> {
+                            hideProgress()
+                            val holderStadiumsList = it.data.data
+                            controlVisibility(holderStadiumsList.isEmpty())
+                            if (holderStadiumsList.isNotEmpty()) {
+                                refreshAdapter(holderStadiumsList)
+                            }
+                        }
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                        }
+                        else -> {
+                        }
                     }
                 }
             }

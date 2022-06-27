@@ -21,7 +21,9 @@ import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.AddImageAdapter
@@ -166,8 +168,10 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         Log.d("TAG", "setupObserversPhoto  photo: ${phot.id} ${phot.name}")
                         if (phot.id == null) {
                             Log.d("TAG", "setupObserversPhoto  photo: ${phot.id} ${phot.name}")
-                            viewModel.addPhotoToStadium(stadiumId,
-                                convertUriMultipart(phot.name as Uri, "file"))
+                            viewModel.addPhotoToStadium(
+                                stadiumId,
+                                convertUriMultipart(phot.name as Uri, "file")
+                            )
                             observeViewModelAdd()
                         }
                     }
@@ -188,19 +192,21 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     }
 
     private fun observeViewModelAdd() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.addPhotoToStadium.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
-                    is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "setupObserversPhoto  dd: ${it}")
-                    }
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupObserversPhoto  dd: ${it}")
-                    }
-                    else -> {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.addPhotoToStadium.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
+                        }
+                        is UiStateObject.SUCCESS -> {
+                            hideProgress()
+                        }
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                        }
+                        else -> {
+                        }
                     }
                 }
             }
@@ -214,9 +220,11 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             }
 
             override fun setOnDeleteClickListener(position: Int, id: String?) {
-                Toast.makeText(requireContext(),
+                Toast.makeText(
+                    requireContext(),
                     getText(R.string.str_delete_image),
-                    Toast.LENGTH_SHORT).show()
+                    Toast.LENGTH_SHORT
+                ).show()
                 photos.removeAt(position)
                 adapterEdit.notifyDataSetChanged()
                 if (id != null) {
@@ -231,23 +239,27 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     }
 
     private fun setupObservers() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.getHolderStadium.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
-
-                    is UiStateObject.SUCCESS -> {
-                        refreshData(it.data.data)
-                        workTimes.addAll(it.data.data.workingDays)
-                        it.data.data.photos.forEach { it ->
-                            photos.add(EditPhoto(it.id, it.name))
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getHolderStadium.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
                         }
-                    }
-                    is UiStateObject.ERROR -> {
-                    }
-                    else -> {
+
+                        is UiStateObject.SUCCESS -> {
+                            hideProgress()
+                            refreshData(it.data.data)
+                            workTimes.addAll(it.data.data.workingDays)
+                            it.data.data.photos.forEach { it ->
+                                photos.add(EditPhoto(it.id, it.name))
+                            }
+                        }
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                        }
+                        else -> {
+                        }
                     }
                 }
             }
@@ -255,20 +267,22 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     }
 
     private fun setupObserversPhoto() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.deleteStadiumPhoto.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.deleteStadiumPhoto.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            //show progress
+                        }
 
-                    is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "setupObserversPhoto: ${it}")
-                    }
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupObserversPhoto: ${it}")
-                    }
-                    else -> {
+                        is UiStateObject.SUCCESS -> {
+                            Log.d("TAG", "setupObserversPhoto: ${it}")
+                        }
+                        is UiStateObject.ERROR -> {
+                            Log.d("TAG", "setupObserversPhoto: ${it}")
+                        }
+                        else -> {
+                        }
                     }
                 }
             }
@@ -290,37 +304,38 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     }
 
     private fun observeViewModelEdit() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.editHolderStadium.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
-                    is UiStateObject.SUCCESS -> {
-                        val binding =
-                            ToastChooseTimeBinding.inflate(LayoutInflater.from(requireActivity()))
-
-                        binding.tvToast.text = getString(R.string.str_successfully_edited)
-                        val custToast = Toast(requireContext())
-                        custToast.setView(binding.root)
-                        custToast.show()
-                        requireActivity().onBackPressed()
-
-                    }
-                    is UiStateObject.ERROR -> {
-                        val binding =
-                            ToastChooseTimeBinding.inflate(LayoutInflater.from(requireActivity()))
-                        binding.tvToast.text = getString(R.string.str_error_edited)
-                        val custToast = Toast(requireContext())
-                        custToast.setView(binding.root)
-                        custToast.show()
-                        requireActivity().onBackPressed()
-                    }
-                    else -> {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.editHolderStadium.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
+                        }
+                        is UiStateObject.SUCCESS -> {
+                            hideProgress()
+                            showEditToast(getString(R.string.str_successfully_edited))
+                        }
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                            showEditToast(getString(R.string.str_error_edited))
+                        }
+                        else -> {
+                        }
                     }
                 }
             }
         }
+    }
+
+    private fun showEditToast(message: String) {
+        val binding =
+            ToastChooseTimeBinding.inflate(LayoutInflater.from(requireActivity()))
+
+        binding.tvToast.text = message
+        val custToast = Toast(requireContext())
+        custToast.setView(binding.root)
+        custToast.show()
+        requireActivity().onBackPressed()
     }
 
     private fun initViewsAdd() {
@@ -423,35 +438,24 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     }
 
     private fun observeViewModel() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.postStadium.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
-                    is UiStateObject.SUCCESS -> {
-                        val binding =
-                            ToastChooseTimeBinding.inflate(LayoutInflater.from(requireActivity()))
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.postStadium.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
+                        }
+                        is UiStateObject.SUCCESS -> {
+                            hideProgress()
+                            showEditToast(getString(R.string.str_successfully_edded))
 
-                        binding.tvToast.text = getString(R.string.str_successfully_edded)
-                        val custToast = Toast(requireContext())
-                        custToast.setView(binding.root)
-                        custToast.show()
-                        requireActivity().onBackPressed()
-
-                    }
-                    is UiStateObject.ERROR -> {
-                        val binding =
-                            ToastChooseTimeBinding.inflate(LayoutInflater.from(requireActivity()))
-
-                        Log.d("TAG", "observeViewModel: ${it.message}")
-                        binding.tvToast.text = getString(R.string.str_successfully_edded)
-                        val custToast = Toast(requireContext())
-                        custToast.setView(binding.root)
-                        custToast.show()
-                        requireActivity().onBackPressed()
-                    }
-                    else -> {
+                        }
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                            showEditToast(getString(R.string.str_not_succesfull))
+                        }
+                        else -> {
+                        }
                     }
                 }
             }
@@ -508,7 +512,12 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
      * This is function, to upgrade from Uri to MultipartBody.Part
      */
     private fun convertUriMultipart(selectedImageUri: Uri, name: String): MultipartBody.Part {
-        val ins = requireActivity().contentResolver.openInputStream(getFilePathFromUri(selectedImageUri, requireContext()))
+        val ins = requireActivity().contentResolver.openInputStream(
+            getFilePathFromUri(
+                selectedImageUri,
+                requireContext()
+            )
+        )
         val image = File.createTempFile(
             "file", ".jpg",
             requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)

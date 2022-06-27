@@ -13,7 +13,9 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.TimeManagerAdapter
 import com.footzone.footzone.databinding.FragmentTimeIntervalBinding
@@ -22,15 +24,17 @@ import com.footzone.footzone.helper.TimeSharedViewModel
 import com.footzone.footzone.model.LiveDataModel
 import com.footzone.footzone.model.TimeManager
 import com.footzone.footzone.model.sessionsday.SessionsData
+import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.LocalTime
 import java.util.*
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
-class TimeIntervalFragment : Fragment() {
+class TimeIntervalFragment : BaseFragment(R.layout.fragment_time_interval) {
     lateinit var binding: FragmentTimeIntervalBinding
     private lateinit var adapter: TimeManagerAdapter
     var beforePosition = -1
@@ -49,13 +53,6 @@ class TimeIntervalFragment : Fragment() {
         bookDate = arguments?.get(KeyValues.STADIUM_DATA) as String
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_time_interval, container, false)
-    }
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -66,30 +63,41 @@ class TimeIntervalFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setupObservers() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.sessionsDay.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
-
-                    is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "setupObserversffff: ${it.data}")
-                        sessionsData = it.data.data
-                        val array = resources.getStringArray(R.array.timelist)
-                        sessionsData.sessionTimes.forEach { data ->
-                            sessionTimes.add(TimeManager(startTime = LocalTime.parse(data.startTime),
-                                finishTime = LocalTime.parse(array[array.indexOf(data.endTime.substring(
-                                    0,
-                                    5)) - 1]),
-                                status = "ACCEPTED"))
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.sessionsDay.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
                         }
-                        initViews()
-                    }
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupObserversffff: ${it.message}")
-                    }
-                    else -> {
+
+                        is UiStateObject.SUCCESS -> {
+                            hideProgress()
+                            sessionsData = it.data.data
+                            val array = resources.getStringArray(R.array.timelist)
+                            sessionsData.sessionTimes.forEach { data ->
+                                sessionTimes.add(
+                                    TimeManager(
+                                        startTime = LocalTime.parse(data.startTime),
+                                        finishTime = LocalTime.parse(
+                                            array[array.indexOf(
+                                                data.endTime.substring(
+                                                    0,
+                                                    5
+                                                )
+                                            ) - 1]
+                                        ),
+                                        status = "ACCEPTED"
+                                    )
+                                )
+                            }
+                            initViews()
+                        }
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                        }
+                        else -> {
+                        }
                     }
                 }
             }

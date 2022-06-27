@@ -46,7 +46,6 @@
                     android:layout_height="6dp"
                     android:layout_margin="12dp"
                     android:background="#FF0000"
-                    android:visibility="gone"
                     app:shapeAppearanceOverlay="@style/circle" />
 
             </LinearLayout>
