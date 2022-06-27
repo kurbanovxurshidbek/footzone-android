@@ -11,7 +11,9 @@ import android.view.View.VISIBLE
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.CommentAdapter
 import com.footzone.footzone.adapter.CustomAdapter
@@ -32,6 +34,7 @@ import com.footzone.footzone.utils.commonfunction.Functions.showStadiumOpenOrClo
 import com.footzone.footzone.utils.commonfunction.Functions.textCutter
 import com.footzone.footzone.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -91,7 +94,6 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
     }
 
     private fun showPitchComments(data: Data) {
-        Log.d("@@comments", data.toString())
         showRatingBarInfo(data)
         refreshCommentAdapter(data)
     }
@@ -127,26 +129,31 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
     }
 
     private fun setupObservers() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.pitchData.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.pitchData.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
+                        }
 
-                    is UiStateObject.SUCCESS -> {
-                        stadiumData = it.data.data
-                        stadiumDataToBottomSheetDialog = StadiumDataToBottomSheetDialog(
-                            stadiumData.stadiumId,
-                            stadiumData.hourlyPrice.toInt(),
-                            stadiumData.workingDays
-                        )
-                        showPitchData(stadiumData)
-                    }
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
-                    }
-                    else -> {
+                        is UiStateObject.SUCCESS -> {
+                            hideProgress()
+                            stadiumData = it.data.data
+                            stadiumDataToBottomSheetDialog = StadiumDataToBottomSheetDialog(
+                                stadiumData.stadiumId,
+                                stadiumData.hourlyPrice.toInt(),
+                                stadiumData.workingDays
+                            )
+                            workingDays = it.data.data.workingDays
+
+                            showPitchData(stadiumData)
+                        }
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                        }
+                        else -> {
+                        }
                     }
                 }
             }
@@ -276,26 +283,26 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
     }
 
     private fun observeAddFavourite() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.addToFavouriteStadiums.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
-
-                    is UiStateObject.SUCCESS -> {
-                        if (it.data.message == "add success") {
-                            changeLinearAddFavourite()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.addToFavouriteStadiums.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            //show progress
                         }
 
-                        if (it.data.message == "delete success") {
-                            changeLinearRemoveFavourite()
+                        is UiStateObject.SUCCESS -> {
+                            if (it.data.message == "add success") {
+                                changeLinearAddFavourite()
+                            }
+
+                            if (it.data.message == "delete success") {
+                                changeLinearRemoveFavourite()
+                            }
                         }
-                    }
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
-                    }
-                    else -> {
+                        is UiStateObject.ERROR -> {}
+                        else -> {
+                        }
                     }
                 }
             }

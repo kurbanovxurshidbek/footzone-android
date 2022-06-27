@@ -63,6 +63,7 @@ class PlayingPitchAdapter(private val onClickEventPlayingSoon: OnClickEventPlayi
 
     @SuppressLint("NotifyDataSetChanged")
     fun submitData(list: List<PlayingSoonHistoryResponseData>) {
+        this.playedPitchList.clear()
         this.playedPitchList.addAll(list)
         notifyDataSetChanged()
     }

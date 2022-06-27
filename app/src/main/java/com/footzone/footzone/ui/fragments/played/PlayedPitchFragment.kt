@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.PlayedPitchAdapter
 import com.footzone.footzone.databinding.FragmentPlayedPitchBinding
@@ -14,6 +16,7 @@ import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -42,21 +45,23 @@ class PlayedPitchFragment : BaseFragment(R.layout.fragment_played_pitch) {
     }
 
     private fun observePlayedStadium() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.playedStadiums.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.playedStadiums.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
+                        }
 
-                    is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "observePlayedStadium: ${it.data}")
-                        refreshAdapter(it.data.data)
-                    }
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
-                    }
-                    else -> {
+                        is UiStateObject.SUCCESS -> {
+                            hideProgress()
+                            refreshAdapter(it.data.data)
+                        }
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                        }
+                        else -> {
+                        }
                     }
                 }
             }

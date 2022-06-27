@@ -5,7 +5,9 @@ import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.PlayingPitchAdapter
@@ -18,6 +20,7 @@ import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PlayingPitchFragment : BaseFragment(R.layout.fragment_playing_pitch) {
@@ -31,7 +34,7 @@ class PlayingPitchFragment : BaseFragment(R.layout.fragment_playing_pitch) {
 
         binding = FragmentPlayingPitchBinding.bind(view)
         viewModel.getPlayingSoonStadium()
-
+        Log.d("TAG", "onViewCreated: okkkk")
         initViews()
     }
 
@@ -50,21 +53,24 @@ class PlayingPitchFragment : BaseFragment(R.layout.fragment_playing_pitch) {
     }
 
     private fun observePlayingSoon() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.playingSoonStadiums.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.playingSoonStadiums.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
+                        }
 
-                    is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "observePlayingSoon: ${it.data}")
-                        refreshAdapter(it.data.data)
-                    }
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
-                    }
-                    else -> {
+                        is UiStateObject.SUCCESS -> {
+                            hideProgress()
+                            refreshAdapter(it.data.data)
+                        }
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                        }
+                        else -> {
+                            hideProgress()
+                        }
                     }
                 }
             }
@@ -73,7 +79,7 @@ class PlayingPitchFragment : BaseFragment(R.layout.fragment_playing_pitch) {
 
     private fun openPitchDetailFragment(stadiumId: String, isFavourite: Boolean) {
         findNavController().navigate(
-            R.id.action_homeFragment_to_pitchDetailFragment,
+            R.id.action_tableFragment_to_pitchDetailFragment,
             bundleOf(
                 KeyValues.STADIUM_ID to stadiumId,
                 KeyValues.IS_FAVOURITE_STADIUM to isFavourite

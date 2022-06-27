@@ -7,9 +7,9 @@ data class StadiumBookSentResponse(
 )
 
 data class StadiumBookSentResponseData(
-    val sessionId: String,
+    val id: String,
     val stadiumName: String,
-    val date: String,
+    val startDate: String,
     val startTime: String,
     val endTime: String,
     val status: String,

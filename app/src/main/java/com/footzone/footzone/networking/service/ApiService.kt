@@ -35,6 +35,9 @@ interface ApiService {
     @GET("favorites/list/{userId}")
     suspend fun getFavouriteStadiumsList(@Path("userId") userId: String): FavouriteStadiumResponse
 
+    @GET("stadium/all/brief/{stadiumId}")
+    suspend fun getSingleStadiumData(@Path("stadiumId") stadiumId: String):SingleStadiumResponse
+
     @GET("user/{userId}")
     suspend fun getUserData(@Path("userId") userId: String): UserData
 

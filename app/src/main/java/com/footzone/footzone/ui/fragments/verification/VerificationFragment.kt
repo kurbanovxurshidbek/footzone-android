@@ -7,7 +7,9 @@ import android.util.Log
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentVerificationBinding
@@ -25,6 +27,7 @@ import com.footzone.footzone.utils.KeyValues.USER_TOKEN
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -92,24 +95,28 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
     }
 
     private fun setupObserversSignIn() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.signInVerification.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
-
-                    is UiStateObject.SUCCESS -> {
-                        if (it.data.success) {
-                            val data = it.data.data
-                            saveToSharedPref(data.user_id, data.token, data.stadiumHolder)
-                            returnHomeFragment()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.signInVerification.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
                         }
-                    }
-                    is UiStateObject.ERROR -> {
-                        toastLong("Kod xato kiritildi.")
-                    }
-                    else -> {
+
+                        is UiStateObject.SUCCESS -> {
+                            if (it.data.success) {
+                                hideProgress()
+                                val data = it.data.data
+                                saveToSharedPref(data.user_id, data.token, data.stadiumHolder)
+                                returnHomeFragment()
+                            }
+                        }
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                            toastLong("Kod xato kiritildi.")
+                        }
+                        else -> {
+                        }
                     }
                 }
             }
@@ -121,18 +128,19 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
             viewModel.smsVerification.collect {
                 when (it) {
                     UiStateObject.LOADING -> {
-                        //show progress
+                        showProgress()
                     }
 
                     is UiStateObject.SUCCESS -> {
                         if (it.data.success) {
-                            Log.d("TAG", "setupObserversSignUp: ${it.data.success}")
+                            hideProgress()
                             user!!.smsCode = binding.editTextVerificationCode.text.toString()
                             viewModel.registerUser(user!!)
                             setupObserversRegister()
                         }
                     }
                     is UiStateObject.ERROR -> {
+                        hideProgress()
                         toastLong("Kod xato kiritildi.")
                     }
                     else -> {
@@ -151,25 +159,28 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
     }
 
     private fun setupObserversRegister() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.registerUser.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.registerUser.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            //show progress
+                        }
 
-                    is UiStateObject.SUCCESS -> {
-                        val userPriority = it.data.data
-                        saveToSharedPref(
-                            userPriority.user_id,
-                            userPriority.token,
-                            user!!.stadiumHolder
-                        )
-                    }
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message} error")
-                    }
-                    else -> {
+                        is UiStateObject.SUCCESS -> {
+                            Log.d("TAG", "setupObserversRegister: ${it.data.data}")
+                            val userPriority = it.data.data
+                            saveToSharedPref(
+                                userPriority.user_id,
+                                userPriority.token,
+                                user!!.stadiumHolder
+                            )
+                        }
+                        is UiStateObject.ERROR -> {
+                            Log.d("TAG", "setupUI: ${it.message} error")
+                        }
+                        else -> {
+                        }
                     }
                 }
             }

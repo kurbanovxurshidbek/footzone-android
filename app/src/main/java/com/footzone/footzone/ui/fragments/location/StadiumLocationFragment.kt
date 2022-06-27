@@ -130,5 +130,4 @@ class StadiumLocationFragment : BaseFragment(R.layout.fragment_stadium_location)
             )
         )
     }
-
 }

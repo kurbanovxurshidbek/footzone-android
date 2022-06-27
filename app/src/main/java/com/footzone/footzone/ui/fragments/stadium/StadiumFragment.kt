@@ -6,7 +6,9 @@ import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.CommentAdapter
@@ -21,6 +23,7 @@ import com.footzone.footzone.utils.UiStateObject
 import com.footzone.footzone.utils.commonfunction.Functions
 import com.footzone.footzone.utils.commonfunction.Functions.showStadiumOpenOrClose
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
@@ -51,19 +54,23 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
     }
 
     private fun setupObservers() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.getHolderStadium.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getHolderStadium.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
+                        }
 
-                    is UiStateObject.SUCCESS -> {
-                        refreshData(it.data.data)
-                    }
-                    is UiStateObject.ERROR -> {
-                    }
-                    else -> {
+                        is UiStateObject.SUCCESS -> {
+                            hideProgress()
+                            refreshData(it.data.data)
+                        }
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                        }
+                        else -> {
+                        }
                     }
                 }
             }
@@ -71,19 +78,21 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
     }
 
     private fun setupCommentObservers() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.pitchComment.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.pitchComment.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            //show progress
+                        }
 
-                    is UiStateObject.SUCCESS -> {
-                        showPitchComments(it.data.data)
-                    }
-                    is UiStateObject.ERROR -> {
-                    }
-                    else -> {
+                        is UiStateObject.SUCCESS -> {
+                            showPitchComments(it.data.data)
+                        }
+                        is UiStateObject.ERROR -> {
+                        }
+                        else -> {
+                        }
                     }
                 }
             }
@@ -94,13 +103,14 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
         showRatingBarInfo(data)
         refreshCommentAdapter(data)
     }
+
     private fun showRatingBarInfo(data: Data) {
-        val averageRate : Float= Functions.resRating(data.commentInfo as ArrayList<Comment>)
+        val averageRate: Float = Functions.resRating(data.commentInfo as ArrayList<Comment>)
         val rateNumberPercentage = Functions.rateNumbers(comments = data.commentInfo)
         val viewRateCount: Int = (data.commentInfo.sumOf { it.number })
         binding.apply {
             textViewRateCount.text = viewRateCount.toString()
-            if(averageRate>0){
+            if (averageRate > 0) {
                 tvAverageRate.text = averageRate.toString()
             } else {
                 tvAverageRate.text = "0"
@@ -108,11 +118,11 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
 
             rbRate.rating = averageRate
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                ratingOne.setProgress(rateNumberPercentage.one,true)
-                ratingTwo.setProgress(rateNumberPercentage.two,true)
-                ratingThree.setProgress(rateNumberPercentage.three,true)
-                ratingFour.setProgress(rateNumberPercentage.four,true)
-                ratingFive.setProgress(rateNumberPercentage.five,true)
+                ratingOne.setProgress(rateNumberPercentage.one, true)
+                ratingTwo.setProgress(rateNumberPercentage.two, true)
+                ratingThree.setProgress(rateNumberPercentage.three, true)
+                ratingFour.setProgress(rateNumberPercentage.four, true)
+                ratingFive.setProgress(rateNumberPercentage.five, true)
             } else {
                 ratingOne.progress = rateNumberPercentage.one
                 ratingTwo.progress = rateNumberPercentage.two
@@ -160,7 +170,7 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
     private fun openEditStadium(stadiumId: String) {
         findNavController().navigate(
             R.id.action_stadiumFragment_to_addStadiumFragment,
-            bundleOf( KeyValues.TYPE_DETAIL to true, KeyValues.STADIUM_ID to stadiumId)
+            bundleOf(KeyValues.TYPE_DETAIL to true, KeyValues.STADIUM_ID to stadiumId)
         )
     }
 

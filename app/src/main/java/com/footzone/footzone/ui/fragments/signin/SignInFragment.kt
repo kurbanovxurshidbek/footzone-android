@@ -10,7 +10,9 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentSignInBinding
@@ -18,6 +20,7 @@ import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues.PHONE_NUMBER
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
@@ -68,25 +71,28 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
     }
 
     private fun setupObservers() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.userPhoneNumber.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.userPhoneNumber.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
+                        }
 
-                    is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "setupObservers: ${it.data}")
-                        toastLong(it.data.data.toString())
-                        openVerificationFragment()
+                        is UiStateObject.SUCCESS -> {
+                            hideProgress()
+                            toastLong(it.data.data.toString())
+                            openVerificationFragment()
+                        }
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                            toastLong(
+                                "Bu raqam orqali ro'yxatdan o'tilmagan. Iltimos ro'yxatdan o'ting."
+                            )
+                            openSignUpFragment()
+                        }
+                        else -> {}
                     }
-                    is UiStateObject.ERROR -> {
-                        toastLong(
-                            "Bu raqam orqali ro'yxatdan o'tilmagan. Iltimos ro'yxatdan o'ting."
-                        )
-                        openSignUpFragment()
-                    }
-                    else -> {}
                 }
             }
         }

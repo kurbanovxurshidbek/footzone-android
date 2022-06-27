@@ -98,10 +98,10 @@
         android:background="@color/white">
 
         <LinearLayout
-            android:background="@color/white"
             android:id="@+id/linearAcceptDecline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -149,7 +149,6 @@
         </LinearLayout>
 
         <TextView
-            android:background="@color/white"
             android:id="@+id/tvStatus"
             android:layout_width="match_parent"
             android:layout_height="0dp"

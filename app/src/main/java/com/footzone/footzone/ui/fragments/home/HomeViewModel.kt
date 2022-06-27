@@ -33,6 +33,10 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
         MutableStateFlow<UiStateObject<ShortStadiumDetailResponse>>(UiStateObject.EMPTY)
     val nearByStadiums = _nearByStadiums
 
+    fun reset() = viewModelScope.launch {
+        _nearByStadiums.value = UiStateObject.EMPTY
+    }
+
     private val _favouriteStadiums =
         MutableStateFlow<UiStateObject<ShortStadiumDetailResponse>>(UiStateObject.EMPTY)
     val favouriteStadiums = _favouriteStadiums
@@ -40,6 +44,10 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
     private val _favouriteStadiumsList =
         MutableStateFlow<UiStateObject<FavouriteStadiumResponse>>(UiStateObject.EMPTY)
     val favouriteStadiumsList = _favouriteStadiumsList
+
+    private val _singleStadiumData =
+        MutableStateFlow<UiStateObject<SingleStadiumResponse>>(UiStateObject.EMPTY)
+    val singleStadiumData = _singleStadiumData
 
     private val _previouslyBookedStadiums =
         MutableStateFlow<UiStateObject<ShortStadiumDetailResponse>>(UiStateObject.EMPTY)
@@ -84,6 +92,19 @@ class HomeViewModel @Inject constructor(private val mainRepository: MainReposito
 
         } catch (e: Exception) {
             _favouriteStadiumsList.value =
+                UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
+        }
+    }
+
+    fun getSingleStadiumData(stadiumId: String) = viewModelScope.launch {
+        _singleStadiumData.value = UiStateObject.LOADING
+
+        try {
+            val response = mainRepository.getSingleStadiumData(stadiumId)
+            _singleStadiumData.value = UiStateObject.SUCCESS(response)
+
+        } catch (e: Exception) {
+            _singleStadiumData.value =
                 UiStateObject.ERROR(e.localizedMessage ?: "No connection", false)
         }
     }

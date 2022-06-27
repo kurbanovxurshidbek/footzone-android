@@ -49,7 +49,7 @@ class PitchAdapter(
             }
 
             btnNavigate.setOnClickListener {
-                onClickEvent.setOnNavigateClickListener(1.0, 2.0)
+                onClickEvent.setOnNavigateClickListener(pitch.latitude, pitch.longitude)
             }
 
             ivBookmark.setOnClickListener {

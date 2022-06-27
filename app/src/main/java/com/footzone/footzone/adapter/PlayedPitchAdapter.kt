@@ -43,6 +43,7 @@ class PlayedPitchAdapter :
 
     @SuppressLint("NotifyDataSetChanged")
     fun submitData(list: List<PlayedHistoryResponseData>) {
+        this.playedPitchList.clear()
         this.playedPitchList.addAll(list)
         notifyDataSetChanged()
     }

@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
@@ -25,21 +26,18 @@ import com.directions.route.*
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.PitchAdapter
 import com.footzone.footzone.databinding.FragmentHomeBinding
-import com.footzone.footzone.databinding.LayoutAcceptBinding
+import com.footzone.footzone.databinding.ItemSingleStadiumDataBinding
 import com.footzone.footzone.databinding.LayoutEnterDialogBinding
 import com.footzone.footzone.helper.OnClickEvent
 import com.footzone.footzone.model.*
 import com.footzone.footzone.ui.fragments.BaseFragment
-import com.footzone.footzone.utils.EnterAccountDialog
+import com.footzone.footzone.utils.*
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
-import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.IS_FAVOURITE_STADIUM
 import com.footzone.footzone.utils.KeyValues.IS_OWNER
 import com.footzone.footzone.utils.KeyValues.LOG_IN
 import com.footzone.footzone.utils.KeyValues.STADIUM_ID
 import com.footzone.footzone.utils.KeyValues.USER_ID
-import com.footzone.footzone.utils.SharedPref
-import com.footzone.footzone.utils.UiStateObject
 import com.footzone.footzone.utils.commonfunction.Functions.resRating
 import com.footzone.footzone.utils.commonfunction.Functions.setFavouriteBackground
 import com.footzone.footzone.utils.commonfunction.Functions.setUnFavouriteBackground
@@ -71,7 +69,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
     private lateinit var bottomSheetBehaviorType: BottomSheetBehavior<View>
     private lateinit var topSheetBehavior: TopSheetBehavior<View>
     private var stadiumsList = ArrayList<ShortStadiumDetail>()
-    private var stadiumsFilteredList = ArrayList<ShortStadiumDetail>()
     private var favouriteStadiums = ArrayList<String>()
     private lateinit var enterAccountDialog: EnterAccountDialog
 
@@ -148,6 +145,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
 
     override fun onMarkerClick(marker: Marker): Boolean {
         marker.showInfoWindow()
+        sendRequestToGetSingleStadiumData(marker.tag.toString())
         routeClear()
         if (cameraCurrentLatLng != null)
             findRoutes(
@@ -269,7 +267,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
 
         showBottomSheet(bottomSheetBehaviorType)
 
-        Log.d("TAG", "initViews: ${sharedPref.getLogIn(LOG_IN, false)}")
         if (sharedPref.getLogIn(LOG_IN, false)) {
             viewModel.detectIsNotificationAvailable()
             observeNotificationAvailability()
@@ -293,23 +290,18 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
             }
         }
 
+        var isOpenFilter = false
+        var isWellRated = false
         binding.topSheet.apply {
             tvCurrentlyOpen.setOnClickListener {
-                stadiumsFilteredList.clear()
-                stadiumsList.forEach {
-                    if (it.isOpen.open)
-                        stadiumsFilteredList.add(it)
-                }
-                refreshAdapter(favouriteStadiums, stadiumsFilteredList)
+                isOpenFilter = !isOpenFilter
+                changeBackground(isOpenFilter, binding.topSheet.tvCurrentlyOpen)
+                controlFilter(isOpenFilter, isWellRated)
             }
             tvWellCommented.setOnClickListener {
-                stadiumsFilteredList.clear()
-                stadiumsList.forEach {
-                    if (resRating(it.comments) > 2) {
-                        stadiumsFilteredList.add(it)
-                    }
-                }
-                refreshAdapter(favouriteStadiums, stadiumsFilteredList)
+                isWellRated = !isWellRated
+                changeBackground(isWellRated, binding.topSheet.tvWellCommented)
+                controlFilter(isOpenFilter, isWellRated)
             }
         }
 
@@ -331,12 +323,64 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                 hideKeyboard(requireActivity())
                 if (binding.bottomSheetTypes.edtPitchSearch.text.isNotEmpty()) {
                     hideBottomSheet(bottomSheetBehaviorType)
-                    sendRequestToGetSearchedStadiums(binding.bottomSheetTypes.edtPitchSearch.text.toString())
+                    sendRequestToGetSearchedStadiums(
+                        binding.bottomSheetTypes.edtPitchSearch.text.toString().trim()
+                    )
                 } else {
                     bottomSheetBehaviorType.state = BottomSheetBehavior.STATE_COLLAPSED
                 }
                 true
             } else false
+        }
+    }
+
+    private fun controlFilter(openFilter: Boolean, wellRated: Boolean) {
+        if (openFilter && wellRated) {
+            refreshAdapter(favouriteStadiums, filterWellRated(filterOpen(stadiumsList)))
+        }
+        if (openFilter && !wellRated) {
+            refreshAdapter(favouriteStadiums, filterOpen(stadiumsList))
+        }
+        if (!openFilter && wellRated) {
+            refreshAdapter(favouriteStadiums, filterWellRated(stadiumsList))
+        }
+        if (!openFilter && !wellRated) {
+            refreshAdapter(favouriteStadiums, stadiumsList)
+        }
+    }
+
+    private fun filterWellRated(stadiumsList: ArrayList<ShortStadiumDetail>): ArrayList<ShortStadiumDetail> {
+        return ArrayList<ShortStadiumDetail>().apply {
+            stadiumsList.forEach {
+                if (resRating(it.comments) > 2) {
+                    this.add(it)
+                }
+            }
+        }
+    }
+
+    private fun filterOpen(stadiumsList: ArrayList<ShortStadiumDetail>): ArrayList<ShortStadiumDetail> {
+        return ArrayList<ShortStadiumDetail>().apply {
+            stadiumsList.forEach {
+                if (it.isOpen.open) {
+                    this.add(it)
+                }
+            }
+        }
+    }
+
+    private fun changeBackground(isFiltered: Boolean, tv: TextView) {
+        val checked = requireContext().resources.getDrawable(R.drawable.ic_checked)
+        if (isFiltered) {
+            tv.apply {
+                setBackgroundResource(R.drawable.textview_rounded_background_blue)
+                setCompoundDrawablesWithIntrinsicBounds(checked, null, null, null)
+            }
+        } else {
+            tv.apply {
+                setBackgroundResource(R.drawable.textview_rounded_background)
+                setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+            }
         }
     }
 
@@ -375,6 +419,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
     private fun sendRequestToGetSearchedStadiums(stadiumToSearch: String) {
         viewModel.getSearchedStadiums(stadiumToSearch)
         observeSearchedStadium()
+    }
+
+    private fun sendRequestToGetSingleStadiumData(stadiumId: String) {
+        viewModel.getSingleStadiumData(stadiumId)
+        observeSingleStadium()
     }
 
     private fun sendRequestToGetPreviouslyBookedStadiums() {
@@ -428,21 +477,24 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
     }
 
     private fun observePreviouslyBookedStadiums() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.previouslyBookedStadiums.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.previouslyBookedStadiums.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
+                        }
 
-                    is UiStateObject.SUCCESS -> {
-                        stadiumsList = it.data.data
-                        refreshAdapter(favouriteStadiums, stadiumsList)
-                    }
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
-                    }
-                    else -> {
+                        is UiStateObject.SUCCESS -> {
+                            hideProgress()
+                            stadiumsList = it.data.data
+                            refreshAdapter(favouriteStadiums, stadiumsList)
+                        }
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                        }
+                        else -> {
+                        }
                     }
                 }
             }
@@ -471,43 +523,71 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
         }
     }
 
-    private fun observeFavouriteStadiumsList() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.favouriteStadiumsList.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
+    private fun observeSingleStadium() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.singleStadiumData.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
+                        }
 
-                    is UiStateObject.SUCCESS -> {
-                        favouriteStadiums = it.data.data
+                        is UiStateObject.SUCCESS -> {
+                            hideProgress()
+                            showSingleStadiumData(it.data.data)
+                        }
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                        }
+                        else -> {}
                     }
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
+                }
+            }
+        }
+    }
+
+    private fun observeFavouriteStadiumsList() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.favouriteStadiumsList.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            //show progress
+                        }
+
+                        is UiStateObject.SUCCESS -> {
+                            favouriteStadiums = it.data.data
+                        }
+                        is UiStateObject.ERROR -> {
+                            Log.d("TAG", "setupUI: ${it.message}")
+                        }
+                        else -> {}
                     }
-                    else -> {}
                 }
             }
         }
     }
 
     private fun observeNearByStadiums() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.nearByStadiums.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        showProgress()
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.nearByStadiums.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
+                        }
 
-                    is UiStateObject.SUCCESS -> {
-                        hideProgress()
-                        stadiumsList = it.data.data
-                        refreshAdapter(favouriteStadiums, stadiumsList)
-                    }
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
-                    }
-                    else -> {
+                        is UiStateObject.SUCCESS -> {
+                            hideProgress()
+                            stadiumsList = it.data.data
+                            refreshAdapter(favouriteStadiums, stadiumsList)
+                            viewModel.reset()
+                        }
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                        }
+                        else -> {
+                        }
                     }
                 }
             }
@@ -515,42 +595,48 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
     }
 
     private fun observeSearchedStadium() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.searchedStadiums.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.searchedStadiums.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
+                        }
 
-                    is UiStateObject.SUCCESS -> {
-                        refreshAdapter(favouriteStadiums, it.data.data)
+                        is UiStateObject.SUCCESS -> {
+                            hideProgress()
+                            stadiumsList = it.data.data
+                            refreshAdapter(favouriteStadiums, stadiumsList)
+                        }
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                        }
+                        else -> {}
                     }
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
-                    }
-                    else -> {}
                 }
             }
         }
     }
 
     private fun observeFavouriteStadiums() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.favouriteStadiums.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.favouriteStadiums.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            showProgress()
+                        }
 
-                    is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "observeNearByStadiums: $it.data")
-                        stadiumsList = it.data.data
-                        refreshAdapter(favouriteStadiums, stadiumsList)
-                    }
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
-                    }
-                    else -> {
+                        is UiStateObject.SUCCESS -> {
+                            hideProgress()
+                            stadiumsList = it.data.data
+                            refreshAdapter(favouriteStadiums, stadiumsList)
+                        }
+                        is UiStateObject.ERROR -> {
+                            hideProgress()
+                        }
+                        else -> {
+                        }
                     }
                 }
             }
@@ -558,25 +644,27 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
     }
 
     private fun observeNotificationAvailability() {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.notification.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
-
-                    is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "observeNotificationAvailability: ${it.data}")
-                        if (it.data.data) {
-                            binding.ivNewNotification.visibility = View.VISIBLE
-                        } else {
-                            binding.ivNewNotification.visibility = View.GONE
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.notification.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            //show progress
                         }
-                    }
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
-                    }
-                    else -> {
+
+                        is UiStateObject.SUCCESS -> {
+                            Log.d("TAG", "observeNotificationAvailability: ${it.data}")
+                            if (it.data.data) {
+                                binding.ivNewNotification.visibility = View.VISIBLE
+                            } else {
+                                binding.ivNewNotification.visibility = View.GONE
+                            }
+                        }
+                        is UiStateObject.ERROR -> {
+                            Log.d("TAG", "setupUI: ${it.message}")
+                        }
+                        else -> {
+                        }
                     }
                 }
             }
@@ -587,28 +675,29 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
         stadiumId: String,
         ivBookmark: ImageView
     ) {
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.addToFavouriteStadiums.collect {
-                when (it) {
-                    UiStateObject.LOADING -> {
-                        //show progress
-                    }
-
-                    is UiStateObject.SUCCESS -> {
-                        if (it.data.message == "add success") {
-                            ivBookmark.setFavouriteBackground()
-                            sendRequestToGetFavouriteStadiumsList()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.addToFavouriteStadiums.collect {
+                    when (it) {
+                        UiStateObject.LOADING -> {
+                            //show progress
                         }
 
-                        if (it.data.message == "delete success") {
-                            ivBookmark.setUnFavouriteBackground()
-                            sendRequestToGetFavouriteStadiumsList()
+                        is UiStateObject.SUCCESS -> {
+                            if (it.data.message == "add success") {
+                                ivBookmark.setFavouriteBackground()
+                                sendRequestToGetFavouriteStadiumsList()
+                            }
+
+                            if (it.data.message == "delete success") {
+                                ivBookmark.setUnFavouriteBackground()
+                                sendRequestToGetFavouriteStadiumsList()
+                            }
                         }
-                    }
-                    is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
-                    }
-                    else -> {
+                        is UiStateObject.ERROR -> {
+                        }
+                        else -> {
+                        }
                     }
                 }
             }
@@ -636,11 +725,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
 
         val adapter = PitchAdapter(favouriteStadiums, stadiums, object : OnClickEvent {
             override fun setOnBookClickListener(stadiumId: String, isFavourite: Boolean) {
-                if (sharedPref.getLogIn(KeyValues.LOG_IN, false)) {
-                    openPitchDetailFragment(stadiumId, isFavourite)
-                } else {
-                    showSignUpDialog()
-                }
+                checkIsLogIn(stadiumId, isFavourite)
             }
 
             override fun setOnNavigateClickListener(latitude: Double, longitude: Double) {
@@ -657,6 +742,14 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
         })
         binding.bottomSheetPitchList.rvPitch.adapter = adapter
         showStadiumList()
+    }
+
+    private fun checkIsLogIn(stadiumId: String, isFavourite: Boolean) {
+        if (sharedPref.getLogIn(LOG_IN, false)) {
+            openPitchDetailFragment(stadiumId, isFavourite)
+        } else {
+            showSignUpDialog()
+        }
     }
 
     private fun showSignUpDialog() {
@@ -722,7 +815,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                     binding.bottomSheetPitchList.bottomSheetPitchList.setBackgroundResource(R.drawable.linear_top_rounded_background)
                 }
 
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED && stadiumsList.isNotEmpty()) {
                     showTopSheet()
                 }
 
@@ -773,8 +866,31 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                     .title(i.name)
                     .icon(bitmapFromVector(R.drawable.ic_locate_stadium))
             )
-            markerList.add(myMarker!!)
+            myMarker!!.tag = i.stadiumId
+            markerList.add(myMarker)
         }
+    }
+
+    private fun showSingleStadiumData(stadiumDetail: ShortStadiumDetail) {
+        SingleStadiumDialog(
+            favouriteStadiums.contains(stadiumDetail.stadiumId),
+            stadiumDetail,
+            requireContext(),
+            object : OnClickEvent {
+                override fun setOnBookClickListener(stadiumId: String, isFavourite: Boolean) {
+                    checkIsLogIn(stadiumId, isFavourite)
+                }
+
+                override fun setOnNavigateClickListener(latitude: Double, longitude: Double) {
+                    requireActivity().shareLocationToGoogleMap(latitude, longitude)
+                }
+
+                override fun setOnBookMarkClickListener(stadiumId: String, ivBookmark: ImageView) {
+                    sendRequestToAddFavouriteStadiums(stadiumId)
+                    observeAddFavouriteStadiums(stadiumId, ivBookmark)
+                }
+            }).instance(ItemSingleStadiumDataBinding.inflate(LayoutInflater.from(requireContext())))
+            .show()
     }
 
     private fun bitmapFromVector(vectorResId: Int): BitmapDescriptor {
@@ -793,5 +909,4 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
         vectorDrawable.draw(canvas)
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
-
 }
