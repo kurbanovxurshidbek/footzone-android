@@ -141,6 +141,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                                 stadiumData.hourlyPrice.toInt(),
                                 stadiumData.workingDays
                             )
+                            workingDays = it.data.data.workingDays
 
                             showPitchData(stadiumData)
                         }
