@@ -102,9 +102,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                 binding.tvPitchWorkTime.text = bundle.get(WORK_TIME).toString()
             }
         }
-    }
-
-    override fun onCreateView(
+    }override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
@@ -198,7 +196,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             }
         }
     }
-
     private fun observeViewModelAdd() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -309,7 +306,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             latitude = data.latitude
         }
     }
-
     private fun observeViewModelEdit() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -418,7 +414,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             registerButtonControl()
         }
     }
-
     @SuppressLint("ResourceAsColor")
     private fun registerButtonControl() {
         if (checkData()) {
@@ -517,7 +512,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             }
         }
     }
-
     /**
      * This is function, to upgrade from Uri to MultipartBody.Part
      */
@@ -564,6 +558,3 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         findNavController().navigate(R.id.action_addStadiumFragment_to_chooseWorkTimeFragment)
     }
 }
-
-
-
