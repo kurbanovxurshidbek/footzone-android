@@ -86,10 +86,12 @@ class FCMService : FirebaseMessagingService() {
         val acceptPendingIntent = PendingIntent.getBroadcast(this, 0,acceptIntent,0)
 
         val declineIntent = Intent(this, DeclineNotificationReceiver::class.java)
-        val declinePendingIntent = PendingIntent.getBroadcast(this, 0,declineIntent,0)
+        val declinePendingIntent = PendingIntent.getBroadcast(this, 1,declineIntent,0)
 
-        expandedView.setOnClickPendingIntent(R.id.btnAcceptExpanded,acceptPendingIntent)
-        expandedView.setOnClickPendingIntent(R.id.btnDecline,declinePendingIntent)
+
+
+  //      expandedView.setOnClickPendingIntent(R.id.btnAcceptExpanded,acceptPendingIntent)
+   //     expandedView.setOnClickPendingIntent(R.id.btnDeclineExpended,declinePendingIntent)
 
         val notificationAdmin = NotificationCompat.Builder(this, CHANNEL_ID)
             .setCustomContentView(collapsedView)
