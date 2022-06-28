@@ -68,22 +68,10 @@
 
         <receiver
             android:name=".broadcast.DeclineNotificationReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.footzone.footzone.backgroundservice.DeclineService" />
-            </intent-filter>
-
-        </receiver>
+            android:exported="false"/>
         <receiver
             android:name=".broadcast.AcceptNotificationReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.footzone.footzone.backgroundservice.AcceptService" />
-            </intent-filter>
-        </receiver>
-
-        <service android:name=".backgroundservice.AcceptService" />
-        <service android:name=".backgroundservice.DeclineService" />
+            android:exported="false"/>
     </application>
 
 </manifest>

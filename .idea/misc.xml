@@ -112,6 +112,7 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_stadium.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_stadium_game_history.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/fragment_stadium_location.xml" value="0.67" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_admin_notification.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_my_pitch_layout.xml" value="0.7207207207207207" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_pitch_book_sent.xml" value="0.22" />
         <entry key="..\:/Users/User/AndroidStudioProjects/footzone-android/app/src/main/res/layout/item_pitch_layout.xml" value="0.25" />
@@ -149,8 +150,6 @@
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/layout/item_played_pitch.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/layout/item_user_notification.xml" value="0.5" />
         <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-android1/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-androidr/app/src/main/res/layout/item_admin_notification.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/android_pc/AndroidStudioProjects/footzone-androidr/app/src/main/res/layout/notification_expanded.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/avtech/AndroidStudioProjects/footzone-androidr/app/src/main/res/layout/notification_collapsed.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/avtech/AndroidStudioProjects/footzone-androidr/app/src/main/res/layout/notification_expanded.xml" value="0.20416666666666666" />
       </map>

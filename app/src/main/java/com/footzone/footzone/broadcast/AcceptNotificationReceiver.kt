@@ -5,22 +5,35 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationManagerCompat
-import com.footzone.footzone.backgroundservice.AcceptService
+import com.footzone.footzone.model.AcceptDeclineRequest
+import com.footzone.footzone.repository.main.MainRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 class AcceptNotificationReceiver : BroadcastReceiver() {
+
+    @Inject
+    lateinit var mainRepository: MainRepository
+
     override fun onReceive(context: Context, intent: Intent) {
         val extras = intent.extras
-        val id: String
+        val sessionId: String
 
         if (extras != null) {
-            id = extras.getString("sessionId")!!
-            Log.d("TAG", "onReceive: $id")
+            sessionId = extras.getString("sessionId")!!
             val notificationManagerCompat = NotificationManagerCompat.from(context)
-            notificationManagerCompat.cancel(1)
-            val intent2 = Intent(context, AcceptService::class.java)
-            intent2.putExtra("sessionId", id)
-            context.startService(intent2)
+            notificationManagerCompat.cancel(0)
+
+            sendAcceptRequest(sessionId)
+        }
+    }
+
+    private fun sendAcceptRequest(sessionId: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            mainRepository.acceptOrDeclineBookingRequest(AcceptDeclineRequest(true, sessionId))
         }
     }
 }

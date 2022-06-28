@@ -48,53 +48,40 @@ class FCMService : FirebaseMessagingService() {
         val session =
             Gson().fromJson(message.data["session"], SessionNotificationResponse::class.java)
 
-        val ACCEPT_ACTION = "com.footzone.footzone.backgroundservice.AcceptService"
+        val ACCEPT_ACTION = "Accept"
         val acceptIntent = Intent(this, AcceptNotificationReceiver::class.java)
         acceptIntent.action = ACCEPT_ACTION
         acceptIntent.putExtra("sessionId", session.sessionId)
         val acceptPendingIntent =
-            PendingIntent.getBroadcast(this, 0, acceptIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(this, 0, acceptIntent, 0)
 
-        val DECLINE_ACTION = "com.footzone.footzone.backgroundservice.DeclineService"
+        val DECLINE_ACTION = "Decline"
         val declineIntent = Intent(this, DeclineNotificationReceiver::class.java)
-        acceptIntent.action = DECLINE_ACTION
-        acceptIntent.putExtra("sessionId", session.sessionId)
+        declineIntent.action = DECLINE_ACTION
+        declineIntent.putExtra("sessionId", session.sessionId)
         val declinePendingIntent =
-            PendingIntent.getBroadcast(this, 0, declineIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-
-
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle(session.stadiumName + " · " + session.startDate)
+            PendingIntent.getBroadcast(this, 0, declineIntent, 0)
 
         val notificationUser = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle(message.data["title"])
-            .setContentText(message.data["body"])
+            .setContentTitle(message.data["body"])
+            .setContentText(session.stadiumName + " · " + session.startDate + " · " + session.startTime.subSequence(0, 5) + "-" + session.startTime.subSequence(0, 5))
             .setSmallIcon(R.drawable.ic_ball)
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_product_logo))
             .setStyle(
-                NotificationCompat.BigTextStyle().bigText(message.data["body"])
-                    .setBigContentTitle(
-                        session.stadiumName + " · " + session.startDate + " · " + session.startTime.subSequence(
-                            0,
-                            5
-                        ) + "-" + session.startTime.subSequence(0, 5)
-                    )
+                NotificationCompat.DecoratedCustomViewStyle()
             )
             .setAutoCancel(true)
-            .addAction(R.drawable.ic_ball, null, acceptPendingIntent)
             .build()
-        notification.color = resources.getColor(R.color.colorBlue600)
+        notificationUser.color = resources.getColor(R.color.colorBlue600)
 
         val collapsedView = RemoteViews(packageName, R.layout.notification_collapsed)
         val expandedView = RemoteViews(packageName, R.layout.notification_expanded)
         collapsedView.setTextViewText(R.id.tvBody, message.data["body"])
+        collapsedView.setTextViewText(R.id.tvTitle, session.stadiumName + " · " + session.startDate + " · " + session.startTime.subSequence(0, 5) + "-" + session.startTime.subSequence(0, 5))
         expandedView.setTextViewText(R.id.tvBodyExpanded, message.data["body"])
-
-        expandedView.setOnClickPendingIntent(R.id.btnDecline, declinePendingIntent)
-        expandedView.setOnClickPendingIntent(R.id.btnAcceptExpanded, acceptPendingIntent)
 
         val notificationAdmin = NotificationCompat.Builder(this, CHANNEL_ID)
             .setCustomContentView(collapsedView)
@@ -108,7 +95,8 @@ class FCMService : FirebaseMessagingService() {
                 NotificationCompat.DecoratedCustomViewStyle()
             )
             .setAutoCancel(true)
-            .addAction(R.drawable.ic_ball, null, acceptPendingIntent)
+            .addAction(R.drawable.ic_ball, "Qabul qilish", acceptPendingIntent)
+            .addAction(R.drawable.ic_ball, "Rad etish", declinePendingIntent)
             .build()
 
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -116,7 +104,7 @@ class FCMService : FirebaseMessagingService() {
             createNotificationChannel(manager)
         val notificationId = Random.nextInt()
 
-        if (message.data["session"] != null) {
+        if (session.stadiumHolder) {
             manager.notify(notificationId, notificationAdmin)
         } else {
             manager.notify(notificationId, notificationUser)
