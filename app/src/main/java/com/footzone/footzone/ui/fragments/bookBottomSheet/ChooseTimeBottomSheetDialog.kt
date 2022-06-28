@@ -73,7 +73,6 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
     private fun initView() {
-
         timeSharedViewModel.getTime().observe(viewLifecycleOwner) {
             startTime = it?.startTime
             endTime = it?.finishTime

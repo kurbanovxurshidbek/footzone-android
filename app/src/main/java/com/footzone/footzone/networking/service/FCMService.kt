@@ -17,6 +17,8 @@ import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.footzone.footzone.R
+import com.footzone.footzone.broadcast.AcceptNotificationReceiver
+import com.footzone.footzone.broadcast.DeclineNotificationReceiver
 import com.footzone.footzone.model.SessionNotificationResponse
 import com.footzone.footzone.ui.activity.MainActivity
 import com.footzone.footzone.utils.KeyValues
@@ -79,6 +81,18 @@ class FCMService : FirebaseMessagingService() {
         val expandedView = RemoteViews(packageName, R.layout.notification_expanded)
         collapsedView.setTextViewText(R.id.tvBody,message.data["body"])
         expandedView.setTextViewText(R.id.tvBodyExpanded, message.data["body"])
+
+        val acceptIntent = Intent(this, AcceptNotificationReceiver::class.java)
+        val acceptPendingIntent = PendingIntent.getBroadcast(this, 0,acceptIntent,0)
+
+        val declineIntent = Intent(this, DeclineNotificationReceiver::class.java)
+        val declinePendingIntent = PendingIntent.getBroadcast(this, 1,declineIntent,0)
+
+
+
+  //      expandedView.setOnClickPendingIntent(R.id.btnAcceptExpanded,acceptPendingIntent)
+   //     expandedView.setOnClickPendingIntent(R.id.btnDeclineExpended,declinePendingIntent)
+
         val notificationAdmin = NotificationCompat.Builder(this, CHANNEL_ID)
             .setCustomContentView(collapsedView)
             .setCustomBigContentView(expandedView)
