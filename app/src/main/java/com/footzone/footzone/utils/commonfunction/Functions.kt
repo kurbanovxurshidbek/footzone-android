@@ -80,7 +80,7 @@ object Functions {
 
     fun ImageView.loadImageUrl(url: String?) {
         Glide.with(this).load(url).placeholder(getCircularProgressDrawable())
-            .error(R.drawable.stadim2).into(this)
+            .error(R.drawable.iv_profile).into(this)
     }
 
     private fun ImageView.getCircularProgressDrawable() =
