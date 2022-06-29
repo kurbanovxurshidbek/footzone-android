@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/white">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -19,31 +19,34 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:layout_marginEnd="5dp">
+                android:layout_marginEnd="5dp"
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:id="@+id/icClose"
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
-                    android:paddingVertical="15dp"
-                    android:paddingEnd="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_view_ic_back"
+                    android:padding="10dp"
                     android:src="@drawable/ic_back_icon" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
-                    android:textSize="22sp"
+                    android:text="@string/str_my_stadium"
                     android:textColor="@color/black"
-                    android:text="@string/str_my_stadium"/>
+                    android:textSize="22sp" />
 
                 <ImageView
                     android:id="@+id/ivAdd"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:padding="15dp"
-                    android:src="@drawable/ic_plus"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/image_view_ic_back"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_plus" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -55,28 +58,28 @@
 
         <LinearLayout
             android:id="@+id/llView"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tvJustText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
                 android:gravity="center"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
-            android:background="#F5F5F5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#F5F5F5"
             android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="1"/>
+            app:spanCount="1" />
     </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

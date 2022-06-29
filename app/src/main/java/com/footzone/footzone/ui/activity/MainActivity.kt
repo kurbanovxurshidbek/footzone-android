@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -33,6 +34,10 @@ class MainActivity : BaseActivity() {
         setupUI()
         if (intent.getStringExtra(KeyValues.NOTIFICATION_TITLE) != null)
             navigate(intent)
+    }
+
+    fun ok(){
+        Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show()
     }
 
     private fun navigate(intent: Intent?) {

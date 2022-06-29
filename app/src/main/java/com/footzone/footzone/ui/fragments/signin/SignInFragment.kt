@@ -40,7 +40,7 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
         binding.textViewSignUp.setOnClickListener {
             openSignUpFragment()
         }
-        binding.backButton.setOnClickListener {
+        binding.ivBack.setOnClickListener {
             closeSignInFragment()
         }
 

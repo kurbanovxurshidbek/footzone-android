@@ -121,7 +121,7 @@ class TimeIntervalFragment : BaseFragment(R.layout.fragment_time_interval) {
             }
         }
 
-        binding.icClose.setOnClickListener {
+        binding.ivBack.setOnClickListener {
             requireActivity().onBackPressed()
         }
     }

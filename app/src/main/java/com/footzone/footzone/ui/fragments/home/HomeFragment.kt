@@ -27,9 +27,11 @@ import com.footzone.footzone.R
 import com.footzone.footzone.adapter.PitchAdapter
 import com.footzone.footzone.databinding.FragmentHomeBinding
 import com.footzone.footzone.databinding.ItemSingleStadiumDataBinding
+import com.footzone.footzone.databinding.LayoutAcceptBinding
 import com.footzone.footzone.databinding.LayoutEnterDialogBinding
 import com.footzone.footzone.helper.OnClickEvent
 import com.footzone.footzone.model.*
+import com.footzone.footzone.ui.activity.MainActivity
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.*
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
@@ -51,6 +53,7 @@ import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import java.lang.Exception
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -213,7 +216,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
 
     private fun btnMyLocationClickManager() {
         binding.findMyLocation.setOnClickListener {
-            updateLastLocation()
+            try {
+                updateLastLocation()
+            } catch (e: Exception) {
+
+            }
         }
     }
 

@@ -59,7 +59,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
 
     private fun initViews() {
         verificationCodeErrorControl()
-        binding.backButton.setOnClickListener {
+        binding.ivBack.setOnClickListener {
             closeVerificationFragment()
         }
         binding.confirmationButton.setOnClickListener {

@@ -132,6 +132,7 @@
         android:layout_marginTop="16dp">
 
         <LinearLayout
+            android:id="@+id/linearButtonWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -156,7 +157,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/btnDeclineExpended"
+                android:id="@+id/btnDecline"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
@@ -190,6 +191,7 @@
             android:visibility="gone">
 
             <TextView
+                android:id="@+id/tvAccepted"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Qabul qilindi"
@@ -207,6 +209,7 @@
             android:visibility="gone">
 
             <TextView
+                android:id="@+id/tvDeclined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rad etildi"

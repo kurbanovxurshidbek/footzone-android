@@ -28,16 +28,18 @@
                 <ImageView
                     android:id="@+id/ivBack"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingEnd="18dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_view_ic_back"
+                    android:padding="10dp"
                     android:src="@drawable/ic_back_icon" />
 
                 <TextView
-                    android:fontFamily="@font/poppins_bold"
                     android:id="@+id/tvAppBarPitchName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="#1C1B1F"
                     android:textSize="22sp" />
 
@@ -47,7 +49,7 @@
                     android:layout_height="48dp"
                     android:paddingVertical="15dp"
                     android:paddingStart="30dp"
-                    android:src="@drawable/ic_edit"/>
+                    android:src="@drawable/ic_edit" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -81,9 +83,9 @@
 
                 <TextView
                     android:id="@+id/tvStadiumName"
-                    android:fontFamily="@font/poppins_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
                     android:maxLines="1"
                     android:textColor="#0A0A0A"
                     android:textSize="24sp"
@@ -228,10 +230,10 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_marginStart="16dp"
                             android:id="@+id/linearNavigation"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
+                            android:layout_marginStart="16dp"
                             android:layout_marginEnd="6dp"
                             android:background="@drawable/button_rounded_corner"
                             android:gravity="center"

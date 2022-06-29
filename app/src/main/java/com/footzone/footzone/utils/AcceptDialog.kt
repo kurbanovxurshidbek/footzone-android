@@ -22,11 +22,11 @@ class AcceptDialog(
 
     private fun setLayout(layoutResID: ConstraintLayout) {
         _instance!!.setContentView(layoutResID)
-        _instance!!.window!!.setBackgroundDrawableResource(R.drawable.rounded_view)
         _instance!!.window!!.setLayout(
             pxFromDp(context1, 320).toInt(),
             pxFromDp(context1, 200).toInt()
         )
+        _instance!!.window!!.setBackgroundDrawableResource(R.drawable.rounded_view)
 
         val tvYes = layoutResID.findViewById<TextView>(R.id.tvYes)
         val tvNo = layoutResID.findViewById<TextView>(R.id.tvNo)
