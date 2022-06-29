@@ -7,10 +7,12 @@ import com.footzone.footzone.model.Response
 import com.footzone.footzone.model.StadiumBookSentResponse
 import com.footzone.footzone.repository.main.MainRepository
 import com.footzone.footzone.utils.UiStateObject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class AdminNotificationViewModel @Inject constructor(private val mainRepository: MainRepository) :
     ViewModel() {
 
