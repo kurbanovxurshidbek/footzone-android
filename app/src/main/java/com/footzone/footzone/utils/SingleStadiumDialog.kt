@@ -76,7 +76,6 @@ class SingleStadiumDialog(
                 )
             }
             btnBook.setOnClickListener {
-                _instance!!.dismiss()
                 onClickEvent.setOnBookClickListener(shortStadiumDetail.stadiumId, isFavourite)
             }
             btnNavigate.setOnClickListener {

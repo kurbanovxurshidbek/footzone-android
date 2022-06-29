@@ -74,6 +74,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
     private var stadiumsList = ArrayList<ShortStadiumDetail>()
     private var favouriteStadiums = ArrayList<String>()
     private lateinit var enterAccountDialog: EnterAccountDialog
+    protected lateinit var singleStadiumDialog: SingleStadiumDialog
 
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -753,6 +754,10 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
 
     private fun checkIsLogIn(stadiumId: String, isFavourite: Boolean) {
         if (sharedPref.getLogIn(LOG_IN, false)) {
+            try {
+                singleStadiumDialog.dismiss()
+            } catch (e: Exception) {
+            }
             openPitchDetailFragment(stadiumId, isFavourite)
         } else {
             showSignUpDialog()
@@ -763,6 +768,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
         enterAccountDialog = EnterAccountDialog(requireContext()) {
             openSignInFragment()
             enterAccountDialog.dismiss()
+            singleStadiumDialog.dismiss()
         }.instance(
             LayoutEnterDialogBinding.inflate(
                 LayoutInflater.from(requireContext())
@@ -879,7 +885,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
     }
 
     private fun showSingleStadiumData(stadiumDetail: ShortStadiumDetail) {
-        SingleStadiumDialog(
+        singleStadiumDialog = SingleStadiumDialog(
             favouriteStadiums.contains(stadiumDetail.stadiumId),
             stadiumDetail,
             requireContext(),
@@ -897,7 +903,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                     observeAddFavouriteStadiums(stadiumId, ivBookmark)
                 }
             }).instance(ItemSingleStadiumDataBinding.inflate(LayoutInflater.from(requireContext())))
-            .show()
+        singleStadiumDialog.show()
     }
 
     private fun bitmapFromVector(vectorResId: Int): BitmapDescriptor {
