@@ -768,7 +768,9 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
         enterAccountDialog = EnterAccountDialog(requireContext()) {
             openSignInFragment()
             enterAccountDialog.dismiss()
+            try {
             singleStadiumDialog.dismiss()
+            }catch (e:Exception){}
         }.instance(
             LayoutEnterDialogBinding.inflate(
                 LayoutInflater.from(requireContext())

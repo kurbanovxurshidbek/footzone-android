@@ -12,6 +12,7 @@ import com.footzone.footzone.model.AdminNotification
 import com.footzone.footzone.model.StadiumBookSentResponseData
 import com.footzone.footzone.utils.commonfunction.Functions
 import com.footzone.footzone.utils.extensions.hide
+import com.footzone.footzone.utils.extensions.show
 import java.time.LocalTime
 
 class AdminNotificationAdapter(
@@ -54,9 +55,24 @@ class AdminNotificationAdapter(
                 )
             }, $duration soat"
             tvPrice.text = "${notification.hourlyPrice.toInt() * duration} so'm"
-        }
 
-            holder.view.apply {
+            if (notification.status=="ACCEPTED"){
+                linearButtonWrapper.hide()
+                acceptedLayout.show()
+                declinedLayout.hide()
+            }
+            if (notification.status=="DECLINED"){
+                linearButtonWrapper.hide()
+                declinedLayout.show()
+                acceptedLayout.hide()
+            }
+
+            if (notification.status=="PENDING"){
+                linearButtonWrapper.show()
+                acceptedLayout.hide()
+                declinedLayout.hide()
+            }
+
             btnAccept.setOnClickListener {
                 linearButtonWrapper.hide()
                 onClickEventAcceptDecline.onAccept(notification.id, tvAccepted, acceptedLayout)
