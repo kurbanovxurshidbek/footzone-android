@@ -22,8 +22,10 @@ import com.footzone.footzone.utils.AcceptDialog
 import com.footzone.footzone.utils.DeclineDialog
 import com.footzone.footzone.utils.UiStateObject
 import com.footzone.footzone.utils.extensions.show
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class AdminNotificationFragment : BaseFragment(R.layout.fragment_admin_notification) {
 
     private lateinit var declineDialog: DeclineDialog
@@ -158,5 +160,4 @@ class AdminNotificationFragment : BaseFragment(R.layout.fragment_admin_notificat
             }
         }
     }
-
 }
