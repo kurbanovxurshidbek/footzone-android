@@ -164,7 +164,6 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
         binding.apply {
 
             refreshAdapter(data.photos)
-
             tvAppBarPitchName.text = data.stadiumName
             tvStadiumName.text = data.stadiumName
             tvAddress.text = data.address
@@ -234,25 +233,45 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
             workingDays.forEach {
                 when (it.dayName) {
                     daysWeek[0] -> {
-                        timeTableDayControl(mondayLayout,tvMondayOpenTime,tvMondayCloseTime,it)
+                        timeTableDayControl(mondayLayout, tvMondayOpenTime, tvMondayCloseTime, it)
                     }
                     daysWeek[1] -> {
-                        timeTableDayControl(tuesdayLayout,tvTuesdayOpenTime,tvTuesdayCloseTime,it)
+                        timeTableDayControl(
+                            tuesdayLayout,
+                            tvTuesdayOpenTime,
+                            tvTuesdayCloseTime,
+                            it
+                        )
                     }
                     daysWeek[2] -> {
-                        timeTableDayControl(wednesdayLayout,tvWednesdayOpenTime,tvWednesdayCloseTime,it)
+                        timeTableDayControl(
+                            wednesdayLayout,
+                            tvWednesdayOpenTime,
+                            tvWednesdayCloseTime,
+                            it
+                        )
                     }
                     daysWeek[3] -> {
-                        timeTableDayControl(thursdayLayout,tvThursdayOpenTime,tvThursdayCloseTime,it)
+                        timeTableDayControl(
+                            thursdayLayout,
+                            tvThursdayOpenTime,
+                            tvThursdayCloseTime,
+                            it
+                        )
                     }
                     daysWeek[4] -> {
-                        timeTableDayControl(fridayLayout,tvFridayOpenTime,tvFridayCloseTime,it)
+                        timeTableDayControl(fridayLayout, tvFridayOpenTime, tvFridayCloseTime, it)
                     }
                     daysWeek[5] -> {
-                        timeTableDayControl(saturdayLayout,tvSaturdayOpenTime,tvSaturdayCloseTime,it)
+                        timeTableDayControl(
+                            saturdayLayout,
+                            tvSaturdayOpenTime,
+                            tvSaturdayCloseTime,
+                            it
+                        )
                     }
                     daysWeek[6] -> {
-                        timeTableDayControl(sundayLayout,tvSundayOpenTime,tvSundayCloseTime,it)
+                        timeTableDayControl(sundayLayout, tvSundayOpenTime, tvSundayCloseTime, it)
                     }
                 }
             }
@@ -261,10 +280,15 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
         dialog.show()
     }
 
-    private fun timeTableDayControl(layout: LinearLayout, openTime: TextView, closeTime: TextView, workingDay: WorkingDay) {
+    private fun timeTableDayControl(
+        layout: LinearLayout,
+        openTime: TextView,
+        closeTime: TextView,
+        workingDay: WorkingDay
+    ) {
         layout.show()
-        openTime.text = textCutter(workingDay.startTime,0,5)
-        closeTime.text = textCutter(workingDay.endTime,0,5)
+        openTime.text = textCutter(workingDay.startTime, 0, 5)
+        closeTime.text = textCutter(workingDay.endTime, 0, 5)
     }
 
 

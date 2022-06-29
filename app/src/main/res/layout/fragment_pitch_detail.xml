@@ -28,14 +28,16 @@
                 <ImageView
                     android:id="@+id/ivBack"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingEnd="18dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_view_ic_back"
+                    android:padding="10dp"
                     android:src="@drawable/ic_back_icon" />
 
                 <TextView
                     android:id="@+id/tvAppBarPitchName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:text="Acme futbol maydoni"
                     android:textColor="#1C1B1F"
                     android:textSize="22sp" />
@@ -466,7 +468,7 @@
                             android:textSize="12sp" />
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
-                           android:id="@+id/ratingFour"
+                            android:id="@+id/ratingFour"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"

@@ -141,7 +141,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             }
         }
 
-        binding.tvOccupancy.setOnClickListener {
+        binding.tvBook.setOnClickListener {
             val stadiumAddress = binding.etPitchAddress.text.toString()
             val stadiumName = binding.etPitchName.text.toString()
             val stadiumPrice = binding.etPitchPrice.text.toString()
@@ -345,7 +345,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         registerButtonControl()
         checkAllFields()
 
-        binding.tvOccupancy.setOnClickListener {
+        binding.tvBook.setOnClickListener {
 
             uris.forEach { selectedImageUri ->
                 files.add(convertUriMultipart(selectedImageUri, "files"))
@@ -418,15 +418,15 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     private fun registerButtonControl() {
         if (checkData()) {
             binding.apply {
-                tvOccupancy.setBackgroundResource(R.drawable.button_register_filled_rounded_corner2)
-                tvOccupancy.isClickable = true
-                tvOccupancy.setTextColor(Color.WHITE)
+                tvBook.setBackgroundResource(R.drawable.button_register_filled_rounded_corner2)
+                tvBook.isClickable = true
+                tvBook.setTextColor(Color.WHITE)
             }
         } else {
             binding.apply {
-                tvOccupancy.setBackgroundResource(R.drawable.button_register_filled_rounded_corner1)
-                tvOccupancy.isClickable = false
-                tvOccupancy.setTextColor(R.color.buttonDisabledTextColor)
+                tvBook.setBackgroundResource(R.drawable.button_register_filled_rounded_corner1)
+                tvBook.isClickable = false
+                tvBook.setTextColor(R.color.buttonDisabledTextColor)
 
             }
         }

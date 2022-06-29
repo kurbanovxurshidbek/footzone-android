@@ -29,12 +29,14 @@
                     android:id="@+id/backButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/image_view_ic_back"
+                    android:padding="10dp"
                     android:src="@drawable/ic_back_icon" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_bold"
                     android:text="Bildirishnomalar"
@@ -47,11 +49,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAdminNotification"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_admin_notification" />
 
 

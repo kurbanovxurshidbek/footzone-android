@@ -45,7 +45,7 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    private fun request() {
+    fun request() {
         Dexter.withContext(this)
             .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
             .withListener(object : PermissionListener {
@@ -78,7 +78,7 @@ open class BaseActivity : AppCompatActivity() {
             Manifest.permission.ACCESS_FINE_LOCATION
         ) == PermissionChecker.PERMISSION_GRANTED
 
-    private fun showLocationOn() {
+    fun showLocationOn() {
         val locationRequest = LocationRequest.create()
         locationRequest.apply {
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY

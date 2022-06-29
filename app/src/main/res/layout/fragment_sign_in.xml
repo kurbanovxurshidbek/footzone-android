@@ -25,16 +25,17 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/backButton"
+                    android:id="@+id/ivBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/image_view_ic_back"
+                    android:padding="10dp"
                     android:src="@drawable/ic_back_icon" />
 
                 <TextView
-
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_bold"
                     android:text="Kirish"
@@ -139,6 +140,8 @@
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/poppins_bold"
                 android:maxLines="1"
+                android:padding="4dp"
+                android:background="@drawable/dialog_textview_background"
                 android:text="Ro’yxatdan o’ting"
                 android:textColor="#0C64E6"
                 android:textSize="14sp" />

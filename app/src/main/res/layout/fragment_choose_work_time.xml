@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -19,23 +19,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:layout_marginEnd="5dp">
+                android:layout_marginEnd="5dp"
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:id="@+id/icClose"
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
-                    android:paddingVertical="15dp"
-                    android:paddingEnd="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_view_ic_back"
+                    android:padding="10dp"
                     android:src="@drawable/ic_back_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="22sp"
+                    android:layout_marginStart="10dp"
+                    android:text="Maydon ish vaqtlarini kiritish"
                     android:textColor="@color/black"
-                    android:text="Maydon ish vaqtlarini kiritish"/>
+                    android:textSize="22sp" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -49,8 +50,8 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:overScrollMode="never"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:overScrollMode="never">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -58,43 +59,43 @@
                 android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:paddingVertical="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp">
+                    android:layout_marginHorizontal="16dp"
+                    android:paddingVertical="12dp">
 
                     <TextView
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Dushanba"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.github.angads25.toggle.widget.LabeledSwitch
                         android:id="@+id/switchMo"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="50dp"
                         android:layout_height="20dp"
                         android:textSize="8sp"
-                        app:on="false"
-                        app:textOn="OPEN"
-                        app:textOff="CLOSED"
+                        app:colorBorder="@color/blue"
                         app:colorOn="@color/blue"
-                        app:colorBorder="@color/blue"/>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:on="false"
+                        app:textOff="CLOSED"
+                        app:textOn="OPEN" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <RelativeLayout
                     android:id="@+id/input_layout_mo"
-                    android:visibility="gone"
-                    android:layout_marginHorizontal="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:orientation="vertical">
+                    android:layout_marginHorizontal="16dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -119,9 +120,9 @@
                                 <NumberPicker
                                     android:id="@+id/startTimeMo"
                                     android:layout_width="90dp"
-                                    android:soundEffectsEnabled="true"
                                     android:layout_height="wrap_content"
                                     android:selectionDividerHeight="0dp"
+                                    android:soundEffectsEnabled="true"
                                     android:theme="@style/NumberPicker" />
                             </LinearLayout>
 
@@ -177,42 +178,42 @@
                 </RelativeLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:paddingVertical="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp">
+                    android:layout_marginHorizontal="16dp"
+                    android:paddingVertical="12dp">
 
                     <TextView
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Seshanba"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.github.angads25.toggle.widget.LabeledSwitch
                         android:id="@+id/switchTu"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="50dp"
                         android:layout_height="20dp"
                         android:textSize="8sp"
-                        app:on="false"
-                        app:textOn="OPEN"
-                        app:textOff="CLOSED"
+                        app:colorBorder="@color/blue"
                         app:colorOn="@color/blue"
-                        app:colorBorder="@color/blue"/>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:on="false"
+                        app:textOff="CLOSED"
+                        app:textOn="OPEN" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <RelativeLayout
                     android:id="@+id/input_layout_tu"
-                    android:visibility="gone"
-                    android:layout_marginHorizontal="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:orientation="vertical">
+                    android:layout_marginHorizontal="16dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
 
                     <LinearLayout
@@ -238,9 +239,9 @@
                                 <NumberPicker
                                     android:id="@+id/startTimeTu"
                                     android:layout_width="90dp"
-                                    android:soundEffectsEnabled="true"
                                     android:layout_height="wrap_content"
                                     android:selectionDividerHeight="0dp"
+                                    android:soundEffectsEnabled="true"
                                     android:theme="@style/NumberPicker" />
                             </LinearLayout>
 
@@ -296,42 +297,42 @@
                 </RelativeLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:paddingVertical="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp">
+                    android:layout_marginHorizontal="16dp"
+                    android:paddingVertical="12dp">
 
                     <TextView
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Chorshanba"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.github.angads25.toggle.widget.LabeledSwitch
                         android:id="@+id/switchWe"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="50dp"
                         android:layout_height="20dp"
                         android:textSize="8sp"
-                        app:on="false"
-                        app:textOn="OPEN"
-                        app:textOff="CLOSED"
+                        app:colorBorder="@color/blue"
                         app:colorOn="@color/blue"
-                        app:colorBorder="@color/blue"/>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:on="false"
+                        app:textOff="CLOSED"
+                        app:textOn="OPEN" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <RelativeLayout
                     android:id="@+id/input_layout_we"
-                    android:visibility="gone"
-                    android:layout_marginHorizontal="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:orientation="vertical">
+                    android:layout_marginHorizontal="16dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
 
                     <LinearLayout
@@ -357,9 +358,9 @@
                                 <NumberPicker
                                     android:id="@+id/startTimeWe"
                                     android:layout_width="90dp"
-                                    android:soundEffectsEnabled="true"
                                     android:layout_height="wrap_content"
                                     android:selectionDividerHeight="0dp"
+                                    android:soundEffectsEnabled="true"
                                     android:theme="@style/NumberPicker" />
                             </LinearLayout>
 
@@ -415,42 +416,42 @@
                 </RelativeLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:paddingVertical="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp">
+                    android:layout_marginHorizontal="16dp"
+                    android:paddingVertical="12dp">
 
                     <TextView
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Payshanba"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.github.angads25.toggle.widget.LabeledSwitch
                         android:id="@+id/switchTh"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="50dp"
                         android:layout_height="20dp"
                         android:textSize="8sp"
-                        app:on="false"
-                        app:textOn="OPEN"
-                        app:textOff="CLOSED"
+                        app:colorBorder="@color/blue"
                         app:colorOn="@color/blue"
-                        app:colorBorder="@color/blue"/>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:on="false"
+                        app:textOff="CLOSED"
+                        app:textOn="OPEN" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <RelativeLayout
                     android:id="@+id/input_layout_th"
-                    android:visibility="gone"
-                    android:layout_marginHorizontal="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:orientation="vertical">
+                    android:layout_marginHorizontal="16dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
 
                     <LinearLayout
@@ -476,9 +477,9 @@
                                 <NumberPicker
                                     android:id="@+id/startTimeTh"
                                     android:layout_width="90dp"
-                                    android:soundEffectsEnabled="true"
                                     android:layout_height="wrap_content"
                                     android:selectionDividerHeight="0dp"
+                                    android:soundEffectsEnabled="true"
                                     android:theme="@style/NumberPicker" />
                             </LinearLayout>
 
@@ -534,42 +535,42 @@
                 </RelativeLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:paddingVertical="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp">
+                    android:layout_marginHorizontal="16dp"
+                    android:paddingVertical="12dp">
 
                     <TextView
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Juma"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.github.angads25.toggle.widget.LabeledSwitch
                         android:id="@+id/switchFr"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="50dp"
                         android:layout_height="20dp"
                         android:textSize="8sp"
-                        app:on="false"
-                        app:textOn="OPEN"
-                        app:textOff="CLOSED"
+                        app:colorBorder="@color/blue"
                         app:colorOn="@color/blue"
-                        app:colorBorder="@color/blue"/>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:on="false"
+                        app:textOff="CLOSED"
+                        app:textOn="OPEN" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <RelativeLayout
                     android:id="@+id/input_layout_fr"
-                    android:visibility="gone"
-                    android:layout_marginHorizontal="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:orientation="vertical">
+                    android:layout_marginHorizontal="16dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
 
                     <LinearLayout
@@ -595,9 +596,9 @@
                                 <NumberPicker
                                     android:id="@+id/startTimeFr"
                                     android:layout_width="90dp"
-                                    android:soundEffectsEnabled="true"
                                     android:layout_height="wrap_content"
                                     android:selectionDividerHeight="0dp"
+                                    android:soundEffectsEnabled="true"
                                     android:theme="@style/NumberPicker" />
                             </LinearLayout>
 
@@ -653,42 +654,42 @@
                 </RelativeLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:paddingVertical="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp">
+                    android:layout_marginHorizontal="16dp"
+                    android:paddingVertical="12dp">
 
                     <TextView
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Shanba"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.github.angads25.toggle.widget.LabeledSwitch
                         android:id="@+id/switchSa"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="50dp"
                         android:layout_height="20dp"
                         android:textSize="8sp"
-                        app:on="false"
-                        app:textOn="OPEN"
-                        app:textOff="CLOSED"
+                        app:colorBorder="@color/blue"
                         app:colorOn="@color/blue"
-                        app:colorBorder="@color/blue"/>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:on="false"
+                        app:textOff="CLOSED"
+                        app:textOn="OPEN" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <RelativeLayout
                     android:id="@+id/input_layout_sa"
-                    android:visibility="gone"
-                    android:layout_marginHorizontal="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:orientation="vertical">
+                    android:layout_marginHorizontal="16dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
 
                     <LinearLayout
@@ -714,9 +715,9 @@
                                 <NumberPicker
                                     android:id="@+id/startTimeSa"
                                     android:layout_width="90dp"
-                                    android:soundEffectsEnabled="true"
                                     android:layout_height="wrap_content"
                                     android:selectionDividerHeight="0dp"
+                                    android:soundEffectsEnabled="true"
                                     android:theme="@style/NumberPicker" />
                             </LinearLayout>
 
@@ -772,42 +773,42 @@
                 </RelativeLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:paddingVertical="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp">
+                    android:layout_marginHorizontal="16dp"
+                    android:paddingVertical="12dp">
 
                     <TextView
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Yakshanba"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.github.angads25.toggle.widget.LabeledSwitch
                         android:id="@+id/switchSu"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="50dp"
                         android:layout_height="20dp"
                         android:textSize="8sp"
-                        app:on="false"
-                        app:textOn="OPEN"
-                        app:textOff="CLOSED"
+                        app:colorBorder="@color/blue"
                         app:colorOn="@color/blue"
-                        app:colorBorder="@color/blue"/>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:on="false"
+                        app:textOff="CLOSED"
+                        app:textOn="OPEN" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <RelativeLayout
                     android:id="@+id/input_layout_su"
-                    android:visibility="gone"
-                    android:layout_marginHorizontal="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:orientation="vertical">
+                    android:layout_marginHorizontal="16dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
 
                     <LinearLayout
@@ -833,9 +834,9 @@
                                 <NumberPicker
                                     android:id="@+id/startTimeSu"
                                     android:layout_width="90dp"
-                                    android:soundEffectsEnabled="true"
                                     android:layout_height="wrap_content"
                                     android:selectionDividerHeight="0dp"
+                                    android:soundEffectsEnabled="true"
                                     android:theme="@style/NumberPicker" />
                             </LinearLayout>
 
@@ -896,9 +897,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
             android:layout_marginBottom="16dp"
-            android:gravity="center"
-            android:layout_marginHorizontal="8dp">
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/tvCancel"

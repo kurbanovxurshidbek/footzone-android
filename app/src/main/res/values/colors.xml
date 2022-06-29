@@ -33,6 +33,7 @@
     <color name="green_accepted">#177B4C</color>
     <color name="data_loading">#dddddd</color>
     <color name="lightBlue">#B4D2FE</color>
+    <color name="state_pressed_color">#D1E1FB</color>
 
 
 </resources>
