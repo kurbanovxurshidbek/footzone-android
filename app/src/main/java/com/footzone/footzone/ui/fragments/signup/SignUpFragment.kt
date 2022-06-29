@@ -88,6 +88,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                             openVerificationFragment(user)
                         }
                         is UiStateObject.ERROR -> {
+                            Log.d("TAG", "setupObservers: ${it.message}")
                             hideProgress()
                             toastLong("Siz avval ro'yxatdan o'tgansiz.\nIltimos kirish uchun raqamingizni kiriting.")
                             findNavController().popBackStack()

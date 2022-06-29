@@ -45,7 +45,8 @@
             android:name=".ui.activity.MainActivity"
             android:configChanges="locale"
             android:exported="true"
-            android:windowSoftInputMode="adjustNothing"></activity>
+            android:windowSoftInputMode="adjustPan">
+        </activity>
 
         <activity
             android:name=".ui.activity.SplashActivity"
