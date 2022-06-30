@@ -4,12 +4,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">MapsActivity</string>
 
-    <string name="for_back_button">for back button</string>
-    <string name="item_recyclerview">item recyclerView</string>
-    <string name="acme_futbol_maydoni">Acme futbol maydoni</string>
-    <string name="amir_temur_ko_chasi_14_uy">Amir Temur ko\'chasi, 14-uy</string>
-    <string name="_998_99_777_66_55">+998 99 777 66 55</string>
-
     <string name="str_busy">Band qilish</string>
     <string name="str_date">Sana</string>
     <string name="str_cancel">Bekor qilish</string>
@@ -19,7 +13,6 @@
     <string name="str_selection">Tanlash</string>
     <string name="str_my_stadium">Mening maydonlarim</string>
     <string name="str_add_stadium">Maydon qo’shish</string>
-    <string name="pick_image_intent_text">"AJHGVBCD N CCS  "</string>
     <string name="str_stadium_name">Maydon nomi</string>
     <string name="str_location">Manzil</string>
     <string name="str_phone_number">Telefon raqam</string>
@@ -28,20 +21,19 @@
     <string name="str_save">Saqlash</string>
     <string name="str_edit_stadium">Maydonni tahrirlash</string>
     <string name="str_time_interval">Vaqt oralig’i</string>
-    <string name="str_stadium_address">Stadion address</string>
-    <string name="str_united_kingdom">United Kingdom</string>
+    <string name="str_stadium_address">Stadion manzili</string>
+    <string name="str_united_kingdom">English</string>
     <string name="str_russian">Russian</string>
     <string name="str_uzbekistan">Uzbekistan</string>
     <string name="str_select_language">Tilni tanlang</string>
     <string name="str_lang">O\'zbekcha</string>4
     <string name="str_setings">Sozlamalar</string>
-    <string name="str_00_00_da_yopiladi">00:00 da yopiladi</string>
     <string name="str_so_m_soat">so\'m/soat</string>
     <string name="str_marshrut">Marshrut</string>
     <string name="str_send">Ulashish</string>
-    <string name="str_ratings_and_reviews">Ratings and reviews</string>
-    <string name="str_votes">votes</string>
-    <string name="str_open">Open</string>
+    <string name="str_ratings_and_reviews">Reytinglar va sharhlar</string>
+    <string name="str_votes">ta ovoz</string>
+    <string name="str_open">Ochiq</string>
     <string name="str_changing_game_days">O\'yin kunlarini o\'zgartirish</string>
     <string name="str_delete_image">Rasm o\'chirildi</string>
     <string name="str_error_phone_number">Telefon nomer kiritishda xatolik bor</string>
