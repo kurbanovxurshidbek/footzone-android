@@ -120,7 +120,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/button_round_corner_grey"
+                android:background="@drawable/button_register_filled_rounded_corner2"
                 android:gravity="center"
                 android:paddingVertical="10dp"
                 android:text="Tanlash"
