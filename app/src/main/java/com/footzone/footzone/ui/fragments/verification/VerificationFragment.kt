@@ -108,7 +108,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
                                 hideProgress()
                                 val data = it.data.data
                                 saveToSharedPref(data.user_id, data.token, data.stadiumHolder)
-                                returnHomeFragment()
+                                //returnHomeFragment()
                             }
                         }
                         is UiStateObject.ERROR -> {
