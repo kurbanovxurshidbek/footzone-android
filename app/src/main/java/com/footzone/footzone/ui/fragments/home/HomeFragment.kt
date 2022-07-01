@@ -27,9 +27,11 @@ import com.footzone.footzone.R
 import com.footzone.footzone.adapter.PitchAdapter
 import com.footzone.footzone.databinding.FragmentHomeBinding
 import com.footzone.footzone.databinding.ItemSingleStadiumDataBinding
+import com.footzone.footzone.databinding.LayoutAcceptBinding
 import com.footzone.footzone.databinding.LayoutEnterDialogBinding
 import com.footzone.footzone.helper.OnClickEvent
 import com.footzone.footzone.model.*
+import com.footzone.footzone.ui.activity.MainActivity
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.*
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
@@ -51,6 +53,7 @@ import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import java.lang.Exception
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -71,6 +74,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
     private var stadiumsList = ArrayList<ShortStadiumDetail>()
     private var favouriteStadiums = ArrayList<String>()
     private lateinit var enterAccountDialog: EnterAccountDialog
+    protected lateinit var singleStadiumDialog: SingleStadiumDialog
 
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -213,7 +217,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
 
     private fun btnMyLocationClickManager() {
         binding.findMyLocation.setOnClickListener {
-            updateLastLocation()
+            try {
+                updateLastLocation()
+            } catch (e: Exception) {
+
+            }
         }
     }
 
@@ -746,6 +754,10 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
 
     private fun checkIsLogIn(stadiumId: String, isFavourite: Boolean) {
         if (sharedPref.getLogIn(LOG_IN, false)) {
+            try {
+                singleStadiumDialog.dismiss()
+            } catch (e: Exception) {
+            }
             openPitchDetailFragment(stadiumId, isFavourite)
         } else {
             showSignUpDialog()
@@ -756,6 +768,9 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
         enterAccountDialog = EnterAccountDialog(requireContext()) {
             openSignInFragment()
             enterAccountDialog.dismiss()
+            try {
+            singleStadiumDialog.dismiss()
+            }catch (e:Exception){}
         }.instance(
             LayoutEnterDialogBinding.inflate(
                 LayoutInflater.from(requireContext())
@@ -872,7 +887,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
     }
 
     private fun showSingleStadiumData(stadiumDetail: ShortStadiumDetail) {
-        SingleStadiumDialog(
+        singleStadiumDialog = SingleStadiumDialog(
             favouriteStadiums.contains(stadiumDetail.stadiumId),
             stadiumDetail,
             requireContext(),
@@ -890,7 +905,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                     observeAddFavouriteStadiums(stadiumId, ivBookmark)
                 }
             }).instance(ItemSingleStadiumDataBinding.inflate(LayoutInflater.from(requireContext())))
-            .show()
+        singleStadiumDialog.show()
     }
 
     private fun bitmapFromVector(vectorResId: Int): BitmapDescriptor {

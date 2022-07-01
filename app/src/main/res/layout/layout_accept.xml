@@ -3,15 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="312dp"
     android:layout_height="200dp"
-    android:background="#ffffff"
-    android:paddingHorizontal="24dp"
+    android:background="@drawable/rounded_view"
+    android:paddingStart="24dp"
     android:paddingTop="24dp"
-    android:paddingBottom="34dp">
+    android:paddingBottom="22dp">
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
         android:text="Qabul qilasizmi?"
         android:textColor="#0A0A0A"
         android:textSize="24sp"
@@ -23,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:text="Siz haqiqatdan ham maydon so’rovini qabul qilishni xohlaysizmi?"
         android:textColor="#424242"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,11 +32,12 @@
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
     <TextView
-        android:paddingHorizontal="16dp"
         android:id="@+id/tvNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:background="@drawable/dialog_textview_background_no"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp"
         android:text="Yo'q"
         android:textColor="#616161"
         android:textSize="14sp"
@@ -45,9 +48,14 @@
         android:id="@+id/tvYes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/dialog_textview_background"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp"
         android:text="Ha"
         android:textColor="#0C64E6"
         android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

@@ -73,7 +73,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     var uris = ArrayList<Uri>()
     var isStart = false
     var stadiumNumber: String? = null
-
+    var isViewCreated = true
     @Inject
     lateinit var sharedPref: SharedPref
 
@@ -141,7 +141,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             }
         }
 
-        binding.tvOccupancy.setOnClickListener {
+        binding.tvBook.setOnClickListener {
             val stadiumAddress = binding.etPitchAddress.text.toString()
             val stadiumName = binding.etPitchName.text.toString()
             val stadiumPrice = binding.etPitchPrice.text.toString()
@@ -173,10 +173,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                                 convertUriMultipart(phot.name as Uri, "file")
                             )
                             Log.d("TAG", "setupObserversPhoto  photo: ${phot.id} ${phot.name}")
-                            viewModel.addPhotoToStadium(
-                                stadiumId,
-                                convertUriMultipart(phot.name as Uri, "file")
-                            )
                             observeViewModelAdd()
                         }
                     }
@@ -255,9 +251,13 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                             hideProgress()
                             refreshData(it.data.data)
                             workTimes.addAll(it.data.data.workingDays)
-                            it.data.data.photos.forEach { it ->
-                                photos.add(EditPhoto(it.id, it.name))
+                            if (isViewCreated){
+                                it.data.data.photos.forEach { it ->
+                                    photos.add(EditPhoto(it.id, it.name))
+                                }
+                                isViewCreated = false
                             }
+
                         }
                         is UiStateObject.ERROR -> {
                             hideProgress()
@@ -345,7 +345,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         registerButtonControl()
         checkAllFields()
 
-        binding.tvOccupancy.setOnClickListener {
+        binding.tvBook.setOnClickListener {
 
             uris.forEach { selectedImageUri ->
                 files.add(convertUriMultipart(selectedImageUri, "files"))
@@ -418,15 +418,15 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     private fun registerButtonControl() {
         if (checkData()) {
             binding.apply {
-                tvOccupancy.setBackgroundResource(R.drawable.button_register_filled_rounded_corner2)
-                tvOccupancy.isClickable = true
-                tvOccupancy.setTextColor(Color.WHITE)
+                tvBook.setBackgroundResource(R.drawable.button_register_filled_rounded_corner2)
+                tvBook.isClickable = true
+                tvBook.setTextColor(Color.WHITE)
             }
         } else {
             binding.apply {
-                tvOccupancy.setBackgroundResource(R.drawable.button_register_filled_rounded_corner1)
-                tvOccupancy.isClickable = false
-                tvOccupancy.setTextColor(R.color.buttonDisabledTextColor)
+                tvBook.setBackgroundResource(R.drawable.button_register_filled_rounded_corner1)
+                tvBook.isClickable = false
+                tvBook.setTextColor(R.color.buttonDisabledTextColor)
 
             }
         }
@@ -451,11 +451,13 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         }
                         is UiStateObject.SUCCESS -> {
                             hideProgress()
+                            Log.d("TAG", "observeViewModel: ")
                             showEditToast(getString(R.string.str_successfully_edded))
 
                         }
                         is UiStateObject.ERROR -> {
                             hideProgress()
+                            Log.d("TAG", "observeViewModel: ${it.message}")
                             showEditToast(getString(R.string.str_not_succesfull))
                         }
                         else -> {
@@ -530,7 +532,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         val inputStream: InputStream? = cr.openInputStream(selectedImageUri)
         val bitmap = BitmapFactory.decodeStream(inputStream)
         val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos)
         val data = baos.toByteArray()
 
         val reqFile: RequestBody =
@@ -543,7 +545,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
 
 
     open fun compressCapture(capture: ByteArray): ByteArray? {
-        val compression = 2
+        val compression = 50
         val bitmap = BitmapFactory.decodeByteArray(capture, 0, capture.size)
         val outputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, compression, outputStream)

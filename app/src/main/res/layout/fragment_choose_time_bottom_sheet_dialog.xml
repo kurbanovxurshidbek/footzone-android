@@ -19,7 +19,7 @@
             android:id="@+id/tvBusy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/str_busy"
+            android:text="Band qilish"
             android:textColor="#0A0A0A"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -87,11 +87,11 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp">
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"
+            android:orientation="vertical">
 
 
             <RelativeLayout
@@ -187,8 +187,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/black"
                 android:text="@string/str_hour"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -215,8 +215,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/black"
                 android:text="so'm"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
         </LinearLayout>
 

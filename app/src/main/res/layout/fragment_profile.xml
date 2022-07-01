@@ -28,7 +28,7 @@
                     android:id="@+id/top"
                     android:layout_width="match_parent"
                     android:layout_height="208dp"
-                    android:background="@drawable/stadim2"
+                    android:background="@drawable/iv_profile"
                     android:paddingStart="4dp"
                     android:paddingEnd="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -75,11 +75,12 @@
                             android:singleLine="true" />
 
                         <ImageView
+                            android:background="@drawable/image_view_ic_back"
                             android:id="@+id/ivEditName"
+                            android:padding="10dp"
+                            android:layout_marginEnd="9dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:paddingStart="3dp"
-                            android:paddingEnd="19dp"
+                            android:layout_height="wrap_content"
                             android:src="@drawable/ic_edit_button" />
 
                     </LinearLayout>

@@ -34,7 +34,6 @@ class PlayingPitchFragment : BaseFragment(R.layout.fragment_playing_pitch) {
 
         binding = FragmentPlayingPitchBinding.bind(view)
         viewModel.getPlayingSoonStadium()
-        Log.d("TAG", "onViewCreated: okkkk")
         initViews()
     }
 

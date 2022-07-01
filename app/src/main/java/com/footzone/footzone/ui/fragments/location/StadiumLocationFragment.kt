@@ -52,7 +52,7 @@ class StadiumLocationFragment : BaseFragment(R.layout.fragment_stadium_location)
 
     private fun initViews() {
         binding.apply {
-            icClose.setOnClickListener { requireActivity().onBackPressed() }
+            ivBack.setOnClickListener { requireActivity().onBackPressed() }
             tvCancel.setOnClickListener { requireActivity().onBackPressed() }
             tvSelection.setOnClickListener {
                 setFragmentResult(
