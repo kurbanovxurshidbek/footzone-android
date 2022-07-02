@@ -131,7 +131,7 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
     private fun enterButtonControl() {
         if (checkData()) {
             binding.apply {
-                enterButton.setBackgroundResource(R.drawable.button_register_filled_rounded_corner2)
+                enterButton.setBackgroundResource(R.drawable.linear_rounded_background)
                 enterButton.setTextColor(Color.WHITE)
             }
         } else {

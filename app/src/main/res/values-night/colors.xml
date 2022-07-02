@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="notification_main">?android:attr/textColorPrimaryInverse</color>
+
+    <color name="darkTextColor">#F5F5F5</color>
+    <color name="lightTextColor">#BEBEBE</color>
+</resources>

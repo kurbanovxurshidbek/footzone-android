@@ -34,5 +34,6 @@
     <color name="data_loading">#dddddd</color>
     <color name="lightBlue">#B4D2FE</color>
     <color name="state_pressed_color">#D1E1FB</color>
+    <color name="notification_main">#ffffff</color>
 
 </resources>

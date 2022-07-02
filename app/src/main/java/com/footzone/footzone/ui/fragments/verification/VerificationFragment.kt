@@ -238,7 +238,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
     private fun registerButtonControl() {
         if (checkData()) {
             binding.apply {
-                confirmationButton.setBackgroundResource(R.drawable.button_register_filled_rounded_corner2)
+                confirmationButton.setBackgroundResource(R.drawable.linear_rounded_background)
                 confirmationButton.isClickable = true
                 confirmationButton.setTextColor(Color.WHITE)
             }

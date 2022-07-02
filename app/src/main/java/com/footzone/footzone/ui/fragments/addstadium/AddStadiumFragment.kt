@@ -438,7 +438,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     private fun registerButtonControl() {
         if (checkData()) {
             binding.apply {
-                tvBook.setBackgroundResource(R.drawable.button_register_filled_rounded_corner2)
+                tvBook.setBackgroundResource(R.drawable.linear_rounded_background)
                 tvBook.isClickable = true
                 tvBook.setTextColor(Color.WHITE)
             }

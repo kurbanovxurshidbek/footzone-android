@@ -78,7 +78,7 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
             endTime = it?.finishTime
             bookData = it?.day
             if (startTime != null && endTime != null) {
-                binding.tvChooseTime.text = "$startTime - $endTime"
+                binding.tvTimeInterval.setText("$startTime - $endTime")
                 binding.tvBook.setBackgroundResource(R.drawable.button_filled_rounded_corner)
                 binding.tvBook.isClickable = true
                 binding.tvBook.setTextColor(Color.WHITE)
@@ -100,14 +100,14 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
             binding.tvDate.setText(destFormat.format(convertedDate).toString())
         }
 
-        binding.llDate.setOnClickListener {
-            binding.tvChooseTime.text = ""
+        binding.tvDate.setOnClickListener {
+            binding.tvTimeInterval.setText("")
             binding.tvGameTime.text = ""
             binding.tvTotalPrice.text = ""
             binding.tvBook.setBackgroundResource(R.drawable.button_round_corner_grey)
             isCheck = false
             val dialog = CalendarDIalog { date, week ->
-                binding.tvDate.text = date
+                binding.tvDate.setText(date)
                 dayOfWeek = week
                 Log.d("TAG", "initView: ${week}")
 
@@ -141,7 +141,7 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
             }
         }
 
-        binding.rlTimeInterval.setOnClickListener {
+        binding.tvTimeInterval.setOnClickListener {
             if (binding.tvDate.text.toString().length > 4) {
 
                 val array = resources.getStringArray(R.array.daysWeek)
