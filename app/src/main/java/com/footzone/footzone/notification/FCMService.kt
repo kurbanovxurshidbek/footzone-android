@@ -4,6 +4,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.app.PendingIntent.FLAG_ONE_SHOT
 import android.content.Context
 import android.content.Intent
@@ -43,7 +44,7 @@ class FCMService : FirebaseMessagingService() {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra(KeyValues.NOTIFICATION_TITLE, message.data["title"])
         val requestCode = (0..10).random()
-        val pendingIntent = PendingIntent.getActivity(this, requestCode, intent, FLAG_ONE_SHOT)
+        val pendingIntent = PendingIntent.getActivity(this, requestCode, intent, FLAG_IMMUTABLE)
 
         val session =
             Gson().fromJson(message.data["session"], SessionNotificationResponse::class.java)
@@ -53,14 +54,14 @@ class FCMService : FirebaseMessagingService() {
         acceptIntent.action = ACCEPT_ACTION
         acceptIntent.putExtra("sessionId", session.sessionId)
         val acceptPendingIntent =
-            PendingIntent.getBroadcast(this, 0, acceptIntent, 0)
+            PendingIntent.getBroadcast(this, 0, acceptIntent, FLAG_IMMUTABLE)
 
         val DECLINE_ACTION = "Decline"
         val declineIntent = Intent(this, DeclineNotificationReceiver::class.java)
         declineIntent.action = DECLINE_ACTION
         declineIntent.putExtra("sessionId", session.sessionId)
         val declinePendingIntent =
-            PendingIntent.getBroadcast(this, 0, declineIntent, 0)
+            PendingIntent.getBroadcast(this, 0, declineIntent, FLAG_IMMUTABLE)
 
         val notificationUser = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(message.data["body"])
