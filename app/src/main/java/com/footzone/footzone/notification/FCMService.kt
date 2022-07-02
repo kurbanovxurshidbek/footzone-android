@@ -65,7 +65,7 @@ class FCMService : FirebaseMessagingService() {
 
         val notificationUser = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(message.data["body"])
-            .setContentText(session.stadiumName + " · " + session.startDate + " · " + session.startTime.subSequence(0, 5) + "-" + session.startTime.subSequence(0, 5))
+            .setContentText(session.stadiumName + " · " + session.startDate + " · " + session.startTime.subSequence(0, 5) + "-" + session.endTime.subSequence(0, 5))
             .setSmallIcon(R.drawable.ic_ball)
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -81,7 +81,7 @@ class FCMService : FirebaseMessagingService() {
         val collapsedView = RemoteViews(packageName, R.layout.notification_collapsed)
         val expandedView = RemoteViews(packageName, R.layout.notification_expanded)
         collapsedView.setTextViewText(R.id.tvBody, message.data["body"])
-        collapsedView.setTextViewText(R.id.tvTitle, session.stadiumName + " · " + session.startDate + " · " + session.startTime.subSequence(0, 5) + "-" + session.startTime.subSequence(0, 5))
+        collapsedView.setTextViewText(R.id.tvTitle, session.stadiumName + " · " + session.startDate + " · " + session.endTime.subSequence(0, 5) + "-" + session.startTime.subSequence(0, 5))
         expandedView.setTextViewText(R.id.tvBodyExpanded, message.data["body"])
 
         val notificationAdmin = NotificationCompat.Builder(this, CHANNEL_ID)
