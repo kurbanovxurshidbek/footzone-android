@@ -45,10 +45,10 @@
 
                 <ImageView
                     android:id="@+id/etStadium"
-                    android:layout_width="68dp"
-                    android:layout_height="48dp"
-                    android:paddingVertical="15dp"
-                    android:paddingStart="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:background="@drawable/image_view_ic_back"
                     android:src="@drawable/ic_edit" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
@@ -173,7 +173,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/poppins_bold"
+                        android:fontFamily="@font/roboto"
                         android:textColor="#424242"
                         android:textSize="16sp" />
                 </LinearLayout>

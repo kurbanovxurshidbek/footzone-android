@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
@@ -17,7 +18,10 @@ import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentSignUpBinding
 import com.footzone.footzone.model.User
+import com.footzone.footzone.security.Symmetric.decrypt
+import com.footzone.footzone.security.Symmetric.encrypt
 import com.footzone.footzone.ui.fragments.BaseFragment
+import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.FIREBASE_TOKEN
 import com.footzone.footzone.utils.KeyValues.USER_DETAIL
 import com.footzone.footzone.utils.SharedPref
@@ -45,11 +49,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     }
 
     private fun sendRequestToSendSms() {
-        viewModel.signUp(
-            "+998${
-                binding.editTextNumber.text.toString().replace("\\s".toRegex(), "")
-            }"
-        )
+        viewModel.signUp(encrypt(phoneNumber())!!)
         setupObservers()
     }
 
@@ -64,16 +64,13 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
 
                         is UiStateObject.SUCCESS -> {
                             hideProgress()
-                            toastLong(it.data.data.toString())
-                            val fullname =
-                                "${
-                                    binding.editTextSurname.text.toString().trim()
-                                } ${binding.editTextName.text.toString().trim()}"
-                            var number = "+998${binding.editTextNumber.text.toString()}"
-                            number = number.replace("\\s".toRegex(), "")
-                            val phoneNumber = number
-                            val isStadiumHolder =
-                                binding.filledExposedDropdown.text.toString() == "Maydon egasi"
+                            toastLong(it.data.data)
+                            toastLong(decrypt(it.data.data)!!)
+
+                            val fullname = fullName()
+                            val phoneNumber = phoneNumber()
+                            val isStadiumHolder = isStadiumHolder()
+
                             val user = User(
                                 getDeviceName(),
                                 sharedPref.getFirebaseToken(FIREBASE_TOKEN),
@@ -100,6 +97,16 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
         }
     }
 
+    private fun isStadiumHolder(): Boolean =
+        binding.filledExposedDropdown.text.toString() == "Maydon egasi"
+
+    private fun phoneNumber(): String =
+        "+998${binding.editTextNumber.text.toString().replace("\\s".toRegex(), "")}"
+
+    private fun fullName(): String = "${
+        binding.editTextSurname.text.toString().trim()
+    } ${binding.editTextName.text.toString().trim()}"
+
     private fun openVerificationFragment(user: User) {
         findNavController().navigate(
             R.id.action_signUpFragment_to_verificationFragment,
@@ -108,18 +115,39 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     }
 
     private fun initViews() {
+
         roleSpinner()
         registerButtonControl()
-        binding.textViewSignIn.setOnClickListener {
-            openSignInFragment()
-        }
-        checkAllFields()
-        binding.registerButton.setOnClickListener {
-            if (checkData()) {
-                sendRequestToSendSms()
-            } else {
-                toast("Ma'lumotlar to'liq kiritilmadi!")
+
+        binding.apply {
+            textViewSignIn.setOnClickListener {
+                openSignInFragment()
             }
+
+            checkAllFields()
+
+            registerButton.setOnClickListener {
+                sendCodeIfAllFieldsFilled()
+            }
+
+            ivBack.setOnClickListener {
+                back()
+            }
+
+            editTextNumber.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    sendCodeIfAllFieldsFilled()
+                    true
+                } else false
+            }
+        }
+    }
+
+    private fun sendCodeIfAllFieldsFilled() {
+        if (checkData()) {
+            sendRequestToSendSms()
+        } else {
+            toast("Ma'lumotlar to'liq kiritilmadi!")
         }
     }
 

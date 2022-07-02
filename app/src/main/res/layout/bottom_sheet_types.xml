@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/linear_top_rounded_background"
-    android:paddingBottom="16dp"
     app:behavior_hideable="false"
     app:behavior_peekHeight="220dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">

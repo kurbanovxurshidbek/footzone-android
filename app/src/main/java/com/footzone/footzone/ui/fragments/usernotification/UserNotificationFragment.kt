@@ -24,6 +24,11 @@ class UserNotificationFragment : BaseFragment(R.layout.fragment_user_notificatio
     }
 
     private fun initViews() {
+
+        binding.ivBack.setOnClickListener {
+            back()
+        }
+
         refreshAdapter()
     }
 

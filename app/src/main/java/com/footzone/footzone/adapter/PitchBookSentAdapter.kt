@@ -49,11 +49,11 @@ class PitchBookSentAdapter(
             tvPrice.text = "${stadium.hourlyPrice.toInt() * duration} so'm"
 
             btnAccept.setOnClickListener {
-                onClickEventAcceptDecline.onAccept(stadium.id,tvStatus,linearAcceptDecline)
+                onClickEventAcceptDecline.onAccept(stadium.id,tvStatus,linearAcceptDecline,position)
             }
 
             btnDecline.setOnClickListener {
-                onClickEventAcceptDecline.onDecline(stadium.id,tvStatus,linearAcceptDecline)
+                onClickEventAcceptDecline.onDecline(stadium.id,tvStatus,linearAcceptDecline,position)
             }
         }
     }

@@ -82,18 +82,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="end"
                 android:layout_marginTop="16dp"
+                android:gravity="end"
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/enterButton"
-                    android:fontFamily="@font/poppins_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_margin="2dp"
                     android:background="@drawable/button_register_filled_rounded_corner1"
+                    android:fontFamily="@font/poppins_bold"
                     android:maxLines="1"
                     android:text="Kirish"
                     android:textAllCaps="false"
@@ -138,10 +138,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:background="@drawable/dialog_textview_background"
                 android:fontFamily="@font/poppins_bold"
                 android:maxLines="1"
-                android:padding="4dp"
-                android:background="@drawable/dialog_textview_background"
+                android:paddingHorizontal="6dp"
                 android:text="Ro’yxatdan o’ting"
                 android:textColor="#0C64E6"
                 android:textSize="14sp" />

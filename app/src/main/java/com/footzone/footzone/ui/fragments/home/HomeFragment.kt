@@ -43,6 +43,8 @@ import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.commonfunction.Functions.resRating
 import com.footzone.footzone.utils.commonfunction.Functions.setFavouriteBackground
 import com.footzone.footzone.utils.commonfunction.Functions.setUnFavouriteBackground
+import com.footzone.footzone.utils.extensions.hide
+import com.footzone.footzone.utils.extensions.show
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -92,6 +94,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
         installLocation()
         sendRequestToGetFavouriteStadiumsList()
         sendRequestToDetectNotification()
+
+        //throw RuntimeException("Test Crash")
     }
 
     private val callback = OnMapReadyCallback { googleMap ->
@@ -402,9 +406,9 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
 
     private fun controlOwnerOption() {
         if (sharedPref.getIsOwner(IS_OWNER)) {
-            binding.bottomSheetTypes.linearMyStadium.visibility = View.VISIBLE
+            binding.bottomSheetTypes.linearMyStadium.show()
         } else {
-            binding.bottomSheetTypes.linearMyStadium.visibility = View.GONE
+            binding.bottomSheetTypes.linearMyStadium.hide()
         }
     }
 
@@ -663,9 +667,9 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                         is UiStateObject.SUCCESS -> {
                             Log.d("TAG", "observeNotificationAvailability: ${it.data}")
                             if (it.data.data) {
-                                binding.ivNewNotification.visibility = View.VISIBLE
+                                binding.ivNewNotification.show()
                             } else {
-                                binding.ivNewNotification.visibility = View.GONE
+                                binding.ivNewNotification.hide()
                             }
                         }
                         is UiStateObject.ERROR -> {
@@ -722,13 +726,13 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
         stadiums: ArrayList<ShortStadiumDetail>
     ) {
         if (stadiums.isEmpty()) {
-            binding.bottomSheetPitchList.tvNoStadiumAlert.visibility = View.VISIBLE
-            binding.bottomSheetPitchList.rvPitch.visibility = View.GONE
+            binding.bottomSheetPitchList.tvNoStadiumAlert.show()
+            binding.bottomSheetPitchList.rvPitch.hide()
             openPitchListBottomSheet()
             return
         } else {
-            binding.bottomSheetPitchList.tvNoStadiumAlert.visibility = View.GONE
-            binding.bottomSheetPitchList.rvPitch.visibility = View.VISIBLE
+            binding.bottomSheetPitchList.tvNoStadiumAlert.hide()
+            binding.bottomSheetPitchList.rvPitch.show()
         }
 
         val adapter = PitchAdapter(favouriteStadiums, stadiums, object : OnClickEvent {
@@ -769,8 +773,9 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
             openSignInFragment()
             enterAccountDialog.dismiss()
             try {
-            singleStadiumDialog.dismiss()
-            }catch (e:Exception){}
+                singleStadiumDialog.dismiss()
+            } catch (e: Exception) {
+            }
         }.instance(
             LayoutEnterDialogBinding.inflate(
                 LayoutInflater.from(requireContext())

@@ -7,11 +7,13 @@ import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import com.footzone.footzone.model.AcceptDeclineRequest
 import com.footzone.footzone.repository.main.MainRepository
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class DeclineNotificationReceiver : BroadcastReceiver() {
 
     @Inject

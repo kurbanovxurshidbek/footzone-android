@@ -124,9 +124,10 @@
                 android:gravity="center"
                 android:paddingVertical="10dp"
                 android:text="Tanlash"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 app:backgroundTint="@null" />
         </LinearLayout>
+
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

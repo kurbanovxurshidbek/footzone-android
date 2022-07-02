@@ -234,8 +234,8 @@
                 android:background="@drawable/button_round_corner_grey"
                 android:gravity="center"
                 android:paddingVertical="10dp"
-                android:text="@string/str_occupancy"
-                android:textColor="@color/black"
+                android:text="Qo'shish"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 app:backgroundTint="@null" />
         </LinearLayout>

@@ -1,16 +1,11 @@
 package com.footzone.footzone.utils
 
 object KeyValues {
-    val NOTIFICATION_TITLE: String = "NotificationTitle"
-    val SPLASH_MESSAGE: String = "SplashMessage"
-//    val STADIUM_IMAGE_BASE_URL = "https://footzone-server.herokuapp.com/images/stadium/"
-//    val USER_IMAGE_BASE_URL = "htt" +
-           // "ps://footzone-server.herokuapp.com/images/user/"
-    val STADIUM_IMAGE_BASE_URL = "https://footzone-demo.herokuapp.com/images/stadium/"
-    val USER_IMAGE_BASE_URL = "https://footzone-demo.herokuapp.com/images/user/"
-//    val STADIUM_IMAGE_BASE_URL = "http://192.168.43.189:8081/images/stadium/"
-//    val USER_IMAGE_BASE_URL = "http://192.168.43.189:8081/images/user/"
-    val PITCH_DETAIL: String = "pitchDetail"
+    const val NOTIFICATION_TITLE: String = "NotificationTitle"
+    const val SPLASH_MESSAGE: String = "SplashMessage"
+    const val STADIUM_IMAGE_BASE_URL = "https://footzone-demo.herokuapp.com/images/stadium/"
+    const val USER_IMAGE_BASE_URL = "https://footzone-demo.herokuapp.com/images/user/"
+    const val PITCH_DETAIL: String = "pitchDetail"
     const val STADIUM_ID = "stadiumID"
     const val IS_FAVOURITE_STADIUM = "isFavouriteStadium"
     const val STADIUM_DATA = "stadiumdata"
@@ -27,9 +22,11 @@ object KeyValues {
     const val LATITUDE = "latitude"
     const val LONGITUDE = "longitude"
     const val LANGUAGE = "language"
-    const val WORK_TIMES  = "workTimes"
-    const val WORK_TIME  = "workTime"
-    const val FIREBASE_TOKEN  = "Firebase Token"
+    const val WORK_TIMES = "workTimes"
+    const val WORK_TIME = "workTime"
+    const val FIREBASE_TOKEN = "Firebase Token"
     const val PICK_FROM_FILE_ADD = 1001
     const val PICK_FROM_FILE_EDIT = 1002
+
+    const val SECURITY_KEY = "FOOTZONE_APPLICATION"
 }

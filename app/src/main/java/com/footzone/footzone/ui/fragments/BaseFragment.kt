@@ -71,4 +71,8 @@ open class BaseFragment(private val layoutResID: Int) : Fragment() {
     open fun hideProgress() {
         loadingDialog.dismiss()
     }
+
+    open fun back() {
+        requireActivity().onBackPressed()
+    }
 }

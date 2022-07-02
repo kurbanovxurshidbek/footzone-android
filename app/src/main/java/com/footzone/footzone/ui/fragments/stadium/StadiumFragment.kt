@@ -47,6 +47,11 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
     }
 
     private fun initViews() {
+
+        binding.ivBack.setOnClickListener {
+            back()
+        }
+
         viewModel.getHolderStadiums(stadiumId)
         viewModel.getCommentAllByStadiumId(stadiumId)
         setupObservers()

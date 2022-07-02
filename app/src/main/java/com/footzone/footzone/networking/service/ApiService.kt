@@ -9,10 +9,10 @@ import retrofit2.http.*
 interface ApiService {
 
     @GET("sms/send/forRegister/{phoneNumber}")
-    suspend fun singUp(@Path("phoneNumber") phoneNumber: String): Response
+    suspend fun singUp(@Path("phoneNumber") phoneNumber: String): SignInCodeResponse
 
     @GET("sms/send/forLogin/{phoneNumber}")
-    suspend fun singIn(@Path("phoneNumber") phoneNumber: String): Response
+    suspend fun singIn(@Path("phoneNumber") phoneNumber: String): SignInCodeResponse
 
     @POST("sms/validate/forRegister")
     suspend fun checkValidation(@Body smsVerification: SmsVerification): SmsVerificationResponse
@@ -36,7 +36,7 @@ interface ApiService {
     suspend fun getFavouriteStadiumsList(@Path("userId") userId: String): FavouriteStadiumResponse
 
     @GET("stadium/all/brief/{stadiumId}")
-    suspend fun getSingleStadiumData(@Path("stadiumId") stadiumId: String):SingleStadiumResponse
+    suspend fun getSingleStadiumData(@Path("stadiumId") stadiumId: String): SingleStadiumResponse
 
     @GET("user/{userId}")
     suspend fun getUserData(@Path("userId") userId: String): UserData
@@ -135,5 +135,4 @@ interface ApiService {
 
     @GET("notification")
     suspend fun detectIsNotificationAvailable(): NotificationAvailabilityResponse
-
 }

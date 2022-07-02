@@ -6,6 +6,8 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Vibrator
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.view.View
 import android.widget.NumberPicker
 import android.widget.RelativeLayout
@@ -18,6 +20,8 @@ import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.WORK_TIME
 import com.footzone.footzone.utils.KeyValues.WORK_TIMES
+import com.footzone.footzone.utils.extensions.hide
+import com.footzone.footzone.utils.extensions.show
 import java.util.*
 
 class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) {
@@ -32,59 +36,64 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
 
     private fun initViews() {
         binding.apply {
-            icClose.setOnClickListener { requireActivity().onBackPressed() }
-            tvCancel.setOnClickListener { requireActivity().onBackPressed() }
-            tvSelection.setOnClickListener {
-                setFragmentResult(KeyValues.TYPE_WORK_TIME,
-                    bundleOf(WORK_TIMES to workTimes, WORK_TIME to wortTime()))
-                requireActivity().onBackPressed()
+            icClose.setOnClickListener {
+                back()
             }
-        }
-        binding.switchMo.setOnToggledListener { toggleableView, isOn ->
-            openTime(binding.inputLayoutMo, isOn)
-        }
-        binding.switchTu.setOnToggledListener { toggleableView, isOn ->
-            openTime(binding.inputLayoutTu, isOn)
-        }
+            tvCancel.setOnClickListener {
+                back()
+            }
 
-        binding.switchWe.setOnToggledListener { toggleableView, isOn ->
-            openTime(binding.inputLayoutWe, isOn)
-        }
+            tvSelection.setOnClickListener {
+                setFragmentResult(
+                    KeyValues.TYPE_WORK_TIME,
+                    bundleOf(WORK_TIMES to workTimes, WORK_TIME to wortTime())
+                )
+                back()
+            }
 
-        binding.switchTh.setOnToggledListener { toggleableView, isOn ->
-            openTime(binding.inputLayoutTh, isOn)
-        }
-        binding.switchFr.setOnToggledListener { toggleableView, isOn ->
-            openTime(binding.inputLayoutFr, isOn)
-        }
+            switchMo.setOnCheckedChangeListener { _, isOn ->
+                openTime(inputLayoutMo, isOn)
+            }
+            switchTu.setOnCheckedChangeListener { _, isOn ->
+                openTime(inputLayoutTu, isOn)
+            }
 
-        binding.switchSa.setOnToggledListener { toggleableView, isOn ->
-            openTime(binding.inputLayoutSa, isOn)
+            switchWe.setOnCheckedChangeListener { _, isOn ->
+                openTime(inputLayoutWe, isOn)
+            }
+
+            switchTh.setOnCheckedChangeListener { _, isOn ->
+                openTime(inputLayoutTh, isOn)
+            }
+            switchFr.setOnCheckedChangeListener { _, isOn ->
+                openTime(inputLayoutFr, isOn)
+            }
+
+            switchSa.setOnCheckedChangeListener { _, isOn ->
+                openTime(inputLayoutSa, isOn)
+            }
+
+            switchSu.setOnCheckedChangeListener { _, isOn ->
+                openTime(inputLayoutSu, isOn)
+            }
+
+            numberPicker(startTimeMo, finishTimeMo)
+            numberPicker(startTimeTu, finishTimeTu)
+            numberPicker(startTimeWe, finishTimeWe)
+            numberPicker(startTimeTh, finishTimeTh)
+            numberPicker(startTimeFr, finishTimeFr)
+            numberPicker(startTimeSa, finishTimeSa)
+            numberPicker(startTimeSu, finishTimeSu)
         }
-
-        binding.switchSu.setOnToggledListener { toggleableView, isOn ->
-            openTime(binding.inputLayoutSu, isOn)
-        }
-
-        numberPicker(binding.startTimeMo, binding.finishTimeMo)
-        numberPicker(binding.startTimeTu, binding.finishTimeTu)
-        numberPicker(binding.startTimeWe, binding.finishTimeWe)
-        numberPicker(binding.startTimeTh, binding.finishTimeTh)
-        numberPicker(binding.startTimeFr, binding.finishTimeFr)
-        numberPicker(binding.startTimeSa, binding.finishTimeSa)
-        numberPicker(binding.startTimeSu, binding.finishTimeSu)
-
     }
 
-    fun openTime(layout: RelativeLayout, bool: Boolean) {
-        if (bool) {
-            layout.visibility = View.VISIBLE
-        } else {
-            layout.visibility = View.GONE
-        }
+    private fun openTime(layout: RelativeLayout, bool: Boolean) = if (bool) {
+        layout.show()
+    } else {
+        layout.hide()
     }
 
-    fun numberPicker(startTime: NumberPicker, finishTime: NumberPicker) {
+    private fun numberPicker(startTime: NumberPicker, finishTime: NumberPicker) {
         val timeList = resources.getStringArray(R.array.timelist)
         startTime.minValue = 1
         startTime.maxValue = 48
@@ -93,52 +102,56 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
         finishTime.maxValue = 48
         finishTime.displayedValues = timeList
 
-        startTime.setOnScrollListener { numberPicker, i ->
+        startTime.setOnScrollListener { _, _ ->
             checkVibrationIsOn(requireContext())
         }
 
 
-        finishTime.setOnScrollListener { numberPicker, i ->
+        finishTime.setOnScrollListener { _, _ ->
             checkVibrationIsOn(requireContext())
         }
     }
 
-    fun wortTime(): String {
+    private fun wortTime(): String {
+
         val array = resources.getStringArray(R.array.daysWeek)
         var string = ""
-        if (binding.switchMo.isOn) {
-            string += "Du, "
-            addTime(binding.startTimeMo, binding.finishTimeMo, array[1])
-        }
 
-        if (binding.switchTu.isOn) {
-            string += "Se, "
-            addTime(binding.startTimeTu, binding.finishTimeTu, array[2])
-        }
+        binding.apply {
+            if (switchMo.isChecked) {
+                string += "Du, "
+                addTime(startTimeMo, finishTimeMo, array[1])
+            }
 
-        if (binding.switchWe.isOn) {
-            string += "Cho, "
-            addTime(binding.startTimeWe, binding.finishTimeWe, array[3])
-        }
+            if (switchTu.isChecked) {
+                string += "Se, "
+                addTime(startTimeTu, finishTimeTu, array[2])
+            }
 
-        if (binding.switchTh.isOn) {
-            string += "Pa, "
-            addTime(binding.startTimeTh, binding.finishTimeTh, array[4])
-        }
+            if (switchWe.isChecked) {
+                string += "Cho, "
+                addTime(startTimeWe, finishTimeWe, array[3])
+            }
 
-        if (binding.switchFr.isOn) {
-            string += "Ju, "
-            addTime(binding.startTimeFr, binding.finishTimeFr, array[5])
-        }
+            if (switchTh.isChecked) {
+                string += "Pa, "
+                addTime(startTimeTh, finishTimeTh, array[4])
+            }
 
-        if (binding.switchSa.isOn) {
-            string += "Sha, "
-            addTime(binding.startTimeSa, binding.finishTimeSa, array[6])
-        }
+            if (switchFr.isChecked) {
+                string += "Ju, "
+                addTime(startTimeFr, finishTimeFr, array[5])
+            }
 
-        if (binding.switchSu.isOn) {
-            string += "Ya"
-            addTime(binding.startTimeSu, binding.finishTimeSu, array[0])
+            if (switchSa.isChecked) {
+                string += "Sha, "
+                addTime(startTimeSa, finishTimeSa, array[6])
+            }
+
+            if (switchSu.isChecked) {
+                string += "Ya"
+                addTime(startTimeSu, finishTimeSu, array[0])
+            }
         }
 
         return string
@@ -148,7 +161,7 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
         val timeList = resources.getStringArray(R.array.timelist)
         val start = startTime.value
         var finish = finishTime.value
-        if (start > finish){
+        if (start > finish) {
             finish = timeList.size
         }
         val startTime = timeList[start - 1].toString()
@@ -159,7 +172,7 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
     /**
      * this function, gives the NumberPicker sound and vibrate
      */
-    fun checkVibrationIsOn(context: Context) {
+    private fun checkVibrationIsOn(context: Context) {
         val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         if (am.ringerMode == AudioManager.RINGER_MODE_VIBRATE) {
             val v: Vibrator =

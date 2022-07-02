@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,10 +7,14 @@
     android:background="@color/white">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        app:elevation="0dp">
+        app:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
@@ -43,9 +47,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
         android:orientation="vertical"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        app:layout_constraintBottom_toTopOf="@id/linearButtons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -59,6 +67,7 @@
                 android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutMonday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
@@ -68,24 +77,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Dushanba"
+                        android:textColor="#424242"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.github.angads25.toggle.widget.LabeledSwitch
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/switchMo"
-                        android:layout_width="50dp"
-                        android:layout_height="20dp"
-                        android:textSize="8sp"
-                        app:colorBorder="@color/blue"
-                        app:colorOn="@color/blue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:thumb="@drawable/custom_thumb"
+                        android:track="@drawable/custom_track"
+                        app:background="@null"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:on="false"
-                        app:textOff="CLOSED"
-                        app:textOn="OPEN" />
+                        app:trackTint="@color/track_custom_color" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -187,24 +196,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Seshanba"
+                        android:textColor="#424242"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.github.angads25.toggle.widget.LabeledSwitch
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/switchTu"
-                        android:layout_width="50dp"
-                        android:layout_height="20dp"
-                        android:textSize="8sp"
-                        app:colorBorder="@color/blue"
-                        app:colorOn="@color/blue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:thumb="@drawable/custom_thumb"
+                        android:track="@drawable/custom_track"
+                        app:background="@null"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:on="false"
-                        app:textOff="CLOSED"
-                        app:textOn="OPEN" />
+                        app:trackTint="@color/track_custom_color" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <RelativeLayout
@@ -306,24 +315,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Chorshanba"
+                        android:textColor="#424242"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.github.angads25.toggle.widget.LabeledSwitch
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/switchWe"
-                        android:layout_width="50dp"
-                        android:layout_height="20dp"
-                        android:textSize="8sp"
-                        app:colorBorder="@color/blue"
-                        app:colorOn="@color/blue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:thumb="@drawable/custom_thumb"
+                        android:track="@drawable/custom_track"
+                        app:background="@null"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:on="false"
-                        app:textOff="CLOSED"
-                        app:textOn="OPEN" />
+                        app:trackTint="@color/track_custom_color" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <RelativeLayout
@@ -425,24 +434,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Payshanba"
+                        android:textColor="#424242"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.github.angads25.toggle.widget.LabeledSwitch
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/switchTh"
-                        android:layout_width="50dp"
-                        android:layout_height="20dp"
-                        android:textSize="8sp"
-                        app:colorBorder="@color/blue"
-                        app:colorOn="@color/blue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:thumb="@drawable/custom_thumb"
+                        android:track="@drawable/custom_track"
+                        app:background="@null"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:on="false"
-                        app:textOff="CLOSED"
-                        app:textOn="OPEN" />
+                        app:trackTint="@color/track_custom_color" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <RelativeLayout
@@ -544,24 +553,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Juma"
+                        android:textColor="#424242"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.github.angads25.toggle.widget.LabeledSwitch
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/switchFr"
-                        android:layout_width="50dp"
-                        android:layout_height="20dp"
-                        android:textSize="8sp"
-                        app:colorBorder="@color/blue"
-                        app:colorOn="@color/blue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:thumb="@drawable/custom_thumb"
+                        android:track="@drawable/custom_track"
+                        app:background="@null"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:on="false"
-                        app:textOff="CLOSED"
-                        app:textOn="OPEN" />
+                        app:trackTint="@color/track_custom_color" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <RelativeLayout
@@ -663,24 +672,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Shanba"
+                        android:textColor="#424242"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.github.angads25.toggle.widget.LabeledSwitch
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/switchSa"
-                        android:layout_width="50dp"
-                        android:layout_height="20dp"
-                        android:textSize="8sp"
-                        app:colorBorder="@color/blue"
-                        app:colorOn="@color/blue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:thumb="@drawable/custom_thumb"
+                        android:track="@drawable/custom_track"
+                        app:background="@null"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:on="false"
-                        app:textOff="CLOSED"
-                        app:textOn="OPEN" />
+                        app:trackTint="@color/track_custom_color" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <RelativeLayout
@@ -782,24 +791,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Yakshanba"
+                        android:textColor="#424242"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.github.angads25.toggle.widget.LabeledSwitch
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/switchSu"
-                        android:layout_width="50dp"
-                        android:layout_height="20dp"
-                        android:textSize="8sp"
-                        app:colorBorder="@color/blue"
-                        app:colorOn="@color/blue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:thumb="@drawable/custom_thumb"
+                        android:track="@drawable/custom_track"
+                        app:background="@null"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:on="false"
-                        app:textOff="CLOSED"
-                        app:textOn="OPEN" />
+                        app:trackTint="@color/track_custom_color" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <RelativeLayout
@@ -894,40 +903,44 @@
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/tvCancel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/view_rounded_corners"
-                android:gravity="center"
-                android:paddingVertical="10dp"
-                android:text="@string/str_cancel"
-                android:textColor="@color/blue"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tvSelection"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/view_rounded_corners_blue"
-                android:gravity="center"
-                android:paddingVertical="10dp"
-                android:text="@string/str_selection"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                app:backgroundTint="@null" />
-        </LinearLayout>
     </LinearLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <LinearLayout
+        android:id="@+id/linearButtons"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginVertical="16dp"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tvCancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_rounded_corner"
+            android:gravity="center"
+            android:paddingVertical="10dp"
+            android:text="@string/str_cancel"
+            android:textColor="@color/colorBlue600"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvSelection"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_register_filled_rounded_corner2"
+            android:gravity="center"
+            android:paddingVertical="10dp"
+            android:text="Tanlash"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:backgroundTint="@null" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

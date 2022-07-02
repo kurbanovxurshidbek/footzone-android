@@ -3,6 +3,7 @@ package com.footzone.footzone.ui.fragments.signup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.footzone.footzone.model.Response
+import com.footzone.footzone.model.SignInCodeResponse
 import com.footzone.footzone.repository.auth.AuthRepository
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(private val authRepository: AuthRepository) :
     ViewModel() {
-    private val _userPhoneNumber = MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
+    private val _userPhoneNumber = MutableStateFlow<UiStateObject<SignInCodeResponse>>(UiStateObject.EMPTY)
     val userPhoneNumber = _userPhoneNumber
 
     fun signUp(phoneNumber: String) = viewModelScope.launch {

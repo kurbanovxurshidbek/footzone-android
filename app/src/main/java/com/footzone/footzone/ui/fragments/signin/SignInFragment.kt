@@ -2,11 +2,13 @@ package com.footzone.footzone.ui.fragments.signin
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
@@ -16,6 +18,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.footzone.footzone.R
 import com.footzone.footzone.databinding.FragmentSignInBinding
+import com.footzone.footzone.security.Symmetric.decrypt
+import com.footzone.footzone.security.Symmetric.encrypt
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues.PHONE_NUMBER
 import com.footzone.footzone.utils.UiStateObject
@@ -28,6 +32,7 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
     lateinit var binding: FragmentSignInBinding
     private val viewModel by viewModels<SignInViewModel>()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -36,40 +41,50 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
         initViews()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initViews() {
-        binding.textViewSignUp.setOnClickListener {
-            openSignUpFragment()
-        }
-        binding.ivBack.setOnClickListener {
-            closeSignInFragment()
-        }
 
-        checkAllFields()
+        binding.apply {
 
-        binding.enterButton.setOnClickListener {
-            sendLogInRequest()
-        }
+            textViewSignUp.setOnClickListener {
+                openSignUpFragment()
+            }
 
-        binding.editTextNumber.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
+            ivBack.setOnClickListener {
+                back()
+            }
+
+            enterButton.setOnClickListener {
                 sendLogInRequest()
-                true
-            } else false
+            }
+
+            checkAllFields()
+
+            editTextNumber.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    sendLogInRequest()
+                    true
+                } else false
+            }
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun sendLogInRequest() {
         if (binding.editTextNumber.text!!.isEmpty() && binding.editTextNumber.text.toString().length != 12) {
             toast("Raqam noto'g'ri kiritildi!")
         } else {
-            phoneNumber =
-                "+998${binding.editTextNumber.text.toString().replace("\\s".toRegex(), "")}"
+            phoneNumber = getPhoneNumber()
 
-            viewModel.signIn(phoneNumber!!)
+            viewModel.signIn(encrypt(phoneNumber!!)!!)
         }
         setupObservers()
     }
 
+    private fun getPhoneNumber(): String =
+        "+998${binding.editTextNumber.text.toString().replace("\\s".toRegex(), "")}"
+
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setupObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -81,7 +96,8 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
 
                         is UiStateObject.SUCCESS -> {
                             hideProgress()
-                            toastLong(it.data.data.toString())
+                            toastLong(it.data.data)
+                            toastLong(decrypt(it.data.data)!!)
                             openVerificationFragment()
                         }
                         is UiStateObject.ERROR -> {
@@ -129,10 +145,6 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
     private fun checkData(): Boolean {
         val number = binding.editTextNumber.text.toString()
         return number.length == 12
-    }
-
-    private fun closeSignInFragment() {
-        findNavController().popBackStack()
     }
 
     private fun openSignUpFragment() {
