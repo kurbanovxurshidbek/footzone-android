@@ -96,7 +96,7 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
 
                         is UiStateObject.SUCCESS -> {
                             hideProgress()
-                            toastLong(it.data.data)
+                           // toastLong(it.data.data)
                             toastLong(decrypt(it.data.data)!!)
                             openVerificationFragment()
                         }

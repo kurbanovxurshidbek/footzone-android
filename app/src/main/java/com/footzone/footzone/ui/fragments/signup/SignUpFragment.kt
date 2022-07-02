@@ -64,7 +64,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
 
                         is UiStateObject.SUCCESS -> {
                             hideProgress()
-                            toastLong(it.data.data)
+                           // toastLong(it.data.data)
                             toastLong(decrypt(it.data.data)!!)
 
                             val fullname = fullName()
