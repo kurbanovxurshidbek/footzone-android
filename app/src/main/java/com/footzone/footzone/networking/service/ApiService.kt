@@ -65,7 +65,7 @@ interface ApiService {
     suspend fun postHolderStadium(
         @Part("stadium") stadium: AddStadiumRequest,
         @Part files: List<MultipartBody.Part>,
-    ): Response
+    ): Unit
 
     @GET("stadium/{stadiumId}")
     suspend fun getHolderStadium(@Path("stadiumId") stadiumId: String): FullStadiumDetailResponse

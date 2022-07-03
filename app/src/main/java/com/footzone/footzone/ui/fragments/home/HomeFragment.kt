@@ -183,13 +183,13 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                 .build()
             routing.execute()
             if (cameraCurrentLatLng != null)
-                16f.animateCamera(
+                12.4f.animateCamera(
                     LatLng(
                         cameraCurrentLatLng!!.latitude,
                         cameraCurrentLatLng!!.longitude
                     )
                 ) else
-                16f.animateCamera(LatLng(lastLocation!!.latitude, lastLocation!!.longitude))
+                12.4f.animateCamera(LatLng(lastLocation!!.latitude, lastLocation!!.longitude))
         }
     }
 

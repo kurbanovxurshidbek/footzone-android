@@ -17,7 +17,7 @@ import javax.inject.Inject
 class AddStadiumViewModel  @Inject constructor(private val mainRepository: MainRepository) :
     ViewModel() {
 
-    private val _postStadium = MutableStateFlow<UiStateObject<Response>>(UiStateObject.EMPTY)
+    private val _postStadium = MutableStateFlow<UiStateObject<Unit>>(UiStateObject.EMPTY)
     val postStadium = _postStadium
 
     private val _getHolderStadium = MutableStateFlow<UiStateObject<FullStadiumDetailResponse>>(UiStateObject.EMPTY)
