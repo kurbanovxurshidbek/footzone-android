@@ -1,6 +1,7 @@
 package com.footzone.footzone.utils
 
 object KeyValues {
+    const val SECURITY_KEY = "FOOTZONE_APPLICATION"
     const val NOTIFICATION_TITLE: String = "NotificationTitle"
     const val SPLASH_MESSAGE: String = "SplashMessage"
     const val STADIUM_IMAGE_BASE_URL = "https://footzone-demo.herokuapp.com/images/stadium/"
@@ -22,11 +23,9 @@ object KeyValues {
     const val LATITUDE = "latitude"
     const val LONGITUDE = "longitude"
     const val LANGUAGE = "language"
-    const val WORK_TIMES = "workTimes"
-    const val WORK_TIME = "workTime"
-    const val FIREBASE_TOKEN = "Firebase Token"
+    const val WORK_TIMES  = "workTimes"
+    const val WORK_TIME  = "workTime"
+    const val FIREBASE_TOKEN  = "Firebase Token"
     const val PICK_FROM_FILE_ADD = 1001
     const val PICK_FROM_FILE_EDIT = 1002
-
-    const val SECURITY_KEY = "FOOTZONE_APPLICATION"
 }
