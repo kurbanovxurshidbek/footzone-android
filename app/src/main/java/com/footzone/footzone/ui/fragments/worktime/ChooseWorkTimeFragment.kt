@@ -11,6 +11,7 @@ import android.transition.TransitionManager
 import android.view.View
 import android.widget.NumberPicker
 import android.widget.RelativeLayout
+import androidx.cardview.widget.CardView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import com.footzone.footzone.R
@@ -52,29 +53,29 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
             }
 
             switchMo.setOnCheckedChangeListener { _, isOn ->
-                openTime(inputLayoutMo, isOn)
+                openTime(isOn, cardViewMo)
             }
             switchTu.setOnCheckedChangeListener { _, isOn ->
-                openTime(inputLayoutTu, isOn)
+                openTime(isOn, cardViewTu)
             }
 
             switchWe.setOnCheckedChangeListener { _, isOn ->
-                openTime(inputLayoutWe, isOn)
+                openTime(isOn, cardViewWe)
             }
 
             switchTh.setOnCheckedChangeListener { _, isOn ->
-                openTime(inputLayoutTh, isOn)
+                openTime(isOn, cardViewTh)
             }
             switchFr.setOnCheckedChangeListener { _, isOn ->
-                openTime(inputLayoutFr, isOn)
+                openTime(isOn, cardViewFr)
             }
 
             switchSa.setOnCheckedChangeListener { _, isOn ->
-                openTime(inputLayoutSa, isOn)
+                openTime(isOn, cardViewSa)
             }
 
             switchSu.setOnCheckedChangeListener { _, isOn ->
-                openTime(inputLayoutSu, isOn)
+                openTime(isOn, cardViewSu)
             }
 
             numberPicker(startTimeMo, finishTimeMo)
@@ -87,10 +88,15 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
         }
     }
 
-    private fun openTime(layout: RelativeLayout, bool: Boolean) = if (bool) {
-        layout.show()
+    private fun openTime(bool: Boolean, cardView: CardView) = if (bool) {
+       // layout.show()
+        androidx.transition.TransitionManager.beginDelayedTransition(cardView,
+            androidx.transition.AutoTransition())
+        binding.inputLayoutMo.setVisibility(View.VISIBLE)
     } else {
-        layout.hide()
+       // layout.hide()
+        TransitionManager.beginDelayedTransition(cardView, AutoTransition())
+        binding.inputLayoutMo.setVisibility(View.GONE)
     }
 
     private fun numberPicker(startTime: NumberPicker, finishTime: NumberPicker) {

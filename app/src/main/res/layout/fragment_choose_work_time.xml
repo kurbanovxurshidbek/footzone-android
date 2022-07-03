@@ -66,839 +66,926 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layoutMonday"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewMo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:paddingVertical="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Dushanba"
-                        android:textColor="#424242"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/switchMo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:thumb="@drawable/custom_thumb"
-                        android:track="@drawable/custom_track"
-                        app:background="@null"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:trackTint="@color/track_custom_color" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <RelativeLayout
-                    android:id="@+id/input_layout_mo"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/edittextround"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <LinearLayout
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/layoutMonday"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="20dp"
-                            android:gravity="center_vertical">
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:paddingVertical="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Dushanba"
+                                android:textColor="#424242"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/switchMo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:thumb="@drawable/custom_thumb"
+                                android:track="@drawable/custom_track"
+                                app:background="@null"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:trackTint="@color/track_custom_color" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/input_layout_mo"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical|end">
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="16dp"
+                                android:background="@drawable/edittextround"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="20dp"
+                                    android:gravity="center_vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|end">
 
 
-                                <NumberPicker
-                                    android:id="@+id/startTimeMo"
-                                    android:layout_width="90dp"
-                                    android:layout_height="wrap_content"
-                                    android:selectionDividerHeight="0dp"
-                                    android:soundEffectsEnabled="true"
-                                    android:theme="@style/NumberPicker" />
+                                        <NumberPicker
+                                            android:id="@+id/startTimeMo"
+                                            android:layout_width="90dp"
+                                            android:layout_height="wrap_content"
+                                            android:selectionDividerHeight="0dp"
+                                            android:soundEffectsEnabled="true"
+                                            android:theme="@style/NumberPicker" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center">
+
+                                        <View
+                                            android:layout_width="24dp"
+                                            android:layout_height="3dp"
+                                            android:background="@color/black" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|start">
+
+                                        <NumberPicker
+                                            android:id="@+id/finishTimeMo"
+                                            android:layout_width="90dp"
+                                            android:layout_height="wrap_content"
+                                            android:selectionDividerHeight="0dp"
+                                            android:theme="@style/NumberPicker" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="0dp"
+                            <View
+                                android:id="@+id/viewMo"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center">
+                                android:layout_alignBottom="@+id/viewMo"
+                                android:layout_marginStart="20dp"
+                                android:background="@color/white"
+                                android:includeFontPadding="false"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingBottom="14dp"
+                                android:text="@string/str_time_interval"
+                                android:textAppearance="@android:style/TextAppearance.Medium"
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
 
-                                <View
-                                    android:layout_width="24dp"
-                                    android:layout_height="3dp"
-                                    android:background="@color/black" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical|start">
-
-                                <NumberPicker
-                                    android:id="@+id/finishTimeMo"
-                                    android:layout_width="90dp"
-                                    android:layout_height="wrap_content"
-                                    android:selectionDividerHeight="0dp"
-                                    android:theme="@style/NumberPicker" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
                     </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                    <View
-                        android:id="@+id/viewMo"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/viewMo"
-                        android:layout_marginStart="20dp"
-                        android:background="@color/white"
-                        android:includeFontPadding="false"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="14dp"
-                        android:text="@string/str_time_interval"
-                        android:textAppearance="@android:style/TextAppearance.Medium"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-                </RelativeLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewTu"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:paddingVertical="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Seshanba"
-                        android:textColor="#424242"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/switchTu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:thumb="@drawable/custom_thumb"
-                        android:track="@drawable/custom_track"
-                        app:background="@null"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:trackTint="@color/track_custom_color" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <RelativeLayout
-                    android:id="@+id/input_layout_tu"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/edittextround"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <LinearLayout
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="20dp"
-                            android:gravity="center_vertical">
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:paddingVertical="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Seshanba"
+                                android:textColor="#424242"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/switchTu"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:thumb="@drawable/custom_thumb"
+                                android:track="@drawable/custom_track"
+                                app:background="@null"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:trackTint="@color/track_custom_color" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/input_layout_tu"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
 
                             <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical|end">
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="16dp"
+                                android:background="@drawable/edittextround"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="20dp"
+                                    android:gravity="center_vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|end">
 
 
-                                <NumberPicker
-                                    android:id="@+id/startTimeTu"
-                                    android:layout_width="90dp"
-                                    android:layout_height="wrap_content"
-                                    android:selectionDividerHeight="0dp"
-                                    android:soundEffectsEnabled="true"
-                                    android:theme="@style/NumberPicker" />
+                                        <NumberPicker
+                                            android:id="@+id/startTimeTu"
+                                            android:layout_width="90dp"
+                                            android:layout_height="wrap_content"
+                                            android:selectionDividerHeight="0dp"
+                                            android:soundEffectsEnabled="true"
+                                            android:theme="@style/NumberPicker" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center">
+
+                                        <View
+                                            android:layout_width="24dp"
+                                            android:layout_height="3dp"
+                                            android:background="@color/black" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|start">
+
+                                        <NumberPicker
+                                            android:id="@+id/finishTimeTu"
+                                            android:layout_width="90dp"
+                                            android:layout_height="wrap_content"
+                                            android:selectionDividerHeight="0dp"
+                                            android:theme="@style/NumberPicker" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="0dp"
+                            <View
+                                android:id="@+id/viewTu"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center">
+                                android:layout_alignBottom="@+id/viewTu"
+                                android:layout_marginStart="20dp"
+                                android:background="@color/white"
+                                android:includeFontPadding="false"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingBottom="14dp"
+                                android:text="@string/str_time_interval"
+                                android:textAppearance="@android:style/TextAppearance.Medium"
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
 
-                                <View
-                                    android:layout_width="24dp"
-                                    android:layout_height="3dp"
-                                    android:background="@color/black" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical|start">
-
-                                <NumberPicker
-                                    android:id="@+id/finishTimeTu"
-                                    android:layout_width="90dp"
-                                    android:layout_height="wrap_content"
-                                    android:selectionDividerHeight="0dp"
-                                    android:theme="@style/NumberPicker" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
                     </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                    <View
-                        android:id="@+id/viewTu"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/viewTu"
-                        android:layout_marginStart="20dp"
-                        android:background="@color/white"
-                        android:includeFontPadding="false"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="14dp"
-                        android:text="@string/str_time_interval"
-                        android:textAppearance="@android:style/TextAppearance.Medium"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-                </RelativeLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewWe"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:paddingVertical="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Chorshanba"
-                        android:textColor="#424242"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/switchWe"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:thumb="@drawable/custom_thumb"
-                        android:track="@drawable/custom_track"
-                        app:background="@null"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:trackTint="@color/track_custom_color" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <RelativeLayout
-                    android:id="@+id/input_layout_we"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/edittextround"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <LinearLayout
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="20dp"
-                            android:gravity="center_vertical">
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:paddingVertical="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Chorshanba"
+                                android:textColor="#424242"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/switchWe"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:thumb="@drawable/custom_thumb"
+                                android:track="@drawable/custom_track"
+                                app:background="@null"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:trackTint="@color/track_custom_color" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/input_layout_we"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
 
                             <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical|end">
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="16dp"
+                                android:background="@drawable/edittextround"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="20dp"
+                                    android:gravity="center_vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|end">
 
 
-                                <NumberPicker
-                                    android:id="@+id/startTimeWe"
-                                    android:layout_width="90dp"
-                                    android:layout_height="wrap_content"
-                                    android:selectionDividerHeight="0dp"
-                                    android:soundEffectsEnabled="true"
-                                    android:theme="@style/NumberPicker" />
+                                        <NumberPicker
+                                            android:id="@+id/startTimeWe"
+                                            android:layout_width="90dp"
+                                            android:layout_height="wrap_content"
+                                            android:selectionDividerHeight="0dp"
+                                            android:soundEffectsEnabled="true"
+                                            android:theme="@style/NumberPicker" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center">
+
+                                        <View
+                                            android:layout_width="24dp"
+                                            android:layout_height="3dp"
+                                            android:background="@color/black" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|start">
+
+                                        <NumberPicker
+                                            android:id="@+id/finishTimeWe"
+                                            android:layout_width="90dp"
+                                            android:layout_height="wrap_content"
+                                            android:selectionDividerHeight="0dp"
+                                            android:theme="@style/NumberPicker" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="0dp"
+                            <View
+                                android:id="@+id/viewWe"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center">
+                                android:layout_alignBottom="@+id/viewWe"
+                                android:layout_marginStart="20dp"
+                                android:background="@color/white"
+                                android:includeFontPadding="false"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingBottom="14dp"
+                                android:text="@string/str_time_interval"
+                                android:textAppearance="@android:style/TextAppearance.Medium"
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
 
-                                <View
-                                    android:layout_width="24dp"
-                                    android:layout_height="3dp"
-                                    android:background="@color/black" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical|start">
-
-                                <NumberPicker
-                                    android:id="@+id/finishTimeWe"
-                                    android:layout_width="90dp"
-                                    android:layout_height="wrap_content"
-                                    android:selectionDividerHeight="0dp"
-                                    android:theme="@style/NumberPicker" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
                     </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                    <View
-                        android:id="@+id/viewWe"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/viewWe"
-                        android:layout_marginStart="20dp"
-                        android:background="@color/white"
-                        android:includeFontPadding="false"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="14dp"
-                        android:text="@string/str_time_interval"
-                        android:textAppearance="@android:style/TextAppearance.Medium"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-                </RelativeLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewTh"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:paddingVertical="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Payshanba"
-                        android:textColor="#424242"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/switchTh"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:thumb="@drawable/custom_thumb"
-                        android:track="@drawable/custom_track"
-                        app:background="@null"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:trackTint="@color/track_custom_color" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <RelativeLayout
-                    android:id="@+id/input_layout_th"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/edittextround"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <LinearLayout
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="20dp"
-                            android:gravity="center_vertical">
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:paddingVertical="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Payshanba"
+                                android:textColor="#424242"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/switchTh"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:thumb="@drawable/custom_thumb"
+                                android:track="@drawable/custom_track"
+                                app:background="@null"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:trackTint="@color/track_custom_color" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/input_layout_th"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
 
                             <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical|end">
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="16dp"
+                                android:background="@drawable/edittextround"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="20dp"
+                                    android:gravity="center_vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|end">
 
 
-                                <NumberPicker
-                                    android:id="@+id/startTimeTh"
-                                    android:layout_width="90dp"
-                                    android:layout_height="wrap_content"
-                                    android:selectionDividerHeight="0dp"
-                                    android:soundEffectsEnabled="true"
-                                    android:theme="@style/NumberPicker" />
+                                        <NumberPicker
+                                            android:id="@+id/startTimeTh"
+                                            android:layout_width="90dp"
+                                            android:layout_height="wrap_content"
+                                            android:selectionDividerHeight="0dp"
+                                            android:soundEffectsEnabled="true"
+                                            android:theme="@style/NumberPicker" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center">
+
+                                        <View
+                                            android:layout_width="24dp"
+                                            android:layout_height="3dp"
+                                            android:background="@color/black" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|start">
+
+                                        <NumberPicker
+                                            android:id="@+id/finishTimeTh"
+                                            android:layout_width="90dp"
+                                            android:layout_height="wrap_content"
+                                            android:selectionDividerHeight="0dp"
+                                            android:theme="@style/NumberPicker" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="0dp"
+                            <View
+                                android:id="@+id/viewTh"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center">
-
-                                <View
-                                    android:layout_width="24dp"
-                                    android:layout_height="3dp"
-                                    android:background="@color/black" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical|start">
-
-                                <NumberPicker
-                                    android:id="@+id/finishTimeTh"
-                                    android:layout_width="90dp"
-                                    android:layout_height="wrap_content"
-                                    android:selectionDividerHeight="0dp"
-                                    android:theme="@style/NumberPicker" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
+                                android:layout_alignBottom="@+id/viewTh"
+                                android:layout_marginStart="20dp"
+                                android:background="@color/white"
+                                android:includeFontPadding="false"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingBottom="14dp"
+                                android:text="@string/str_time_interval"
+                                android:textAppearance="@android:style/TextAppearance.Medium"
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
                     </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                    <View
-                        android:id="@+id/viewTh"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/viewTh"
-                        android:layout_marginStart="20dp"
-                        android:background="@color/white"
-                        android:includeFontPadding="false"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="14dp"
-                        android:text="@string/str_time_interval"
-                        android:textAppearance="@android:style/TextAppearance.Medium"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-                </RelativeLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewFr"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:paddingVertical="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Juma"
-                        android:textColor="#424242"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/switchFr"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:thumb="@drawable/custom_thumb"
-                        android:track="@drawable/custom_track"
-                        app:background="@null"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:trackTint="@color/track_custom_color" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <RelativeLayout
-                    android:id="@+id/input_layout_fr"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/edittextround"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <LinearLayout
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="20dp"
-                            android:gravity="center_vertical">
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:paddingVertical="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Juma"
+                                android:textColor="#424242"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/switchFr"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:thumb="@drawable/custom_thumb"
+                                android:track="@drawable/custom_track"
+                                app:background="@null"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:trackTint="@color/track_custom_color" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/input_layout_fr"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
 
                             <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical|end">
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="16dp"
+                                android:background="@drawable/edittextround"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="20dp"
+                                    android:gravity="center_vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|end">
 
 
-                                <NumberPicker
-                                    android:id="@+id/startTimeFr"
-                                    android:layout_width="90dp"
-                                    android:layout_height="wrap_content"
-                                    android:selectionDividerHeight="0dp"
-                                    android:soundEffectsEnabled="true"
-                                    android:theme="@style/NumberPicker" />
+                                        <NumberPicker
+                                            android:id="@+id/startTimeFr"
+                                            android:layout_width="90dp"
+                                            android:layout_height="wrap_content"
+                                            android:selectionDividerHeight="0dp"
+                                            android:soundEffectsEnabled="true"
+                                            android:theme="@style/NumberPicker" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center">
+
+                                        <View
+                                            android:layout_width="24dp"
+                                            android:layout_height="3dp"
+                                            android:background="@color/black" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|start">
+
+                                        <NumberPicker
+                                            android:id="@+id/finishTimeFr"
+                                            android:layout_width="90dp"
+                                            android:layout_height="wrap_content"
+                                            android:selectionDividerHeight="0dp"
+                                            android:theme="@style/NumberPicker" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="0dp"
+                            <View
+                                android:id="@+id/viewFr"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center">
-
-                                <View
-                                    android:layout_width="24dp"
-                                    android:layout_height="3dp"
-                                    android:background="@color/black" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical|start">
-
-                                <NumberPicker
-                                    android:id="@+id/finishTimeFr"
-                                    android:layout_width="90dp"
-                                    android:layout_height="wrap_content"
-                                    android:selectionDividerHeight="0dp"
-                                    android:theme="@style/NumberPicker" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
+                                android:layout_alignBottom="@+id/viewFr"
+                                android:layout_marginStart="20dp"
+                                android:background="@color/white"
+                                android:includeFontPadding="false"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingBottom="14dp"
+                                android:text="@string/str_time_interval"
+                                android:textAppearance="@android:style/TextAppearance.Medium"
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
                     </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                    <View
-                        android:id="@+id/viewFr"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/viewFr"
-                        android:layout_marginStart="20dp"
-                        android:background="@color/white"
-                        android:includeFontPadding="false"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="14dp"
-                        android:text="@string/str_time_interval"
-                        android:textAppearance="@android:style/TextAppearance.Medium"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-                </RelativeLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewSa"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:paddingVertical="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Shanba"
-                        android:textColor="#424242"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/switchSa"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:thumb="@drawable/custom_thumb"
-                        android:track="@drawable/custom_track"
-                        app:background="@null"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:trackTint="@color/track_custom_color" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <RelativeLayout
-                    android:id="@+id/input_layout_sa"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/edittextround"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <LinearLayout
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="20dp"
-                            android:gravity="center_vertical">
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:paddingVertical="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Shanba"
+                                android:textColor="#424242"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/switchSa"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:thumb="@drawable/custom_thumb"
+                                android:track="@drawable/custom_track"
+                                app:background="@null"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:trackTint="@color/track_custom_color" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/input_layout_sa"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
 
                             <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical|end">
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="16dp"
+                                android:background="@drawable/edittextround"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="20dp"
+                                    android:gravity="center_vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|end">
 
 
-                                <NumberPicker
-                                    android:id="@+id/startTimeSa"
-                                    android:layout_width="90dp"
-                                    android:layout_height="wrap_content"
-                                    android:selectionDividerHeight="0dp"
-                                    android:soundEffectsEnabled="true"
-                                    android:theme="@style/NumberPicker" />
+                                        <NumberPicker
+                                            android:id="@+id/startTimeSa"
+                                            android:layout_width="90dp"
+                                            android:layout_height="wrap_content"
+                                            android:selectionDividerHeight="0dp"
+                                            android:soundEffectsEnabled="true"
+                                            android:theme="@style/NumberPicker" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center">
+
+                                        <View
+                                            android:layout_width="24dp"
+                                            android:layout_height="3dp"
+                                            android:background="@color/black" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|start">
+
+                                        <NumberPicker
+                                            android:id="@+id/finishTimeSa"
+                                            android:layout_width="90dp"
+                                            android:layout_height="wrap_content"
+                                            android:selectionDividerHeight="0dp"
+                                            android:theme="@style/NumberPicker" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="0dp"
+                            <View
+                                android:id="@+id/viewSa"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center">
-
-                                <View
-                                    android:layout_width="24dp"
-                                    android:layout_height="3dp"
-                                    android:background="@color/black" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical|start">
-
-                                <NumberPicker
-                                    android:id="@+id/finishTimeSa"
-                                    android:layout_width="90dp"
-                                    android:layout_height="wrap_content"
-                                    android:selectionDividerHeight="0dp"
-                                    android:theme="@style/NumberPicker" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
+                                android:layout_alignBottom="@+id/viewSa"
+                                android:layout_marginStart="20dp"
+                                android:background="@color/white"
+                                android:includeFontPadding="false"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingBottom="14dp"
+                                android:text="@string/str_time_interval"
+                                android:textAppearance="@android:style/TextAppearance.Medium"
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
                     </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                    <View
-                        android:id="@+id/viewSa"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/viewSa"
-                        android:layout_marginStart="20dp"
-                        android:background="@color/white"
-                        android:includeFontPadding="false"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="14dp"
-                        android:text="@string/str_time_interval"
-                        android:textAppearance="@android:style/TextAppearance.Medium"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-                </RelativeLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewSu"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:paddingVertical="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Yakshanba"
-                        android:textColor="#424242"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/switchSu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:thumb="@drawable/custom_thumb"
-                        android:track="@drawable/custom_track"
-                        app:background="@null"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:trackTint="@color/track_custom_color" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <RelativeLayout
-                    android:id="@+id/input_layout_su"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/edittextround"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <LinearLayout
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="20dp"
-                            android:gravity="center_vertical">
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:paddingVertical="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Yakshanba"
+                                android:textColor="#424242"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/switchSu"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:thumb="@drawable/custom_thumb"
+                                android:track="@drawable/custom_track"
+                                app:background="@null"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:trackTint="@color/track_custom_color" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/input_layout_su"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
 
                             <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical|end">
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="16dp"
+                                android:background="@drawable/edittextround"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="20dp"
+                                    android:gravity="center_vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|end">
 
 
-                                <NumberPicker
-                                    android:id="@+id/startTimeSu"
-                                    android:layout_width="90dp"
-                                    android:layout_height="wrap_content"
-                                    android:selectionDividerHeight="0dp"
-                                    android:soundEffectsEnabled="true"
-                                    android:theme="@style/NumberPicker" />
+                                        <NumberPicker
+                                            android:id="@+id/startTimeSu"
+                                            android:layout_width="90dp"
+                                            android:layout_height="wrap_content"
+                                            android:selectionDividerHeight="0dp"
+                                            android:soundEffectsEnabled="true"
+                                            android:theme="@style/NumberPicker" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center">
+
+                                        <View
+                                            android:layout_width="24dp"
+                                            android:layout_height="3dp"
+                                            android:background="@color/black" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center_vertical|start">
+
+                                        <NumberPicker
+                                            android:id="@+id/finishTimeSu"
+                                            android:layout_width="90dp"
+                                            android:layout_height="wrap_content"
+                                            android:selectionDividerHeight="0dp"
+                                            android:theme="@style/NumberPicker" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="0dp"
+                            <View
+                                android:id="@+id/viewSu"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center">
-
-                                <View
-                                    android:layout_width="24dp"
-                                    android:layout_height="3dp"
-                                    android:background="@color/black" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical|start">
-
-                                <NumberPicker
-                                    android:id="@+id/finishTimeSu"
-                                    android:layout_width="90dp"
-                                    android:layout_height="wrap_content"
-                                    android:selectionDividerHeight="0dp"
-                                    android:theme="@style/NumberPicker" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
+                                android:layout_alignBottom="@+id/viewSu"
+                                android:layout_marginStart="20dp"
+                                android:background="@color/white"
+                                android:includeFontPadding="false"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingBottom="14dp"
+                                android:text="@string/str_time_interval"
+                                android:textAppearance="@android:style/TextAppearance.Medium"
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
                     </LinearLayout>
-
-                    <View
-                        android:id="@+id/viewSu"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/viewSu"
-                        android:layout_marginStart="20dp"
-                        android:background="@color/white"
-                        android:includeFontPadding="false"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="14dp"
-                        android:text="@string/str_time_interval"
-                        android:textAppearance="@android:style/TextAppearance.Medium"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                </androidx.cardview.widget.CardView>
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
