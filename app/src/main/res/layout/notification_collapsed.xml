@@ -15,7 +15,7 @@
 
     <TextView
         android:id="@+id/tvTitle"
-        android:textColor="#818181"
+        android:textColor="@color/notification_collapsed_text_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="12sp" />

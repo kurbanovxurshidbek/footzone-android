@@ -26,7 +26,7 @@ class DeclineNotificationReceiver : BroadcastReceiver() {
         if (extras != null) {
             sessionId = extras.getString("sessionId")!!
             val notificationManagerCompat = NotificationManagerCompat.from(context)
-            notificationManagerCompat.cancel(1)
+            notificationManagerCompat.cancel(0)
 
             sendDeclineRequest(sessionId)
         }

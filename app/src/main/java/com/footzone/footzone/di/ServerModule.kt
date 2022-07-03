@@ -3,6 +3,8 @@ package com.footzone.footzone.di
 import com.footzone.footzone.networking.service.ApiService
 import com.footzone.footzone.utils.KeyValues.USER_TOKEN
 import com.footzone.footzone.utils.SharedPref
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,18 +17,23 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+
 @Module
 @InstallIn(SingletonComponent::class)
 class ServerModule {
 
     private val BASE_URL: String = "https://footzone-demo.herokuapp.com/api/v1/"
 
+    var gson: Gson = GsonBuilder()
+        .setLenient()
+        .create()
+
     @Provides
     @Singleton
     fun getRetrofit(client: OkHttpClient): Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .client(client)
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 
     @Provides

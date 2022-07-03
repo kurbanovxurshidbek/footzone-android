@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="“Acme futbol maydoni”"
-        android:textColor="@color/lightTextColor"
+        android:textColor="#424242"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="nomli maydoningizga band qilish uchun so’rov tushdi."
-        android:textColor="@color/lightTextColor"
+        android:textColor="#424242"
         android:textSize="14sp" />
 
     <LinearLayout
@@ -34,21 +34,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="17.04.2022"
-            android:textColor="@color/lightTextColor"
+            android:textColor="#424242"
             android:textSize="14sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=" • "
-            android:textColor="@color/lightTextColor"
+            android:textColor="#424242"
             android:textSize="14sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="16:04"
-            android:textColor="@color/lightTextColor"
+            android:textColor="#424242"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -68,7 +68,7 @@
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:src="@drawable/ic_book"
-            app:tint="#616161" />
+            app:tint="@color/colorNeutral80" />
 
         <TextView
             android:id="@+id/tvDate"
@@ -91,7 +91,7 @@
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:src="@drawable/ic_time"
-            app:tint="#616161" />
+            app:tint="@color/colorNeutral80" />
 
         <TextView
             android:id="@+id/tvHours"
@@ -114,7 +114,7 @@
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:src="@drawable/ic_money"
-            app:tint="#616161" />
+            app:tint="@color/colorNeutral80" />
 
         <TextView
             android:id="@+id/tvPrice"

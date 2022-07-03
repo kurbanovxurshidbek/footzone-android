@@ -171,7 +171,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     private fun registerButtonControl() {
         if (checkData()) {
             binding.apply {
-                registerButton.setBackgroundResource(R.drawable.button_register_filled_rounded_corner2)
+                registerButton.setBackgroundResource(R.drawable.linear_rounded_background)
                 registerButton.setTextColor(Color.WHITE)
             }
         } else {
