@@ -32,6 +32,8 @@ import com.footzone.footzone.utils.KeyValues.USER_TOKEN
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
 import com.footzone.footzone.utils.commonfunction.Functions.loadImageUrl
+import com.footzone.footzone.utils.extensions.hide
+import com.footzone.footzone.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import me.shouheng.compress.Compress
@@ -81,11 +83,11 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
         binding.apply {
             if (!logIn) {
-                linerProfile.visibility = View.GONE
-                linearProfileNoSignIn.visibility = View.VISIBLE
+                linerProfile.hide()
+                linearProfileNoSignIn.show()
             } else {
-                linerProfile.visibility = View.VISIBLE
-                linearProfileNoSignIn.visibility = View.GONE
+                linerProfile.show()
+                linearProfileNoSignIn.hide()
             }
             ivAdd.setOnClickListener {
                 getImageFromGallery()
@@ -174,7 +176,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         startActivity(requireActivity().intent);
     }
 
-
     private fun setupObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -216,7 +217,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         }
     }
 
-
     private fun showPopup(v: View) {
         PopupMenu(requireContext(), v).apply {
             setOnMenuItemClickListener { item ->
@@ -242,7 +242,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         }
     }
 
-
     private fun getImageFromGallery() {
         getImageFromGallery.launch("image/*")
     }
@@ -265,7 +264,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             binding.ivProfile.setPadding(0, 0, 0, 0)
             Glide.with(requireActivity()).load(image).into(binding.ivProfile)
             binding.ivAdd.setImageResource(R.drawable.ic_edit_button)
-
 
             GlobalScope.launch {
                 val result = Compress.with(requireContext(), image)

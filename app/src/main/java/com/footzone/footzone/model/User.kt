@@ -9,7 +9,7 @@ data class User(
     val deviceType: String?,
     val fullName: String?,
     val language: String?,
-    val phoneNumber: String?,
+    var phoneNumber: String?,
     var smsCode: String?,
     val stadiumHolder: Boolean?
 ) : Parcelable {

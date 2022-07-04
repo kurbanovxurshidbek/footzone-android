@@ -12,6 +12,6 @@ data class StadiumBookSentResponseData(
     val startDate: String,
     val startTime: String,
     val endTime: String,
-    val status: String,
+    var status: String,
     val hourlyPrice: Long
 )

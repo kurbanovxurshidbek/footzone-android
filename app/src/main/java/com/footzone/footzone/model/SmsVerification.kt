@@ -1,3 +1,3 @@
 package com.footzone.footzone.model
 
-data class SmsVerification(val codeSent: Int, val phoneNumber: String)
+data class SmsVerification(val codeSent: String, val phoneNumber: String)

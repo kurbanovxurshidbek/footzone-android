@@ -4,6 +4,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.app.PendingIntent.FLAG_ONE_SHOT
 import android.content.Context
 import android.content.Intent
@@ -43,7 +44,7 @@ class FCMService : FirebaseMessagingService() {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra(KeyValues.NOTIFICATION_TITLE, message.data["title"])
         val requestCode = (0..10).random()
-        val pendingIntent = PendingIntent.getActivity(this, requestCode, intent, FLAG_ONE_SHOT)
+        val pendingIntent = PendingIntent.getActivity(this, requestCode, intent, FLAG_IMMUTABLE)
 
         val session =
             Gson().fromJson(message.data["session"], SessionNotificationResponse::class.java)
@@ -53,18 +54,23 @@ class FCMService : FirebaseMessagingService() {
         acceptIntent.action = ACCEPT_ACTION
         acceptIntent.putExtra("sessionId", session.sessionId)
         val acceptPendingIntent =
-            PendingIntent.getBroadcast(this, 0, acceptIntent, 0)
+            PendingIntent.getBroadcast(this, 0, acceptIntent, FLAG_IMMUTABLE)
 
         val DECLINE_ACTION = "Decline"
         val declineIntent = Intent(this, DeclineNotificationReceiver::class.java)
         declineIntent.action = DECLINE_ACTION
         declineIntent.putExtra("sessionId", session.sessionId)
         val declinePendingIntent =
-            PendingIntent.getBroadcast(this, 0, declineIntent, 0)
+            PendingIntent.getBroadcast(this, 1, declineIntent, FLAG_IMMUTABLE)
 
         val notificationUser = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(message.data["body"])
-            .setContentText(session.stadiumName + " · " + session.startDate + " · " + session.startTime.subSequence(0, 5) + "-" + session.startTime.subSequence(0, 5))
+            .setContentText(
+                session.stadiumName + " · " + session.startDate + " · " + session.startTime.subSequence(
+                    0,
+                    5
+                ) + "-" + session.endTime.subSequence(0, 5)
+            )
             .setSmallIcon(R.drawable.ic_ball)
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -80,7 +86,13 @@ class FCMService : FirebaseMessagingService() {
         val collapsedView = RemoteViews(packageName, R.layout.notification_collapsed)
         val expandedView = RemoteViews(packageName, R.layout.notification_expanded)
         collapsedView.setTextViewText(R.id.tvBody, message.data["body"])
-        collapsedView.setTextViewText(R.id.tvTitle, session.stadiumName + " · " + session.startDate + " · " + session.startTime.subSequence(0, 5) + "-" + session.startTime.subSequence(0, 5))
+        collapsedView.setTextViewText(
+            R.id.tvTitle,
+            session.stadiumName + " · " + session.startDate + " · " + session.endTime.subSequence(
+                0,
+                5
+            ) + "-" + session.startTime.subSequence(0, 5)
+        )
         expandedView.setTextViewText(R.id.tvBodyExpanded, message.data["body"])
 
         val notificationAdmin = NotificationCompat.Builder(this, CHANNEL_ID)
@@ -102,12 +114,13 @@ class FCMService : FirebaseMessagingService() {
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             createNotificationChannel(manager)
-        val notificationId = Random.nextInt()
+        val notificationAdminId = 0
+        val notificationUserId = 1
 
         if (session.stadiumHolder) {
-            manager.notify(notificationId, notificationAdmin)
+            manager.notify(notificationAdminId, notificationAdmin)
         } else {
-            manager.notify(notificationId, notificationUser)
+            manager.notify(notificationUserId, notificationUser)
         }
 
     }

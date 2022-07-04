@@ -170,7 +170,8 @@
                         android:id="@+id/icTimetable"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/image_view_ic_back"
+                        android:padding="10dp"
                         android:src="@drawable/ic_bottom" />
                 </LinearLayout>
 

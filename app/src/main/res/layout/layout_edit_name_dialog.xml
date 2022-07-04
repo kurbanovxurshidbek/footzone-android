@@ -1,60 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="312dp"
-    android:paddingHorizontal="24dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/dialog_background"
+    android:orientation="vertical"
+    android:paddingHorizontal="24dp"
     android:paddingTop="24dp"
-    android:paddingBottom="34dp"
-    android:layout_height="wrap_content">
+    android:paddingBottom="34dp">
 
     <TextView
-        android:text="Ismni o'zgartirish"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#0A0A0A"
-        android:textSize="24sp"
-        android:fontFamily="@font/roboto"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/roboto"
+        android:text="Ismni o'zgartirish"
+        android:textColor="#0A0A0A"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/etName"
-        android:hint="Ism"
-        android:maxLength="25"
-        android:fontFamily="@font/roboto"
-        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textCapSentences" />
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto"
+        android:hint="Ism"
+        android:inputType="textCapSentences"
+        android:maxLength="25" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:gravity="end"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_height="wrap_content">
+        android:gravity="end"
+        android:orientation="horizontal">
 
         <TextView
-            android:paddingHorizontal="16dp"
             android:id="@+id/tvNo"
-            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="Bekor qilish"
+            android:background="@drawable/dialog_textview_background_no"
             android:fontFamily="@font/roboto"
+            android:paddingHorizontal="4dp"
+            android:text="Bekor qilish"
             android:textColor="#616161"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvYes"
-            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tasdiqlash"
+            android:background="@drawable/dialog_textview_background"
             android:fontFamily="@font/roboto"
+            android:paddingHorizontal="4dp"
+            android:text="Tasdiqlash"
             android:textColor="#0C64E6"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

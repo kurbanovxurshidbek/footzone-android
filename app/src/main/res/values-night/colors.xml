@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="notification_main">#000000</color>
+
+    <color name="darkTextColor">#F5F5F5</color>
+    <color name="lightTextColor">#FFFFFF</color>
+    <color name="line_color">#E0E0E0</color>
+    <color name="notification_tint_color">#D3D3D3</color>
+    <color name="notification_text_color">#C5C5C5</color>
+    <color name="notification_collapsed_text_color">#DCDCDC</color>
+</resources>

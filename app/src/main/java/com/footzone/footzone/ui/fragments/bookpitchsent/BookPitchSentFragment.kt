@@ -22,6 +22,8 @@ import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.AcceptDialog
 import com.footzone.footzone.utils.DeclineDialog
 import com.footzone.footzone.utils.UiStateObject
+import com.footzone.footzone.utils.extensions.hide
+import com.footzone.footzone.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -96,16 +98,16 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
                             if (isToAccept) {
                                 if (it.data.success) {
                                     acceptDialog.dismiss()
-                                    tvStatus.visibility = View.VISIBLE
-                                    linearAcceptDecline.visibility = View.GONE
+                                    tvStatus.show()
+                                    linearAcceptDecline.hide()
                                 }
                             } else {
                                 if (it.data.success) {
                                     declineDialog.dismiss()
                                     tvStatus.setTextColor(Color.parseColor("#C8303F"))
                                     tvStatus.text = "Rad etildi!"
-                                    tvStatus.visibility = View.VISIBLE
-                                    linearAcceptDecline.visibility = View.GONE
+                                    tvStatus.show()
+                                    linearAcceptDecline.hide()
                                 }
                             }
                         }
@@ -123,18 +125,19 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
 
     private fun refreshAdapter(requests: List<StadiumBookSentResponseData>) {
         if (requests.isEmpty()) {
-            binding.tvEmptyListAlert.visibility = View.VISIBLE
-            binding.rvBookSent.visibility = View.GONE
+            binding.tvEmptyListAlert.show()
+            binding.rvBookSent.hide()
             return
         } else {
-            binding.tvEmptyListAlert.visibility = View.GONE
-            binding.rvBookSent.visibility = View.VISIBLE
+            binding.tvEmptyListAlert.hide()
+            binding.rvBookSent.show()
         }
         playingPitchAdapter = PitchBookSentAdapter(requests, object : OnClickEventAcceptDecline {
             override fun onAccept(
                 stadiumId: String,
                 tvStatus: TextView,
-                linearAcceptDecline: LinearLayout
+                linearAcceptDecline: LinearLayout,
+                position: Int
             ) {
                 acceptDialog =
                     AcceptDialog(requireContext()) {
@@ -157,7 +160,8 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
             override fun onDecline(
                 stadiumId: String,
                 tvStatus: TextView,
-                linearAcceptDecline: LinearLayout
+                linearAcceptDecline: LinearLayout,
+                position: Int
             ) {
                 declineDialog =
                     DeclineDialog(requireContext()) {

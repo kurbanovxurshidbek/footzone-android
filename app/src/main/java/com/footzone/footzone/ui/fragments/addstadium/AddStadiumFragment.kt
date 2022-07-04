@@ -74,6 +74,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     var isStart = false
     var stadiumNumber: String? = null
     var isViewCreated = true
+
     @Inject
     lateinit var sharedPref: SharedPref
 
@@ -102,7 +103,9 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                 binding.tvPitchWorkTime.text = bundle.get(WORK_TIME).toString()
             }
         }
-    }override fun onCreateView(
+    }
+
+    override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
@@ -129,12 +132,20 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         refreshAdapter()
 
         binding.apply {
-            icClose.setOnClickListener { requireActivity().onBackPressed() }
-            tvCancel.setOnClickListener { requireActivity().onBackPressed() }
+
+            icClose.setOnClickListener {
+                back()
+            }
+
+            tvCancel.setOnClickListener {
+                back()
+            }
+
             ivChooseLocation.setOnClickListener {
                 isStart = true
                 openStadiumLocation()
             }
+
             ivChooseWorkTime.setOnClickListener {
                 isStart = true
                 openChooseWorkTime()
@@ -192,6 +203,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             }
         }
     }
+
     private fun observeViewModelAdd() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -251,7 +263,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                             hideProgress()
                             refreshData(it.data.data)
                             workTimes.addAll(it.data.data.workingDays)
-                            if (isViewCreated){
+                            if (isViewCreated) {
                                 it.data.data.photos.forEach { it ->
                                     photos.add(EditPhoto(it.id, it.name))
                                 }
@@ -306,6 +318,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             latitude = data.latitude
         }
     }
+
     private fun observeViewModelEdit() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -336,9 +349,11 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
 
         binding.tvToast.text = message
         val custToast = Toast(requireContext())
-        custToast.setView(binding.root)
+        custToast.view = binding.root
         custToast.show()
-        requireActivity().onBackPressed()
+
+        back()
+
     }
 
     private fun initViewsAdd() {
@@ -391,8 +406,12 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         binding.recyclerView.adapter = adapterAdd
 
         binding.apply {
-            icClose.setOnClickListener { requireActivity().onBackPressed() }
-            tvCancel.setOnClickListener { requireActivity().onBackPressed() }
+            icClose.setOnClickListener {
+                back()
+            }
+            tvCancel.setOnClickListener {
+                back()
+            }
             ivChooseLocation.setOnClickListener { openStadiumLocation() }
             ivChooseWorkTime.setOnClickListener { openChooseWorkTime() }
         }
@@ -414,11 +433,12 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             registerButtonControl()
         }
     }
+
     @SuppressLint("ResourceAsColor")
     private fun registerButtonControl() {
         if (checkData()) {
             binding.apply {
-                tvBook.setBackgroundResource(R.drawable.button_register_filled_rounded_corner2)
+                tvBook.setBackgroundResource(R.drawable.linear_rounded_background)
                 tvBook.isClickable = true
                 tvBook.setTextColor(Color.WHITE)
             }
@@ -514,6 +534,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             }
         }
     }
+
     /**
      * This is function, to upgrade from Uri to MultipartBody.Part
      */

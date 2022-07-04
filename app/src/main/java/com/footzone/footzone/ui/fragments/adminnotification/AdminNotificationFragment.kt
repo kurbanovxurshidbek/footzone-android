@@ -44,7 +44,14 @@ class AdminNotificationFragment : BaseFragment(R.layout.fragment_admin_notificat
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAdminNotificationBinding.bind(view)
 
+        initViews()
         observeAllNotifications()
+    }
+
+    private fun initViews() {
+        binding.ivBack.setOnClickListener {
+            back()
+        }
     }
 
     private fun observeAllNotifications() {
@@ -77,7 +84,8 @@ class AdminNotificationFragment : BaseFragment(R.layout.fragment_admin_notificat
             override fun onAccept(
                 stadiumId: String,
                 tvStatus: TextView,
-                linearAcceptDecline: LinearLayout
+                linearAcceptDecline: LinearLayout,
+                position: Int
             ) {
                 acceptDialog =
                     AcceptDialog(requireContext()) {
@@ -88,7 +96,13 @@ class AdminNotificationFragment : BaseFragment(R.layout.fragment_admin_notificat
                                 stadiumId
                             )
                         )
-                        observeAcceptDeclineResponse(true, tvStatus, linearAcceptDecline)
+                        observeAcceptDeclineResponse(
+                            true,
+                            tvStatus,
+                            linearAcceptDecline,
+                            notifications,
+                            position
+                        )
                     }.instance(
                         LayoutAcceptBinding.inflate(
                             LayoutInflater.from(requireContext())
@@ -100,7 +114,8 @@ class AdminNotificationFragment : BaseFragment(R.layout.fragment_admin_notificat
             override fun onDecline(
                 stadiumId: String,
                 tvStatus: TextView,
-                linearAcceptDecline: LinearLayout
+                linearAcceptDecline: LinearLayout,
+                position: Int
             ) {
                 declineDialog =
                     DeclineDialog(requireContext()) {
@@ -110,7 +125,13 @@ class AdminNotificationFragment : BaseFragment(R.layout.fragment_admin_notificat
                                 stadiumId
                             )
                         )
-                        observeAcceptDeclineResponse(false, tvStatus, linearAcceptDecline)
+                        observeAcceptDeclineResponse(
+                            false,
+                            tvStatus,
+                            linearAcceptDecline,
+                            notifications,
+                            position
+                        )
                     }.instance(
                         LayoutDeclineBinding.inflate(
                             LayoutInflater.from(requireContext())
@@ -125,7 +146,9 @@ class AdminNotificationFragment : BaseFragment(R.layout.fragment_admin_notificat
     private fun observeAcceptDeclineResponse(
         isToAccept: Boolean,
         tvStatus: TextView,
-        linearAcceptDecline: LinearLayout
+        linearAcceptDecline: LinearLayout,
+        notifications: List<StadiumBookSentResponseData>,
+        position: Int
     ) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -141,11 +164,13 @@ class AdminNotificationFragment : BaseFragment(R.layout.fragment_admin_notificat
                                 if (it.data.success) {
                                     acceptDialog.dismiss()
                                     linearAcceptDecline.show()
+                                    adapter.changeNotificationStatus("ACCEPTED", position)
                                 }
                             } else {
                                 if (it.data.success) {
                                     declineDialog.dismiss()
                                     linearAcceptDecline.show()
+                                    adapter.changeNotificationStatus("DECLINED", position)
                                 }
                             }
                         }

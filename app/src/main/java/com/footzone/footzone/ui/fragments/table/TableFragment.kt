@@ -21,6 +21,8 @@ import com.footzone.footzone.utils.KeyValues.IS_OWNER
 import com.footzone.footzone.utils.KeyValues.LOG_IN
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
+import com.footzone.footzone.utils.extensions.hide
+import com.footzone.footzone.utils.extensions.show
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,40 +46,44 @@ class TableFragment : BaseFragment(R.layout.fragment_table) {
 
     private fun initViews() {
         val logIn = sharedPref.getLogIn(LOG_IN, false)
-        if (!logIn) {
-            binding.tabelFragmentSignIn.visibility = View.GONE
-            binding.tabelFragmentNoSignIn.visibility = View.VISIBLE
+        binding.apply {
+            if (!logIn) {
+                tabelFragmentSignIn.hide()
+                tabelFragmentNoSignIn.show()
 
-            binding.tvEnterAccount.setOnClickListener {
-                findNavController().navigate(R.id.action_tableFragment_to_signInFragment)
+                tvEnterAccount.setOnClickListener {
+                    findNavController().navigate(R.id.action_tableFragment_to_signInFragment)
+                }
+            } else {
+                tabelFragmentSignIn.show()
+                tabelFragmentNoSignIn.hide()
+
+                tableViewPagerAdapter = TableViewPagerAdapter(requireActivity())
+
+                controlViewPagerState()
             }
-        } else {
-            binding.tabelFragmentSignIn.visibility = View.VISIBLE
-            binding.tabelFragmentNoSignIn.visibility = View.GONE
-
-            tableViewPagerAdapter = TableViewPagerAdapter(requireActivity())
-
-            controlViewPagerState()
         }
     }
 
     private fun controlViewPagerState() {
-        if (!isPitchOwner) {
-            addFragmentsToVPUser()
-            binding.vpPitchTable.adapter = tableViewPagerAdapter
+        binding.apply {
+            if (!isPitchOwner) {
+                addFragmentsToVPUser()
+                vpPitchTable.adapter = tableViewPagerAdapter
 
-            binding.tabLayoutPitch.setupWithViewPager(
-                binding.vpPitchTable,
-                arrayListOf("O'ynaladi", "O'ynalgan")
-            )
-        } else {
-            addFragmentsToVPOwner()
-            binding.vpPitchTable.adapter = tableViewPagerAdapter
+                tabLayoutPitch.setupWithViewPager(
+                    vpPitchTable,
+                    arrayListOf("O'ynaladi", "O'ynalgan")
+                )
+            } else {
+                addFragmentsToVPOwner()
+                vpPitchTable.adapter = tableViewPagerAdapter
 
-            binding.tabLayoutPitch.setupWithViewPager(
-                binding.vpPitchTable,
-                arrayListOf("So'rov tushgan", "O'ynalgan")
-            )
+                tabLayoutPitch.setupWithViewPager(
+                    vpPitchTable,
+                    arrayListOf("So'rov tushgan", "O'ynalgan")
+                )
+            }
         }
     }
 

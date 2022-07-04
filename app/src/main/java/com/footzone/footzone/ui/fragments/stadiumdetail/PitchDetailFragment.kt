@@ -174,46 +174,53 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
     }
 
     private fun initViews() {
-
-        binding.rbRate.setIsIndicator(true)
-
         if (isFavouriteStadium) {
             changeLinearAddFavourite()
         }
 
-        binding.linearFavourite.setOnClickListener {
-            if (sharedPref.getUserID(USER_ID, "").isNotEmpty()) {
-                viewModel.addToFavouriteStadiums(
-                    FavouriteStadiumRequest(
-                        stadiumId,
-                        sharedPref.getUserID(USER_ID, "")
+        binding.apply {
+            rbRate.setIsIndicator(true)
+
+            linearFavourite.setOnClickListener {
+                if (sharedPref.getUserID(USER_ID, "").isNotEmpty()) {
+                    viewModel.addToFavouriteStadiums(
+                        FavouriteStadiumRequest(
+                            stadiumId,
+                            sharedPref.getUserID(USER_ID, "")
+                        )
                     )
+                    observeAddFavourite()
+                } else
+                    toast(
+                        "Siz hali ro'yxatdan o'tmagansiz.\n" +
+                                "Sahifam bo'limidan ro'yxatdan o'tishingiz mumkin"
+                    )
+            }
+
+            ivBack.setOnClickListener {
+                back()
+            }
+
+            btnOpenBottomSheet.setOnClickListener {
+                val chooseTimeBottomSheetDialog =
+                    ChooseTimeBottomSheetDialog(stadiumDataToBottomSheetDialog)
+                chooseTimeBottomSheetDialog.show(
+                    childFragmentManager,
+                    chooseTimeBottomSheetDialog.tag
                 )
-                observeAddFavourite()
-            } else
-                toast(
-                    "Siz hali ro'yxatdan o'tmagansiz.\n" +
-                            "Sahifam bo'limidan ro'yxatdan o'tishingiz mumkin"
+            }
+
+            linearNavigation.setOnClickListener {
+                requireActivity().shareLocationToGoogleMap(
+                    stadiumData.latitude,
+                    stadiumData.longitude
                 )
-        }
-
-        binding.ivBack.setOnClickListener {
-            requireActivity().onBackPressed()
-        }
-
-        binding.btnOpenBottomSheet.setOnClickListener {
-            val chooseTimeBottomSheetDialog =
-                ChooseTimeBottomSheetDialog(stadiumDataToBottomSheetDialog)
-            chooseTimeBottomSheetDialog.show(childFragmentManager, chooseTimeBottomSheetDialog.tag)
-        }
-
-        binding.linearNavigation.setOnClickListener {
-            requireActivity().shareLocationToGoogleMap(stadiumData.latitude, stadiumData.longitude)
-        }
-        binding.icTimetable.setOnClickListener {
-            Log.d("TAG", "initViews: ${workingDays}")
-            if (workingDays.isNotEmpty()) {
-                openTimeTableDialog()
+            }
+            icTimetable.setOnClickListener {
+                Log.d("TAG", "initViews: ${workingDays}")
+                if (workingDays.isNotEmpty()) {
+                    openTimeTableDialog()
+                }
             }
         }
     }
@@ -293,17 +300,21 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
 
 
     private fun changeLinearAddFavourite() {
-        binding.linearFavourite.setBackgroundResource(R.drawable.button_filled_rounded_corner)
-        binding.ivFavourite.setColorFilter(Color.parseColor("#ffffff"))
-        binding.tvFavourite.setTextColor(Color.parseColor("#ffffff"))
-        binding.tvFavourite.text = "Tanlanganlardan o'chirish"
+        binding.apply {
+            linearFavourite.setBackgroundResource(R.drawable.button_filled_rounded_corner)
+            ivFavourite.setColorFilter(Color.parseColor("#ffffff"))
+            tvFavourite.setTextColor(Color.parseColor("#ffffff"))
+            tvFavourite.text = "Tanlanganlardan o'chirish"
+        }
     }
 
     private fun changeLinearRemoveFavourite() {
-        binding.linearFavourite.setBackgroundResource(R.drawable.button_rounded_corner)
-        binding.ivFavourite.setColorFilter(Color.parseColor("#0C64E6"))
-        binding.tvFavourite.setTextColor(Color.parseColor("#0C64E6"))
-        binding.tvFavourite.text = "Tanlanganlarga qo'shish"
+        binding.apply {
+            linearFavourite.setBackgroundResource(R.drawable.button_rounded_corner)
+            ivFavourite.setColorFilter(Color.parseColor("#0C64E6"))
+            tvFavourite.setTextColor(Color.parseColor("#0C64E6"))
+            tvFavourite.text = "Tanlanganlarga qo'shish"
+        }
     }
 
     private fun observeAddFavourite() {
@@ -342,5 +353,4 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
         adapterComment = CommentAdapter(data.allComments, requireContext())
         binding.recyclerViewComment.adapter = adapterComment
     }
-
 }

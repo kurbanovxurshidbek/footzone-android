@@ -45,7 +45,12 @@ class AdminNotificationAdapter(
                 "${notification.stadiumName} ${tvStadiumName.context.getText(R.string.str_football_stadium)}"
             tvDate.text = notification.startDate
             tvHours.text =
-                "${notification.startTime.subSequence(0, 5)}-${notification.endTime.substring(0, 5)}, " +
+                "${notification.startTime.subSequence(0, 5)}-${
+                    notification.endTime.substring(
+                        0,
+                        5
+                    )
+                }, " +
                         "$duration ${tvHours.context.getText(R.string.str_hour)}"
             tvPrice.text = "${(notification.hourlyPrice.toInt() * duration).toInt()} so'm"
             "${notification.startTime.subSequence(0, 5)}-${
@@ -56,18 +61,18 @@ class AdminNotificationAdapter(
             }, $duration soat"
             tvPrice.text = "${notification.hourlyPrice.toInt() * duration} so'm"
 
-            if (notification.status=="ACCEPTED"){
+            if (notification.status == "ACCEPTED") {
                 linearButtonWrapper.hide()
                 acceptedLayout.show()
                 declinedLayout.hide()
             }
-            if (notification.status=="DECLINED"){
+            if (notification.status == "DECLINED") {
                 linearButtonWrapper.hide()
                 declinedLayout.show()
                 acceptedLayout.hide()
             }
 
-            if (notification.status=="PENDING"){
+            if (notification.status == "PENDING") {
                 linearButtonWrapper.show()
                 acceptedLayout.hide()
                 declinedLayout.hide()
@@ -75,17 +80,32 @@ class AdminNotificationAdapter(
 
             btnAccept.setOnClickListener {
                 linearButtonWrapper.hide()
-                onClickEventAcceptDecline.onAccept(notification.id, tvAccepted, acceptedLayout)
+                onClickEventAcceptDecline.onAccept(
+                    notification.id,
+                    tvAccepted,
+                    acceptedLayout,
+                    position
+                )
             }
 
             btnDecline.setOnClickListener {
                 linearButtonWrapper.hide()
-                onClickEventAcceptDecline.onDecline(notification.id, tvDeclined, declinedLayout)
+                onClickEventAcceptDecline.onDecline(
+                    notification.id,
+                    tvDeclined,
+                    declinedLayout,
+                    position
+                )
             }
         }
     }
 
     override fun getItemCount(): Int {
         return notifications.size
+    }
+
+    fun changeNotificationStatus(status: String, position: Int) {
+        notifications[position].status = status
+        notifyItemChanged(position)
     }
 }

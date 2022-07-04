@@ -52,8 +52,13 @@ class StadiumLocationFragment : BaseFragment(R.layout.fragment_stadium_location)
 
     private fun initViews() {
         binding.apply {
-            ivBack.setOnClickListener { requireActivity().onBackPressed() }
-            tvCancel.setOnClickListener { requireActivity().onBackPressed() }
+            ivBack.setOnClickListener {
+                back()
+            }
+            tvCancel.setOnClickListener {
+                back()
+            }
+
             tvSelection.setOnClickListener {
                 setFragmentResult(
                     KeyValues.TYPE_LOCATION,
@@ -62,7 +67,7 @@ class StadiumLocationFragment : BaseFragment(R.layout.fragment_stadium_location)
                         "longitude" to cameraCurrentLatLng!!.longitude
                     )
                 )
-                findNavController().popBackStack()
+                back()
             }
         }
     }

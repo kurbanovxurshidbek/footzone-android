@@ -20,6 +20,8 @@ import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
+import com.footzone.footzone.utils.extensions.hide
+import com.footzone.footzone.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -72,24 +74,28 @@ class MyStadiumFragment : BaseFragment(R.layout.fragment_my_stadium) {
 
     private fun initViews() {
         binding.apply {
-            icClose.setOnClickListener { requireActivity().onBackPressed() }
-        }
+            icClose.setOnClickListener {
+                back()
+            }
 
-        binding.ivAdd.setOnClickListener {
-            openAddStadium()
+            ivAdd.setOnClickListener {
+                openAddStadium()
+            }
         }
     }
 
     private fun controlVisibility(isListEmpty: Boolean) {
-        if (!isListEmpty) {
-            binding.recyclerView.visibility = View.VISIBLE
-            binding.llView.visibility = View.GONE
-        } else {
-            binding.recyclerView.visibility = View.GONE
-            binding.llView.visibility = View.VISIBLE
-            binding.tvJustText.text =
-                getText(R.string.str_holder_not_stadium)
+        binding.apply {
+            if (!isListEmpty) {
+                recyclerView.show()
+                llView.hide()
+            } else {
+                recyclerView.hide()
+                llView.show()
+                tvJustText.text =
+                    getText(R.string.str_holder_not_stadium)
 
+            }
         }
     }
 

@@ -2,9 +2,12 @@ package com.footzone.footzone.ui.fragments.verification
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import androidx.annotation.RequiresApi
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -16,6 +19,8 @@ import com.footzone.footzone.databinding.FragmentVerificationBinding
 import com.footzone.footzone.model.SignInVerification
 import com.footzone.footzone.model.SmsVerification
 import com.footzone.footzone.model.User
+import com.footzone.footzone.security.Symmetric.decrypt
+import com.footzone.footzone.security.Symmetric.encrypt
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.IS_OWNER
@@ -41,6 +46,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
     private var phoneNumber: String? = null
     private var isToSignUp = false
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -57,28 +63,50 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
         initViews()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initViews() {
         verificationCodeErrorControl()
-        binding.ivBack.setOnClickListener {
-            closeVerificationFragment()
-        }
-        binding.confirmationButton.setOnClickListener {
-            if (isToSignUp) {
-                sendRequestToSignUp()
-            } else {
-                sendRequestToSignIn()
+        binding.apply {
+            ivBack.setOnClickListener {
+                back()
+            }
+
+            confirmationButton.setOnClickListener {
+                checkAndSingInUp()
+            }
+
+            tvResendCode.setOnClickListener {
+                //code resent
+            }
+
+            editTextVerificationCode.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    checkAndSingInUp()
+                    true
+                } else false
             }
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun checkAndSingInUp() {
+        if (isToSignUp) {
+            sendRequestToSignUp()
+        } else {
+            sendRequestToSignIn()
+        }
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun sendRequestToSignIn() {
         viewModel.signIn(
             SignInVerification(
-                binding.editTextVerificationCode.text.toString().toInt(),
+                encrypt(binding.editTextVerificationCode.text.toString())!!,
                 getDeviceName()!!,
                 sharedPref.getFirebaseToken(KeyValues.FIREBASE_TOKEN),
                 "Mobile",
-                phoneNumber!!
+                encrypt(phoneNumber!!)!!
             )
         )
         setupObserversSignIn()
@@ -87,8 +115,8 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
     private fun sendRequestToSignUp() {
         viewModel.signUp(
             SmsVerification(
-                binding.editTextVerificationCode.text.toString().toInt(),
-                user?.phoneNumber.toString()
+                encrypt(binding.editTextVerificationCode.text.toString())!!,
+                encrypt(user?.phoneNumber.toString())!!
             )
         )
         setupObserversSignUp()
@@ -123,6 +151,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setupObserversSignUp() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             viewModel.smsVerification.collect {
@@ -134,7 +163,9 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
                     is UiStateObject.SUCCESS -> {
                         if (it.data.success) {
                             hideProgress()
-                            user!!.smsCode = binding.editTextVerificationCode.text.toString()
+                            user!!.smsCode =
+                                encrypt(binding.editTextVerificationCode.text.toString())
+                            user!!.phoneNumber = encrypt(user!!.phoneNumber!!)
                             viewModel.registerUser(user!!)
                             setupObserversRegister()
                         }
@@ -203,15 +234,11 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
         }
     }
 
-    private fun closeVerificationFragment() {
-        requireActivity().onBackPressed()
-    }
-
     @SuppressLint("ResourceAsColor")
     private fun registerButtonControl() {
         if (checkData()) {
             binding.apply {
-                confirmationButton.setBackgroundResource(R.drawable.button_register_filled_rounded_corner2)
+                confirmationButton.setBackgroundResource(R.drawable.linear_rounded_background)
                 confirmationButton.isClickable = true
                 confirmationButton.setTextColor(Color.WHITE)
             }
