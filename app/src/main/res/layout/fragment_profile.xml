@@ -68,7 +68,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="Akmal Bunyodov"
                             android:textColor="@color/black"
                             android:textSize="28sp"
                             android:singleLine="true" />
@@ -105,7 +104,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="+998 99 777 66 55"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
                     </LinearLayout>
