@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.VISIBLE
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.viewModels
@@ -18,7 +17,6 @@ import com.footzone.footzone.R
 import com.footzone.footzone.adapter.CommentAdapter
 import com.footzone.footzone.adapter.CustomAdapter
 import com.footzone.footzone.databinding.FragmentPitchDetailBinding
-import com.footzone.footzone.databinding.LayoutAcceptBinding
 import com.footzone.footzone.databinding.LayoutTimetableDialogBinding
 import com.footzone.footzone.model.*
 import com.footzone.footzone.ui.fragments.BaseFragment
@@ -335,7 +333,8 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                                 changeLinearRemoveFavourite()
                             }
                         }
-                        is UiStateObject.ERROR -> {}
+                        is UiStateObject.ERROR -> {
+                        }
                         else -> {
                         }
                     }
