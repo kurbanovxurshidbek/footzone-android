@@ -5,9 +5,11 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import java.util.concurrent.TimeUnit
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
@@ -26,6 +28,9 @@ import com.footzone.footzone.utils.KeyValues.FIREBASE_TOKEN
 import com.footzone.footzone.utils.KeyValues.USER_DETAIL
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
+import com.google.firebase.FirebaseException
+import com.google.firebase.FirebaseTooManyRequestsException
+import com.google.firebase.auth.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -35,6 +40,9 @@ import javax.inject.Inject
 class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
 
     lateinit var binding: FragmentSignUpBinding
+    lateinit var auth: FirebaseAuth
+    var storedVerificationId: String = ""
+    var resendToken: PhoneAuthProvider.ForceResendingToken? = null
     private val viewModel by viewModels<SignUpViewModel>()
 
     @Inject
@@ -44,6 +52,9 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentSignUpBinding.bind(view)
+
+        auth = FirebaseAuth.getInstance()
+        auth.setLanguageCode("uz")
 
         initViews()
     }
@@ -59,6 +70,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                 viewModel.userPhoneNumber.collect {
                     when (it) {
                         UiStateObject.LOADING -> {
+                            Log.d("@@@", "setupObservers: Loading")
                             showProgress()
                         }
 
@@ -66,7 +78,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                             hideProgress()
                             // toastLong(it.data.data)
                             toastLong(decrypt(it.data.data)!!)
-
+                            Log.d("@@@", "setupObservers: Succes")
                             val fullname = fullName()
                             val phoneNumber = phoneNumber()
                             val isStadiumHolder = isStadiumHolder()
@@ -85,7 +97,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                             openVerificationFragment(user)
                         }
                         is UiStateObject.ERROR -> {
-                            Log.d("TAG", "setupObservers: ${it.message}")
+                            Log.d("@@@", "setupObservers: ${it.message}")
                             hideProgress()
                             toastLong("Siz avval ro'yxatdan o'tgansiz.\nIltimos kirish uchun raqamingizni kiriting.")
                             findNavController().popBackStack()
@@ -110,7 +122,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     private fun openVerificationFragment(user: User) {
         findNavController().navigate(
             R.id.action_signUpFragment_to_verificationFragment,
-            bundleOf(USER_DETAIL to user)
+            bundleOf(USER_DETAIL to user, KeyValues.STORED_VERIFICATION_ID to storedVerificationId,"RESEND_TOKEN" to resendToken)
         )
     }
 
@@ -146,6 +158,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     private fun sendCodeIfAllFieldsFilled() {
         if (checkData()) {
             sendRequestToSendSms()
+            sendVerificationCode(phoneNumber())
         } else {
             toast("Ma'lumotlar to'liq kiritilmadi!")
         }
@@ -206,5 +219,75 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
         val editTextFilledExposedDropdown = binding.filledExposedDropdown
 
         editTextFilledExposedDropdown.setAdapter(adapter)
+    }
+    private fun sendVerificationCode(phoneNumber: String) {
+        val options = PhoneAuthOptions.newBuilder(auth)
+            .setPhoneNumber(phoneNumber)       // Phone number to verify
+            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+            .setActivity(requireActivity())                 // Activity (for callback binding)
+            .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
+            .build()
+        PhoneAuthProvider.verifyPhoneNumber(options)
+    }
+    private var callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+        private val TAG = "@@@"
+        override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+            // This callback will be invoked in two situations:
+            // 1 - Instant verification. In some cases the phone number can be instantly
+            //     verified without needing to send or enter a verification code.
+            // 2 - Auto-retrieval. On some devices Google Play services can automatically
+            //     detect the incoming verification SMS and perform verification without
+            //     user action.
+            Log.d(TAG, "onVerificationCompleted:$credential")
+            signInWithPhoneAuthCredential(credential)
+        }
+
+        override fun onVerificationFailed(e: FirebaseException) {
+            // This callback is invoked in an invalid request for verification is made,
+            // for instance if the the phone number format is not valid.
+            Log.w(TAG, "onVerificationFailed", e)
+
+            if (e is FirebaseAuthInvalidCredentialsException) {
+                // Invalid request
+            } else if (e is FirebaseTooManyRequestsException) {
+                // The SMS quota for the project has been exceeded
+            }
+
+            // Show a message and update the UI
+        }
+
+        override fun onCodeSent(
+            verificationId: String,
+            token: PhoneAuthProvider.ForceResendingToken
+        ) {
+            // The SMS verification code has been sent to the provided phone number, we
+            // now need to ask the user to enter the code and then construct a credential
+            // by combining the code with a verification ID.
+            Log.d(TAG, "onCodeSent:$verificationId")
+
+            // Save verification ID and resending token so we can use them later
+            storedVerificationId = verificationId
+            resendToken = token
+        }
+    }
+    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("@@@", "signInWithCredential:success")
+
+                    val user = task.result?.user?.phoneNumber
+                    Log.d("@@@", "signInWithCredential:success $user")
+                    Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
+                } else {
+                    // Sign in failed, display a message and update the UI
+                    Log.w("@@@", "signInWithCredential:failure", task.exception)
+                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                        // The verification code entered was invalid
+                    }
+                    // Update UI
+                }
+            }
     }
 }
