@@ -15,8 +15,6 @@ object KeyValues {
     const val TYPE_DETAIL = "type"
     const val USER_DETAIL = "user"
     const val PHONE_NUMBER = "phoneNumber"
-    const val STORED_VERIFICATION_ID:String = ""
-    const val CODE:String = ""
     var LOCATION = "location"
     const val TYPE_LOCATION = "1001"
     const val TYPE_WORK_TIME = "1002"
