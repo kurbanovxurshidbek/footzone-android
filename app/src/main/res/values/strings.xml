@@ -62,6 +62,7 @@
     <string name="str_not_complete_data">Ma\'lumotlar to\'liq kiritilmadi!</string>
     <string name="str_incorrect_code">Kod xato kiritildi.</string>
     <string name="str_please_check">Tekshirib ko\'ring</string>
+    <string name="str_field">futbol maydoni</string>
 
     <string-array name="timelist">
         <item>00:30</item>
