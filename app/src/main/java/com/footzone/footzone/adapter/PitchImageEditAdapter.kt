@@ -80,5 +80,5 @@ class PitchImageEditAdapter(
 
     class EditImageViewHolder(val view: ItemStadiumImageEditBinding) :
         RecyclerView.ViewHolder(view.root)
-
+    
 }

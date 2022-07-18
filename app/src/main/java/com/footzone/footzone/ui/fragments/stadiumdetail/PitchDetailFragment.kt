@@ -240,10 +240,10 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
             tvClose.setOnClickListener { dialog.dismiss() }
             workingDays.forEach {
                 when (it.dayName) {
-                    daysWeek[0] -> {
+                    daysWeek[1] -> {
                         timeTableDayControl(mondayLayout, tvMondayOpenTime, tvMondayCloseTime, it)
                     }
-                    daysWeek[1] -> {
+                    daysWeek[2] -> {
                         timeTableDayControl(
                             tuesdayLayout,
                             tvTuesdayOpenTime,
@@ -251,7 +251,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                             it
                         )
                     }
-                    daysWeek[2] -> {
+                    daysWeek[3] -> {
                         timeTableDayControl(
                             wednesdayLayout,
                             tvWednesdayOpenTime,
@@ -259,7 +259,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                             it
                         )
                     }
-                    daysWeek[3] -> {
+                    daysWeek[4] -> {
                         timeTableDayControl(
                             thursdayLayout,
                             tvThursdayOpenTime,
@@ -267,10 +267,10 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                             it
                         )
                     }
-                    daysWeek[4] -> {
+                    daysWeek[5] -> {
                         timeTableDayControl(fridayLayout, tvFridayOpenTime, tvFridayCloseTime, it)
                     }
-                    daysWeek[5] -> {
+                    daysWeek[6] -> {
                         timeTableDayControl(
                             saturdayLayout,
                             tvSaturdayOpenTime,
@@ -278,7 +278,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                             it
                         )
                     }
-                    daysWeek[6] -> {
+                    daysWeek[0] -> {
                         timeTableDayControl(sundayLayout, tvSundayOpenTime, tvSundayCloseTime, it)
                     }
                 }

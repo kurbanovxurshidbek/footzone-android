@@ -68,6 +68,8 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentChooseTimeBottomSheetDialogBinding.bind(view)
         initView()
+
+        binding.tvGameTime
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -84,7 +86,7 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
                 binding.tvBook.setTextColor(Color.WHITE)
                 val playTime =
                     calculateInHours(LocalTime.parse(startTime), LocalTime.parse(endTime))
-                binding.tvGameTime.text = "${playTime.toInt()} "
+                binding.tvGameTime.text = "${playTime.toFloat()} "
                 binding.tvTotalPrice.text = "${(playTime * stadiumData.hourlyPrice).toInt()} "
                 isCheck = true
             } else {
