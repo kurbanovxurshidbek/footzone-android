@@ -55,7 +55,7 @@
     <string name="str_internet_off">Internet bilan muammo sodir bo\'ldi.</string>
     <string name="str_internet_on">Internet sifati tiklandi.</string>
     <string name="str_error_get_location">ERROR loading location</string>
-    <string name="str_not_registered_yet">Siz hali ro\'yxatdan o\'tmagansiz.\n\" + \"Sahifam bo\'limidan ro\'yxatdan o\'tishingiz mumkin</string>
+    <string name="str_not_registered_yet">Siz hali ro\'yxatdan o\'tmagansiz.\n\Sahifam bo\'limidan ro\'yxatdan o\'tishingiz mumkin</string>
     <string name="str_incorrect_phonenumber">Raqam noto\'g\'ri kiritildi!</string>
     <string name="str_not_reg_with_number">Bu raqam orqali ro\'yxatdan o\'tilmagan. Iltimos ro\'yxatdan o\'ting.</string>
     <string name="str_already_reg_log_in">Siz avval ro\'yxatdan o\'tgansiz.\nIltimos kirish uchun raqamingizni kiriting.</string>

@@ -213,6 +213,11 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                     stadiumData.longitude
                 )
             }
+
+            linearShare.setOnClickListener {
+                //share
+            }
+
             icTimetable.setOnClickListener {
                 if (workingDays.isNotEmpty()) {
                     openTimeTableDialog()
