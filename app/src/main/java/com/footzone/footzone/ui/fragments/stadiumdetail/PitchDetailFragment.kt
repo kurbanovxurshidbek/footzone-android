@@ -22,6 +22,8 @@ import com.footzone.footzone.model.*
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.ui.fragments.bookBottomSheet.ChooseTimeBottomSheetDialog
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
+import com.footzone.footzone.utils.KeyValues.ADD_SUCCESS
+import com.footzone.footzone.utils.KeyValues.DELETE_SUCCESS
 import com.footzone.footzone.utils.KeyValues.IS_FAVOURITE_STADIUM
 import com.footzone.footzone.utils.KeyValues.STADIUM_ID
 import com.footzone.footzone.utils.KeyValues.USER_ID
@@ -78,11 +80,9 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                     }
 
                     is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "setupObservers: ${it.data}")
                         showPitchComments(it.data.data)
                     }
                     is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
                     }
                     else -> {
                     }
@@ -190,8 +190,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                     observeAddFavourite()
                 } else
                     toast(
-                        "Siz hali ro'yxatdan o'tmagansiz.\n" +
-                                "Sahifam bo'limidan ro'yxatdan o'tishingiz mumkin"
+                        getString(R.string.str_not_registered_yet)
                     )
             }
 
@@ -215,7 +214,6 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                 )
             }
             icTimetable.setOnClickListener {
-                Log.d("TAG", "initViews: ${workingDays}")
                 if (workingDays.isNotEmpty()) {
                     openTimeTableDialog()
                 }
@@ -325,11 +323,11 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                         }
 
                         is UiStateObject.SUCCESS -> {
-                            if (it.data.message == "add success") {
+                            if (it.data.message == ADD_SUCCESS) {
                                 changeLinearAddFavourite()
                             }
 
-                            if (it.data.message == "delete success") {
+                            if (it.data.message == DELETE_SUCCESS) {
                                 changeLinearRemoveFavourite()
                             }
                         }

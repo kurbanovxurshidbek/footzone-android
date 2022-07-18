@@ -1,8 +1,19 @@
 package com.footzone.footzone.utils
 
-import com.google.firebase.auth.PhoneAuthProvider
 
 object KeyValues {
+    const val PENDING: String = "PENDING"
+    const val PLAYED: String = "PLAYED"
+    const val USER: String = "Oddiy foydalanuvchi"
+    const val STADIUM_OWNER: String = "Maydon egasi"
+    const val DEFAULT: String = "default"
+    const val ADD_SUCCESS: String = "add success"
+    const val DELETE_SUCCESS: String = "delete success"
+    const val KEY: String = "AIzaSyCVwdU3slouglv7TBDh3juGegafJVnKx8U"
+    const val DECLINED_2: String = "Rad etildi!"
+    const val ACCEPTED: String = "ACCEPTED"
+    const val DECLINED: String = "ACCEPTED"
+    const val All: String = "ALL"
     const val SECURITY_KEY = "FOOTZONE_APPLICATION"
     const val NOTIFICATION_TITLE: String = "NotificationTitle"
     const val SPLASH_MESSAGE: String = "SplashMessage"
@@ -25,9 +36,9 @@ object KeyValues {
     const val LATITUDE = "latitude"
     const val LONGITUDE = "longitude"
     const val LANGUAGE = "language"
-    const val WORK_TIMES  = "workTimes"
-    const val WORK_TIME  = "workTime"
-    const val FIREBASE_TOKEN  = "Firebase Token"
+    const val WORK_TIMES = "workTimes"
+    const val WORK_TIME = "workTime"
+    const val FIREBASE_TOKEN = "Firebase Token"
     const val PICK_FROM_FILE_ADD = 1001
     const val PICK_FROM_FILE_EDIT = 1002
 }

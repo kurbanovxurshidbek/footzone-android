@@ -136,12 +136,11 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
                                 hideProgress()
                                 val data = it.data.data
                                 saveToSharedPref(data.user_id, data.token, data.stadiumHolder)
-                                //returnHomeFragment()
                             }
                         }
                         is UiStateObject.ERROR -> {
                             hideProgress()
-                            toastLong("Kod xato kiritildi.")
+                            toastLong(getString(R.string.str_incorrect_code))
                         }
                         else -> {
                         }
@@ -172,7 +171,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
                     }
                     is UiStateObject.ERROR -> {
                         hideProgress()
-                        toastLong("Kod xato kiritildi.")
+                        toastLong(getString(R.string.str_incorrect_code))
                     }
                     else -> {
                     }
@@ -199,7 +198,6 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
                         }
 
                         is UiStateObject.SUCCESS -> {
-                            Log.d("TAG", "setupObserversRegister: ${it.data.data}")
                             val userPriority = it.data.data
                             saveToSharedPref(
                                 userPriority.user_id,
@@ -208,7 +206,6 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
                             )
                         }
                         is UiStateObject.ERROR -> {
-                            Log.d("TAG", "setupUI: ${it.message} error")
                         }
                         else -> {
                         }
@@ -225,7 +222,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
     private fun verificationCodeErrorControl() {
         binding.editTextVerificationCode.doAfterTextChanged {
             if (it!!.toString().length != 6) {
-                binding.textInputLayoutVerificationCode.error = "Tekshirib ko'ring"
+                binding.textInputLayoutVerificationCode.error = getString(R.string.str_please_check)
                 registerButtonControl()
             } else {
                 binding.textInputLayoutVerificationCode.error = null

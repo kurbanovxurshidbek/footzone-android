@@ -1,8 +1,10 @@
 package com.footzone.footzone.ui.activity
 
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +16,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.footzone.footzone.R
+import com.footzone.footzone.broadcast.InternetBroadcastReceiver
 import com.footzone.footzone.databinding.ActivityMainBinding
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.IS_OWNER
@@ -34,6 +37,8 @@ class MainActivity : BaseActivity() {
         setupUI()
         if (intent.getStringExtra(KeyValues.NOTIFICATION_TITLE) != null)
             navigate(intent)
+
+        checkInternet()
     }
 
     private fun navigate(intent: Intent?) {
@@ -96,5 +101,23 @@ class MainActivity : BaseActivity() {
 
     private fun hideBottomNav() {
         binding.bottomNavigationView.visibility = View.GONE
+    }
+
+    private fun checkInternet() {
+        val internetBroadcastReceiver = InternetBroadcastReceiver()
+        val intentFilter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+
+        internetBroadcastReceiver.onInternetOff = {
+            showToast(getString(R.string.str_internet_off), Toast.LENGTH_LONG)
+        }
+
+        internetBroadcastReceiver.onInternetOn = {
+            showToast(getString(R.string.str_internet_on), Toast.LENGTH_LONG)
+        }
+
+        registerReceiver(
+            internetBroadcastReceiver,
+            intentFilter
+        )
     }
 }

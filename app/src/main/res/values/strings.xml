@@ -1,49 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FootZone</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">MapsActivity</string>
 
-    <string name="str_busy">Book</string>
-    <string name="str_date">Date</string>
-    <string name="str_cancel">Cancel</string>
-    <string name="str_occupancy">Book</string>
-    <string name="str_band">Already booked.</string>
-    <string name="str_choose_date">Select a date</string>
-    <string name="str_selection">Choose</string>
-    <string name="str_my_stadium">My stadiums</string>
-    <string name="str_add_stadium">Add stadium</string>
-    <string name="str_stadium_name">Stadium name</string>
-    <string name="str_location">Address</string>
-    <string name="str_phone_number">Phone number</string>
-    <string name="str_work_time">Working hours</string>
-    <string name="str_prise">Price (sum/hour)</string>
-    <string name="str_save">Save</string>
-    <string name="str_edit_stadium">Edit stadium</string>
-    <string name="str_time_interval">Time interval</string>
-    <string name="str_stadium_address">Stadium address</string>
+    <string name="str_busy">Band qilish</string>
+    <string name="str_date">Sana</string>
+    <string name="str_cancel">Bekor qilish</string>
+    <string name="str_occupancy">Band qilish</string>
+    <string name="str_band">Boshqa user tomonidan band qilingan.</string>
+    <string name="str_choose_date">Sanani tanlang</string>
+    <string name="str_selection">Tanlash</string>
+    <string name="str_my_stadium">Mening maydonlarim</string>
+    <string name="str_add_stadium">Maydon qo’shish</string>
+    <string name="str_stadium_name">Maydon nomi</string>
+    <string name="str_location">Manzil</string>
+    <string name="str_phone_number">Telefon raqam</string>
+    <string name="str_work_time">Ish vaqtlari</string>
+    <string name="str_prise">Narxi (so’m/soat)</string>
+    <string name="str_save">Saqlash</string>
+    <string name="str_edit_stadium">Maydonni tahrirlash</string>
+    <string name="str_time_interval">Vaqt oralig’i</string>
+    <string name="str_stadium_address">Stadion manzili</string>
     <string name="str_united_kingdom">English</string>
     <string name="str_russian">Russian</string>
-    <string name="str_uzbekistan">Uzbek</string>
-    <string name="str_select_language">Choose language</string>
-    <string name="str_setings">Settings</string>
-    <string name="str_lang">English</string>
-    <string name="str_so_m_soat">sum/hour</string>
-    <string name="str_marshrut">Route</string>
-    <string name="str_send">Share</string>
-    <string name="str_ratings_and_reviews">Ratings and reviews</string>
-    <string name="str_votes">votes</string>
-    <string name="str_open">Open</string>
-    <string name="str_changing_game_days">Changing game days</string>
-    <string name="str_delete_image">Delete Image</string>
-    <string name="str_error_phone_number">There is an error entering the phone number</string>
-    <string name="str_error_entering_price">Error entering price</string>
-    <string name="str_successfully_edited">The field has been successfully edited</string>
-    <string name="str_error_edited">The field has not been edited successfully, please try again</string>
-    <string name="str_successfully_edded">The field was successfully added.</string>
-    <string name="str_not_succesfull">The field did not join successfully, hit again</string>
+    <string name="str_uzbekistan">Uzbekistan</string>
+    <string name="str_select_language">Tilni tanlang</string>
+    <string name="str_lang">O\'zbekcha</string>4
+    <string name="str_setings">Sozlamalar</string>
+    <string name="str_so_m_soat">so\'m/soat</string>
+    <string name="str_marshrut">Marshrut</string>
+    <string name="str_send">Ulashish</string>
+    <string name="str_ratings_and_reviews">Reytinglar va sharhlar</string>
+    <string name="str_votes">ta ovoz</string>
+    <string name="str_open">Ochiq</string>
+    <string name="str_changing_game_days">O\'yin kunlarini o\'zgartirish</string>
+    <string name="str_delete_image">Rasm o\'chirildi</string>
+    <string name="str_error_phone_number">Telefon nomer kiritishda xatolik bor</string>
+    <string name="str_error_entering_price">Narxni kiritishda xatolik</string>
+    <string name="str_successfully_edited">Maydon muvofaqiyatli tahrirlandi</string>
+    <string name="str_error_edited">Maydon muvofaqiyatli tahrirlanmadi, qayta urinib ko\'ring</string>
+    <string name="str_successfully_edded">Maydon muvofaqiyatli qo\'shildi.</string>
+    <string name="str_not_succesfull">Maydon muvaffaqiyatli qo\'shilmadi, qayta urinib koring</string>
     <string name="str_date_incomplete">Malumotlar to\'liq to\'ldirilmagan</string>
     <string name="str_select_dat_game">O\'yin kunini tanlang</string>
-    <string name="str_send_request">Sizning so\'rovingiz yuborildi,\n tez orada javob qaytadi</string>
+    <string name="str_send_request">Sizning so\'rovingiz yuborildi,\tez orada javob qaytadi</string>
     <string name="str_not_send_request">Sizning so\'rovingiz yuborilmadi,\qayta urining</string>
     <string name="str_holder_not_stadium">Hozir sizda maydonlar mavjud emas.\nMaydon qo’shish uchun yuqoridagi\n“+” tugmasini bosing</string>
     <string name="str_select_game_time">O\'yin vaqtlarini tanlang</string>
@@ -51,6 +52,16 @@
     <string name="str_football_stadium">futbol maydoni</string>
     <string name="str_hour">soat</string>
     <string name="channel_id">Something</string>
+    <string name="str_internet_off">Internet bilan muammo sodir bo\'ldi.</string>
+    <string name="str_internet_on">Internet sifati tiklandi.</string>
+    <string name="str_error_get_location">ERROR loading location</string>
+    <string name="str_not_registered_yet">Siz hali ro\'yxatdan o\'tmagansiz.\n\" + \"Sahifam bo\'limidan ro\'yxatdan o\'tishingiz mumkin</string>
+    <string name="str_incorrect_phonenumber">Raqam noto\'g\'ri kiritildi!</string>
+    <string name="str_not_reg_with_number">Bu raqam orqali ro\'yxatdan o\'tilmagan. Iltimos ro\'yxatdan o\'ting.</string>
+    <string name="str_already_reg_log_in">Siz avval ro\'yxatdan o\'tgansiz.\nIltimos kirish uchun raqamingizni kiriting.</string>
+    <string name="str_not_complete_data">Ma\'lumotlar to\'liq kiritilmadi!</string>
+    <string name="str_incorrect_code">Kod xato kiritildi.</string>
+    <string name="str_please_check">Tekshirib ko\'ring</string>
 
     <string-array name="timelist">
         <item>00:30</item>
@@ -103,6 +114,7 @@
         <item>23:59</item>
     </string-array>
 
+
     <string-array name="daysWeek">
         <item>SUNDAY</item>
         <item>MONDAY</item>
@@ -112,4 +124,5 @@
         <item>FRIDAY</item>
         <item>SATURDAY</item>
     </string-array>
+
 </resources>

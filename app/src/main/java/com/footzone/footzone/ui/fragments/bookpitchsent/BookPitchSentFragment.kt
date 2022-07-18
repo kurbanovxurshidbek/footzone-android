@@ -21,6 +21,7 @@ import com.footzone.footzone.model.StadiumBookSentResponseData
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.AcceptDialog
 import com.footzone.footzone.utils.DeclineDialog
+import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.UiStateObject
 import com.footzone.footzone.utils.extensions.hide
 import com.footzone.footzone.utils.extensions.show
@@ -105,7 +106,7 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
                                 if (it.data.success) {
                                     declineDialog.dismiss()
                                     tvStatus.setTextColor(Color.parseColor("#C8303F"))
-                                    tvStatus.text = "Rad etildi!"
+                                    tvStatus.text = KeyValues.DECLINED_2
                                     tvStatus.show()
                                     linearAcceptDecline.hide()
                                 }

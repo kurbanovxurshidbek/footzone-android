@@ -14,10 +14,14 @@ import com.footzone.footzone.databinding.FragmentStadiumGameHistoryBinding
 import com.footzone.footzone.model.StadiumBookSentResponseData
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.KeyValues.PLAYED
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
+import com.footzone.footzone.utils.extensions.hide
+import com.footzone.footzone.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.security.Key
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -35,7 +39,7 @@ class StadiumGameHistoryFragment : BaseFragment(R.layout.fragment_stadium_game_h
 
         binding = FragmentStadiumGameHistoryBinding.bind(view)
         if (sharedPref.getUserID(KeyValues.USER_ID, "").isNotEmpty())
-            viewModel.getStadiumPlayedHistory("PLAYED")
+            viewModel.getStadiumPlayedHistory(PLAYED)
         initViews()
     }
 
@@ -71,12 +75,12 @@ class StadiumGameHistoryFragment : BaseFragment(R.layout.fragment_stadium_game_h
 
     private fun refreshAdapter(history: List<StadiumBookSentResponseData>) {
         if (history.isEmpty()) {
-            binding.tvEmptyListAlert.visibility = View.VISIBLE
-            binding.rvStadiumGameHistory.visibility = View.GONE
+            binding.tvEmptyListAlert.show()
+            binding.rvStadiumGameHistory.hide()
             return
         } else {
-            binding.tvEmptyListAlert.visibility = View.GONE
-            binding.rvStadiumGameHistory.visibility = View.VISIBLE
+            binding.tvEmptyListAlert.hide()
+            binding.rvStadiumGameHistory.show()
         }
 
         playedPitchAdapter.submitData(history)

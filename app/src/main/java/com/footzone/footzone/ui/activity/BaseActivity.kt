@@ -7,10 +7,13 @@ import android.content.Intent
 import android.content.IntentSender
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.PermissionChecker
+import com.footzone.footzone.databinding.ToastChooseTimeBinding
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.SharedPref
 import com.google.android.gms.common.api.ApiException
@@ -70,6 +73,7 @@ open class BaseActivity : AppCompatActivity() {
         val intent = Intent(context, MainActivity::class.java)
         intent.putExtra(KeyValues.SPLASH_MESSAGE, true)
         startActivity(intent)
+        //finish()
     }
 
     open fun isLocationPermissionGranted(): Boolean =
@@ -78,7 +82,7 @@ open class BaseActivity : AppCompatActivity() {
             Manifest.permission.ACCESS_FINE_LOCATION
         ) == PermissionChecker.PERMISSION_GRANTED
 
-    fun showLocationOn() {
+    private fun showLocationOn() {
         val locationRequest = LocationRequest.create()
         locationRequest.apply {
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -113,13 +117,11 @@ open class BaseActivity : AppCompatActivity() {
     open fun loadFCMToken() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
-                Log.d("@@@Error firebase", "Fetching FCM registration token failed")
                 return@OnCompleteListener
             }
             // Get new FCM registration token
             // Save it in locally to use later
             val token = task.result
-            Log.d("@@@firebase token", token.toString())
             sharedPref.saveFirebaseToken(KeyValues.FIREBASE_TOKEN, token.toString())
         })
     }
@@ -132,4 +134,15 @@ open class BaseActivity : AppCompatActivity() {
                 showLocationOn()
             }
         }
+
+    open fun showToast(message: String, duration: Int) {
+        val binding =
+            ToastChooseTimeBinding.inflate(LayoutInflater.from(context))
+
+        binding.tvToast.text = message
+        val customToast = Toast(context)
+        customToast.duration = duration
+        customToast.view = binding.root
+        customToast.show()
+    }
 }

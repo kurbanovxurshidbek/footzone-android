@@ -15,6 +15,8 @@ import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
+import com.footzone.footzone.utils.extensions.hide
+import com.footzone.footzone.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -71,12 +73,12 @@ class PlayedPitchFragment : BaseFragment(R.layout.fragment_played_pitch) {
     private fun refreshAdapter(playedStadiums: List<PlayedHistoryResponseData>) {
 
         if (playedStadiums.isEmpty()) {
-            binding.tvEmptyListAlert.visibility = View.VISIBLE
-            binding.rvPlayedStadiums.visibility = View.GONE
+            binding.tvEmptyListAlert.show()
+            binding.rvPlayedStadiums.hide()
             return
         } else {
-            binding.tvEmptyListAlert.visibility = View.GONE
-            binding.rvPlayedStadiums.visibility = View.VISIBLE
+            binding.tvEmptyListAlert.hide()
+            binding.rvPlayedStadiums.show()
         }
 
         playedPitchAdapter.submitData(playedStadiums)

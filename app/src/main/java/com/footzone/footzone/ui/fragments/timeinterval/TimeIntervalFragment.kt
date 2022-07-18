@@ -22,6 +22,7 @@ import com.footzone.footzone.model.TimeManager
 import com.footzone.footzone.model.sessionsday.SessionsData
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.KeyValues.ACCEPTED
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -86,7 +87,7 @@ class TimeIntervalFragment : BaseFragment(R.layout.fragment_time_interval) {
                                                 )
                                             ) - 1]
                                         ),
-                                        status = "ACCEPTED"
+                                        status = ACCEPTED
                                     )
                                 )
                             }
@@ -128,11 +129,7 @@ class TimeIntervalFragment : BaseFragment(R.layout.fragment_time_interval) {
                     timeSharedViewModel.setTime(LiveDataModel(startTime, finishTime, bookDate))
                     requireActivity().onBackPressed()
                 } else {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.str_select_game_time),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    toast(getString(R.string.str_select_game_time))
                 }
             }
 
@@ -281,7 +278,7 @@ class TimeIntervalFragment : BaseFragment(R.layout.fragment_time_interval) {
         )
 
         for (pos in position downTo 0) {
-            if (array[pos].status == "ACCEPTED")
+            if (array[pos].status == ACCEPTED)
                 return pos + 1
         }
         return 0
@@ -298,7 +295,7 @@ class TimeIntervalFragment : BaseFragment(R.layout.fragment_time_interval) {
         )
 
         for (pos in position until array.size) {
-            if (array[pos].status == "ACCEPTED")
+            if (array[pos].status == ACCEPTED)
                 return pos - 1
         }
         return array.size - 1

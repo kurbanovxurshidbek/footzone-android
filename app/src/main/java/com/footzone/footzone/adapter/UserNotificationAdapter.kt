@@ -25,8 +25,8 @@ class UserNotificationAdapter(var items: ArrayList<UserNotification>) :
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = items[position]
         holder.view.apply {
-            messageBody.setText(item.body)
-            messageDate.setText(item.date)
+            messageBody.text = item.body
+            messageDate.text = item.date
             if (item.isChecked) {
                 itemUserNotificationRoot.setBackgroundResource(R.drawable.checked_item_user_notification_background)
                 messageBody.setTextColor(Color.parseColor("#424242"))

@@ -24,6 +24,8 @@ import com.footzone.footzone.security.Symmetric.encrypt
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.FIREBASE_TOKEN
+import com.footzone.footzone.utils.KeyValues.STADIUM_OWNER
+import com.footzone.footzone.utils.KeyValues.USER
 import com.footzone.footzone.utils.KeyValues.USER_DETAIL
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
@@ -67,7 +69,6 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
 
                         is UiStateObject.SUCCESS -> {
                             hideProgress()
-                            // toastLong(it.data.data)
                             toastLong(decrypt(it.data.data)!!)
 
                             val fullname = fullName()
@@ -88,9 +89,8 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
                             openVerificationFragment(user)
                         }
                         is UiStateObject.ERROR -> {
-                            Log.d("TAG", "setupObservers: ${it.message}")
                             hideProgress()
-                            toastLong("Siz avval ro'yxatdan o'tgansiz.\nIltimos kirish uchun raqamingizni kiriting.")
+                            toastLong(getString(R.string.str_already_reg_log_in))
                             findNavController().popBackStack()
                         }
                         else -> {}
@@ -101,10 +101,11 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     }
 
     private fun isStadiumHolder(): Boolean =
-        binding.filledExposedDropdown.text.toString() == "Maydon egasi"
+        binding.filledExposedDropdown.text.toString() == STADIUM_OWNER
 
     private fun phoneNumber(): String =
         "+998${binding.editTextNumber.text.toString().replace("\\s".toRegex(), "")}"
+
     private fun fullName(): String = "${
         binding.editTextSurname.text.toString().trim()
     } ${binding.editTextName.text.toString().trim()}"
@@ -149,7 +150,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
         if (checkData()) {
             sendRequestToSendSms()
         } else {
-            toast("Ma'lumotlar to'liq kiritilmadi!")
+            toast(getString(R.string.str_not_complete_data))
         }
     }
 
@@ -202,7 +203,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
 
     //this function for get role exp: Stadium owner or User
     private fun roleSpinner() {
-        val type: Array<String> = arrayOf("Oddiy foydalanuvchi", "Maydon egasi")
+        val type: Array<String> = arrayOf(USER, STADIUM_OWNER)
         val adapter: ArrayAdapter<String> =
             ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, type)
         val editTextFilledExposedDropdown = binding.filledExposedDropdown

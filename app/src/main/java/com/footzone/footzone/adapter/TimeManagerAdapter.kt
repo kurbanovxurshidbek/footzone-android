@@ -10,6 +10,7 @@ import com.footzone.footzone.R
 import com.footzone.footzone.databinding.ItemChooseTimeViewGreyBinding
 import com.footzone.footzone.databinding.ItemChooseTimeViewWhiteBinding
 import com.footzone.footzone.model.TimeManager
+import com.footzone.footzone.utils.KeyValues.ACCEPTED
 
 /**
  * This adapter , user can  view the stadium run times
@@ -21,7 +22,7 @@ class TimeManagerAdapter(private var onItemSelected: ((Int, ItemChooseTimeViewWh
 
     override fun getItemViewType(position: Int): Int {
         val item = getItem(position)
-        return if (item.status == "ACCEPTED") {
+        return if (item.status == ACCEPTED) {
             TYPE_ITEM_GREY
         } else {
             TYPE_ITEM_WHITE
