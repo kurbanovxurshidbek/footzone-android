@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
+import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
@@ -48,11 +49,13 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
         initViews()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun sendRequestToSendSms() {
         viewModel.signUp(encrypt(phoneNumber())!!)
         setupObservers()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setupObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
