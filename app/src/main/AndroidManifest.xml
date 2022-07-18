@@ -45,8 +45,7 @@
             android:name=".ui.activity.MainActivity"
             android:configChanges="locale"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".ui.activity.SplashActivity"
@@ -69,10 +68,10 @@
 
         <receiver
             android:name=".broadcast.DeclineNotificationReceiver"
-            android:exported="false"/>
+            android:exported="false" />
         <receiver
             android:name=".broadcast.AcceptNotificationReceiver"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>

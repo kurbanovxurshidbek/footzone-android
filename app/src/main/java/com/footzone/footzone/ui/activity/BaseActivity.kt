@@ -110,7 +110,6 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-
     open fun loadFCMToken() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {

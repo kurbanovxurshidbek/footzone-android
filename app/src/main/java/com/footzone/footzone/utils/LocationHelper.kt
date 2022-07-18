@@ -44,7 +44,7 @@ class LocationHelper {
                     // use your location object
 
                     if (this@LocationHelper::locationListener.isInitialized) {
-                        locationListener.onLocationChanged(location)
+                        locationListener.onLocationChanged(location!!)
                     }
                 }
 

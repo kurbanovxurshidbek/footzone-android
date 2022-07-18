@@ -36,10 +36,6 @@ class MainActivity : BaseActivity() {
             navigate(intent)
     }
 
-    fun ok(){
-        Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show()
-    }
-
     private fun navigate(intent: Intent?) {
         if (intent != null) {
             if (sharedPref.getIsOwner(IS_OWNER)) {
