@@ -53,29 +53,29 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
             }
 
             switchMo.setOnCheckedChangeListener { _, isOn ->
-                openTime(isOn, cardViewMo)
+                openTime(inputLayoutMo, isOn, cardViewMo)
             }
             switchTu.setOnCheckedChangeListener { _, isOn ->
-                openTime(isOn, cardViewTu)
+                openTime(inputLayoutTu, isOn, cardViewTu)
             }
 
             switchWe.setOnCheckedChangeListener { _, isOn ->
-                openTime(isOn, cardViewWe)
+                openTime(inputLayoutWe, isOn, cardViewWe)
             }
 
             switchTh.setOnCheckedChangeListener { _, isOn ->
-                openTime(isOn, cardViewTh)
+                openTime(inputLayoutTh, isOn, cardViewTh)
             }
             switchFr.setOnCheckedChangeListener { _, isOn ->
-                openTime(isOn, cardViewFr)
+                openTime(inputLayoutFr, isOn, cardViewFr)
             }
 
             switchSa.setOnCheckedChangeListener { _, isOn ->
-                openTime(isOn, cardViewSa)
+                openTime(inputLayoutSa, isOn, cardViewSa)
             }
 
             switchSu.setOnCheckedChangeListener { _, isOn ->
-                openTime(isOn, cardViewSu)
+                openTime(inputLayoutSu, isOn, cardViewSu)
             }
 
             numberPicker(startTimeMo, finishTimeMo)
@@ -88,15 +88,16 @@ class ChooseWorkTimeFragment : BaseFragment(R.layout.fragment_choose_work_time) 
         }
     }
 
-    private fun openTime(bool: Boolean, cardView: CardView) = if (bool) {
+    private fun openTime(rel: RelativeLayout, bool: Boolean, cardView: CardView) = if (bool) {
        // layout.show()
+        rel.setVisibility(View.VISIBLE)
         androidx.transition.TransitionManager.beginDelayedTransition(cardView,
             androidx.transition.AutoTransition())
-        binding.inputLayoutMo.setVisibility(View.VISIBLE)
+
     } else {
        // layout.hide()
         TransitionManager.beginDelayedTransition(cardView, AutoTransition())
-        binding.inputLayoutMo.setVisibility(View.GONE)
+            rel.setVisibility(View.GONE)
     }
 
     private fun numberPicker(startTime: NumberPicker, finishTime: NumberPicker) {

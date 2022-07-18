@@ -1,5 +1,7 @@
 package com.footzone.footzone.utils
 
+import com.google.firebase.auth.PhoneAuthProvider
+
 object KeyValues {
     const val SECURITY_KEY = "FOOTZONE_APPLICATION"
     const val NOTIFICATION_TITLE: String = "NotificationTitle"

@@ -96,7 +96,7 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
 
                         is UiStateObject.SUCCESS -> {
                             hideProgress()
-                           // toastLong(it.data.data)
+                            // toastLong(it.data.data)
                             toastLong(decrypt(it.data.data)!!)
                             openVerificationFragment()
                         }
@@ -120,7 +120,6 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
             bundleOf(PHONE_NUMBER to phoneNumber)
         )
     }
-
     private fun checkAllFields() {
         binding.editTextNumber.doAfterTextChanged {
             enterButtonControl()
