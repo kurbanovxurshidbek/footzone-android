@@ -20,6 +20,10 @@ import com.footzone.footzone.model.StadiumBookSentResponseData
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.AcceptDialog
 import com.footzone.footzone.utils.DeclineDialog
+import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.KeyValues.ACCEPTED
+import com.footzone.footzone.utils.KeyValues.All
+import com.footzone.footzone.utils.KeyValues.DECLINED
 import com.footzone.footzone.utils.UiStateObject
 import com.footzone.footzone.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,7 +41,7 @@ class AdminNotificationFragment : BaseFragment(R.layout.fragment_admin_notificat
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.getAllNotifications("ALL")
+        viewModel.getAllNotifications(All)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -164,13 +168,13 @@ class AdminNotificationFragment : BaseFragment(R.layout.fragment_admin_notificat
                                 if (it.data.success) {
                                     acceptDialog.dismiss()
                                     linearAcceptDecline.show()
-                                    adapter.changeNotificationStatus("ACCEPTED", position)
+                                    adapter.changeNotificationStatus(ACCEPTED, position)
                                 }
                             } else {
                                 if (it.data.success) {
                                     declineDialog.dismiss()
                                     linearAcceptDecline.show()
-                                    adapter.changeNotificationStatus("DECLINED", position)
+                                    adapter.changeNotificationStatus(DECLINED, position)
                                 }
                             }
                         }

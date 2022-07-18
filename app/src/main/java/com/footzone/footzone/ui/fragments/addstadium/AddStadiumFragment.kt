@@ -32,6 +32,7 @@ import com.footzone.footzone.databinding.FragmentAddStadiumBinding
 import com.footzone.footzone.databinding.ToastChooseTimeBinding
 import com.footzone.footzone.helper.OnClickEditEvent
 import com.footzone.footzone.model.*
+import com.footzone.footzone.ui.activity.MainActivity
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.LATITUDE
@@ -177,13 +178,12 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                             workTimes
                         )
 
-                    for (phot in photos) {
-                        if (phot.id == null) {
+                    for (photo in photos) {
+                        if (photo.id == null) {
                             viewModel.addPhotoToStadium(
                                 stadiumId,
-                                convertUriMultipart(phot.name as Uri, "file")
+                                convertUriMultipart(photo.name as Uri, "file")
                             )
-                            Log.d("TAG", "setupObserversPhoto  photo: ${phot.id} ${phot.name}")
                             observeViewModelAdd()
                         }
                     }
@@ -329,11 +329,17 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         }
                         is UiStateObject.SUCCESS -> {
                             hideProgress()
-                            showEditToast(getString(R.string.str_successfully_edited))
+                            (requireActivity() as MainActivity).showToast(
+                                getString(R.string.str_successfully_edited),
+                                Toast.LENGTH_SHORT
+                            )
                         }
                         is UiStateObject.ERROR -> {
                             hideProgress()
-                            showEditToast(getString(R.string.str_error_edited))
+                            (requireActivity() as MainActivity).showToast(
+                                getString(R.string.str_error_edited),
+                                Toast.LENGTH_SHORT
+                            )
                         }
                         else -> {
                         }
@@ -341,19 +347,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                 }
             }
         }
-    }
-
-    private fun showEditToast(message: String) {
-        val binding =
-            ToastChooseTimeBinding.inflate(LayoutInflater.from(requireActivity()))
-
-        binding.tvToast.text = message
-        val custToast = Toast(requireContext())
-        custToast.view = binding.root
-        custToast.show()
-
-        back()
-
     }
 
     private fun initViewsAdd() {
@@ -472,13 +465,18 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                         is UiStateObject.SUCCESS -> {
                             hideProgress()
                             Log.d("TAG", "observeViewModel: ")
-                            showEditToast(getString(R.string.str_successfully_edded))
-
+                            (requireActivity() as MainActivity).showToast(
+                                getString(R.string.str_successfully_edded),
+                                Toast.LENGTH_SHORT
+                            )
                         }
                         is UiStateObject.ERROR -> {
                             hideProgress()
                             Log.d("TAG", "observeViewModel: ${it.message}")
-                            showEditToast(getString(R.string.str_not_succesfull))
+                            (requireActivity() as MainActivity).showToast(
+                                getString(R.string.str_not_succesfull),
+                                Toast.LENGTH_SHORT
+                            )
                         }
                         else -> {
                         }
@@ -549,7 +547,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
         ins?.close()
         fileOutputStream.close()
 
-        val cr: ContentResolver = requireContext().getContentResolver()
+        val cr: ContentResolver = requireContext().contentResolver
         val inputStream: InputStream? = cr.openInputStream(selectedImageUri)
         val bitmap = BitmapFactory.decodeStream(inputStream)
         val baos = ByteArrayOutputStream()

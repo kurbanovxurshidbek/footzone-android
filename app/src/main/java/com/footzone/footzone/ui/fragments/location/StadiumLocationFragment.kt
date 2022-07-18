@@ -110,7 +110,7 @@ class StadiumLocationFragment : BaseFragment(R.layout.fragment_stadium_location)
                 Handler(Looper.getMainLooper()).postDelayed({
                     fusedLocationClient =
                         LocationServices.getFusedLocationProviderClient(requireContext())
-                    toast("ERROR loading location")
+                    toast(getString(R.string.str_error_get_location))
                 }, 400)
             }
         }

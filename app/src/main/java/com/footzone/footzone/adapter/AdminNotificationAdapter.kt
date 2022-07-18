@@ -10,6 +10,9 @@ import com.footzone.footzone.databinding.ItemAdminNotificationBinding
 import com.footzone.footzone.helper.OnClickEventAcceptDecline
 import com.footzone.footzone.model.AdminNotification
 import com.footzone.footzone.model.StadiumBookSentResponseData
+import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.KeyValues.ACCEPTED
+import com.footzone.footzone.utils.KeyValues.DECLINED
 import com.footzone.footzone.utils.commonfunction.Functions
 import com.footzone.footzone.utils.extensions.hide
 import com.footzone.footzone.utils.extensions.show
@@ -61,18 +64,18 @@ class AdminNotificationAdapter(
             }, $duration soat"
             tvPrice.text = "${notification.hourlyPrice.toInt() * duration} so'm"
 
-            if (notification.status == "ACCEPTED") {
+            if (notification.status == ACCEPTED) {
                 linearButtonWrapper.hide()
                 acceptedLayout.show()
                 declinedLayout.hide()
             }
-            if (notification.status == "DECLINED") {
+            if (notification.status == DECLINED) {
                 linearButtonWrapper.hide()
                 declinedLayout.show()
                 acceptedLayout.hide()
             }
 
-            if (notification.status == "PENDING") {
+            if (notification.status == KeyValues.PENDING) {
                 linearButtonWrapper.show()
                 acceptedLayout.hide()
                 declinedLayout.hide()

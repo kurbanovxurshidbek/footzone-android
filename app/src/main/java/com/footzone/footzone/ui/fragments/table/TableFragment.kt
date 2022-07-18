@@ -99,7 +99,7 @@ class TableFragment : BaseFragment(R.layout.fragment_table) {
 
     private fun TabLayout.setupWithViewPager(viewPager: ViewPager2, labels: List<String>) {
         if (labels.size != viewPager.adapter?.itemCount)
-            throw Exception("Item count is not equal labels size")
+            throw Exception()
 
         TabLayoutMediator(this, viewPager) { tab, position ->
             tab.text = labels[position]

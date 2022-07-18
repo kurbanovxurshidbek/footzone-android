@@ -72,7 +72,7 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun sendLogInRequest() {
         if (binding.editTextNumber.text!!.isEmpty() && binding.editTextNumber.text.toString().length != 12) {
-            toast("Raqam noto'g'ri kiritildi!")
+            toast(getString(R.string.str_incorrect_phonenumber))
         } else {
             phoneNumber = getPhoneNumber()
 
@@ -96,14 +96,13 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
 
                         is UiStateObject.SUCCESS -> {
                             hideProgress()
-                           // toastLong(it.data.data)
                             toastLong(decrypt(it.data.data)!!)
                             openVerificationFragment()
                         }
                         is UiStateObject.ERROR -> {
                             hideProgress()
                             toastLong(
-                                "Bu raqam orqali ro'yxatdan o'tilmagan. Iltimos ro'yxatdan o'ting."
+                                getString(R.string.str_not_reg_with_number)
                             )
                             openSignUpFragment()
                         }
@@ -120,7 +119,6 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
             bundleOf(PHONE_NUMBER to phoneNumber)
         )
     }
-
     private fun checkAllFields() {
         binding.editTextNumber.doAfterTextChanged {
             enterButtonControl()

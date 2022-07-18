@@ -111,8 +111,6 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
             val dialog = CalendarDIalog { date, week ->
                 binding.tvDate.setText(date)
                 dayOfWeek = week
-                Log.d("TAG", "initView: ${week}")
-
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 dialog.showCalendarDialog(requireActivity())
@@ -135,11 +133,7 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
                 )
                 observeSendBooking()
             } else {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.str_date_incomplete),
-                    Toast.LENGTH_SHORT
-                ).show()
+                toast(getString(R.string.str_date_incomplete))
             }
         }
 
@@ -151,8 +145,8 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
                 val destFormat = SimpleDateFormat("yyyy-MM-dd")
                 val convertedDate = sourceFormat.parse(binding.tvDate.text.toString())
 
-                for (pos in 0..stadiumData.workingDays.size - 1) {
-                    if (stadiumData.workingDays[pos].dayName.equals(array[dayOfWeek - 1])) {
+                for (pos in 0 until stadiumData.workingDays.size) {
+                    if (stadiumData.workingDays[pos].dayName == array[dayOfWeek - 1]) {
                         val bookDate: String = destFormat.format(convertedDate)
                         findNavController().navigate(
                             R.id.action_pitchDetailFragment_to_timeIntervalFragment,
@@ -161,12 +155,7 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
                     }
                 }
             } else {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.str_select_dat_game),
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+                toast(getString(R.string.str_select_dat_game))
             }
         }
     }
@@ -183,19 +172,11 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
                         is UiStateObject.SUCCESS -> {
                             loadingDialog.dismiss()
                             dismiss()
-                            Toast.makeText(
-                                requireContext(),
-                                getText(R.string.str_send_request),
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            toast(getText(R.string.str_send_request))
                         }
                         is UiStateObject.ERROR -> {
                             loadingDialog.dismiss()
-                            Toast.makeText(
-                                requireContext(),
-                                getText(R.string.str_not_send_request),
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            toast(getText(R.string.str_not_send_request))
                         }
                         else -> {
                         }
@@ -203,6 +184,14 @@ class ChooseTimeBottomSheetDialog(private val stadiumData: StadiumDataToBottomSh
                 }
             }
         }
+    }
+
+    private fun toast(msg: CharSequence) {
+        Toast.makeText(
+            requireContext(),
+            msg,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     @SuppressLint("ResourceType")

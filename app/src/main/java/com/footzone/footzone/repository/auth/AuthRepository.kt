@@ -17,9 +17,11 @@ class AuthRepository @Inject constructor(private val apiService: ApiService) {
 
     suspend fun signIn(phoneNumber: String) = apiService.singIn(phoneNumber)
 
-    suspend fun checkValidation(smsVerification: SmsVerification) = apiService.checkValidation(smsVerification)
+    suspend fun checkValidation(smsVerification: SmsVerification) =
+        apiService.checkValidation(smsVerification)
 
-    suspend fun signInVerification(signInVerification: SignInVerification) = apiService.signInVerification(signInVerification)
+    suspend fun signInVerification(signInVerification: SignInVerification) =
+        apiService.signInVerification(signInVerification)
 
     suspend fun registerUser(user: User) = apiService.registerUser(user)
 

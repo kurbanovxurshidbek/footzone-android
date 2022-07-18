@@ -24,6 +24,7 @@ import com.footzone.footzone.model.EditNameRequest
 import com.footzone.footzone.model.profile.Data
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.KeyValues.DEFAULT
 import com.footzone.footzone.utils.KeyValues.IS_OWNER
 import com.footzone.footzone.utils.KeyValues.LANGUAGE
 import com.footzone.footzone.utils.KeyValues.LOG_IN
@@ -103,18 +104,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             ivEditName.setOnClickListener {
                 changeUserNameDialog()
             }
-
-        }
-
-        binding.linearLanguage.setOnClickListener {
-            val dialog = ChooseLanguageDialog { lang ->
-                val sharedPref = SharedPref(requireContext())
-                sharedPref.saveLanguage(LANGUAGE, lang)
-                setLocale(lang)
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                dialog.showChooseLanguageDialog(requireActivity())
-            }
         }
     }
 
@@ -149,31 +138,16 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                     }
 
                     is UiStateObject.SUCCESS -> {
-                        Log.d("TAG", "setupObservers: ${it.data}")
                         binding.tvName.text = name
                         dialog.dismiss()
                     }
                     is UiStateObject.ERROR -> {
-                        Log.d("TAG", "setupUI: ${it.message}")
                     }
                     else -> {
                     }
                 }
             }
         }
-    }
-
-    private fun setLocale(language: String) {
-        val locale = Locale(language)
-        Locale.setDefault(locale)
-        val config = Configuration()
-        config.locale = locale
-        requireActivity().baseContext.resources.updateConfiguration(
-            config,
-            requireActivity().baseContext.resources.displayMetrics
-        )
-        requireActivity().finish();
-        startActivity(requireActivity().intent);
     }
 
     private fun setupObservers() {
@@ -206,7 +180,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             tvName.text = userData.fullName
             tvNumber.text = userData.phoneNumber
 
-            if (!userData.photo.name.startsWith("default")) {
+            if (!userData.photo.name.startsWith(DEFAULT)) {
                 ivProfile.setPadding(0, 0, 0, 0)
                 ivProfile.loadImageUrl("${KeyValues.USER_IMAGE_BASE_URL}${userData.photo.name}")
                 ivAdd.setImageResource(R.drawable.ic_edit_button)

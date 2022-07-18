@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.footzone.footzone.databinding.ItemCommentBinding
 import com.footzone.footzone.model.AllComment
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.KeyValues.DEFAULT
 import com.footzone.footzone.utils.commonfunction.Functions.loadImageUrl
 
 class CommentAdapter(var items: List<AllComment>, val context: Context) :
@@ -30,7 +31,7 @@ class CommentAdapter(var items: List<AllComment>, val context: Context) :
             bodyComment.text = item.text
             dateComment.text = item.createdAt.subSequence(0, 10)
 
-            if (!item.userAttachmentName.equals("default-profile-pic.jpg")) {
+            if (!item.userAttachmentName.startsWith(DEFAULT)) {
                 val uri = "${KeyValues.USER_IMAGE_BASE_URL}${item.userAttachmentName}"
                 ivUserPhoto.loadImageUrl(uri)
             }

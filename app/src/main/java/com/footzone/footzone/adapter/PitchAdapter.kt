@@ -42,7 +42,6 @@ class PitchAdapter(
             tvPitchPrice.text =
                 "${pitch.hourlyPrice} ${tvPitchPrice.context.getText(R.string.str_so_m_soat)}"
             tvRatingNums.text = "(${pitch.comments.sumOf { it.number }})"
-            tvPitchPrice.text = "${pitch.hourlyPrice} so'm/soat"
 
             if (favouriteStadiums.contains(pitch.stadiumId)) {
                 ivBookmark.setFavouriteBackground()

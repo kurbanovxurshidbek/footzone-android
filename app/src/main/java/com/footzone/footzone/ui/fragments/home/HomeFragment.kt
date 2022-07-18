@@ -35,8 +35,11 @@ import com.footzone.footzone.ui.activity.MainActivity
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.*
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
+import com.footzone.footzone.utils.KeyValues.ADD_SUCCESS
+import com.footzone.footzone.utils.KeyValues.DELETE_SUCCESS
 import com.footzone.footzone.utils.KeyValues.IS_FAVOURITE_STADIUM
 import com.footzone.footzone.utils.KeyValues.IS_OWNER
+import com.footzone.footzone.utils.KeyValues.KEY
 import com.footzone.footzone.utils.KeyValues.LOG_IN
 import com.footzone.footzone.utils.KeyValues.STADIUM_ID
 import com.footzone.footzone.utils.KeyValues.USER_ID
@@ -95,7 +98,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
         sendRequestToGetFavouriteStadiumsList()
         sendRequestToDetectNotification()
 
-        //throw RuntimeException("Test Crash")
     }
 
     private val callback = OnMapReadyCallback { googleMap ->
@@ -179,7 +181,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                 .withListener(this)
                 .alternativeRoutes(true)
                 .waypoints(start, end)
-                .key("AIzaSyCVwdU3slouglv7TBDh3juGegafJVnKx8U")
+                .key(KEY)
                 .build()
             routing.execute()
             if (cameraCurrentLatLng != null)
@@ -258,7 +260,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                 Handler(Looper.getMainLooper()).postDelayed({
                     fusedLocationClient =
                         LocationServices.getFusedLocationProviderClient(requireContext())
-                    toast("ERROR loading location")
+                    toast(getString(R.string.str_error_get_location))
                 }, 400)
             }
         }
@@ -443,11 +445,14 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
             viewModel.getPreviouslyBookedStadiums()
             observePreviouslyBookedStadiums()
         } else {
-            toast(
-                "Siz hali ro'yxatdan o'tmagansiz.\n" +
-                        "Sahifam bo'limidan ro'yxatdan o'tishingiz mumkin"
-            )
+            notRegisteredToast()
         }
+    }
+
+    private fun notRegisteredToast() {
+        toast(
+            getString(R.string.str_not_registered_yet)
+        )
     }
 
     private fun sendRequestToAddFavouriteStadiums(stadiumId: String) {
@@ -457,10 +462,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                 FavouriteStadiumRequest(stadiumId, userID)
             viewModel.addToFavouriteStadiums(favouriteStadiumRequest)
         } else {
-            toast(
-                "Siz hali ro'yxatdan o'tmagansiz.\n" +
-                        "Sahifam bo'limidan ro'yxatdan o'tishingiz mumkin"
-            )
+            notRegisteredToast()
         }
     }
 
@@ -471,10 +473,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
             viewModel.getFavouriteStadiums(userId)
             observeFavouriteStadiums()
         } else {
-            toast(
-                "Siz hali ro'yxatdan o'tmagansiz.\n" +
-                        "Sahifam bo'limidan ro'yxatdan o'tishingiz mumkin"
-            )
+            notRegisteredToast()
         }
     }
 
@@ -526,7 +525,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                             findMultipleLocation(it.data.data)
                         }
                         is UiStateObject.ERROR -> {
-                            Log.d("TAG", "setupUI: ${it.message}")
                         }
                         else -> {}
                     }
@@ -571,7 +569,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                             favouriteStadiums = it.data.data
                         }
                         is UiStateObject.ERROR -> {
-                            Log.d("TAG", "setupUI: ${it.message}")
                         }
                         else -> {}
                     }
@@ -665,7 +662,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                         }
 
                         is UiStateObject.SUCCESS -> {
-                            Log.d("TAG", "observeNotificationAvailability: ${it.data}")
                             if (it.data.data) {
                                 binding.ivNewNotification.show()
                             } else {
@@ -673,7 +669,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                             }
                         }
                         is UiStateObject.ERROR -> {
-                            Log.d("TAG", "setupUI: ${it.message}")
                         }
                         else -> {
                         }
@@ -696,12 +691,12 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
                         }
 
                         is UiStateObject.SUCCESS -> {
-                            if (it.data.message == "add success") {
+                            if (it.data.message == ADD_SUCCESS) {
                                 ivBookmark.setFavouriteBackground()
                                 sendRequestToGetFavouriteStadiumsList()
                             }
 
-                            if (it.data.message == "delete success") {
+                            if (it.data.message == DELETE_SUCCESS) {
                                 ivBookmark.setUnFavouriteBackground()
                                 sendRequestToGetFavouriteStadiumsList()
                             }

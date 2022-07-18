@@ -3,6 +3,7 @@
     package="com.footzone.footzone">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -44,7 +45,12 @@
             android:name=".ui.activity.MainActivity"
             android:configChanges="locale"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -68,10 +74,10 @@
 
         <receiver
             android:name=".broadcast.DeclineNotificationReceiver"
-            android:exported="false"/>
+            android:exported="false" />
         <receiver
             android:name=".broadcast.AcceptNotificationReceiver"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>

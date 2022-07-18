@@ -19,6 +19,8 @@ import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.GoogleMapHelper.shareLocationToGoogleMap
 import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.UiStateObject
+import com.footzone.footzone.utils.extensions.hide
+import com.footzone.footzone.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -89,12 +91,12 @@ class PlayingPitchFragment : BaseFragment(R.layout.fragment_playing_pitch) {
     private fun refreshAdapter(playingSoonList: List<PlayingSoonHistoryResponseData>) {
 
         if (playingSoonList.isEmpty()) {
-            binding.tvEmptyListAlert.visibility = View.VISIBLE
-            binding.rvPlayingSoon.visibility = View.GONE
+            binding.tvEmptyListAlert.show()
+            binding.rvPlayingSoon.hide()
             return
         } else {
-            binding.tvEmptyListAlert.visibility = View.GONE
-            binding.rvPlayingSoon.visibility = View.VISIBLE
+            binding.tvEmptyListAlert.hide()
+            binding.rvPlayingSoon.show()
         }
 
         playingPitchAdapter.submitData(playingSoonList)
