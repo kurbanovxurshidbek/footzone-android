@@ -1,14 +1,16 @@
 package com.footzone.footzone.ui.fragments.stadiumdetail
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.app.ShareCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -36,6 +38,7 @@ import com.footzone.footzone.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
@@ -213,12 +216,26 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                     stadiumData.longitude
                 )
             }
+
+            linearShare.setOnClickListener {
+                shareLocation(stadiumData.longitude, stadiumData.latitude)
+            }
+
             icTimetable.setOnClickListener {
                 if (workingDays.isNotEmpty()) {
                     openTimeTableDialog()
                 }
             }
         }
+    }
+
+    private fun shareLocation(longitude: Double, latitude: Double) {
+        val gmmIntentUri = "https://www.google.com/maps?q=$latitude,$longitude"
+        ShareCompat.IntentBuilder.from(requireActivity())
+            .setType("text/plain")
+            .setChooserTitle(stadiumData.stadiumName + " " + getString(R.string.str_field))
+            .setText(gmmIntentUri)
+            .startChooser()
     }
 
     private fun openTimeTableDialog() {
