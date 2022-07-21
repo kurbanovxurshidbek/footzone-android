@@ -6,7 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
+import android.view.inputmethod.EditorInfo
 import androidx.annotation.RequiresApi
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
@@ -31,12 +31,8 @@ import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.KeyValues.USER_TOKEN
 import com.footzone.footzone.utils.SharedPref
 import com.footzone.footzone.utils.UiStateObject
-import com.google.firebase.FirebaseException
-import com.google.firebase.FirebaseTooManyRequestsException
-import com.google.firebase.auth.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -48,34 +44,21 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
     private val viewModel by viewModels<VerificationViewModel>()
     private var user: User? = null
     private var phoneNumber: String? = null
-    lateinit var auth: FirebaseAuth
     private var isToSignUp = false
-    lateinit var codeForBackend: String
-    lateinit var storedVerificationId: String
-    lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentVerificationBinding.bind(view)
-
-        auth = FirebaseAuth.getInstance()
-        auth.setLanguageCode("uz")
-
         if (arguments?.containsKey(USER_DETAIL)!!) {
             user = arguments?.get(USER_DETAIL) as User
             isToSignUp = true
-        } else {
+        }
+        if (arguments?.containsKey(PHONE_NUMBER)!!) {
+            phoneNumber = arguments?.get(PHONE_NUMBER).toString()
             isToSignUp = false
         }
-
-        phoneNumber = arguments?.get("PHONE_NUMBER").toString()
-        codeForBackend = arguments?.get("CODE").toString()
-        storedVerificationId = arguments?.get("STORED_VERIFICATION_ID").toString()
-        resendToken = arguments?.get("RESEND_TOKEN") as PhoneAuthProvider.ForceResendingToken
-
-        Log.d("@@@", "onViewCreated: code: $codeForBackend storedVerificationId: $storedVerificationId resendToken: $resendToken" )
 
         initViews()
     }
@@ -89,13 +72,18 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
             }
 
             confirmationButton.setOnClickListener {
-                // checkAndSingInUp()
-                showProgress()
-                verifyCode()
+                checkAndSingInUp()
             }
 
             tvResendCode.setOnClickListener {
                 //code resent
+            }
+
+            editTextVerificationCode.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    checkAndSingInUp()
+                    true
+                } else false
             }
         }
     }
@@ -112,26 +100,22 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun sendRequestToSignIn() {
-        Log.d("@@@", "codeForBackend $codeForBackend")
-        Log.d("@@@", "getFirebaseToken ${sharedPref.getFirebaseToken(KeyValues.FIREBASE_TOKEN)}")
         viewModel.signIn(
             SignInVerification(
-                encrypt(codeForBackend)!!,
+                encrypt(binding.editTextVerificationCode.text.toString())!!,
                 getDeviceName()!!,
                 sharedPref.getFirebaseToken(KeyValues.FIREBASE_TOKEN),
                 "Mobile",
-                encrypt(phoneNumber.toString())!!
+                encrypt(phoneNumber!!)!!
             )
         )
-        Log.d("@@@", "sendRequestToSignIn: ")
         setupObserversSignIn()
     }
-
     private fun sendRequestToSignUp() {
         viewModel.signUp(
             SmsVerification(
-                encrypt(codeForBackend)!!,
-                encrypt(phoneNumber.toString())!!
+                encrypt(binding.editTextVerificationCode.text.toString())!!,
+                encrypt(user?.phoneNumber.toString())!!
             )
         )
         setupObserversSignUp()
@@ -147,18 +131,16 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
                         }
 
                         is UiStateObject.SUCCESS -> {
-                            Log.d("@@@", "setupObserversSignIn: success")
                             if (it.data.success) {
                                 hideProgress()
-                                Log.d("@@@", "keldi")
                                 val data = it.data.data
                                 saveToSharedPref(data.user_id, data.token, data.stadiumHolder)
+                                //returnHomeFragment()
                             }
                         }
                         is UiStateObject.ERROR -> {
-                            Log.d("@@@", "setupObserversSignIn: error")
                             hideProgress()
-                            toastLong(getString(R.string.str_incorrect_code))
+                            toastLong("Kod xato kiritildi.")
                         }
                         else -> {
                         }
@@ -189,7 +171,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
                     }
                     is UiStateObject.ERROR -> {
                         hideProgress()
-                        toastLong(getString(R.string.str_incorrect_code))
+                        toastLong("Kod xato kiritildi.")
                     }
                     else -> {
                     }
@@ -216,6 +198,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
                         }
 
                         is UiStateObject.SUCCESS -> {
+                            Log.d("TAG", "setupObserversRegister: ${it.data.data}")
                             val userPriority = it.data.data
                             saveToSharedPref(
                                 userPriority.user_id,
@@ -224,6 +207,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
                             )
                         }
                         is UiStateObject.ERROR -> {
+                            Log.d("TAG", "setupUI: ${it.message} error")
                         }
                         else -> {
                         }
@@ -236,11 +220,10 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
     private fun returnHomeFragment() {
         findNavController().navigate(R.id.action_verificationFragment_to_homeFragment)
     }
-
     private fun verificationCodeErrorControl() {
         binding.editTextVerificationCode.doAfterTextChanged {
             if (it!!.toString().length != 6) {
-                binding.textInputLayoutVerificationCode.error = getString(R.string.str_please_check)
+                binding.textInputLayoutVerificationCode.error = "Tekshirib ko'ring"
                 registerButtonControl()
             } else {
                 binding.textInputLayoutVerificationCode.error = null
@@ -270,78 +253,4 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
     private fun checkData(): Boolean {
         return binding.editTextVerificationCode.text!!.toString().length == 6
     }
-
-    fun verifyCode(){
-        val code = binding.editTextVerificationCode.text.toString()
-        Log.d("@@@", "verifyCode: $code")
-        if (code.length == 6){
-            val credential = PhoneAuthProvider.getCredential(storedVerificationId,code)
-            signInWithPhoneAuthCredential(credential)
-        }
-    }
-    fun resendCode(phoneNumber: String){
-        val options = PhoneAuthOptions.newBuilder(auth)
-            .setPhoneNumber(phoneNumber)       // Phone number to verify
-            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-            .setActivity(requireActivity())                 // Activity (for callback binding)
-            .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
-            .setForceResendingToken(resendToken)
-            .build()
-        PhoneAuthProvider.verifyPhoneNumber(options)
-    }
-    private var callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-        private val TAG = "@@@"
-        override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-        }
-
-        override fun onVerificationFailed(e: FirebaseException) {
-            // This callback is invoked in an invalid request for verification is made,
-            // for instance if the the phone number format is not valid.
-            Log.w(TAG, "onVerificationFailed", e)
-
-            if (e is FirebaseAuthInvalidCredentialsException) {
-                // Invalid request
-            } else if (e is FirebaseTooManyRequestsException) {
-                // The SMS quota for the project has been exceeded
-            }
-            hideProgress()
-            toastLong("Birozdan so'ng harakat qilib ko'ring")
-            // Show a message and update the UI
-        }
-
-        override fun onCodeSent(
-            verificationId: String,
-            token: PhoneAuthProvider.ForceResendingToken
-        ) {
-            Log.d(TAG, "onCodeSent:$verificationId")
-
-            storedVerificationId = verificationId
-            resendToken = token
-        }
-    }
-    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d("@@@", "signInWithCredential:success")
-
-                    val user = task.result?.user?.phoneNumber
-                    Log.d("@@@", "signInWithCredential:success $user")
-                    hideProgress()
-                    checkAndSingInUp()
-                    Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
-                } else {
-                    // Sign in failed, display a message and update the UI
-                    Log.w("@@@", "signInWithCredential:failure", task.exception)
-                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                        // The verification code entered was invalid
-                    }
-                    hideProgress()
-                    toastLong(getString(R.string.str_incorrect_code))
-                    // Update UI
-                }
-            }
-    }
-
 }
