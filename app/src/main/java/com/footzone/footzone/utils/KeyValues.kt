@@ -2,6 +2,7 @@ package com.footzone.footzone.utils
 
 
 object KeyValues {
+    const val SMS_CODE = "smsCode"
     const val PENDING: String = "PENDING"
     const val PLAYED: String = "PLAYED"
     const val USER: String = "Oddiy foydalanuvchi"

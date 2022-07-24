@@ -279,6 +279,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), RoutingListener,
         topSheetBehavior = TopSheetBehavior.from(topSheet)
         bottomSheetBehaviorType = BottomSheetBehavior.from(bottomSheetTypes)
 
+        binding.bottomSheetPitchList.rvPitch.edgeEffectFactory = BounceEdgeEffectFactory()
+
         showBottomSheet(bottomSheetBehaviorType)
 
         if (sharedPref.getLogIn(LOG_IN, false)) {

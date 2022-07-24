@@ -26,6 +26,7 @@ import com.footzone.footzone.utils.KeyValues
 import com.footzone.footzone.utils.KeyValues.IS_OWNER
 import com.footzone.footzone.utils.KeyValues.LOG_IN
 import com.footzone.footzone.utils.KeyValues.PHONE_NUMBER
+import com.footzone.footzone.utils.KeyValues.SMS_CODE
 import com.footzone.footzone.utils.KeyValues.USER_DETAIL
 import com.footzone.footzone.utils.KeyValues.USER_ID
 import com.footzone.footzone.utils.KeyValues.USER_TOKEN
@@ -76,7 +77,9 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
             }
 
             tvResendCode.setOnClickListener {
-                //code resent
+                if (isToSignUp)
+                    toastLong(user!!.smsCode!!)
+                else toastLong(arguments?.get(SMS_CODE).toString())
             }
 
             editTextVerificationCode.setOnEditorActionListener { _, actionId, _ ->
@@ -111,6 +114,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
         )
         setupObserversSignIn()
     }
+
     private fun sendRequestToSignUp() {
         viewModel.signUp(
             SmsVerification(
@@ -220,6 +224,7 @@ class VerificationFragment : BaseFragment(R.layout.fragment_verification) {
     private fun returnHomeFragment() {
         findNavController().navigate(R.id.action_verificationFragment_to_homeFragment)
     }
+
     private fun verificationCodeErrorControl() {
         binding.editTextVerificationCode.doAfterTextChanged {
             if (it!!.toString().length != 6) {

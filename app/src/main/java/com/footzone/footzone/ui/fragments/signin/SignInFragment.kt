@@ -4,10 +4,8 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
@@ -22,6 +20,7 @@ import com.footzone.footzone.security.Symmetric.decrypt
 import com.footzone.footzone.security.Symmetric.encrypt
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues.PHONE_NUMBER
+import com.footzone.footzone.utils.KeyValues.SMS_CODE
 import com.footzone.footzone.utils.UiStateObject
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -96,9 +95,9 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
 
                         is UiStateObject.SUCCESS -> {
                             hideProgress()
-                            // toastLong(it.data.data)
-                            toastLong(decrypt(it.data.data)!!)
-                            openVerificationFragment()
+                            val smsCode = decrypt(it.data.data)!!
+                            toastLong(smsCode)
+                            openVerificationFragment(smsCode)
                         }
                         is UiStateObject.ERROR -> {
                             hideProgress()
@@ -114,12 +113,13 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
         }
     }
 
-    private fun openVerificationFragment() {
+    private fun openVerificationFragment(smsCode: String) {
         findNavController().navigate(
             R.id.action_signInFragment_to_verificationFragment,
-            bundleOf(PHONE_NUMBER to phoneNumber)
+            bundleOf(PHONE_NUMBER to phoneNumber, SMS_CODE to smsCode)
         )
     }
+
     private fun checkAllFields() {
         binding.editTextNumber.doAfterTextChanged {
             enterButtonControl()

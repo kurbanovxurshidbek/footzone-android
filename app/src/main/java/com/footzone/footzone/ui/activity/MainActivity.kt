@@ -112,7 +112,7 @@ class MainActivity : BaseActivity() {
         }
 
         internetBroadcastReceiver.onInternetOn = {
-            showToast(getString(R.string.str_internet_on), Toast.LENGTH_LONG)
+           // showToast(getString(R.string.str_internet_on), Toast.LENGTH_LONG)
         }
 
         registerReceiver(
