@@ -44,7 +44,7 @@
     <string name="str_not_succesfull">Maydon muvaffaqiyatli qo\'shilmadi, qayta urinib koring</string>
     <string name="str_date_incomplete">Malumotlar to\'liq to\'ldirilmagan</string>
     <string name="str_select_dat_game">O\'yin kunini tanlang</string>
-    <string name="str_send_request">Sizning so\'rovingiz yuborildi,\tez orada javob qaytadi</string>
+    <string name="str_send_request">Sizning so\'rovingiz yuborildi,\n tez orada javob qaytadi</string>
     <string name="str_not_send_request">Sizning so\'rovingiz yuborilmadi,\qayta urining</string>
     <string name="str_holder_not_stadium">Hozir sizda maydonlar mavjud emas.\nMaydon qo’shish uchun yuqoridagi\n“+” tugmasini bosing</string>
     <string name="str_select_game_time">O\'yin vaqtlarini tanlang</string>
