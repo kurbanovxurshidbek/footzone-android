@@ -1,278 +1,317 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="312dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/dialog_background"
-    android:paddingTop="24dp"
     android:orientation="vertical"
-    android:paddingBottom="24dp"
-    android:layout_height="wrap_content">
+    android:paddingHorizontal="16dp"
+    android:paddingTop="24dp"
+    android:paddingBottom="24dp">
+
+    <TextView
+        android:fontFamily="@font/roboto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/str_open_times"
+        android:textColor="#0A0A0A"
+        android:textSize="22sp" />
 
     <LinearLayout
         android:id="@+id/mondayLayout"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
-        android:visibility="gone"
-        android:paddingHorizontal="16dp"
-        android:layout_height="wrap_content">
+        android:visibility="gone">
+
         <TextView
             android:id="@+id/tvMonday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/roboto"
             android:text="Dushanba"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/roboto"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/tvMondayOpenTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="00:00"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textSize="16sp" />
+
         <TextView
-            android:text=" - "
-            android:textSize="16sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text=" - "
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/tvMondayCloseTime"
-            android:textSize="16sp"
-            android:text="00:00"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/tuesdayLayout"
-        android:layout_marginTop="4dp"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
-        android:visibility="gone"
-        android:paddingHorizontal="16dp"
-        android:layout_height="wrap_content">
+
+        android:visibility="gone">
+
         <TextView
             android:id="@+id/tvTuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/roboto"
             android:text="Seshanba"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/roboto"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/tvTuesdayOpenTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="00:00"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textSize="16sp" />
+
         <TextView
-            android:text=" - "
-            android:textSize="16sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text=" - "
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/tvTuesdayCloseTime"
-            android:textSize="16sp"
-            android:text="00:00"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textSize="16sp" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/wednesdayLayout"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
-        android:layout_marginTop="4dp"
-        android:visibility="gone"
-        android:paddingHorizontal="16dp"
-        android:layout_height="wrap_content">
+
+        android:visibility="gone">
+
         <TextView
             android:id="@+id/tvWednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/roboto"
             android:text="Chorshanba"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/roboto"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/tvWednesdayOpenTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="00:00"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textSize="16sp" />
+
         <TextView
-            android:text=" - "
-            android:textSize="16sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text=" - "
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/tvWednesdayCloseTime"
-            android:textSize="16sp"
-            android:text="00:00"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/thursdayLayout"
-        android:layout_marginTop="4dp"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
-        android:visibility="gone"
-        android:paddingHorizontal="16dp"
-        android:layout_height="wrap_content">
+
+        android:visibility="gone">
+
         <TextView
             android:id="@+id/tvThursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/roboto"
             android:text="Payshanba"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/roboto"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/tvThursdayOpenTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="00:00"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textSize="16sp" />
+
         <TextView
-            android:text=" - "
-            android:textSize="16sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text=" - "
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/tvThursdayCloseTime"
-            android:textSize="16sp"
-            android:text="00:00"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textSize="16sp" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/fridayLayout"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
-        android:layout_marginTop="4dp"
-        android:visibility="gone"
-        android:paddingHorizontal="16dp"
-        android:layout_height="wrap_content">
+
+        android:visibility="gone">
+
         <TextView
             android:id="@+id/tvFriday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/roboto"
             android:text="Juma"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/roboto"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/tvFridayOpenTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="00:00"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textSize="16sp" />
+
         <TextView
-            android:text=" - "
-            android:textSize="16sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text=" - "
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/tvFridayCloseTime"
-            android:textSize="16sp"
-            android:text="00:00"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/saturdayLayout"
-        android:layout_marginTop="4dp"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
-        android:visibility="gone"
-        android:paddingHorizontal="16dp"
-        android:layout_height="wrap_content">
+
+        android:visibility="gone">
+
         <TextView
             android:id="@+id/tvSaturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/roboto"
             android:text="Shanba"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/roboto"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/tvSaturdayOpenTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="00:00"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textSize="16sp" />
+
         <TextView
-            android:text=" - "
-            android:textSize="16sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text=" - "
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/tvSaturdayCloseTime"
-            android:textSize="16sp"
-            android:text="00:00"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textSize="16sp" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/sundayLayout"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
-        android:paddingHorizontal="16dp"
-        android:layout_marginTop="4dp"
-        android:visibility="gone"
-        android:layout_height="wrap_content">
+
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tvSunday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Yakshanba"
-            android:textStyle="bold"
             android:fontFamily="@font/roboto"
-            android:textSize="16sp" />
+            android:text="Yakshanba"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvSundayOpenTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="00:00"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textSize="16sp" />
+
         <TextView
-            android:text=" - "
-            android:textSize="16sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text=" - "
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/tvSundayCloseTime"
-            android:textSize="16sp"
-            android:text="00:00"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:gravity="end"
-        android:layout_height="wrap_content">
+        android:gravity="end">
+
         <TextView
-            android:paddingEnd="16dp"
             android:id="@+id/tvClose"
-            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Yopish"
+            android:background="@drawable/dialog_textview_background"
             android:fontFamily="@font/roboto"
+            android:padding="8dp"
+            android:text="Yopish"
             android:textColor="#0C64E6"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textStyle="bold" />
     </LinearLayout>
-
 
 </LinearLayout>

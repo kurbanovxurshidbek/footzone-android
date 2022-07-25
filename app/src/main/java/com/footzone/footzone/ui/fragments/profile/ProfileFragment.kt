@@ -179,7 +179,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         binding.apply {
             tvName.text = userData.fullName
             tvNumber.text = userData.phoneNumber
-
             if (!userData.photo.name.startsWith(DEFAULT)) {
                 ivProfile.setPadding(0, 0, 0, 0)
                 ivProfile.loadImageUrl("${KeyValues.USER_IMAGE_BASE_URL}${userData.photo.name}")

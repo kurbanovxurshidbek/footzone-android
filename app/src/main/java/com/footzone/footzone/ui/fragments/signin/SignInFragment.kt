@@ -4,9 +4,8 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
+import android.view.inputmethod.EditorInfo
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
@@ -21,32 +20,22 @@ import com.footzone.footzone.security.Symmetric.decrypt
 import com.footzone.footzone.security.Symmetric.encrypt
 import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.KeyValues.PHONE_NUMBER
+import com.footzone.footzone.utils.KeyValues.SMS_CODE
 import com.footzone.footzone.utils.UiStateObject
-import com.google.firebase.FirebaseException
-import com.google.firebase.FirebaseTooManyRequestsException
-import com.google.firebase.auth.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
     private var phoneNumber: String? = null
     lateinit var binding: FragmentSignInBinding
     private val viewModel by viewModels<SignInViewModel>()
-    lateinit var auth: FirebaseAuth
-    var storedVerificationId: String = ""
-    lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
-    var code: String = ""
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentSignInBinding.bind(view)
-
-        auth = FirebaseAuth.getInstance()
-        auth.setLanguageCode("uz")
 
         initViews()
     }
@@ -69,22 +58,29 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
             }
 
             checkAllFields()
+
+            editTextNumber.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    sendLogInRequest()
+                    true
+                } else false
+            }
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun sendLogInRequest() {
         if (binding.editTextNumber.text!!.isEmpty() && binding.editTextNumber.text.toString().length != 12) {
-            toast(getString(R.string.str_incorrect_phonenumber))
+            toast("Raqam noto'g'ri kiritildi!")
         } else {
-            phoneNumber = phoneNumber()
+            phoneNumber = getPhoneNumber()
 
             viewModel.signIn(encrypt(phoneNumber!!)!!)
         }
         setupObservers()
     }
 
-    private fun phoneNumber(): String =
+    private fun getPhoneNumber(): String =
         "+998${binding.editTextNumber.text.toString().replace("\\s".toRegex(), "")}"
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -98,14 +94,15 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
                         }
 
                         is UiStateObject.SUCCESS -> {
-                            toastLong(decrypt(it.data.data)!!)
-                            code = decrypt(it.data.data)!!
-                            sendVerificationCode(phoneNumber())
+                            hideProgress()
+                            val smsCode = decrypt(it.data.data)!!
+                            toastLong(smsCode)
+                            openVerificationFragment(smsCode)
                         }
                         is UiStateObject.ERROR -> {
                             hideProgress()
                             toastLong(
-                                getString(R.string.str_not_reg_with_number)
+                                "Bu raqam orqali ro'yxatdan o'tilmagan. Iltimos ro'yxatdan o'ting."
                             )
                             openSignUpFragment()
                         }
@@ -116,20 +113,10 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
         }
     }
 
-    private fun openVerificationFragment(
-        storedVerificationId: String,
-        resendToken: PhoneAuthProvider.ForceResendingToken,
-        code: String,
-        phoneNumber: String
-    ) {
+    private fun openVerificationFragment(smsCode: String) {
         findNavController().navigate(
             R.id.action_signInFragment_to_verificationFragment,
-            bundleOf(
-                PHONE_NUMBER to this.phoneNumber,
-                "STORED_VERIFICATION_ID" to storedVerificationId,
-                "RESEND_TOKEN" to resendToken,
-                "CODE" to code
-            )
+            bundleOf(PHONE_NUMBER to phoneNumber, SMS_CODE to smsCode)
         )
     }
 
@@ -162,55 +149,4 @@ class SignInFragment : BaseFragment(R.layout.fragment_sign_in) {
     private fun openSignUpFragment() {
         findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
     }
-
-    //this functions provide to send sms for auth
-    private fun sendVerificationCode(phoneNumber: String) {
-        val options = PhoneAuthOptions.newBuilder(auth)
-            .setPhoneNumber(phoneNumber)       // Phone number to verify
-            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-            .setActivity(requireActivity())                 // Activity (for callback binding)
-            .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
-            .build()
-        PhoneAuthProvider.verifyPhoneNumber(options)
-    }
-
-    private var callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-        private val TAG = "@@@"
-        override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-        }
-
-        override fun onVerificationFailed(e: FirebaseException) {
-            // This callback is invoked in an invalid request for verification is made,
-            // for instance if the the phone number format is not valid.
-            Log.w(TAG, "onVerificationFailed", e)
-
-            if (e is FirebaseAuthInvalidCredentialsException) {
-                // Invalid request
-            } else if (e is FirebaseTooManyRequestsException) {
-                // The SMS quota for the project has been exceeded
-
-            }
-            hideProgress()
-            Toast.makeText(
-                requireContext(),
-                "Birozdan so'ng harakat qilib ko'ring!",
-                Toast.LENGTH_SHORT
-            ).show()
-            // Show a message and update the UI
-        }
-
-        override fun onCodeSent(
-            verificationId: String,
-            token: PhoneAuthProvider.ForceResendingToken
-        ) {
-            Log.d(TAG, "onCodeSent:$verificationId")
-
-            // Save verification ID and resending token so we can use them later
-            storedVerificationId = verificationId
-            resendToken = token
-            openVerificationFragment(storedVerificationId, resendToken, code, phoneNumber())
-            hideProgress()
-        }
-    }
-
 }

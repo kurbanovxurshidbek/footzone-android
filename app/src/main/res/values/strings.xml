@@ -4,6 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">MapsActivity</string>
 
+    <string name="str_open_times">Ochiq vaqtlar</string>
     <string name="str_busy">Band qilish</string>
     <string name="str_date">Sana</string>
     <string name="str_cancel">Bekor qilish</string>
