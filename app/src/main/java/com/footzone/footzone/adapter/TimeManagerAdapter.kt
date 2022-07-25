@@ -16,7 +16,7 @@ import com.footzone.footzone.utils.KeyValues.ACCEPTED
  * This adapter , user can  view the stadium run times
  */
 class TimeManagerAdapter(private var onItemSelected: ((Int, ItemChooseTimeViewWhiteBinding) -> Unit)) :
-    ListAdapter<TimeManager, RecyclerView.ViewHolder>(DiffUtil()) {
+    ListAdapter<TimeManager, RecyclerView.ViewHolder> (DiffUtil()) {
     private val TYPE_ITEM_WHITE = 1001
     private val TYPE_ITEM_GREY = 1002
 
