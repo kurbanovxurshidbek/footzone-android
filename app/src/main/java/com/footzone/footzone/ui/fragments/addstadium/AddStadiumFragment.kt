@@ -333,6 +333,7 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
                                 getString(R.string.str_successfully_edited),
                                 Toast.LENGTH_SHORT
                             )
+                            back()
                         }
                         is UiStateObject.ERROR -> {
                             hideProgress()

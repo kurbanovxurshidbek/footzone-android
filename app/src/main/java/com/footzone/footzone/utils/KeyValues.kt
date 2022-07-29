@@ -13,7 +13,7 @@ object KeyValues {
     const val KEY: String = "AIzaSyCVwdU3slouglv7TBDh3juGegafJVnKx8U"
     const val DECLINED_2: String = "Rad etildi!"
     const val ACCEPTED: String = "ACCEPTED"
-    const val DECLINED: String = "ACCEPTED"
+    const val DECLINED: String = "DECLINED"
     const val All: String = "ALL"
     const val SECURITY_KEY = "FOOTZONE_APPLICATION"
     const val NOTIFICATION_TITLE: String = "NotificationTitle"

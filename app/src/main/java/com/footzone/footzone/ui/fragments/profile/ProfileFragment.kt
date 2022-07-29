@@ -234,7 +234,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             ins?.close()
             fileOutputStream.close()
             if (image.length() == 0L) return@registerForActivityResult
-            binding.ivProfile.setPadding(0, 0, 0, 0)
+            //binding.ivProfile.setPadding(0, 0, 0, 0)
             Glide.with(requireActivity()).load(image).into(binding.ivProfile)
             binding.ivAdd.setImageResource(R.drawable.ic_edit_button)
 
