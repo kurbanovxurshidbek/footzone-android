@@ -218,7 +218,7 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
             }
 
             linearShare.setOnClickListener {
-                shareLocation(stadiumData.longitude, stadiumData.latitude)
+                shareLocation(stadiumData.longitude, stadiumData.latitude,stadiumData.stadiumName)
             }
 
             icTimetable.setOnClickListener {
@@ -227,15 +227,6 @@ class PitchDetailFragment : BaseFragment(R.layout.fragment_pitch_detail) {
                 }
             }
         }
-    }
-
-    private fun shareLocation(longitude: Double, latitude: Double) {
-        val gmmIntentUri = "https://www.google.com/maps?q=$latitude,$longitude"
-        ShareCompat.IntentBuilder.from(requireActivity())
-            .setType("text/plain")
-            .setChooserTitle(stadiumData.stadiumName + " " + getString(R.string.str_field))
-            .setText(gmmIntentUri)
-            .startChooser()
     }
 
     private fun openTimeTableDialog() {

@@ -10,7 +10,6 @@
         android:layout_width="160dp"
         android:layout_height="120dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_background"
         android:theme="@style/roundedShapeableImageView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

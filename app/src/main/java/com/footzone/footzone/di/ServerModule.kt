@@ -21,7 +21,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class ServerModule {
 
-    private val BASE_URL: String = "https://footzone-demo.herokuapp.com/api/v1/"
+    private val BASE_URL: String = "https://heroku-footzone.herokuapp.com/api/v1/"
 
     var gson: Gson = GsonBuilder()
         .setLenient()

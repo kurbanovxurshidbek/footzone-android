@@ -139,7 +139,6 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
         }
     }
 
-
     private fun refreshCommentAdapter(data: Data) {
         adapterComment = CommentAdapter(data.allComments, requireContext())
         binding.recyclerViewComment.adapter = adapterComment
@@ -158,6 +157,10 @@ class StadiumFragment : BaseFragment(R.layout.fragment_stadium) {
 
             linearNavigation.setOnClickListener {
                 requireActivity().shareLocationToGoogleMap(data.latitude, data.longitude)
+            }
+
+            binding.linearShare.setOnClickListener {
+                shareLocation(data.longitude, data.latitude, data.stadiumName)
             }
 
             ivBack.setOnClickListener {

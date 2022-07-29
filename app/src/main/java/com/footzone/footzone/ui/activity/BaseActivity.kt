@@ -73,7 +73,7 @@ open class BaseActivity : AppCompatActivity() {
         val intent = Intent(context, MainActivity::class.java)
         intent.putExtra(KeyValues.SPLASH_MESSAGE, true)
         startActivity(intent)
-        //finish()
+        finish()
     }
 
     open fun isLocationPermissionGranted(): Boolean =
