@@ -306,17 +306,53 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
     }
 
     private fun refreshData(data: StadiumData) {
+        Log.d("TAG", "refreshData: '${data.workingDays}")
+        workTimes(data.workingDays)
         binding.apply {
             tvTitle.text = getText(R.string.str_edit_stadium)
             etPitchName.setText(data.stadiumName);
             etPitchAddress.setText(data.address)
-            tvPitchWorkTime.text = getText(R.string.str_changing_game_days)
+           // tvPitchWorkTime.text = getText(R.string.str_changing_game_days)
             etPitchPrice.setText(data.hourlyPrice.toString())
             recyclerView.adapter = adapterEdit
             stadiumNumber = data.number
             longitude = data.longitude
             latitude = data.latitude
         }
+    }
+
+    private fun workTimes(workingDays: List<WorkingDay>) {
+        var string = ""
+        workingDays.forEach{
+            if (it.dayName == "MONDAY") {
+                string += "Du, "
+            }
+
+            if (it.dayName == "TUESDAY") {
+                string += "Se, "
+            }
+
+            if (it.dayName == "WEDNESDAY") {
+                string += "Cho, "
+            }
+
+            if (it.dayName == "THURSDAY") {
+                string += "Pa, "
+            }
+
+            if (it.dayName == "FRIDAY") {
+                string += "Ju, "
+            }
+
+            if (it.dayName == "SATURDAY") {
+                string += "Sha, "
+            }
+
+            if(it.dayName == "SUNDAY" ){
+                string += "Ya"
+            }
+        }
+        binding.tvPitchWorkTime.text = string
     }
 
     private fun observeViewModelEdit() {

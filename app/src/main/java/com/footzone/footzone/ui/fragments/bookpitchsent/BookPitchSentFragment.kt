@@ -2,6 +2,7 @@ package com.footzone.footzone.ui.fragments.bookpitchsent
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
@@ -10,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.footzone.footzone.R
 import com.footzone.footzone.adapter.PitchBookSentAdapter
 import com.footzone.footzone.databinding.FragmentBookPitchSentBinding
@@ -22,11 +24,13 @@ import com.footzone.footzone.ui.fragments.BaseFragment
 import com.footzone.footzone.utils.AcceptDialog
 import com.footzone.footzone.utils.DeclineDialog
 import com.footzone.footzone.utils.KeyValues
+import com.footzone.footzone.utils.KeyValues.PENDING
 import com.footzone.footzone.utils.UiStateObject
 import com.footzone.footzone.utils.extensions.hide
 import com.footzone.footzone.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
@@ -40,7 +44,11 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.getSentBookingRequests("PENDING")
+        sendRequest()
+    }
+
+    private fun sendRequest() {
+        viewModel.getSentBookingRequests(PENDING)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,10 +59,16 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
         initViews()
     }
 
-
     private fun initViews() {
         observeBookSentList()
+
+        binding.apply {
+            swipeContainer.setOnRefreshListener {
+                sendRequest()
+            }
+        }
     }
+
 
     private fun observeBookSentList() {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -67,10 +81,12 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
 
                         is UiStateObject.SUCCESS -> {
                             hideProgress()
+                            binding.swipeContainer.isRefreshing = false
                             refreshAdapter(it.data.data)
                         }
 
                         is UiStateObject.ERROR -> {
+                            binding.swipeContainer.isRefreshing = false
                             hideProgress()
                         }
                         else -> {
@@ -84,7 +100,7 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
     private fun observeAcceptDeclineResponse(
         isToAccept: Boolean,
         tvStatus: TextView,
-        linearAcceptDecline: LinearLayout
+        linearAcceptDecline: LinearLayout,
     ) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -138,7 +154,7 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
                 stadiumId: String,
                 tvStatus: TextView,
                 linearAcceptDecline: LinearLayout,
-                position: Int
+                position: Int,
             ) {
                 acceptDialog =
                     AcceptDialog(requireContext()) {
@@ -162,7 +178,7 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
                 stadiumId: String,
                 tvStatus: TextView,
                 linearAcceptDecline: LinearLayout,
-                position: Int
+                position: Int,
             ) {
                 declineDialog =
                     DeclineDialog(requireContext()) {
@@ -184,4 +200,5 @@ class BookPitchSentFragment : BaseFragment(R.layout.fragment_book_pitch_sent) {
 
         binding.rvBookSent.adapter = playingPitchAdapter
     }
+
 }
