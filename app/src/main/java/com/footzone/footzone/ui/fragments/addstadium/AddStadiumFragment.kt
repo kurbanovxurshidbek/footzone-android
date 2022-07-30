@@ -312,7 +312,6 @@ open class AddStadiumFragment : BaseFragment(R.layout.fragment_add_stadium) {
             tvTitle.text = getText(R.string.str_edit_stadium)
             etPitchName.setText(data.stadiumName);
             etPitchAddress.setText(data.address)
-           // tvPitchWorkTime.text = getText(R.string.str_changing_game_days)
             etPitchPrice.setText(data.hourlyPrice.toString())
             recyclerView.adapter = adapterEdit
             stadiumNumber = data.number
