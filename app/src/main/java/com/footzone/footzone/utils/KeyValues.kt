@@ -20,6 +20,8 @@ object KeyValues {
     const val SPLASH_MESSAGE: String = "SplashMessage"
     const val STADIUM_IMAGE_BASE_URL = "https://heroku-footzone.herokuapp.com/images/stadium/"
     const val USER_IMAGE_BASE_URL = "https://heroku-footzone.herokuapp.com/images/user/"
+//    const val STADIUM_IMAGE_BASE_URL = "http://192.168.43.32:8081/images/stadium/"
+//    const val USER_IMAGE_BASE_URL = "http://192.168.43.32:8081/images/user/"
     const val PITCH_DETAIL: String = "pitchDetail"
     const val STADIUM_ID = "stadiumID"
     const val IS_FAVOURITE_STADIUM = "isFavouriteStadium"

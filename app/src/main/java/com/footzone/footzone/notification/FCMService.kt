@@ -49,6 +49,8 @@ class FCMService : FirebaseMessagingService() {
         val session =
             Gson().fromJson(message.data["session"], SessionNotificationResponse::class.java)
 
+        Log.d(TAG, "onMessageReceived: ${session.sessionId}")
+        
         val ACCEPT_ACTION = "Accept"
         val acceptIntent = Intent(this, AcceptNotificationReceiver::class.java)
         acceptIntent.action = ACCEPT_ACTION
