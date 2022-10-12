@@ -48,6 +48,8 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
 
         binding = FragmentSignUpBinding.bind(view)
 
+        binding.filledExposedDropdown
+
         initViews()
     }
 
@@ -202,6 +204,7 @@ class SignUpFragment : BaseFragment(R.layout.fragment_sign_up) {
     private fun openSignInFragment() {
         requireActivity().onBackPressed()
     }
+
 
     //this function for get role exp: Stadium owner or User
     private fun roleSpinner() {
